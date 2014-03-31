@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MathBox - Example: Complex 4D surface projected down to 3D.</title>
+
+  <!--
+    This example shows a complex 4D surface projected down to 3D
+  -->
+
+  <script type="text/javascript" charset="utf-8" src="../vendor/domready.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../build/MathBox-bundle.js"></script>
+
+  <script type="text/javascript">
+    DomReady.ready(function () {
+      if (location.href.match(/^file:/)) {
+        document.getElementById('info').style.opacity = 1;
+        document.getElementById('info').innerHTML = "Sorry. This example does not work when accessed using file://. Please use an http:// host and try again.";
+      }
+    });
+  </script>
+
+  <script type="text/javascript">
+  /**
+   * Bootstrap
+   */
+  DomReady.ready(function() {
+    ThreeBox.preload([
+      '../shaders/snippets.glsl.html',
+    ], function () {
+
+      // MathBox boilerplate
+      var mathbox = window.mathbox = mathBox({
+        cameraControls: true,
+        cursor:         true,
+        controlClass:   ThreeBox.OrbitControls,
+        elementResize:  true,
+        fullscreen:     true,
+        screenshot:     true,
+        stats:          false,
+        scale:          1,
+      }).start();
+
+      // Viewport camera/setup
+      mathbox
+        // Cartesian viewport
+        .viewport({
+          type: 'cartesian',
+          range: [[-5, 5], [-5, 5], [-5, 5]],
+          scale: [1, 1, 1],
+          polar: 0,
+        })
+        .camera({
+          orbit: 4,
+          phi: τ/2,
+          theta: .2,
+        })
+        .transition(300)
+
+        // Surface function
+        .surface({
+          mesh: false,
+          line: true,
+          shaded: true,
+          domain: [[-2.5, 1.5], [-π*1.5, π*1.5]],
+          n: [32, 64],
+          expression: surfaceFunc,
+        })
+
+      // Rotate camera continuously
+      mathbox.world().loop().hookPreRender(function () {
+        mathbox.set('camera', { phi: +new Date() * .0003 });
+      });
+
+    });
+  });
+
+  /**
+   * Custom helpers
+   */
+
+  // Complex exponentiation function, projected down to 3D
+  function surfaceFunc(x, y) {
+    var p = π/2;
+    var z = Math.exp(x);
+
+    return [
+      Math.cos(y) * z + Math.cos(p) * y,
+      Math.sin(y) * z,
+      x  + Math.sin(p) * y
+    ];
+  }
+
+  </script>
+
+  <link href="base.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+<body>
+  <div id="info"></div>
+</body>
+</html>

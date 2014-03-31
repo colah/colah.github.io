@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MathBox - Example: Texture map on surface.</title>
+
+  <!--
+    This example shows how to apply a texture map to a surface.
+  -->
+
+  <script type="text/javascript" charset="utf-8" src="../vendor/domready.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../build/MathBox-bundle.js"></script>
+
+  <script type="text/javascript">
+    DomReady.ready(function () {
+      if (location.href.match(/^file:/)) {
+        document.getElementById('info').style.opacity = 1;
+        document.getElementById('info').innerHTML = "Sorry. This example does not work when accessed using file://. Please use an http:// host and try again.";
+      }
+    });
+  </script>
+
+  <script type="text/javascript">
+  /**
+   * Bootstrap
+   */
+  DomReady.ready(function() {
+    ThreeBox.preload([
+      '../shaders/snippets.glsl.html',
+      '../resources/texture.png',
+    ], function (assets) {
+      // Texture shift/scale (Three.js Texture object)
+      assets['texture'].repeat.set(2, 2);
+      assets['texture'].offset.set(-.5, -.5);
+
+      // MathBox boilerplate
+      var mathbox = window.mathbox = mathBox({
+        cameraControls: true,
+        cursor:         true,
+        controlClass:   ThreeBox.OrbitControls,
+        elementResize:  true,
+        fullscreen:     true,
+        screenshot:     true,
+        stats:          false,
+        scale:          1,
+      }).start();
+
+      // Viewport camera/setup
+      mathbox
+        // Cartesian viewport
+        .viewport({
+          type: 'cartesian',
+        })
+        .camera({
+          orbit: 4,
+          phi: τ/4-.8,
+          theta: 1.1,
+        })
+        .transition(300)
+
+        // Surface function
+        .surface({
+          n: [192, 192],
+          color: 0xffffff,
+          shaded: true,
+          map: assets['texture'], // Asset name is the filename without extension
+          mapColor: 1,
+          mapOpacity: 1,
+          domain: [[-1.5, 1.5], [-1.5, 1.5]],
+          n: [48, 32],
+          expression: surfaceFunc,
+        })
+
+      // Animate viewport between polar and cartesian
+      mathbox.world().loop().hookPreRender(function () {
+        var t = +new Date() * .0003;
+        mathbox.set('viewport', { polar: Math.sin(t) * .5 + .5 });
+      });
+    });
+  });
+  </script>
+
+  <script type="text/javascript">
+  /**
+   * Custom helpers
+   */
+
+  // Arbitrary function
+  function surfaceFunc(x, y) {
+
+    return [
+      x,
+      -.15 + (
+          Math.cos(x * 3.41 + Math.sin(y * 1.9)) +
+          Math.cos(y * 3.7 - Math.cos(x * 4.1))
+      )*.25,
+      y];
+  }
+
+  </script>
+
+  <link href="base.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+<body>
+  <div id="info"></div>
+</body>
+</html>
