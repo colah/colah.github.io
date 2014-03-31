@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MathBox - Empty Example.</title>
+
+  <!--
+    This example is good for starting from.
+  -->
+
+  <script type="text/javascript" charset="utf-8" src="../vendor/domready.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../build/MathBox-bundle.js"></script>
+
+  <script type="text/javascript">
+    DomReady.ready(function () {
+      if (location.href.match(/^file:/)) {
+        document.getElementById('info').style.opacity = 1;
+        document.getElementById('info').innerHTML = "Sorry. This example does not work when accessed using file://. Please use an http:// host and try again.";
+      }
+    });
+  </script>
+
+  <script type="text/javascript">
+
+  function mathboxSetup() {
+    // Viewport camera/setup
+    mathbox
+      // Cartesian viewport
+      .viewport({
+        type: 'cartesian',
+        range: [[-3, 3], [-3, 3], [-3, 3]],
+        scale: [1, 1, 1],
+      })
+      .camera({
+        orbit: 3.5,
+        phi: τ/4,
+        theta: 0,
+      })
+      .transition(300)
+      // Add XYZ axes
+      .axis({
+        id: 'x-axis',
+        axis: 0,
+        color: 0xa0a0a0,
+        ticks: 5,
+        lineWidth: 2,
+        size: .05,
+        labels: true,
+      })
+      .axis({
+        id: 'y-axis',
+        axis: 1,
+        color: 0xa0a0a0,
+        ticks: 5,
+        lineWidth: 2,
+        size: .05,
+        labels: true,
+        zero: false,
+      })
+      .axis({
+        id: 'z-axis',
+        axis: 2,
+        color: 0xa0a0a0,
+        ticks: 5,
+        lineWidth: 2,
+        size: .05,
+        zero: false,
+        labels: true,
+      })
+
+      // Grid
+      .grid({
+        id: 'my-grid',
+        axis: [0, 2],
+        color: 0xc0c0c0,
+        lineWidth: 1,
+      })
+
+      // Curve, explicit function
+      .curve({
+        id: 'my-curve',
+        domain: [-3, 3],
+        expression: function (x) { return Math.cos(x); },
+        line: true,
+        points: true,
+        lineWidth: 2,
+      })
+
+      // Curve, parametric function
+      .curve({
+        id: 'my-circle',
+        domain: [-3, 3],
+        expression: function (x) { return [Math.sin(x)*2, Math.cos(x)*2]; },
+        line: true,
+        points: false,
+        lineWidth: 2,
+      })
+
+      .curve({
+        id: 'my-intersection',
+        domain: [-3, 3],
+        expression: function (x) { return 1.0; },
+        line: true,
+        points: false,
+        lineWidth: 2,
+      })
+      /*
+      .surface({
+        n: [ 64, 64 ],                         // Number of points in each direction
+        domain: [[-3, 3], [0, 1]],              // X/Y Input domain
+        data: null,                            // Array of array of data points, each an array of 2 or 3 elements
+        expression: function (x, y, i, j) {    // Live expression for data points.
+          return Math.cos(x);                            // Return single value or array of 2/3 elements.
+        },
+        points: false,                         // Whether to draw points
+        line: false,                           // Whether to draw wireframe lines
+        mesh: true,                            // Whether to draw a solid mesh
+        doubleSided: true,                     // Whether the mesh is double sided
+        flipSided: false,                      // Whether to flip a single sided mesh
+        shaded: true,                          // Whether to shade the surface
+            })
+
+      .surface({
+        n: [ 64, 64 ],                         // Number of points in each direction
+        domain: [[-3, 3], [0, 1]],              // X/Y Input domain
+        data: null,                            // Array of array of data points, each an array of 2 or 3 elements
+        expression: function (x, y, i, j) {    // Live expression for data points.
+          return Math.sin(x)+2*y;
+        },
+        points: false,                         // Whether to draw points
+        line: false,                           // Whether to draw wireframe lines
+        mesh: true,                            // Whether to draw a solid mesh
+        doubleSided: true,                     // Whether the mesh is double sided
+        flipSided: false,                      // Whether to flip a single sided mesh
+        shaded: true,                          // Whether to shade the surface
+            })
+
+      .surface({
+        n: [ 64, 64 ],                         // Number of points in each direction
+        domain: [[0, 6.28], [0, 6.28]],              // X/Y Input domain
+        data: null,                            // Array of array of data points, each an array of 2 or 3 elements
+        expression: function (x, y, i, j) {    // Live expression for data points.
+          return [Math.cos(x), Math.sin(y), Math.cos(x+y)];
+        },
+        points: false,                         // Whether to draw points
+        line: false,                           // Whether to draw wireframe lines
+        mesh: true,                            // Whether to draw a solid mesh
+        doubleSided: true,                     // Whether the mesh is double sided
+        flipSided: false,                      // Whether to flip a single sided mesh
+        shaded: true,                          // Whether to shade the surface
+            })
+*/
+      .surface({
+        n: [ 64, 64 ],                         // Number of points in each direction
+        domain: [[0, 6.28], [0, 6.28]],              // X/Y Input domain
+        data: null,                            // Array of array of data points, each an array of 2 or 3 elements
+        expression: function (x, y, i, j) {    // Live expression for data points.
+          r = 1;
+          return [r*Math.sin(x)*Math.cos(y), r*Math.sin(x)*Math.sin(y), r*Math.cos(x)];
+        },
+        points: false,                         // Whether to draw points
+        line: true,                           // Whether to draw wireframe lines
+        mesh: true,                            // Whether to draw a solid mesh
+        doubleSided: true,                     // Whether the mesh is double sided
+        flipSided: false,                      // Whether to flip a single sided mesh
+        shaded: true,                          // Whether to shade the surface
+            })
+  }
+
+  var mathboxScript = [
+    // Steps go here
+    /*
+    ['add', 'curve', {
+      id: 'my-curve',
+      domain: [-3, 3],
+      expression: function (x, i) {
+        return [x, Math.sin(x), 0];
+      },
+      // ...
+    }, {
+      delay: 500,
+      duration: 300,
+    }],
+    */
+  ];
+
+  </script>
+
+  <script type="text/javascript">
+  /**
+   * Bootstrap
+   */
+  DomReady.ready(function() {
+    ThreeBox.preload([
+      '../shaders/snippets.glsl.html',
+    ], function () {
+
+      // MathBox boilerplate
+      var mathbox = window.mathbox = mathBox({
+        cameraControls: true,
+        cursor:         true,
+        controlClass:   ThreeBox.OrbitControls,
+        elementResize:  true,
+        fullscreen:     true,
+        screenshot:     true,
+        stats:          false,
+        scale:          1,
+      }).start();
+
+      // Set up director
+      var script = window.mathboxScript;
+      var director = window.director = new MathBox.Director(mathbox, script);
+
+      // Arrow controls
+      // Controls for stand-alone
+      window.addEventListener('touchstart', function (e) {
+        director.forward();
+        document.getElementById('info').style.opacity = '0';
+      });
+      window.addEventListener('keydown', function (e) {
+        if (e.keyCode == 38 || e.keyCode == 37) director.back();
+        else if (e.keyCode == 40 || e.keyCode == 39) director.forward();
+        else {
+          return;
+        }
+
+        document.getElementById('info').style.opacity = '0';
+      });
+
+      window.mathboxSetup(mathbox);
+
+    });
+  });
+  </script>
+
+  <link href="base.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+<body>
+  <div id="info"></div>
+</body>
+</html>

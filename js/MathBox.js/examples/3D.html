@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MathBox</title>
+
+  <script type="text/javascript" src="http://use.typekit.com/nde6wmn.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+  <script type="text/javascript" charset="utf-8" src="../vendor/domready.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../vendor/console-extras/dist/console-extras.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../build/MathBox-bundle.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../vendor/crosseyed.js"></script>
+
+  <script type="text/javascript">
+    DomReady.ready(function () {
+      if (location.href.match(/^file:/)) {
+        document.getElementById('info').style.opacity = 1;
+        document.getElementById('info').innerHTML = "Sorry. This example does not work when accessed using file://. Please use an http:// host and try again.";
+      }
+    });
+  </script>
+
+  <script type="text/javascript">
+  /**
+   * Bootstrap
+   */
+  DomReady.ready(function() {
+    ThreeBox.preload([
+      '../build/MathBox.glsl.html',
+    ], function () {
+
+      document.getElementById('info').style.opacity = '1';
+
+      // Set up Cross eyed 3D
+      var renderer = new THREE.WebGLRenderer({
+  			antialias		: true,
+  			preserveDrawingBuffer	: true
+  		});
+      var crosseyed = new THREE.CrosseyedEffect(renderer);
+
+      // MathBox boilerplate
+      var mathbox = window.mathbox = mathBox({
+        cameraControls: false,
+        cursor:         true,
+        controlClass:   ThreeBox.OrbitControls,
+        elementResize:  true,
+        fullscreen:     true,
+        screenshot:     true,
+        stats:          false,
+        scale:          1,
+        renderer:       crosseyed, 
+      }).start();
+
+      // Set up director
+      var script = window.mathboxScript;
+      var director = window.director = new MathBox.Director(mathbox, script);
+
+      // Arrow controls
+      // Controls for stand-alone
+      var message = true;
+      window.addEventListener('keydown', function (e) {
+        if (e.keyCode == 38 || e.keyCode == 37) director.back();
+        else if (e.keyCode == 40 || e.keyCode == 39) director.forward();
+        else {
+          return;
+        }
+
+        if (message) {
+          document.getElementById('info').innerHTML = "Maximize the browser, sit a comfortable distance away from the screen and cross your eyes until the two images overlap.<br><br><kbd>→</kbd>";
+          message = false;
+        }
+        else {
+          document.getElementById('info').style.opacity = '0';
+        }
+      });
+
+      window.mathboxSetup(mathbox);
+    });
+  });
+  </script>
+
+  <script type="text/javascript">
+
+  /**
+   * Setup
+   */
+  window.mathboxSetup = function (mathbox) {
+
+    // Viewport camera/setup
+    mathbox
+      // Polar viewport
+      .viewport({
+        type: 'polar',
+        polar: 0,
+        range: [[-5.5, 5.5], [-5.5, 5.5]],
+        scale: [1.1, 1.1, 1],
+      })
+      .camera({
+        orbit: 3.5,
+        phi: τ/4,
+        theta: 0,
+      })
+      .transition(300)
+
+  }
+
+  /** 
+   * Script
+   */
+  window.mathboxScript = [
+
+    // clean, switch to polar, show axis grid
+    [
+      ['add', 'grid', {
+        n: [128, 2],
+        ticks: [8, 5],
+        tickUnit: [π, 1],
+        tickScale: [2, 10],
+        lineWidth: 2,
+        color: 0xc0c0c0,
+        zIndex: -10,
+      }, {
+        delay: 400,
+        duration: 300,
+      }],
+      ['animate', 'viewport', {
+        range: [[-π, π], [-2, 2]],
+        scale: [.8, .8, .8],
+        polar: 1,
+      }, {
+        delay: 300,
+        duration: 0,
+      }],
+      ['add', 'axis', {
+        id: 'a1',
+        lineWidth: 0,
+        labels: true,
+        axis: 1,
+        offset: [0, 0, 0],
+        ticks: 5,
+        color: 0xc0c0c0,
+      }, {
+        delay: 400,
+        duration: 500,
+      }],
+      ['add', 'axis', {
+        lineWidth: 0,
+        labels: true,
+        axis: 1,
+        offset: [τ/8, 0, 0],
+        ticks: 5,
+        arrow: false,
+        color: 0xc0c0c0,
+      }, {
+        delay: 400,
+        duration: 500,
+      }],
+      ['add', 'axis', {
+        id: 'a2',
+        lineWidth: 0,
+        labels: true,
+        axis: 1,
+        offset: [τ/4, 0, 0],
+        ticks: 5,
+        color: 0xc0c0c0,
+      }, {
+        delay: 400,
+        duration: 500,
+      }],
+      ['add', 'axis', {
+        lineWidth: 0,
+        labels: true,
+        axis: 1,
+        offset: [3*τ/8, 0, 0],
+        ticks: 5,
+        arrow: false,
+        color: 0xc0c0c0,
+      }, {
+        delay: 400,
+        duration: 500,
+      }],
+      ['add', 'axis', {
+        lineWidth: 0,
+        labels: true,
+        axis: 1,
+        offset: [τ/2, 0, 0],
+        ticks: 5,
+        arrow: false,
+        color: 0xc0c0c0,
+      }, {
+        delay: 400,
+        duration: 500,
+      }],
+      ['add', 'axis', {
+        lineWidth: 0,
+        labels: true,
+        axis: 1,
+        offset: [-3*τ/8, 0, 0],
+        ticks: 5,
+        arrow: false,
+        color: 0xc0c0c0,
+      }, {
+        delay: 400,
+        duration: 500,
+      }],
+      ['add', 'axis', {
+        lineWidth: 0,
+        labels: true,
+        axis: 1,
+        offset: [-τ/4, 0, 0],
+        ticks: 5,
+        arrow: false,
+        color: 0xc0c0c0,
+      }, {
+        delay: 400,
+        duration: 500,
+      }],
+      ['add', 'axis', {
+        lineWidth: 0,
+        labels: true,
+        axis: 1,
+        offset: [-τ/8, 0, 0],
+        ticks: 5,
+        arrow: false,
+        color: 0xc0c0c0,
+      }, {
+        delay: 400,
+        duration: 500,
+      }],
+      ['set', 'axis', {
+        labels: false,
+        arrow: false,
+      }],
+      ['set', '#a2', {
+        arrow: true,
+      }],
+      ['remove', 'grid', {
+        duration: 300,
+        delay: 500,
+      }],
+      ['add', 'grid', {
+        n: [192, 2],
+        tickUnit: [π, 1],
+        tickScale: [2, 10],
+        lineWidth: 2,
+        color: 0xc0c0c0,
+        zIndex: -10,
+        ticks: [6, 6],
+      }, {
+        delay: 500,
+        duration: 300,
+      }],
+      ['add', 'surface', {
+        id: 'fill',
+        n: [192, 2],
+        domain: [[-π, π], [0.001, 1.7]],
+        expression: function (x,y) {
+          return [x, y, 0];
+        },
+        zIndex: -20,
+        color: 0xffffff,
+        shaded: false,
+        opacity: .8,
+      }, {
+        delay: 500,
+        duration: 300,
+      }],
+      ['remove', '#vb, #vc, #slash'],
+      ['animate', 'viewport', {
+        range: [[-π, π], [-1.7, 1.7]],
+        rotation: [0, 0, τ/4],
+      }, {
+        duration: 800,
+      }],
+      ['add', 'vector', {
+        id: 'vfield',
+        n: 16,
+        data: [
+          [0], [0, .5], [π/2], [π/2, .5],
+          [-π], [-π, .5], [-π+π/2], [-π+π/2, .5],
+          [π/4], [π/4, 1], [π/2+π/4], [π/2+π/4, 1],
+          [-π+π/4], [-π+π/4, 1], [-π+π/2+π/4], [-π+π/2+π/4, 1],
+
+          [π/8], [π/8, 1.5], [π/2+π/8], [π/2+π/8, 1.5],
+          [-π+π/8],[-π+π/8, 1.5], [-π+π/2+π/8], [-π+π/2+π/8, 1.5],
+          [π/8+π/4], [π/8+π/4, 1.5], [π/2+π/4+π/8], [π/2+π/4+π/8, 1.5],
+          [-π+π/4+π/8], [-π+π/4+π/8, 1.5], [-π/8], [-π/8, 1.5],
+        ],
+        lineWidth: 3,
+        size: .1,
+        zIndex: 10,
+        opacity: 0.001,
+      }, {
+        duration: 0,
+      }],
+      ['animate', '#vfield', {
+        opacity: 1,
+      }, {
+        duration: 400,
+        delay: 500,
+      }],
+    ],
+
+    // Fold half of square root
+    [
+      ['animate', 'camera', {
+        orbit: 3.5,
+        phi: τ/4+3.14,
+        theta: .5,
+      }, {
+        duration: 3000,
+      }],
+      ['set', '#a2', {
+        arrow: false,
+      }],
+      ['set', '#a1', {
+        arrow: true,
+      }],
+      ['set', 'viewport', {
+        rotation: [0, 0, 0],
+      }],
+      ['animate', 'viewport', {
+        fold: .5,
+      }, {
+        duration: 3000,
+      }],
+      ['animate', 'viewport', {
+        power: .5,
+      }, {
+        delay: 3000,
+        duration: 3000,
+      }],
+    ],
+
+    // Show negative square roots
+    [
+      ['animate', 'camera', {
+        orbit: 3.5,
+        phi: τ/4,
+        theta: 0,
+      }, {
+        duration: 3000,
+      }],
+      ['animate', 'viewport', {
+        range: [[-τ, τ], [-1.7, 1.7]],
+      }, {
+        duration: 1500,
+      }],
+      ['animate', '#fill', {
+        domain: [[-τ, τ], [0.001, 1.7]],
+      }, {
+        duration: 1500,
+      }],
+      ['animate', 'grid', {
+        ticks: [12, 6],
+      }, {
+        duration: 300,
+        delay: 500,
+      }],
+      ['add', 'vector', {
+        id: 'vfield2',
+        n: 16,
+        data: [
+          [τ], [τ, .5], [τ+π/2], [τ+π/2, .5],
+          [τ+-π], [τ+-π, .5], [τ+-π+π/2], [τ+-π+π/2, .5],
+          [τ+π/4], [τ+π/4, 1], [τ+π/2+π/4], [τ+π/2+π/4, 1],
+          [τ+-π+π/4], [τ+-π+π/4, 1], [τ+-π+π/2+π/4], [τ+-π+π/2+π/4, 1],
+
+          [τ+π/8], [τ+π/8, 1.5], [τ+π/2+π/8], [τ+π/2+π/8, 1.5],
+          [τ-π+π/8], [τ-π+π/8, 1.5], [τ-π+π/2+π/8], [τ-π+π/2+π/8, 1.5],
+          [τ+π/8+π/4], [τ+π/8+π/4, 1.5], [τ+π/2+π/4+π/8], [τ+π/2+π/4+π/8, 1.5],
+          [τ+-π+π/4+π/8], [τ+-π+π/4+π/8, 1.5], [τ+-π/8], [τ+-π/8, 1.5],
+        ],
+        lineWidth: 3,
+        size: .1,
+        zIndex: 5,
+        worldRotation: [0, 0, -π],
+        opacity: .25,
+      }, {
+        duration: 0,
+        delay: 0,
+      }],
+      ['animate', '#vfield2', {
+        worldRotation: [0, 0, 0],
+        opacity: 1,
+      }, {
+        duration: 1000,
+        delay: 2000,
+      }],
+    ],
+
+    // Split disc
+    [
+      ['set', '#vfield', {
+        mathPosition: [-π, 0, 0],
+      }],
+      ['set', '#vfield2', {
+        mathPosition: [-π, 0, 0],
+      }],
+      ['animate', 'camera', {
+        phi: .92,
+        theta: 0.32,
+      }, {
+        duration: 4000,
+      }],
+      ['animate', 'camera', {
+        phi: 2.22,
+        theta: 0.32,
+      }, {
+        duration: 3000,
+      }],
+      ['animate', 'viewport', {
+        helix: .1,
+      }, {
+        delay: 200,
+        duration: 2000,
+      }],
+    ],
+
+    // Square back to normal
+    [
+      ['animate', 'camera', {
+        phi: 2.22 + π,
+        theta: 0.32,
+      }, {
+        delay: 6000,
+        duration: 4000,
+      }],
+      ['animate', 'viewport', {
+        fold: 1,
+      }, {
+        delay: 0,
+        duration: 3000,
+      }],
+      ['animate', 'viewport', {
+        power: 1,
+      }, {
+        delay: 3000,
+        duration: 3000,
+      }],
+      ['animate', 'grid', {
+        ticks: [6, 6],
+      }, {
+        delay: 0,
+        duration: 500,
+      }],
+    ],
+
+    // Flatten
+    [
+      ['animate', 'viewport', {
+        helix: 0,
+      }, {
+        duration: 1500,
+      }],
+      ['animate', 'camera', {
+        phi: 1.57*3,
+        theta: 0,
+      }, {
+        delay: 1500,
+        duration: 1500,
+      }],
+    ],
+
+    // Full square root
+    [
+      ['set', 'viewport', {
+        range: [[-τ, τ], [-1.7, 1.7]],
+      }],
+      ['set', '#fill', {
+        domain: [[-τ, τ], [0.001, 1.7]],
+      }],
+      ['animate', 'viewport', {
+        helix: .1,
+      }, {
+        duration: 2000,
+      }],
+      ['animate', 'viewport', {
+        fold: .5,
+        power: .5,
+      }, {
+        delay: 2000,
+        duration: 3000,
+      }],
+      ['animate', 'grid', {
+        ticks: [12, 6],
+      }, {
+        delay: 1500,
+        duration: 500,
+      }],
+      ['animate', 'viewport', {
+        helix: 0,
+      }, {
+        delay: 3000,
+        duration: 2000,
+      }],
+    ],
+
+    // Fourth power
+    [
+      ['animate', 'camera', {
+        phi: 1.57+.7,
+        theta: 0,
+        orbit: 6.5,
+      }, {
+        delay: 0,
+        duration: 7000,
+      }],
+      ['animate', 'camera', {
+        phi: 1.57,
+      }, {
+        delay: 3000,
+        duration: 2000,
+      }],
+      ['animate', 'viewport', {
+        helix: .15,
+      }, {
+        duration: 2000,
+      }],
+      ['animate', 'viewport', {
+        fold: 2,
+        power: 2,
+      }, {
+        delay: 2000,
+        duration: 4000,
+      }],
+      ['animate', 'viewport', {
+        helix: 0,
+      }, {
+        delay: 5000,
+        duration: 3000,
+      }],
+    ],
+
+    // 1/sqrt(2) power
+    [
+      ['animate', 'camera', {
+        phi: 3.14+1.57+.9,
+        theta: 0,
+        orbit: 6.5,
+      }, {
+        delay: 0,
+        duration: 10000,
+      }],
+      ['animate', 'viewport', {
+        helix: .15,
+      }, {
+        duration: 2000,
+      }],
+      ['animate', 'viewport', {
+        fold: 2*0.707,
+        power: 2*0.707,
+      }, {
+        delay: 3000,
+        duration: 4000,
+      }],
+    ],
+
+    // Extend
+    [
+      ['remove', 'vector'],
+      ['add', 'vector', {
+        n: 9,
+        data: [
+          [-τ*2],   [-τ*2, 1.6],
+          [-τ*1.5], [-τ*1.5, 1.6],
+          [-τ],     [-τ, 1.6],
+          [-τ*.5],  [-τ*.5, 1.6],
+          [0],      [0, 1.6],
+          [τ*.5],   [τ*.5, 1.6],
+          [τ],      [τ, 1.6],
+          [τ*1.5],  [τ*1.5, 1.6],
+          [τ*2],    [τ*2, 1.6],
+        ],
+        lineWidth: 3,
+        size: .1,
+        zIndex: 5,
+      }, {
+        delay: 1500,
+      }],
+      ['animate', 'viewport', {
+        range: [[-τ*2.3, τ*2.3], [-1.7, 1.7]],
+      }, {
+        duration: 2000,
+      }],
+      ['animate', '#fill', {
+        domain: [[-τ*2.3, τ*2.3], [0.001, 1.7]],
+      }, {
+        duration: 2000,
+      }],
+      ['animate', 'camera', {
+        phi: 3.14+.7,
+        theta: 0,
+        orbit: 10,
+      }, {
+        delay: 0,
+        duration: 5000,
+      }],
+    ],
+
+    // Flatten
+    [
+      ['animate', 'viewport', {
+        helix: 0,
+      }, {
+        delay: 500,
+        duration: 4500,
+      }],
+      ['animate', 'camera', {
+        orbit: 5,
+      }, {
+        delay: 500,
+        duration: 4500,
+      }],
+      ['animate', 'camera', {
+        phi: 3.14 + 1.57,
+      }, {
+        delay: 5200,
+        duration: 1500,
+      }],
+      ['add', 'vector', {
+        id: 'dupe1',
+        n: 9,
+        data: [
+          [-τ*2],   [-τ*2, 1.6],
+          [-τ*1.5], [-τ*1.5, 1.6],
+          [-τ],     [-τ, 1.6],
+          [-τ*.5],  [-τ*.5, 1.6],
+          [0],      [0, 1.6],
+          [τ*.5],   [τ*.5, 1.6],
+          [τ],      [τ, 1.6],
+          [τ*1.5],  [τ*1.5, 1.6],
+          [τ*2],    [τ*2, 1.6],
+        ],
+        lineWidth: 3,
+        size: .1,
+        zIndex: 5,
+        mathPosition: [τ*5, 0],
+        opacity: .001,
+      }],
+      ['add', 'vector', {
+        id: 'dupe2',
+        n: 9,
+        data: [
+          [-τ*2],   [-τ*2, 1.6],
+          [-τ*1.5], [-τ*1.5, 1.6],
+          [-τ],     [-τ, 1.6],
+          [-τ*.5],  [-τ*.5, 1.6],
+          [0],      [0, 1.6],
+          [τ*.5],   [τ*.5, 1.6],
+          [τ],      [τ, 1.6],
+          [τ*1.5],  [τ*1.5, 1.6],
+          [τ*2],    [τ*2, 1.6],
+        ],
+        lineWidth: 3,
+        size: .1,
+        zIndex: 5,
+        mathPosition: [τ*10, 0],
+        opacity: .001,
+      }],
+      ['add', 'vector', {
+        id: 'dupe3',
+        n: 9,
+        data: [
+          [-τ*2],   [-τ*2, 1.6],
+          [-τ*1.5], [-τ*1.5, 1.6],
+          [-τ],     [-τ, 1.6],
+          [-τ*.5],  [-τ*.5, 1.6],
+          [0],      [0, 1.6],
+          [τ*.5],   [τ*.5, 1.6],
+          [τ],      [τ, 1.6],
+          [τ*1.5],  [τ*1.5, 1.6],
+          [τ*2],    [τ*2, 1.6],
+        ],
+        lineWidth: 3,
+        size: .1,
+        zIndex: 5,
+        mathPosition: [τ*15, 0],
+        opacity: .001,
+      }],
+      ['add', 'vector', {
+        id: 'dupe1',
+        n: 9,
+        data: [
+          [-τ*2],   [-τ*2, 1.6],
+          [-τ*1.5], [-τ*1.5, 1.6],
+          [-τ],     [-τ, 1.6],
+          [-τ*.5],  [-τ*.5, 1.6],
+          [0],      [0, 1.6],
+          [τ*.5],   [τ*.5, 1.6],
+          [τ],      [τ, 1.6],
+          [τ*1.5],  [τ*1.5, 1.6],
+          [τ*2],    [τ*2, 1.6],
+        ],
+        lineWidth: 3,
+        size: .1,
+        zIndex: 5,
+        mathPosition: [-τ*5, 0],
+        opacity: .001,
+      }],
+      ['add', 'vector', {
+        id: 'dupe2',
+        n: 9,
+        data: [
+          [-τ*2],   [-τ*2, 1.6],
+          [-τ*1.5], [-τ*1.5, 1.6],
+          [-τ],     [-τ, 1.6],
+          [-τ*.5],  [-τ*.5, 1.6],
+          [0],      [0, 1.6],
+          [τ*.5],   [τ*.5, 1.6],
+          [τ],      [τ, 1.6],
+          [τ*1.5],  [τ*1.5, 1.6],
+          [τ*2],    [τ*2, 1.6],
+        ],
+        lineWidth: 3,
+        size: .1,
+        zIndex: 5,
+        mathPosition: [-τ*10, 0],
+        opacity: .001,
+      }],
+      ['add', 'vector', {
+        id: 'dupe3',
+        n: 9,
+        data: [
+          [-τ*2],   [-τ*2, 1.6],
+          [-τ*1.5], [-τ*1.5, 1.6],
+          [-τ],     [-τ, 1.6],
+          [-τ*.5],  [-τ*.5, 1.6],
+          [0],      [0, 1.6],
+          [τ*.5],   [τ*.5, 1.6],
+          [τ],      [τ, 1.6],
+          [τ*1.5],  [τ*1.5, 1.6],
+          [τ*2],    [τ*2, 1.6],
+        ],
+        lineWidth: 3,
+        size: .1,
+        zIndex: 5,
+        mathPosition: [-τ*15, 0],
+        opacity: .001,
+      }],
+      ['animate', '#dupe3', {
+        opacity: .25,
+      }, {
+        delay: 200,
+        duration: 300,
+      }],
+      ['animate', '#dupe2', {
+        opacity: .5,
+      }, {
+        delay: 200,
+        duration: 300,
+      }],
+      ['animate', '#dupe1', {
+        opacity: .75,
+      }, {
+        delay: 200,
+        duration: 300,
+      }],
+    ],
+  ];
+
+  </script>
+
+  <link href="base.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+<body>
+  <div id="info" class="transition">Press the <kbd>→</kbd> key to step through.</div>
+</body>
+</html>
