@@ -72,6 +72,7 @@
                             <h1>Fanfiction.net, Graphs, and PageRank: Oh My!</h1>
                             <div class="info">
     <p style="font-family:CMSS; font-size:120%">Posted on February 28, 2014</p>
+    math, fanfiction, graphs, visualization
     <!--
         by colah
     -->
@@ -274,52 +275,71 @@ Graph of top Twilight fanfiction, colored by ship
 <p>In a normal vote gives equal weight to every voter. But some voters are better qualified to decide than others. In PageRank, we recalculate the votes again and again, giving each “person’s” vote a weight based on how many votes they received in the previous step.</p>
 <p>In the case of the Internet, we interpret a website linking to another website as that website voting for the one it links to. We can similarly apply it to fanfiction by interpreting stories “voting” for the stories users are most likely to like, given that they like the voter.</p>
 <p><strong>Harry Potter top stories by PageRank:</strong></p>
-<ol type="1">
-<li>Harry Potter and the Nightmares of Futures Past (8.97889327)</li>
-<li>Make A Wish (7.93161420843)</li>
-<li>Realizations (7.5272404382)</li>
-<li>Poison Pen (6.90003490535)</li>
-<li>Oh God Not Again! (6.55448282307)</li>
-<li>A Black Comedy (6.22269137202)</li>
-<li>To Shape and Change (6.12800445009)</li>
-<li>Lord of Caer Azkaban (5.77633220949)</li>
-<li>The Lie I’ve Lived (5.77580873603)</li>
-<li>His Own Man (5.35246225041)</li>
-<li>Harry Potter and the Methods of Rationality (5.16490335475)</li>
-<li>Harry Crow (4.94247999591)</li>
-<li>Harry Potter And The Summer Of Change (4.78256150739)</li>
-<li>Delenda Est (4.75238318694)</li>
-<li>An Aunt’s Love (4.73469693544)</li>
-<li>…</li>
+<ol>
+        <li>
+<a href="fanfiction.net/s/1260679">Realizations</a> (16.4446246629)
+</li>
+        <li>
+<a href="fanfiction.net/s/2636963">Harry Potter and the Nightmares of Futures Past</a> (15.7110134023)
+</li>
+        <li>
+<a href="fanfiction.net/s/2318355">Make A Wish</a> (14.0838498959)
+</li>
+        <li>
+<a href="fanfiction.net/s/5554780">Poison Pen</a> (11.761694652)
+</li>
+        <li>
+<a href="fanfiction.net/s/6413108">To Shape and Change</a> (11.5102522756)
+</li>
+        <li>
+<a href="img/hp.html"><b>More</b></a>
 </ol>
+
+
+
 <p><strong>Naruto top stories by PageRank:</strong></p>
-<ol type="1">
-<li>Team 8 (11.1638219556)</li>
-<li>Naruto: Myoushuu no Fuuin (6.42967321043)</li>
-<li>It’s For a Good Cause, I Swear! (5.57768838353)</li>
-<li>The Sealed Kunai (5.24903743168)</li>
-<li>Chunin Exam Day (5.14212258792)</li>
-<li>Better Left Unsaid (4.24301874048)</li>
-<li>The Dichotomy of Namikaze Naruto (4.06902329344)</li>
-<li>Ripples (3.98406655602)</li>
-<li>Neo Yondaime Hokage (3.96637117774)</li>
-<li>Naruto: Game of the Year Edition (3.92832766505)</li>
-<li>…</li>
+<ol>
+        <li>
+<a href="fanfiction.net/s/2731239">Team 8</a> (11.1638219556)
+</li>
+        <li>
+<a href="fanfiction.net/s/6694302">Naruto: Myoushuu no Fuuin</a> (6.42967321043)
+</li>
+        <li>
+<a href="fanfiction.net/s/5409165">It’s For a Good Cause, I Swear!</a> (5.57768838353)
+</li>
+        <li>
+<a href="fanfiction.net/s/6051938">The Sealed Kunai</a> (5.24903743168)
+</li>
+        <li>
+<a href="fanfiction.net/s/3929411">Chunin Exam Day</a> (5.14212258792)
+</li>
+        <li>
+<a href="img/naruto.html"><b>More</b></a>
 </ol>
+
+
 <p><strong>Twilight top stories by PageRank:</strong></p>
-<ol type="1">
-<li>The Blessing and the Curse (18.6217297811)</li>
-<li>Tropic of Virgo (15.0218120789)</li>
-<li>A Rough Start (12.7611042705)</li>
-<li>Creature of Habit (12.6476879833)</li>
-<li>The Plan (10.212420851)</li>
-<li>High Anxiety (9.03310345142)</li>
-<li>For the Summer (8.76037948412)</li>
-<li>The Vampire in the Basement (8.72666750989)</li>
-<li>The Cannabean Betrothal (8.68746342005)</li>
-<li>The Best I Ever Had (8.68039369571)</li>
-<li>…</li>
+<ol>
+        <li>
+<a href="fanfiction.net/s/5100876">The Blessing and the Curse</a> (18.6217297811)
+</li>
+        <li>
+<a href="fanfiction.net/s/4901517">Tropic of Virgo</a> (15.0218120789)
+</li>
+        <li>
+<a href="fanfiction.net/s/5319052">A Rough Start</a> (12.7611042705)
+</li>
+        <li>
+<a href="fanfiction.net/s/4769414">Creature of Habit</a> (12.6476879833)
+</li>
+        <li>
+<a href="fanfiction.net/s/6550419">The Plan</a> (10.212420851)
+</li>
+        <li>
+<a href="img/twi.html"><b>More</b></a>
 </ol>
+
 <p>One neat thing we can do is give nodes on our graphs a size based on their PageRank. (We can also color nodes based on the first three components of the singular value decomposition of the adjacency matrix.)</p>
 <div class="bigcenterimgcontainer">
 <img src="img/HP_union_size_larger.png" alt style>
@@ -359,6 +379,7 @@ Graph of top Twilight fanfiction, colored by ship
 
 <script src="../../comments/inlineDisqussions.js"></script>
 <script src="../../js/disqus.js"></script>
+
                         </div>
                         <div class="col-md-4"></div>
                     </div>
