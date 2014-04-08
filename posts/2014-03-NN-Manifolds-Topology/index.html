@@ -176,6 +176,7 @@ The hidden layer learns a representation so that the data is linearly seperable
 
 </div>
 <p>It is worth explicitly noting here that these tasks are only somewhat challenging because we are using low-dimensional neural networks. If we were using wider networks, all this would be quite easy.</p>
+<p><em>(Andrej Karpathy has made a <a href="http://cs.stanford.edu/people/karpathy/convnetjs//demo/classify2d.html">nice demo</a> based on ConvnetJS that allows you to interactively explore networks with this sort of visualization of training!)</em></p>
 <h2 id="topology-of-tanh-layers">Topology of tanh Layers</h2>
 <p>Each layer stretches and squishes space, but it never cuts, breaks, or folds it. Intuitively, we can see that it preserves topological properties. For example, a set will be connected afterwards if it was before (and vice versa).</p>
 <p>Transformations like this, which don’t affect topology, are called homeomorphisms. Formally, they are bijections that are continuous functions both ways.</p>
