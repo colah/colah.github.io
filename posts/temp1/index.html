@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Deep Learning, Representations, and Types -- colah's blog</title>
+        
+        <link rel="stylesheet" href="../../fonts/Serif/cmun-serif.css" />
+        <link rel="stylesheet" href="../../fonts/Serif-Slanted/cmun-serif-slanted.css" />
+
+        <!--BOOTSTRAP-->
+        <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!--mobile first-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--removed html from url but still is html-->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <!--font awesome-->
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+        <!--fonts: allan & cardo-->
+        <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
+
+        <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
+
+        <link href="../../css/default.css" rel="stylesheet">
+
+        <link href="../../comments/inlineDisqussions.css" rel="stylesheet">
+
+        <!--Highlight-->
+        <link href="../../highlight/styles/github.css" rel="stylesheet">
+        
+        <link href="../../favicon.ico" rel="shortcut icon" />
+
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
+        for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);
+        mixpanel.init("dc1ac55f121e696b2f8d54d338ec642c");</script><!-- end Mixpanel -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49811703-1', 'colah.github.io');
+  ga('require', 'linkid', 'linkid.js');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+
+</script>
+    </head>
+
+    <body>
+        <div id="wrap">
+            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+                <div class="container">
+                    <!--Toggle header for mobile-->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand active" href="../../" style="font-size:20px;">colah's blog</a>
+                    </div>
+                    <!--normal header-->
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="../../archive.html"><span class="glyphicon glyphicon-pencil"></span>  Blog</a></li>
+                            <li><a href="../../about.html"><span class="glyphicon glyphicon-user"></span>  About</a></li>
+                            <li><a href="../../contact.html"><span class="glyphicon glyphicon-envelope"></span>  Contact</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </nav>
+
+            
+            <div id="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1>Deep Learning, Representations, and Types</h1>
+                            <div class="info">
+    <p style="font-family:CMSS; font-size:120%">Posted on April 21, 2014</p>
+    neural networks, deep learning, representations, type theory, category theory
+    <!--
+        by colah
+    -->
+</div>
+</br>
+
+<h2 id="introduction">Introduction</h2>
+<p>A lot of problems in machine learning are about trying to learn a function on a high-dimensional space. We have a set of data points for which we know what value the function should take. For example, we might be trying to classify images – which we can interpret as vectors – given a set of images for which we know their classes.</p>
+<p>For example, consider the following 2-dimensional points. The are in two classes, red and blue. If we had an unknown point somewhere on the plane, which class should that be?</p>
+<div class="centerimgcontainer">
+<img src="img/ex1-points.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>One option would be to go with the class of the closest known point. (This is a very simple version of a technique called <a href="http://en.wikipedia.org/wiki/Nearest_neighbour_algorithm">nearest neighbors</a>.)</p>
+<div class="floatrightimgcontainer">
+<img src="img/ex1-knn.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<div class="bigcenterimgcontainer">
+<img src="img/ex1-svm.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<h2 id="one-hidden-layer-neural-networks">One Hidden Layer Neural Networks</h2>
+<p>A neural network with a hidden layer has universality: given enough hidden units, it can approximate any function. This is a frequently quoted – and even more frequently, misunderstood and applied – theorem.</p>
+<p>It’s true, essentially, because the hidden layer can be used as a lookup table.</p>
+<p>For simplicity, let’s consider a perceptron network. A <a href="http://en.wikipedia.org/wiki/Perceptron">perceptron</a> is a very simple neuron that fires if it exceeds a certain threshold and doesn’t fire if it doesn’t reach that threshold. A perceptron network gets binary (0 and 1) inputs and gives binary outputs.</p>
+<div class="floatrightimgcontainer">
+<img src="img/flowchart-PerceptronLookup.png" alt style>
+</div>
+<p>Note that there are only a finite number of possible inputs. For each possible input, we can construct a neuron in the hidden layer that fires for that input, and only on that specific input. Then we can use the connections between that neuron and the output neurons to control the output in that specific case.</p>
+<p>Constructing a case for every possible input requires <span class="math">\(2^n\)</span> hidden neurons, when you have <span class="math">\(n\)</span> input neurons. In reality, the situation isn’t usually that bad. You can have cases that encompass multiple inputs. And you have can have overlapping cases that add together to achieve the right input on their intersection.</p>
+<p>(It isn’t only perceptron networks that have universality. Networks of sigmoid neurons (and other activation functions) are also universal: give enough hidden neurons, they can approximate any continuous function arbitrarily well. Seeing this is significantly trickier because you can’t just isolate inputs.)</p>
+<p>And so, it’s true that one hidden layer neural networks are universal. But there isn’t anything particularly impressive or exciting about that. Saying that your model can do the same thing as a lookup table isn’t a very strong argument for it. You’re just saying it isn’t literally impossible for your model to do the task.</p>
+<p>Universality means that a network can fit to any training data you give it. It doesn’t mean that it will interpolate to new data points in a reasonable way.</p>
+<p>There seems, in fact, to be something very powerful about neural networks. But it’s much more subtle than universality and it seems to require networks with many layers.</p>
+<h2 id="word-embeddings">Word Embeddings</h2>
+<p>I’d like to change courses for a minute and trace a particularly interesting strand of deep learning research: word embeddings. In my personal opinion, word embeddings are probably the most exciting area of research in deep learning at the moment. Beyond that, I think they are one of the best places to gain intuition about why deep learning is so effective.</p>
+<p>A word embedding <span class="math">\(W: \mathrm{words} \to \mathbb{R}^n\)</span> is a paramaterized function mapping words in some language to high-dimensional vectors (perhaps 200 to 500 dimensions). For example, we might find:</p>
+<p><span class="math">\[W(``\text{cat}\!&quot;) = (0.2,~ \text{-}0.4,~ 0.7,~ ...)\]</span></p>
+<p><span class="math">\[W(``\text{mat}\!&quot;) = (0.0,~ 0.6,~ \text{-}0.1,~ ...)\]</span></p>
+<p>(Typically, the function is a lookup table, parameterized by a matrix, <span class="math">\(\theta\)</span>, with a row for each word: <span class="math">\(W_\theta(w_n) = \theta_n\)</span>.)</p>
+<p><span class="math">\(W\)</span> is initialized to have random vectors for each word. It learns to have meaningful vectors in order to perform some task.</p>
+<p>For example, one task we might train a network for is predicting whether a 5-gram (sequence of five words) is ‘valid.’ We can easily get lots of 5-grams from Wikipedia (eg. “cat sat on the mat”) and then ‘break’ half of them by switching a word with a random word (eg. “cat sat <strong>song</strong> the mat”), since that will almost certainly make our 5-gram nonsensical.</p>
+<div class="floatrightimgcontainer">
+<img src="img/Bottou-WordSetup.png" alt style>
+<div class="caption">
+Modular Network to determine if a 5-gram is ‘valid’ (From Bottou (???))
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>The model we train will run each word in the 5-gram through <span class="math">\(W\)</span> to get a vector representing it and feed those into another ‘module’ called <span class="math">\(R\)</span> which tries to predict if the 5-gram is ‘valid’ or ‘broken.’ Then, we’d like:</p>
+<p><span class="math">\[R(W(``\text{cat}\!&quot;),~ W(``\text{sat}\!&quot;),~ W(``\text{on}\!&quot;),~ W(``\text{the}\!&quot;),~ W(``\text{mat}\!&quot;)) = 1\]</span></p>
+<p><span class="math">\[R(W(``\text{cat}\!&quot;),~ W(``\text{sat}\!&quot;),~ W(``\text{song}\!&quot;),~ W(``\text{the}\!&quot;),~ W(``\text{mat}\!&quot;)) = 0\]</span></p>
+<p>In order to predict these values accurately, the network needs to learn good parameters for both <span class="math">\(W\)</span> and <span class="math">\(R\)</span>.</p>
+<p>Now, this task isn’t terribly interesting. Maybe it could be helpful in detecting grammatical errors in text or something. But what is extremely interesting is <span class="math">\(W\)</span>.</p>
+<p>(In fact, to us, the entire point of the task is to learn <span class="math">\(W\)</span>. We could have done several other tasks – another common one is predicting the next word in the sentence. But we don’t really care. In the remainder of this section we will talk about many word embedding results and won’t distinguish between different approaches.)</p>
+<p>One thing we can do to get a feel for the word embedding space is to visualize them with t-SNE, a sophisticated technique for visualizing high-dimensional data.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Turian-WordTSNE.png" alt style>
+<div class="caption">
+t-SNE visualizations of word embeddings. Left: Number Region; Right: Jobs Region. From [Turian <em>et al.</em>], see <a href="http://metaoptimize.s3.amazonaws.com/cw-embeddings-ACL2010/embeddings-mostcommon.EMBEDDING_SIZE=50.png">complete image</a>.
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>This kind of ‘map’ of words makes a lot of intuitive sense to us. Similar words are close together. Another way to get at this is to look at which words are closest in the embedding to a given word. Again, the words tend to be quite similar.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Colbert-WordTable2.png" alt style>
+<div class="caption">
+What words have embeddings closest to a given word? From <a href="http://arxiv.org/pdf/1103.0398v1.pdf">Colbert <em>et al.</em> (2011)</a>
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>It seems natural for a network to make words with similar meanings have similar vectors. If you switch a word for a synonym (eg. “a few people sing well” <span class="math">\(\to\)</span> “a <em>couple</em> people sing well”), the validity of the sentence doesn’t change. While, from a naive perspective, the input sentence has changed a lot, if <span class="math">\(W\)</span> maps synonyms (like “few” and “couple”) close together, from <span class="math">\(R\)</span>’s perspective little changes.</p>
+<p>This is very powerful. The number of possible 5-grams is massive and we have a comparatively small number of data points to try to learn from. Similar words being close together allows us to generalize from one sentence to a class of similar sentences. This doesn’t just mean switching a word for a synonym, but also switching a word for a word in a similar class (eg. “the wall is blue” <span class="math">\(\to\)</span> “the wall is <em>red</em>”). Further, we can change multiple words (eg. “the wall is blue” <span class="math">\(\to\)</span> “the <em>ceiling</em> is <em>red</em>”). The impact of this is exponential with respect to the number of words.</p>
+<p>So, clearly this is a very useful thing for <span class="math">\(W\)</span> to do. But how does it learn to do this? It seems quite likely that there are lots of situations where it has seen a sentence like “the wall is blue” and know that it is valid before it sees a sentence like “the wall is red”. As such, shifting “red” a bit closer to “blue” makes the network perform better.</p>
+<p>We still need to see examples of every word being used, but the analogies allow us to generalize to new combinations of words. You’ve seen all the words that you understand before, but you haven’t seen all the sentences that you understand before. So too with neural networks.</p>
+<div class="floatrightimgcontainer">
+<img src="img/Mikolov-GenderVecs.png" alt style>
+<div class="caption">
+From <a href="https://www.aclweb.org/anthology/N/N13/N13-1090.pdf">Mikolov <em>et al.</em> (2013)</a>
+</div>
+</div>
+<p>Word embeddings exhibit an even more remarkable property: analogies between words seem to be encoded in the difference vectors between words. For example, there seems to be a constant male-female difference vector:</p>
+<p><span class="math">\[W(``\text{woman}\!&quot;) - W(``\text{man}\!&quot;) ~\simeq~ W(``\text{aunt}\!&quot;) - W(``\text{uncle}\!&quot;)\]</span> <span class="math">\[W(``\text{woman}\!&quot;) - W(``\text{man}\!&quot;) ~\simeq~ W(``\text{queen}\!&quot;) - W(``\text{king}\!&quot;)\]</span></p>
+<p>This may not seem too surprising. After all, gender pronouns mean that switching a word can make a sentence grammatically incorrect. You write, “<em>she</em> is the aunt” but “<em>he</em> is the uncle.” Similarly, “<em>he</em> is the King” but “<em>she</em> is the Queen.” If one sees “<em>she</em> is the <em>uncle</em>,” the most likely explanation is a grammatical error. If words are being randomly switched half the time, it seems pretty likely that happened here.</p>
+<p>“Of course!” We say with hindsight, “the word embedding will learn to encode gender in a consistent way. In fact, there’s probably a gender dimension. Same thing for singular vs plural. It’s easy to find these trivial relationships!”</p>
+<p>It turns out, though, that much more sophisticated relationships are also encoded in this way. It seems almost miraculous!</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Mikolov-AnalogyTable.png" alt style>
+<div class="caption">
+Relationship pairs in a word embedding. From <a href="http://arxiv.org/pdf/1301.3781.pdf">Mikolov <em>et al.</em> (2013b)</a>.
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>It’s important to appreciate that all of these properties of <span class="math">\(W\)</span> are <em>side effects</em>. We didn’t try to have similar words be close together. We didn’t try to have analogies encoded with difference vectors. All we tried to do was perform a simple task, like predicting whether a sentence was valid. These properties more or less popped out of the optimization process.</p>
+<p>This seems to be a great strength of neural networks: they learn better ways to represent data, automatically. Representing data well, in turn, seems to be essential to success at many machine learning problems. Word embeddings are just a particularly striking example of learning a representation.</p>
+<h2 id="shared-representations">Shared Representations</h2>
+<p>The properties of word embeddings are certainly interesting, but can we do anything useful with them? Besides predicting silly things, like whether a 5-gram is ‘valid’?</p>
+<div class="floatrightimgcontainer">
+<img src="img/flowchart-TranfserLearning2.png" alt style>
+<div class="caption">
+<span class="math">\(W\)</span> and <span class="math">\(F\)</span> learn to perform task A. Later, <span class="math">\(G\)</span> can learn to perform B based on <span class="math">\(W\)</span>.
+</div>
+</div>
+<p>We learned the word embedding in order to do well on a simple task, but based on the nice properties we’ve observed in word embeddings, you may suspect that they could be generally useful in NLP tasks. In fact, word representations like these are extremely important:</p>
+<blockquote>
+<p>The use of word representations… has become a key “secret sauce” for the success of many NLP systems in recent years, across tasks including named entity recognition, part-of-speech tagging, parsing, and semantic role labeling. (<a href="http://nlp.stanford.edu/~lmthang/data/papers/conll13_morpho.pdf">Luong <em>et al.</em> (2013)</a>)</p>
+</blockquote>
+<p>This general tactic – learning a good representation on a task A and then using it on a task B – is one of the major tricks in the Deep Learning toolbox. It goes by different names depending on the details: pretraining, transfer learning, and multi-task learning. One of the great strengths of this approach is that it allows the representation to learn from more than one kind of data.</p>
+<p>There’s a counterpart to this trick. Instead of learning a way to represent one kind of data and using it to perform multiple kinds of tasks, we can learn a way to map multiple kinds of data into a single representation!</p>
+<p>One nice example of this is a bilingual word-embedding, produced in Socher <em>et al.</em> (2013). We can learn to embed words from two different languages in a single, shared space. In this case, we learn to embed English and Mandarin Chinese words in the same space.</p>
+<div class="floatrightimgcontainer">
+<img src="img/flowchart-billingual.png" alt style>
+</div>
+<p>We train two word embeddings, <span class="math">\(W_{en}\)</span> and <span class="math">\(W_{zh}\)</span> in a manner similar to how we did above. However, we know that certain English words and Chineses words have similar meanings. So, we optimize for an additional property: words that we know are close translations should be close together.</p>
+<p>Of course, we observe that the words we knew had similar meanings end up close together. Since we optimized for that, it’s not surprising. More interesting is that words we <em>didn’t know</em> were translations end up close together.</p>
+<p>In light of our previous experiences with word embeddings, this may not seem too surprising. Word embeddings pull similar words together, so if an English and Chinese word we know to mean similar things are near each other, their synonyms will also end up near each other. We also know that things like gender differences tend to end up being represented with a constant difference vector. It seems like forcing enough points to line up should force these difference vectors to be the same in both the English and Chinese embeddings. A result of this would be that if we know that two male versions of words translate to each other, we should also get the female words to translate to each other.</p>
+<p>Intuitively, it feels a bit like the two languages have a similar ‘shape’ and that by forcing them to line up at different points, they overlap and other points get pulled into the right positions.</p>
+<div class="centerimgcontainer">
+<img src="img/Socher-BillingualTSNE.png" alt style>
+<div class="caption">
+t-SNE visualization of the bilingual word embedding. Green is Chinese, Yellow is English. (Socher <em>et al.</em> (2013))
+</div>
+</div>
+<p>In billingual word embeddings, we learn a shared representation for two very similar kinds of data. But we can also learn to embed very different kinds of data in the same space.</p>
+<div class="floatrightimgcontainer">
+<img src="img/flowchart-DeViSE.png" alt style>
+</div>
+<p>Recently, deep learning has begun exploring models that embeds images and words in a single representation.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>The basic idea is that one classifies images by outputing a vector in a word embedding. Images of dogs are mapped near the “dog” word vector. Images of horses are mapped near the “horse” vector. Images of automobiles near the “auto” vector. And so on.</p>
+<p>The interesting part is what happens when you test the model on new classes of images. For example, if the model wasn’t trained to classify cats – that is, to map them near the “cat” vector – what happens when we try to classify images of cats?</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Socher-ImageClassManifold.png" alt style>
+<div class="caption">
+(Socher <em>et al.</em> (2013))
+</div>
+</div>
+<p>One extremely exciting result is Frome <em>et al.</em> (2013)’s deep visual-semantic embedding model (DeViSE).</p>
+<p>Again, we train a word embedding.</p>
+<p>We also train a deep convolutional neural network. Deep convolutional neural networks are a class of neural network that achieves outstanding results on computer vision tasks. Starting with Krizehvsky <em>et al.</em> (2012) winning ILSVRC 2012, deep conv nets have, frankly, blow prior image classification results out of the water. Frome <em>et al.</em> use a derivative of the Krizhevsky network and train it to classify images into 1000 classes.</p>
+<p>A deep convolutional neural network takes an image and, over the course of many layers, builds up more and more abstract representations of the image, starting with detecting edges, color contrasts and textures. Finally, at the end, it assigns a probability to the image being each one of a thousand classes. In the Krizhevsky network, the highest level representation of the image before it gives its answer is a 4,096 dimensional vector.</p>
+<p>Now it’s time to merge the representations! The image representation has 4,096 dimensions. Word representations are typically much lower-dimensional – in this case, 500 or 1000 dimensions. We try to project the image representation into the word representation in such a way that images of a particular class map close to the corresponding word.</p>
+<p>This network achieves slightly worse results than the original network at classifying images into these 1000 classes. When it’s wrong, it tends to make more reasonable mistakes. That isn’t terribly surprising.</p>
+<p>What’s much more exciting is how it responds to images in classes it hasn’t seen before. If the class is similar to one it is trained on, it maps the images close to the known class. Since the word embedding also maps the label close to the label for the known class, the image maps close to the correct label and has a much better than random chance of getting the correct answer.</p>
+<p>Further, if one tests only on a few classes that have never been seen before, that are all very different, the network can do quite well. One could image that, even if the network has never seen a cow before, if shown a picture of a cow and asked if it is a “cow” or “ocean,” it will choose a “cow.” This is because the image of a cow maps close to the word embeddings of other animals, which is close to “cow.”</p>
+<p><em>(It seems like much stronger results should be possible. In our word embedding space, there is a consistent difference vector between male and female version of words. Similarly, in image space, there are consistent features distinguishing between male and female. Beards, mustaches, and baldness are all strong, obvious indicators of being male. Breasts and, less reliably, long hair, makeup and jewelery, are obvious indicators of being female. Even if you’ve never seen a king before, if the queen, determined to be such by the presence of a crown, suddenly has a beard, it’s pretty reasonable to give the male version.)</em></p>
+<p>Shared embeddings are an extremely exciting area of research and drive at why the representation focused perspective of deep learning is so compelling.</p>
+<h2 id="recursive-neural-networks">Recursive Neural Networks</h2>
+<p>We began our discussion of word embeddings with the following network:</p>
+<div class="centerimgcontainer">
+<img src="img/Bottou-WordSetup.png" alt style>
+<div class="caption">
+Modular Network that learns word embeddings (From Bottou (???))
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>The above diagram represents a <em>modular</em> network, <span class="math">\(R(W(w_1),~ W(w_2),~ W(w_3),~ W(w_4),~ W(w_5))\)</span>. It is built from two modules, <span class="math">\(W\)</span> and <span class="math">\(R\)</span>.</p>
+<h2 id="the-neural-network-category">The Neural Network Category</h2>
+<h2 id="functional-programming-with-neural-networks">Functional Programming with Neural Networks?</h2>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Word</span>     <span class="fu">=</span> <span class="dt">Int</span>
+<span class="kw">type</span> <span class="dt">WordRep</span>  <span class="fu">=</span> <span class="dt">Float</span><span class="fu">^</span><span class="dv">500</span>
+<span class="kw">type</span> <span class="dt">FiveGram</span> <span class="fu">=</span> (<span class="dt">WordRep</span>, <span class="dt">WordRep</span>, <span class="dt">WordRep</span>, <span class="dt">WordRep</span>, <span class="dt">WordRep</span>)
+
+<span class="ot">w ::</span> <span class="dt">Word</span> <span class="fu">~&gt;</span> <span class="dt">WordRep</span>
+w <span class="fu">=</span> lookupTable
+
+<span class="ot">a ::</span> <span class="dt">FiveGram</span> <span class="fu">~&gt;</span> <span class="dt">Float</span>
+a <span class="fu">=</span> out <span class="fu">.</span> layer2 <span class="fu">.</span> layer1 <span class="kw">where</span>
+<span class="ot">    layer1 ::</span> <span class="dt">FiveGram</span>   <span class="ot">-&gt;</span> <span class="dt">Float</span><span class="fu">^</span><span class="dv">1000</span>
+    layer1 <span class="fu">=</span> layer tanh
+<span class="ot">    layer2 ::</span> <span class="dt">Float</span><span class="fu">^</span><span class="dv">1000</span> <span class="ot">-&gt;</span> <span class="dt">Float</span><span class="fu">^</span><span class="dv">1000</span>
+    layer2 <span class="fu">=</span> layer tanh
+<span class="ot">    out ::</span> <span class="dt">FiveGram</span> <span class="ot">-&gt;</span> <span class="dt">Float</span>
+    out <span class="fu">=</span> layer sigmoid
+
+<span class="ot">f ::</span> <span class="dt">FiveGram</span> <span class="fu">~&gt;</span> <span class="dt">Float</span>
+f (w1, w2, w3, w4, w5) <span class="fu">=</span> a (w w1, w w2, w w3, w w4, w w5)
+
+<span class="kw">let</span> map f fivegrams <span class="fu">=</span> valid</code></pre>
+<h2 id="the-manifold-of-words">The Manifold of Words</h2>
+<p>Hut, shanty, shack, hovel Cabin House, Home Residence, Habitation, Abode, Dwelling, Domicile Mansion, Manor, estate, Palace, Castle, Lodge, château, chalet Cottage Apartment, Condominium Condo, Flat</p>
+<hr />
+<hr />
+<hr />
+<hr />
+<hr />
+<hr />
+<p>In the last few years, deep neural networks have lead to breakthrough results on a variety of pattern recognition problems, such as computer vision and voice recognition. One of the essential components leading to these results has been a special kind of neural network called a <em>convolutional neural network</em>.</p>
+<p>At it’s most basic, convolutional neural networks can be thought of as a kind of neural network that uses many identical copies of the same neuron. This allows the network to have lots of neurons and express computationally large models while keeping the actual parameters that need to be learned fairly small.</p>
+<p>This trick of having multiple copies of the same neuron is roughly analogous to the abstraction of functions in mathematics and computer science. When programming, we write a function once and use it in many places – not writing the same code a hundred times in different places makes it faster to program, and results in fewer bugs. Similarly, a convolutional neural network can learn a neuron once and use it in many places, making it easier to learn the model and reducing error.</p>
+<p>(It should be noted that not all neural networks that use multiple copies of the same neuron are convolutional neural networks. Convolutional neural networks are just one type of neural network that uses the more general trick, <em>weight-tying</em>. Other kinds of neural network that do this are recurrent neural networks and recursive neural networks.)</p>
+<div class="floatrightimgcontainer">
+<img src="img/Bottou-WordSetup.png" alt style>
+<div class="caption">
+Modular Network that learns word embeddings (From Bottou (???))
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>The above diagram represents a <em>modular</em> network, <span class="math">\(R(W(w_1),~ W(w_2),~ W(w_3),~ W(w_4),~ W(w_5))\)</span>. It is built from two modules, <span class="math">\(W\)</span> and <span class="math">\(R\)</span>.</p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Previous work has been done modeling the joint distributions of tags and images, but it took a very different perspective.<a href="#fnref1">↩</a></p></li>
+</ol>
+</section>
+
+<div id="disqus_thread"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+<script src="../../comments/inlineDisqussions.js"></script>
+<script src="../../js/disqus.js"></script>
+
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+            </div>
+        
+
+            <div id="footer">
+                <div class="container">
+                    Built by <a href="https://github.com/oinkina">Oinkina</a> with
+                    <a href="http://jaspervdj.be/hakyll">Hakyll</a> 
+                    using <a href="http://getbootstrap.com/">Bootstrap</a>, 
+                    <a href="http://www.mathjax.org/">MathJax</a>,
+                    <a href="http://disqus.com/">Disqus</a>,
+                    <a href="https://github.com/unconed/MathBox.js">MathBox.js</a>,
+                    <a href="http://highlightjs.org/">Highlight.js</a>, 
+                    and <a href="http://ignorethecode.net/blog/2010/04/20/footnotes/">Footnotes.js</a>.
+                </div>
+            </div>
+        </div>
+
+    <!-- jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="../../js/footnotes.js"></script>
+
+    <script src="../../comments/inlineDisqussions.js"></script>
+    
+    <noscript>Enable JavaScript for footnotes, Disqus comments, and other cool stuff.</noscript>
+
+    </body>
+
+</html>
