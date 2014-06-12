@@ -217,11 +217,11 @@ Relationship pairs in a word embedding. From <a href="http://arxiv.org/pdf/1301.
 <div class="floatrightimgcontainer">
 <img src="img/flowchart-billingual.png" alt style>
 </div>
-<p>We train two word embeddings, <span class="math">\(W_{en}\)</span> and <span class="math">\(W_{zh}\)</span> in a manner similar to how we did above. However, we know that certain English words and Chineses words have similar meanings. So, we optimize for an additional property: words that we know are close translations should be close together.</p>
+<p>We train two word embeddings, <span class="math">\(W_{en}\)</span> and <span class="math">\(W_{zh}\)</span> in a manner similar to how we did above. However, we know that certain English words and Chinese words have similar meanings. So, we optimize for an additional property: words that we know are close translations should be close together.</p>
 <p>Of course, we observe that the words we knew had similar meanings end up close together. Since we optimized for that, it’s not surprising. More interesting is that words we <em>didn’t know</em> were translations end up close together.</p>
 <p>In light of our previous experiences with word embeddings, this may not seem too surprising. Word embeddings pull similar words together, so if an English and Chinese word we know to mean similar things are near each other, their synonyms will also end up near each other. We also know that things like gender differences tend to end up being represented with a constant difference vector. It seems like forcing enough points to line up should force these difference vectors to be the same in both the English and Chinese embeddings. A result of this would be that if we know that two male versions of words translate to each other, we should also get the female words to translate to each other.</p>
 <p>Intuitively, it feels a bit like the two languages have a similar ‘shape’ and that by forcing them to line up at different points, they overlap and other points get pulled into the right positions.</p>
-<div class="bigcenterimgcontainer">
+<div class="centerimgcontainer">
 <img src="img/Socher-BillingualTSNE.png" alt style>
 <div class="caption">
 t-SNE visualization of the bilingual word embedding. Green is Chinese, Yellow is English. (<a href="http://ai.stanford.edu/~wzou/emnlp2013_ZouSocherCerManning.pdf">Socher <em>et al.</em> (2013a)</a>)
@@ -234,7 +234,7 @@ t-SNE visualization of the bilingual word embedding. Green is Chinese, Yellow is
 <p>Recently, deep learning has begun exploring models that embed images and words in a single representation.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
 <p>The basic idea is that one classifies images by outputting a vector in a word embedding. Images of dogs are mapped near the “dog” word vector. Images of horses are mapped near the “horse” vector. Images of automobiles near the “automobile” vector. And so on.</p>
 <p>The interesting part is what happens when you test the model on new classes of images. For example, if the model wasn’t trained to classify cats – that is, to map them near the “cat” vector – what happens when we try to classify images of cats?</p>
-<div class="bigcenterimgcontainer">
+<div class="centerimgcontainer">
 <img src="img/Socher-ImageClassManifold.png" alt style>
 <div class="caption">
 (<a href="http://nlp.stanford.edu/~socherr/SocherGanjooManningNg_NIPS2013.pdf">Socher <em>et al.</em> (2013b)</a>)
@@ -248,10 +248,12 @@ t-SNE visualization of the bilingual word embedding. Green is Chinese, Yellow is
 </div>
 </div>
 <p>This was done by members of the Stanford group with only 8 known classes (and 2 unknown classes). The results are already quite impressive. But with so few known classes, there are very few points to interpolate the relationship between images and semantic space off of.</p>
-<p>The Google group did a much larger version – instead of 8 categories, they used 1,000 – around the same time (<a href="http://static.googleusercontent.com/media/research.google.com/en//pubs/archive/41473.pdf">Frome <em>et al.</em> (2013)</a>) and has followed up with a new variation <a href="http://arxiv.org/pdf/1312.5650.pdf">Norouzi <em>et al.</em> (2014)</a>. Both are based on an extremely powerful image classification model (from <a href="http://www.cs.toronto.edu/~fritz/absps/imagenet.pdf">Krizehvsky <em>et al.</em> (2012)</a>), but embed images into the word embedding space in different ways.</p>
+<!-- (from KSH)?? -->
+
+<p>The Google group did a much larger version – instead of 8 categories, they used 1,000 – around the same time (<a href="http://static.googleusercontent.com/media/research.google.com/en//pubs/archive/41473.pdf">Frome <em>et al.</em> (2013)</a>) and has followed up with a new variation (<a href="http://arxiv.org/pdf/1312.5650.pdf">Norouzi <em>et al.</em> (2014)</a>). Both are based on an very powerful image classification model (from <a href="http://www.cs.toronto.edu/~fritz/absps/imagenet.pdf">Krizehvsky <em>et al.</em> (2012)</a>), but embed images into the word embedding space in different ways.</p>
 <p>The results are impressive. While they may not get images of unknown classes to the precise vector representing that class, they are able to get to the right neighborhood. So, if you ask it to classify images of unknown classes and the classes are fairly different, it can distinguish between the different classes.</p>
 <p>Even though I’ve never seen a Aesculapian snake or an Armadillo before, if you show me a picture of one and a picture of the other, I can tell you which is which because I have a general idea of what sort of animal is associated with each word. These networks can accomplish the same thing.</p>
-<p><em>(These results all exploit a sort of “these words are similar” reasoning. But it seems like much stronger results should be possible based on relationships between words. In our word embedding space, there is a consistent difference vector between male and female version of words. Similarly, in image space, there are consistent features distinguishing between male and female. Beards, mustaches, and baldness are all strong, obvious indicators of being male. Breasts and, less reliably, long hair, makeup and jewelery, are obvious indicators of being female. Even if you’ve never seen a king before, if the queen, determined to be such by the presence of a crown, suddenly has a beard, it’s pretty reasonable to give the male version.)</em></p>
+<p><em>(These results all exploit a sort of “these words are similar” reasoning. But it seems like much stronger results should be possible based on relationships between words. In our word embedding space, there is a consistent difference vector between male and female version of words. Similarly, in image space, there are consistent features distinguishing between male and female. Beards, mustaches, and baldness are all strong, highly visible indicators of being male. Breasts and, less reliably, long hair, makeup and jewelery, are obvious indicators of being female.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> Even if you’ve never seen a king before, if the queen, determined to be such by the presence of a crown, suddenly has a beard, it’s pretty reasonable to give the male version.)</em></p>
 <p>Shared embeddings are an extremely exciting area of research and drive at why the representation focused perspective of deep learning is so compelling.</p>
 <h2 id="recursive-neural-networks">Recursive Neural Networks</h2>
 <p>We began our discussion of word embeddings with the following network:</p>
@@ -264,7 +266,62 @@ Modular Network that learns word embeddings (From <a href="http://arxiv.org/pdf/
 <div class="spaceafterimg">
 
 </div>
-<p>The above diagram represents a <em>modular</em> network, <span class="math">\(R(W(w_1),~ W(w_2),~ W(w_3),~ W(w_4),~ W(w_5))\)</span>. It is built from two modules, <span class="math">\(W\)</span> and <span class="math">\(R\)</span>.</p>
+<p>The above diagram represents a <em>modular</em> network, <span class="math">\(R(W(w_1),~ W(w_2),~ W(w_3),~ W(w_4),~ W(w_5))\)</span>. It is built from two modules, <span class="math">\(W\)</span> and <span class="math">\(R\)</span>. This approach, of building neural networks from smaller neural network “modules” that can be composed together, is not very wide spread. It has, however, been very successful in NLP.</p>
+<p>Models like the above are powerful, but they have an unfortunate limitation: they can only have a fixed number of inputs.</p>
+<p>We can overcome this by adding an association module, <span class="math">\(A\)</span>, which will take two word or phrase representations and merge them.</p>
+<div class="centerimgcontainer">
+<img src="img/Bottou-Afold.png" alt style>
+<div class="caption">
+(From <a href="http://arxiv.org/pdf/1102.1808v3.pdf">Bottou (2011)</a>)
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>By merging sequences of words, <span class="math">\(A\)</span> takes us from representing words to representing phrases or even representing whole <em>sentences</em>! And because we can merge together different numbers of words, we don’t have to have a fixed number of inputs.</p>
+<p>It doesn’t necessarily make sense to merge together words in a sentence linearly. If one considers the phrase “the cat sat on the mat”, it can naturally be bracketed into segments: “((the cat) (sat (on (the mat))”. We can apply <span class="math">\(A\)</span> based on this bracketing:</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Bottou-Atree.png" alt style>
+<div class="caption">
+(From <a href="http://arxiv.org/pdf/1102.1808v3.pdf">Bottou (2011)</a>)
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>These models are often called “recursive neural networks” because one often has the output of a module go into a module of the same type. They are also sometimes called “tree-structured neural networks.”</p>
+<p>Recursive neural networks have had significant successes in a number of NLP tasks. For example, <a href="http://nlp.stanford.edu/~socherr/EMNLP2013_RNTN.pdf">Socher <em>et al.</em> (2013c)</a> uses a recursive neural network to predict sentence sentiment:</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Socher-SentimentTree.png" alt style>
+<div class="caption">
+(From <a href="http://nlp.stanford.edu/~socherr/EMNLP2013_RNTN.pdf">Socher <em>et al.</em> (2013c)</a>)
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>One major goal has been to create a <em>reversible</em> sentence representation, a representation that one can reconstruct an actual sentence from, with roughly the same meaning. For example, we can try to introduce a disassociation module, <span class="math">\(D\)</span>, that tries to undo <span class="math">\(A\)</span>:</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Bottou-unfold.png" alt style>
+<div class="caption">
+(From <a href="http://arxiv.org/pdf/1102.1808v3.pdf">Bottou (2011)</a>)
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>If we could accomplish such a thing, it would be an extremely powerful tool. For example, we could try to make a bilingual sentence representation and use it for translation.</p>
+<p>Unfortunately, this turns out to be very difficult. Very very difficult. And given the tremendous promise, there are lots of people working on it.</p>
+<p>Recently, <a href="http://arxiv.org/pdf/1406.1078v1.pdf">Cho <em>et al.</em> (2014)</a> have made some progress on representing phrases, with a model that can encode English phrases and decode them in French. Look at the phrase representations it learns!</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Cho-TimePhrase-TSNE.png" alt style>
+<div class="caption">
+Small section of the t-SNE of the phrase representation <br /> (From <a href="http://arxiv.org/pdf/1406.1078v1.pdf">Cho <em>et al.</em> (2014)</a>)
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
 <h2 id="the-neural-network-category">The Neural Network Category</h2>
 <h2 id="functional-programming-with-neural-networks">Functional Programming with Neural Networks?</h2>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Word</span>     <span class="fu">=</span> <span class="dt">Int</span>
@@ -299,20 +356,11 @@ f (w1, w2, w3, w4, w5) <span class="fu">=</span> a (w w1, w w2, w w3, w w4, w w5
 <p>At it’s most basic, convolutional neural networks can be thought of as a kind of neural network that uses many identical copies of the same neuron. This allows the network to have lots of neurons and express computationally large models while keeping the actual parameters that need to be learned fairly small.</p>
 <p>This trick of having multiple copies of the same neuron is roughly analogous to the abstraction of functions in mathematics and computer science. When programming, we write a function once and use it in many places – not writing the same code a hundred times in different places makes it faster to program, and results in fewer bugs. Similarly, a convolutional neural network can learn a neuron once and use it in many places, making it easier to learn the model and reducing error.</p>
 <p>(It should be noted that not all neural networks that use multiple copies of the same neuron are convolutional neural networks. Convolutional neural networks are just one type of neural network that uses the more general trick, <em>weight-tying</em>. Other kinds of neural network that do this are recurrent neural networks and recursive neural networks.)</p>
-<div class="floatrightimgcontainer">
-<img src="img/Bottou-WordSetup.png" alt style>
-<div class="caption">
-Modular Network that learns word embeddings (From Bottou (???))
-</div>
-</div>
-<div class="spaceafterimg">
-
-</div>
-<p>The above diagram represents a <em>modular</em> network, <span class="math">\(R(W(w_1),~ W(w_2),~ W(w_3),~ W(w_4),~ W(w_5))\)</span>. It is built from two modules, <span class="math">\(W\)</span> and <span class="math">\(R\)</span>.</p>
 <section class="footnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Previous work has been done modeling the joint distributions of tags and images, but it took a very different perspective.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>I’m very conscious that physical indicators of gender can be misleading. I don’t mean to imply, for example, that everyone who is bald is male or everyone who has breasts is female. Just that these often indicate such, and greatly adjust our prior.<a href="#fnref2">↩</a></p></li>
 </ol>
 </section>
 
