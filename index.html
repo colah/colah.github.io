@@ -4,7 +4,7 @@
     
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Home -- colah's blog</title>
+        <title>Home - colah's blog</title>
         
         <link rel="stylesheet" href="./fonts/Serif/cmun-serif.css" />
         <link rel="stylesheet" href="./fonts/Serif-Slanted/cmun-serif-slanted.css" />
@@ -27,32 +27,17 @@
         <link href="./css/sticky-footer-navbar.css" rel="stylesheet">
 
         <link href="./css/default.css" rel="stylesheet">
+        <link href="./css/index.css" rel="stylesheet">
 
-        <link href="./comments/inlineDisqussions.css" rel="stylesheet">
+        <link href="./css/inlineDisqussions.css" rel="stylesheet">
 
         <!--Highlight-->
         <link href="./highlight/styles/github.css" rel="stylesheet">
         
         <link href="./favicon.ico" rel="shortcut icon" />
 
-        
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
-        <!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
-        for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);
-        mixpanel.init("dc1ac55f121e696b2f8d54d338ec642c");</script><!-- end Mixpanel -->
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-49811703-1', 'colah.github.io');
-  ga('require', 'linkid', 'linkid.js');
-  ga('require', 'displayfeatures');
-  ga('send', 'pageview');
-
-</script>
     </head>
 
     <body>
@@ -67,7 +52,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand active" href="./" style="font-size:20px;">colah's blog</a>
+                        <a class="navbar-brand active" href="./" id="home">colah's blog</a>
                     </div>
                     <!--normal header-->
                     <div class="navbar-collapse collapse">
@@ -81,13 +66,16 @@
             </nav>
 
             
-            <div id="content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h1>Home</h1>
-                            <h2>Recent Posts</h2>
+            <div class="container">
+                <div class="col-sm-10 col-sm-offset-1" id="indexwrapper">
+                    <h1>Home</h1>
+                    <h2>Posts</h2>
 <ul>
+    
+        <li class="post_item">
+    		<a href="posts/2014-07-FFN-Graphs-Vis/">Fanfiction.net, Graphs, and PageRank: Oh My!</a>
+    			- <span class="soft">July  6, 2014</span>
+		</li>
     
         <li class="post_item">
     		<a href="posts/2014-03-NN-Manifolds-Topology/">Neural Networks, Manifolds, and Topology</a>
@@ -96,28 +84,10 @@
     
 </ul>
 
-<p><a href="./archive.html">See more</a>.
+<p><a href="./archive.html">Read more.</a>
 
-                        </div>
-                        <div class="col-md-4"></div>
-                    </div>
                 </div>
             </div>
-        
-
-            <div id="footer">
-                <div class="container">
-                    Built by <a href="https://github.com/oinkina">Oinkina</a> with
-                    <a href="http://jaspervdj.be/hakyll">Hakyll</a> 
-                    using <a href="http://getbootstrap.com/">Bootstrap</a>, 
-                    <a href="http://www.mathjax.org/">MathJax</a>,
-                    <a href="http://disqus.com/">Disqus</a>,
-                    <a href="https://github.com/unconed/MathBox.js">MathBox.js</a>,
-                    <a href="http://highlightjs.org/">Highlight.js</a>, 
-                    and <a href="http://ignorethecode.net/blog/2010/04/20/footnotes/">Footnotes.js</a>.
-                </div>
-            </div>
-        </div>
 
     <!-- jQuery-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -130,8 +100,9 @@
 
     <script src="./js/footnotes.js"></script>
 
-    <script src="./comments/inlineDisqussions.js"></script>
-    
+    <script src="./js/inlineDisqussions.js"></script>
+    <script src="./js/analytics.js"></script>
+
     <noscript>Enable JavaScript for footnotes, Disqus comments, and other cool stuff.</noscript>
 
     </body>

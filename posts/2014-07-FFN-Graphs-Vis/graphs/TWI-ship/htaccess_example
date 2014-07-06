@@ -1,0 +1,2 @@
+AddType application/json json
+AddType text/xml gexf

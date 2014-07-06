@@ -1,0 +1,53 @@
+{
+  "type": "network",
+  "version": "1.0",
+  "data": "data.json",
+  "logo": {
+    "text": "colah",
+    "file": "",
+    "link": ""
+  },
+  "text": {
+    "title": "Graph of Top Harry Potter Fanfiction",
+    "more": "The romantic pairing of the story strongly effects which stories are linked together in Harry Potter fanficiton. Ships are inferred from tags story summaries.\n\n HP \u003d Harry Potter, HG \u003d Hermione Granger, GW \u003d Ginny Weasley, DM \u003d Draco Malfoy, SS \u003d Severus Snape and LV \u003d Lord Voldemort",
+    "intro": "Graph of top Harry Potter Fanfiction, colored by ship."
+  },
+  "legend": {
+    "edgeLabel": "connection",
+    "colorLabel": "ship",
+    "nodeLabel": "story"
+  },
+  "features": {
+    "search": true,
+    "groupSelectorAttribute": false,
+    "hoverBehavior": "default"
+  },
+  "informationPanel": {
+    "imageAttribute": false,
+    "groupByEdgeDirection": false
+  },
+  "sigma": {
+    "graphProperties": {
+      "minEdgeSize": 0.2,
+      "maxNodeSize": 7,
+      "maxEdgeSize": 0.5,
+      "minNodeSize": 1
+    },
+    "drawingProperties": {
+      "labelThreshold": 10,
+      "hoverFontStyle": "bold",
+      "defaultEdgeType": "curve",
+      "defaultLabelColor": "#000",
+      "defaultLabelHoverColor": "#fff",
+      "defaultLabelSize": 14,
+      "activeFontStyle": "bold",
+      "fontStyle": "bold",
+      "defaultHoverLabelBGColor": "#002147",
+      "defaultLabelBGColor": "#ddd"
+    },
+    "mouseProperties": {
+      "minRatio": 0.75,
+      "maxRatio": 20
+    }
+  }
+}
