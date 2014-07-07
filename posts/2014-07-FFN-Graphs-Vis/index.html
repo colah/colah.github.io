@@ -108,8 +108,8 @@ Graph of Harry Potter Fanfiction, colored by ship
 </div>
 <p>In the following post, we will visualize the Harry Potter, Naruto and Twilight fandoms on fanfiction.net. We will also use Google’s PageRank algorithm to rank stories, and perform collaborative filtering to make story recommendations to top fanfiction.net users.</p>
 <p>If you’re not interested in the details, you can skip to the following:</p>
-<p><strong>Interactive Graphs</strong>: <a href="recs/hp.html">Harry Potter</a>, <a href="recs/nar.html">Naruto</a>, <a href="recs/twi.html">Twilight</a></p>
-<p><strong>Story Rankings</strong>: <a href="recs/hp.html">Harry Potter</a>, <a href="recs/nar.html">Naruto</a>, <a href="recs/twi.html">Twilight</a></p>
+<p><strong>Interactive Graphs</strong>: <a href="graphs/HP-ship/">Harry Potter</a>, <a href="graphs/NAR-ship/">Naruto</a>, <a href="graphs/TWI-ship/">Twilight</a></p>
+<p><strong>Story Rankings</strong>: <a href="pagerank/hp.html">Harry Potter</a>, <a href="pagerank/naruto.html">Naruto</a>, <a href="pagerank/twi.html">Twilight</a></p>
 <p><strong>Story Recommendations</strong>: <a href="recs/hp.html">Harry Potter</a>, <a href="recs/nar.html">Naruto</a>, <a href="recs/twi.html">Twilight</a></p>
 <p>And of course, you might skim below to see the pretty pictures!</p>
 <h3 id="introduction">Introduction</h3>
@@ -117,7 +117,6 @@ Graph of Harry Potter Fanfiction, colored by ship
 <p>The sheer amount of fanfiction out there is rather staggering. The total number of stories on fanfiction.net exceeds six million. Harry Potter stories account for around 14% of these, followed by Naruto (around 7%) and Twilight (around 4%) (<a href="http://ffnresearch.blogspot.com/2010/07/fanfictionnet-story-totals.html">FFN Research</a>). The majority of these stories have very little in the way of readership, but popular stories can have a large number of readers.</p>
 <p>Some research was done into the demographics of fanfiction.net users and other topics by <a href="http://ffnresearch.blogspot.com/">FFN Research</a>. They found that 78% of fanfiction.net authors who joined in 2010 identified as female. Further, around 80% of users who report their age are between 13 and 17.</p>
 <p>A lot of other interesting research and analysis has been done on the blogs <a href="http://destinationtoast.tumblr.com/stats">Destination: Toast!</a> and <a href="http://toastystats.tumblr.com/">TOASTYSTATS</a>.</p>
-<p>In this post, we will examine the relationships between different Harry Potter stories on fanfiction.net. We will create visualizations, experiment with the application of Google’s PageRank algorithm, and finally construct a crude recommendation tool. We will also discuss a number of directions for future exploration.</p>
 <h3 id="basic-methods">Basic Methods</h3>
 <p>In addition to allowing users to post stories they write, fanfiction.net allows authors to “favorite” stories they like. Looking at which stories tend to be favorited by the same users gives us a way to understand connections between stories.</p>
 <div class="floatrightimgcontainer">
