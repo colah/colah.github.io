@@ -10,7 +10,11 @@
         <item>
     <title>Deep Learning, NLP, and Representations</title>
     <link>http://colah.github.io/posts/2014-07-NLP-RNNs-Representations/</link>
-    <description><![CDATA[<h1 id="one-hidden-layer-neural-networks">One Hidden Layer Neural Networks</h1>
+    <description><![CDATA[<h1 id="introduction">Introduction</h1>
+<p>In the last few years, deep neural networks have dominated pattern recognition. They blew the previous state of the art out of the water for many computer vision tasks. Voice recognition is also moving that way.</p>
+<p>But despite the results, we have to wonder… why do they work so well?</p>
+<p>This post reviews some extremely remarkable results in applying deep neural networks to natural language processing (NLP). In doing so, I hope to make accessible one promising answer as to why deep neural networks work. I think it’s a very elegant perspective.</p>
+<h1 id="one-hidden-layer-neural-networks">One Hidden Layer Neural Networks</h1>
 <p>A neural network with a hidden layer has universality: given enough hidden units, it can approximate any function. This is a frequently quoted – and even more frequently, misunderstood and applied – theorem.</p>
 <p>It’s true, essentially, because the hidden layer can be used as a lookup table.</p>
 <p>For simplicity, let’s consider a perceptron network. A <a href="http://en.wikipedia.org/wiki/Perceptron">perceptron</a> is a very simple neuron that fires if it exceeds a certain threshold and doesn’t fire if it doesn’t reach that threshold. A perceptron network gets binary (0 and 1) inputs and gives binary outputs.</p>
@@ -20,7 +24,7 @@
 </div>
 <p>And so, it’s true that one hidden layer neural networks are universal. But there isn’t anything particularly impressive or exciting about that. Saying that your model can do the same thing as a lookup table isn’t a very strong argument for it. It just means it isn’t <em>impossible</em> for your model to do the task.</p>
 <p>Universality means that a network can fit to any training data you give it. It doesn’t mean that it will interpolate to new data points in a reasonable way.</p>
-<p>That said… There does, in fact, seem to be something very powerful about neural networks with many layers. But it’s much more subtle than universality. The goal of this post is to get at what that subtle thing is.</p>
+<p>No, universality isn’t an explanation for why neural networks work so well. The real reason seems to be something much more subtle… And, to understand it, we’ll first need to understand some concrete results.</p>
 <h1 id="word-embeddings">Word Embeddings</h1>
 <p>I’d like to start by tracing a particularly interesting strand of deep learning research: word embeddings. In my personal opinion, word embeddings are one of the most exciting area of research in deep learning at the moment. Beyond that, I think they are one of the best places to gain intuition about why deep learning is so effective.</p>
 <p>A word embedding <span class="math">\(W: \mathrm{words} \to \mathbb{R}^n\)</span> is a paramaterized function mapping words in some language to high-dimensional vectors (perhaps 200 to 500 dimensions). For example, we might find:</p>
@@ -217,7 +221,7 @@ Small section of the t-SNE of the phrase representation <br /> (From <a href="ht
 <p>I’ve heard some of the results reviewed above criticized by researchers in other fields, in particualar, in NLP and linguistics. The concerns are not with the results themselves, but the conclusions drawn from them, and how they compare to other techniques.</p>
 <p>I don’t feel qualified to articulate these concerns. I’d encourage someone who feels this way to describe the concerns in the comments.</p>
 <h1 id="conclusion">Conclusion</h1>
-<p>The representation perspective of deep learning is a powerful view that seems to answer why deep neural networks are so effective.</p>
+<p>The representation perspective of deep learning is a powerful view that seems to answer why deep neural networks are so effective. Beyond that, I think there’s something extremely beautiful about it: why are neural networks effective? Because better ways of representing data can pop out of optimizing layered models.</p>
 <p>Deep learning is a very young field, where theories aren’t strongly established and views quickly change. That said, it is my impression that the representation-focused perspective of neural networks is presently very popular.</p>
 <p>This post reviews a lot of research results I find very exciting, but my main motivation is to set the stage for a future post exploring connections between deep learning, type theory and functional programming. If you’re interested, you can subscribe to my <a href="../../rss.xml">rss feed</a> so that you’ll see it when it is published.</p>
 <p><em>(I would be delighted to hear your comments and thoughts: you can comment inline or at the end. For typos, technical errors, or clarifications you would like to see added, you are encouraged to make a pull request on <a href="https://github.com/colah/NLP-RNNs-Representations-Post">github</a>)</em></p>
