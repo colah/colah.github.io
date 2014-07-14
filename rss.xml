@@ -6,13 +6,253 @@
         <description><![CDATA[]]></description>
         <atom:link href="http://colah.github.io//rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Tue, 08 Jul 2014 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Sun, 13 Jul 2014 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Understanding Convolutions</title>
+    <link>http://colah.github.io/posts/2014-07-Understanding-Convolutions/</link>
+    <description><![CDATA[<p>In a <a href="../2014-07-Conv-Nets-Modular/">previous post</a>, we built up an understanding of convolutional neural networks, without referring to any significant mathematics. To go further, however, we need to understand convolutions.</p>
+<p>If we just wanted to understand convolutional neural networks, it might suffice to roughly understand convolutions. But the aim of this series is to bring us to the frontier of convolutional neural networks and explore new options. To do that, we’re going to need to understand convolutions very deeply.</p>
+<p>Thankfully, with a few examples, convolution becomes quite a straightforward idea.</p>
+<h1 id="lessons-from-a-dropped-ball">Lessons from a Dropped Ball</h1>
+<p>Imagine we drop a ball from some height onto the ground, where it only has one dimension of motion. <em>How likely is it that a ball will go a distance <span class="math">\(c\)</span> if you drop it and then drop it again from above the point at which it landed?</em></p>
+<p>Let’s break this down. After the first drop, it will land <span class="math">\(a\)</span> units away from the starting point with probability <span class="math">\(f(a)\)</span>, where <span class="math">\(f\)</span> is the probability distribution.</p>
+<p>Now after this first drop, we pick the ball up and drop it from another height above the point where it first landed. The probability of the ball rolling <span class="math">\(b\)</span> units away from the new starting point is <span class="math">\(g(b)\)</span>, where <span class="math">\(g\)</span> may be a different probability distribution if it’s dropped from a different height.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-fagb.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>If we fix the result of the first drop so we know the ball went distance <span class="math">\(a\)</span>, for the ball to go a total distance <span class="math">\(c\)</span>, the distance traveled in the second drop is also fixed at <span class="math">\(b\)</span>, where <span class="math">\(a+b=c\)</span>. So the probability of this happening is simply <span class="math">\(f(a) \cdot g(b)\)</span>.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>Let’s think about this with a specific discrete example. We want the total distance <span class="math">\(c\)</span> to be 3. If the first time it rolls, <span class="math">\(a=2\)</span>, the second time it must roll <span class="math">\(b=1\)</span> in order to reach our total distance <span class="math">\(a+b=3\)</span>. The probability of this is <span class="math">\(f(2) \cdot g(1)\)</span>.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-split-21.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>However, this isn’t the only way we could get to a total distance of 3. The ball could roll 1 units the first time, and 2 the second. Or 0 units the first time and all 3 the second. It could go any <span class="math">\(a\)</span> and <span class="math">\(b\)</span>, as long as they add to 3.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-splits-12-03.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>The probabilities are <span class="math">\(f(1) \cdot g(2)\)</span> and <span class="math">\(f(0) \cdot g(3)\)</span>, respectively.</p>
+<p>In order to find the <em>total likelihood</em> of the ball reaching a total distance of <span class="math">\(c\)</span>, we can’t consider only one possible way of reaching <span class="math">\(c\)</span>. Instead, we consider <em>all the possible ways</em> of partitioning <span class="math">\(c\)</span> into two drops <span class="math">\(a\)</span> and <span class="math">\(b\)</span> and sum over the <em>probability of each way</em>.</p>
+<p><span class="math">\[...~~ f(0)\!\cdot\! g(3) ~+~ f(1)\!\cdot\! g(2) ~+~ f(2)\!\cdot\! g(1)~~...\]</span></p>
+<p>We already know that the probability for each case of <span class="math">\(a+b=c\)</span> is simply <span class="math">\(f(a) \cdot g(b)\)</span>. So, summing over every solution to <span class="math">\(a+b=c\)</span>, we can denote the total likelihood as:</p>
+<p><span class="math">\[\sum_{a+b=c} f(a) \cdot g(b)\]</span></p>
+<p>Turns out, we’re doing a convolution! In particular, the convolution of <span class="math">\(f\)</span> and <span class="math">\(g\)</span>, evluated at <span class="math">\(c\)</span> is defined:</p>
+<p><span class="math">\[(f\ast g)(c) = \sum_{a+b=c} f(a) \cdot g(b)~~~~\]</span></p>
+<p>If we substitute <span class="math">\(b = c-a\)</span>, we get:</p>
+<p><span class="math">\[(f\ast g)(c) = \sum_a f(a) \cdot g(c-a)\]</span></p>
+<p>This is the standard definition<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> of convolution.</p>
+<p>To make this a bit more concrete, we can think about this in terms of positions the ball might land. After the first drop, it will land at an intermediate position <span class="math">\(a\)</span> with probability <span class="math">\(f(a)\)</span>. If it lands at <span class="math">\(a\)</span>, it has probability <span class="math">\(g(c-a)\)</span> of landing at a position <span class="math">\(c\)</span>.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-OnePath.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>To get the convolution, we consider all intermediate positions.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-SumPaths.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<h1 id="visualizing-convolutions">Visualizing Convolutions</h1>
+<p>There’s a very nice trick that helps one think about convolutions more easily.</p>
+<p>First, an observation. Suppose the probability that a ball lands a certain distance <span class="math">\(x\)</span> from where it started is <span class="math">\(f(x)\)</span>. Then, afterwards, the probability given that it started a distance <span class="math">\(x\)</span> from where it landed is <span class="math">\(f(-x)\)</span>.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-Reverse.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>If we know the ball lands at a position <span class="math">\(c\)</span> after the second drop, what is the probability that the previous position was <span class="math">\(a\)</span>?</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-BackProb.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>So the probability that the previous position was <span class="math">\(a\)</span> is <span class="math">\(g(-(a-c)) = g(c-a)\)</span>.</p>
+<p>Now, consider the probability each intermediate position contributes to the ball finally landing at <span class="math">\(c\)</span>. We know the probability of the first drop putting the ball into the intermediate position a is <span class="math">\(f(a)\)</span>. We also know that the probability of it having been in <span class="math">\(a\)</span>, if it lands at <span class="math">\(c\)</span> is <span class="math">\(g(c-a)\)</span>.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-Intermediate.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>Summing over the <span class="math">\(a\)</span>s, we get the convolution.</p>
+<p>The advantage of this approach is that it allows us to visualize the evaluation of a convolution at a value <span class="math">\(c\)</span> in a single picture. By shifting the bottom half shifting around, we can evaluate the convolution at other values of <span class="math">\(c\)</span>. This allows us to understand the convolution as a whole.</p>
+<p>For example, we can see that it peaks when the distributions align.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-Intermediate-Align.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>And shrinks as the intersection between the distributions gets smaller.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-Intermediate-Sep.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>By using this trick in an animation, it really becomes possible to visually understand convolutions.</p>
+<p>Below, we’re able to visualize the convolution of two box functions:</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Wiki-BoxConvAnim.gif" alt="" style="">
+<div class="caption">
+From Wikipedia
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>Armed with this perspective, a lot of things become more intuitive.</p>
+<p>Let’s consider a non-probabilistic example. Convolutions are sometimes used in audio manipulation. For example, one might use a function with two spikes in it, but zero everywhere else, to create an echo. As our double-spiked function slides, one spike hits a point in time first, adding that signal to the output sound, and later, another spike follows, adding a second, delayed copy.</p>
+<h1 id="higher-dimensional-convolutions">Higher Dimensional Convolutions</h1>
+<p>Convolutions are an extremely general idea. We can also use them in a higher number of dimensions.</p>
+<p>Let’s consider our example of a falling ball again. Now, as it falls, it’s position shifts not only in one dimension, but in two.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-TwoDim.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>Convolution is the same as before:</p>
+<p><span class="math">\[(f\ast g)(c) = \sum_{a+b=c} f(a) \cdot g(b)\]</span></p>
+<p>Except, now <span class="math">\(a\)</span>, <span class="math">\(b\)</span> and <span class="math">\(c\)</span> are vectors. To be more explicit,</p>
+<p><span class="math">\[(f\ast g)(c_1, c_2) = \sum_{\begin{array}{c}a_1+b_1=c_1\\a_2+b_2=c_2\end{array}} f(a_1,a_2) \cdot g(b_1,b_2)\]</span></p>
+<p>Or in the standard definition:</p>
+<p><span class="math">\[(f\ast g)(c_1, c_2) = \sum_{a_1, a_2} f(a_1, a_2) \cdot g(c_1-a_1,~ c_2-a_2)\]</span></p>
+<p>Just like one-dimensional convolutions, we can think of a two-dimensional convolution as sliding one function on top of another, multiplying and adding.</p>
+<p>One common application of this is image processing. We can think of images as two-dimensional functions. Many important image transformations are convolutions where you convolve the image function with a very small, local function called a “kernel.”</p>
+<div class="centerimgcontainer">
+<img src="img/RiverTrain-ImageConvDiagram.png" alt="" style="">
+<div class="caption">
+From the <a href="http://rivertrail.github.io/RiverTrail/tutorial/">River Trail documentation</a>
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>The kernel slides to every position of the image and computes a new pixel as a weighted sum of the pixels it floats over.</p>
+<p>For example, by averaging a 3x3 box of pixels, we can blur an image. To do this, our kernel takes the value <span class="math">\(1/9\)</span> on each pixel in the box,</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Gimp-Blur.png" alt="" style="">
+<div class="caption">
+Derived from the <a href="http://docs.gimp.org/en/plug-in-convmatrix.html">Gimp documentation</a>
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>We can also detect edges by taking the values <span class="math">\(-1\)</span> and <span class="math">\(1\)</span> on two adjacent pixels, and zero everywhere else. That is, we subtract two adjacent pixels. When side by side pixels are similar, this is gives us approximately zero. On edges, however, adjacent pixels are very different in the direction perpendicular to the edge.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Gimp-Edge.png" alt="" style="">
+<div class="caption">
+Derived from the <a href="http://docs.gimp.org/en/plug-in-convmatrix.html">Gimp documentation</a>
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>The gimp documentation has <a href="http://docs.gimp.org/en/plug-in-convmatrix.html">many other examples</a>.</p>
+<h1 id="convolutional-neural-networks">Convolutional Neural Networks</h1>
+<p>So, how does convolution relate to convolutional neural networks?</p>
+<p>Consider a 1-dimensional convolutional layer with inputs <span class="math">\(\{x_n\}\)</span> and outputs <span class="math">\(\{y_n\}\)</span>, like we discussed in the <a href="../2014-07-Conv-Nets-Modular/">previous post</a>:</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Conv-9-Conv2-XY.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>As we observed, we can describe the outputs in terms of the inputs:</p>
+<p><span class="math">\[y_n = A(x_{n}, x_{n+1}, ...)\]</span></p>
+<p>Generally, <span class="math">\(A\)</span> would be multiple neurons. But suppose it is a single neuron for a moment.</p>
+<p>Recall that a typical neuron in a neural network is described by:</p>
+<p><span class="math">\[\sigma(w_0x_0 + w_1x_1 + w_2x_2 ~...~ + b)\]</span></p>
+<p>Where <span class="math">\(x_0\)</span>, <span class="math">\(x_1\)</span>… are the inputs. The weights, <span class="math">\(w_0\)</span>, <span class="math">\(w_1\)</span>, … describe how the neuron connects to its inputs. A negative weight means that an input inhibits the neuron from firing, while a positive weight encourages it to. The weights are the heart of the neuron, controlling its behavior.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> Saying that multiple neurons are identical is the same thing as saying that the weights are the same.</p>
+<p>It’s this wiring of neurons, describing all the weights and which ones are identical, that convolution will handle for us.</p>
+<p>Typically, we describe all the neurons in a layers at once, rather than individually. The trick is to have a weight matrix, <span class="math">\(W\)</span>:</p>
+<p><span class="math">\[y = \sigma(Wx + b)\]</span></p>
+<p>For example, we get:</p>
+<p><span class="math">\[y_0 = \sigma(W_{0,0}x_0 + W_{0,1}x_1 + W_{0,2}x_2 ...)\]</span></p>
+<p><span class="math">\[y_1 = \sigma(W_{1,0}x_0 + W_{1,1}x_1 + W_{1,2}x_2 ...)\]</span></p>
+<p>Each row of the matrix describes the weights connect a neuron to its inputs.</p>
+<p>Returning to the convolutional layer, though, because there are multiple copies of the same neuron, many weights appear in multiple positions.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Conv-9-Conv2-XY-W.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>Which corresponds to the equations:</p>
+<p><span class="math">\[y_0 = \sigma(W_0x_0 + W_1x_1 -b)\]</span></p>
+<p><span class="math">\[y_1 = \sigma(W_0x_1 + W_1x_2 -b)\]</span></p>
+<p>So while, normally, a weight matrix connects every input to every neuron with different weights:</p>
+<p><span class="math">\[W = \left[\begin{array}{ccccc} 
+W_{0,0} &amp; W_{0,1} &amp; W_{0,2} &amp; W_{0,3} &amp; ...\\
+W_{1,0} &amp; W_{1,1} &amp; W_{1,2} &amp; W_{1,3} &amp; ...\\
+W_{2,0} &amp; W_{2,1} &amp; W_{2,2} &amp; W_{2,3} &amp; ...\\
+W_{3,0} &amp; W_{3,1} &amp; W_{3,2} &amp; W_{3,3} &amp; ...\\
+...     &amp;   ...   &amp;   ...   &amp;  ...    &amp; ...\\
+\end{array}\right]\]</span></p>
+<p>The matrix for a convolutional layer like the one above looks quite different. The same weights appear in a bunch of positions. And because neurons don’t connect to many possible inputs, there’s lots of zeros.</p>
+<p><span class="math">\[W = \left[\begin{array}{ccccc} 
+w_0 &amp; w_1 &amp;  0  &amp;  0  &amp; ...\\
+ 0  &amp; w_0 &amp; w_1 &amp;  0  &amp; ...\\
+ 0  &amp;  0  &amp; w_0 &amp; w_1 &amp; ...\\
+ 0  &amp;  0  &amp;  0  &amp; w_0 &amp; ...\\
+... &amp; ... &amp; ... &amp; ... &amp; ...\\
+\end{array}\right]\]</span></p>
+<p>Multiplying by the above matrix is the same thing as convolving with <span class="math">\([...0, w_1, w_0, 0...]\)</span>. The function sliding to different positions corresponds to having neurons at those positions.</p>
+<p>What about two-dimensional convolutional layers?</p>
+<div class="centerimgcontainer">
+<img src="img/Conv2-5x5-Conv2-XY.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>The wiring of a two dimensional convolutional layer corresponds to a two-dimensional convolution.</p>
+<p>Consider our example of using a convolution to detect edges in an image, above, by sliding a kernel around and applying it to every patch. Just like this, a convolutional layer will apply a neuron to every patch of the image.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>We introduced a lot of mathematical machinery in this blog post, but it may not be obvious what we gained. Convolution is obviously a useful tool in probability theory and computer graphics, but what do we gain from phrasing convolutional neural networks in terms of convolutions?</p>
+<p>The first advantage is that we have some very powerful language for describing the wiring of networks. The examples we’ve dealt with so far haven’t been complicated enough for this benefit to become clear, but convolutions will allow us to get rid of huge amounts of unpleasant book-keeping for us.</p>
+<p>Secondly, convolutions come with significant implementational advantages. Many libraries provide highly efficient convolution routines. Further, while convolution naively appears to be an <span class="math">\(O(n^2)\)</span> operation, using some rather deep mathematical insights, it is possible to create a <span class="math">\(O(n\log(n))\)</span> implementation. We will discuss this in much greater detail in a future post.</p>
+<p>In fact, he use of highly-efficient parallel convolution implementations on GPUs has been essential to recent progress in computer vision.</p>
+<h1 id="next-posts-in-this-series">Next Posts in this Series</h1>
+<p>This post is part of a series on convolutional neural networks and their generalizations. The first two posts will be review for those familiar with deep learning, while later ones should be of interest to everyone. To get updates, subscribe to my <a href="../../rss.xml">RSS feed</a>!</p>
+<p>Please comment below or on the side. Pull requests can be made on <a href="https://github.com/colah/Conv-Nets-Series">github</a>.</p>
+<h1 id="acknowledgments">Acknowledgments</h1>
+<p>I’m extremely grateful to Eliana Lorch, for extensive discussion of convolutions and help writing this post.</p>
+<p>I’m also grateful to Michael Nielsen and Dario Amodei for their comments and support.</p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>We want the probability of the ball rolling <span class="math">\(a\)</span> units the first time and also rolling <span class="math">\(b\)</span> units the second time. The distributions <span class="math">\(P(A) = f(a)\)</span> and <span class="math">\(P(b) = g(b)\)</span> are independent, with both distributions centered at 0. So <span class="math">\(P(a,b) = P(a) * P(b) = f(a) \cdot g(b)\)</span>.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>The non-standard definition, which I haven’t previously seen, seems to have a lot of benefits. In future posts, we will find this definition very helpful because it lends itself to generalization to new algebraic structures. But it also has the advantage that it makes a lot of algebraic properties of convolutions really obvious.</p>
+<p>For example, convolution is a commutative operation. That is, <span class="math">\(f\ast g = g\ast f\)</span>. Why?</p>
+<p><span class="math">\[\sum_{a+b=c} f(a) \cdot g(b) ~~=~  \sum_{b+a=c} g(b) \cdot f(a)\]</span></p>
+<p>Convolution is also associative. That is, <span class="math">\((f\ast g)\ast h = f\ast (g\ast h)\)</span>. Why?</p>
+<p><span class="math">\[\sum_{(a+b)+c=d} (f(a) \cdot g(b)) \cdot h(c) ~~=~ \sum_{a+(b+c)=d} f(a) \cdot (g(b) \cdot h(c))\]</span><a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>There’s also the bias, which is the “threshold” for whether the neuron fires, but it’s much simpler and I don’t want to clutter this section talking about it.<a href="#fnref3">↩</a></p></li>
+</ol>
+</section>]]></description>
+    <pubDate>Sun, 13 Jul 2014 00:00:00 UT</pubDate>
+    <guid>http://colah.github.io/posts/2014-07-Understanding-Convolutions/</guid>
+</item>
+<item>
     <title>Conv Nets: A Modular Perspective</title>
     <link>http://colah.github.io/posts/2014-07-Conv-Nets-Modular/</link>
     <description><![CDATA[<h1 id="introduction">Introduction</h1>
 <p>In the last few years, deep neural networks have lead to breakthrough results on a variety of pattern recognition problems, such as computer vision and voice recognition. One of the essential components leading to these results has been a special kind of neural network called a <em>convolutional neural network</em>.</p>
-<p>At it’s most basic, convolutional neural networks can be thought of as a kind of neural network that uses many identical copies of the same neuron.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> This allows the network to have lots of neurons and express computationally large models while keeping the number of actual parameters – the values describing how neurons behave – that need to be learned fairly small.</p>
+<p>At its most basic, convolutional neural networks can be thought of as a kind of neural network that uses many identical copies of the same neuron.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> This allows the network to have lots of neurons and express computationally large models while keeping the number of actual parameters – the values describing how neurons behave – that need to be learned fairly small.</p>
 <div class="bigcenterimgcontainer">
 <img src="img/Conv2-9x5-Conv2Conv2.png" alt="" style="">
 <div class="caption">
@@ -236,7 +476,7 @@ Filters learned by the first convolutional layer. The top half corresponds to th
 <p>Universality means that a network can fit to any training data you give it. It doesn’t mean that it will interpolate to new data points in a reasonable way.</p>
 <p>No, universality isn’t an explanation for why neural networks work so well. The real reason seems to be something much more subtle… And, to understand it, we’ll first need to understand some concrete results.</p>
 <h1 id="word-embeddings">Word Embeddings</h1>
-<p>I’d like to start by tracing a particularly interesting strand of deep learning research: word embeddings. In my personal opinion, word embeddings are one of the most exciting area of research in deep learning at the moment. Beyond that, I think they are one of the best places to gain intuition about why deep learning is so effective.</p>
+<p>I’d like to start by tracing a particularly interesting strand of deep learning research: word embeddings. In my personal opinion, word embeddings are one of the most exciting area of research in deep learning at the moment, although they were originally introduced by Bengio, <em>et al.</em> more than a decade ago.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> Beyond that, I think they are one of the best places to gain intuition about why deep learning is so effective.</p>
 <p>A word embedding <span class="math">\(W: \mathrm{words} \to \mathbb{R}^n\)</span> is a paramaterized function mapping words in some language to high-dimensional vectors (perhaps 200 to 500 dimensions). For example, we might find:</p>
 <p><span class="math">\[W(``\text{cat}\!&quot;) = (0.2,~ \text{-}0.4,~ 0.7,~ ...)\]</span></p>
 <p><span class="math">\[W(``\text{mat}\!&quot;) = (0.0,~ 0.6,~ \text{-}0.1,~ ...)\]</span></p>
@@ -279,7 +519,7 @@ What words have embeddings closest to a given word? From <a href="http://arxiv.o
 
 </div>
 <p>It seems natural for a network to make words with similar meanings have similar vectors. If you switch a word for a synonym (eg. “a few people sing well” <span class="math">\(\to\)</span> “a <em>couple</em> people sing well”), the validity of the sentence doesn’t change. While, from a naive perspective, the input sentence has changed a lot, if <span class="math">\(W\)</span> maps synonyms (like “few” and “couple”) close together, from <span class="math">\(R\)</span>’s perspective little changes.</p>
-<p>This is very powerful. The number of possible 5-grams is massive and we have a comparatively small number of data points to try to learn from. Similar words being close together allows us to generalize from one sentence to a class of similar sentences. This doesn’t just mean switching a word for a synonym, but also switching a word for a word in a similar class (eg. “the wall is blue” <span class="math">\(\to\)</span> “the wall is <em>red</em>”). Further, we can change multiple words (eg. “the wall is blue” <span class="math">\(\to\)</span> “the <em>ceiling</em> is <em>red</em>”). The impact of this is exponential with respect to the number of words.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<p>This is very powerful. The number of possible 5-grams is massive and we have a comparatively small number of data points to try to learn from. Similar words being close together allows us to generalize from one sentence to a class of similar sentences. This doesn’t just mean switching a word for a synonym, but also switching a word for a word in a similar class (eg. “the wall is blue” <span class="math">\(\to\)</span> “the wall is <em>red</em>”). Further, we can change multiple words (eg. “the wall is blue” <span class="math">\(\to\)</span> “the <em>ceiling</em> is <em>red</em>”). The impact of this is exponential with respect to the number of words.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></p>
 <p>So, clearly this is a very useful thing for <span class="math">\(W\)</span> to do. But how does it learn to do this? It seems quite likely that there are lots of situations where it has seen a sentence like “the wall is blue” and know that it is valid before it sees a sentence like “the wall is red”. As such, shifting “red” a bit closer to “blue” makes the network perform better.</p>
 <p>We still need to see examples of every word being used, but the analogies allow us to generalize to new combinations of words. You’ve seen all the words that you understand before, but you haven’t seen all the sentences that you understand before. So too with neural networks.</p>
 <div class="floatrightimgcontainer">
@@ -320,7 +560,7 @@ Relationship pairs in a word embedding. From <a href="http://arxiv.org/pdf/1301.
 <p>There’s a counterpart to this trick. Instead of learning a way to represent one kind of data and using it to perform multiple kinds of tasks, we can learn a way to map multiple kinds of data into a single representation!</p>
 <p>One nice example of this is a bilingual word-embedding, produced in <a href="http://ai.stanford.edu/~wzou/emnlp2013_ZouSocherCerManning.pdf">Socher <em>et al.</em> (2013a)</a>. We can learn to embed words from two different languages in a single, shared space. In this case, we learn to embed English and Mandarin Chinese words in the same space.</p>
 <div class="floatrightimgcontainer">
-<img src="img/flowchart-billingual.png" alt="" style="">
+<img src="img/flowchart-bilingual.png" alt="" style="">
 </div>
 <p>We train two word embeddings, <span class="math">\(W_{en}\)</span> and <span class="math">\(W_{zh}\)</span> in a manner similar to how we did above. However, we know that certain English words and Chinese words have similar meanings. So, we optimize for an additional property: words that we know are close translations should be close together.</p>
 <p>Of course, we observe that the words we knew had similar meanings end up close together. Since we optimized for that, it’s not surprising. More interesting is that words we <em>didn’t know</em> were translations end up close together.</p>
@@ -332,11 +572,11 @@ Relationship pairs in a word embedding. From <a href="http://arxiv.org/pdf/1301.
 t-SNE visualization of the bilingual word embedding. Green is Chinese, Yellow is English. (<a href="http://ai.stanford.edu/~wzou/emnlp2013_ZouSocherCerManning.pdf">Socher <em>et al.</em> (2013a)</a>)
 </div>
 </div>
-<p>In billingual word embeddings, we learn a shared representation for two very similar kinds of data. But we can also learn to embed very different kinds of data in the same space.</p>
+<p>In bilingual word embeddings, we learn a shared representation for two very similar kinds of data. But we can also learn to embed very different kinds of data in the same space.</p>
 <div class="floatrightimgcontainer">
 <img src="img/flowchart-DeViSE.png" alt="" style="">
 </div>
-<p>Recently, deep learning has begun exploring models that embed images and words in a single representation.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></p>
+<p>Recently, deep learning has begun exploring models that embed images and words in a single representation.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a></p>
 <p>The basic idea is that one classifies images by outputting a vector in a word embedding. Images of dogs are mapped near the “dog” word vector. Images of horses are mapped near the “horse” vector. Images of automobiles near the “automobile” vector. And so on.</p>
 <p>The interesting part is what happens when you test the model on new classes of images. For example, if the model wasn’t trained to classify cats – that is, to map them near the “cat” vector – what happens when we try to classify images of cats?</p>
 <div class="centerimgcontainer">
@@ -358,7 +598,7 @@ t-SNE visualization of the bilingual word embedding. Green is Chinese, Yellow is
 <p>The Google group did a much larger version – instead of 8 categories, they used 1,000 – around the same time (<a href="http://static.googleusercontent.com/media/research.google.com/en//pubs/archive/41473.pdf">Frome <em>et al.</em> (2013)</a>) and has followed up with a new variation (<a href="http://arxiv.org/pdf/1312.5650.pdf">Norouzi <em>et al.</em> (2014)</a>). Both are based on an very powerful image classification model (from <a href="http://www.cs.toronto.edu/~fritz/absps/imagenet.pdf">Krizehvsky <em>et al.</em> (2012)</a>), but embed images into the word embedding space in different ways.</p>
 <p>The results are impressive. While they may not get images of unknown classes to the precise vector representing that class, they are able to get to the right neighborhood. So, if you ask it to classify images of unknown classes and the classes are fairly different, it can distinguish between the different classes.</p>
 <p>Even though I’ve never seen a Aesculapian snake or an Armadillo before, if you show me a picture of one and a picture of the other, I can tell you which is which because I have a general idea of what sort of animal is associated with each word. These networks can accomplish the same thing.</p>
-<p><em>(These results all exploit a sort of “these words are similar” reasoning. But it seems like much stronger results should be possible based on relationships between words. In our word embedding space, there is a consistent difference vector between male and female version of words. Similarly, in image space, there are consistent features distinguishing between male and female. Beards, mustaches, and baldness are all strong, highly visible indicators of being male. Breasts and, less reliably, long hair, makeup and jewelery, are obvious indicators of being female.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> Even if you’ve never seen a king before, if the queen, determined to be such by the presence of a crown, suddenly has a beard, it’s pretty reasonable to give the male version.)</em></p>
+<p><em>(These results all exploit a sort of “these words are similar” reasoning. But it seems like much stronger results should be possible based on relationships between words. In our word embedding space, there is a consistent difference vector between male and female version of words. Similarly, in image space, there are consistent features distinguishing between male and female. Beards, mustaches, and baldness are all strong, highly visible indicators of being male. Breasts and, less reliably, long hair, makeup and jewelery, are obvious indicators of being female.<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a> Even if you’ve never seen a king before, if the queen, determined to be such by the presence of a crown, suddenly has a beard, it’s pretty reasonable to give the male version.)</em></p>
 <p>Shared embeddings are an extremely exciting area of research and drive at why the representation focused perspective of deep learning is so compelling.</p>
 <h1 id="recursive-neural-networks">Recursive Neural Networks</h1>
 <p>We began our discussion of word embeddings with the following network:</p>
@@ -428,7 +668,7 @@ Small section of the t-SNE of the phrase representation <br /> (From <a href="ht
 
 </div>
 <h1 id="criticisms">Criticisms</h1>
-<p>I’ve heard some of the results reviewed above criticized by researchers in other fields, in particualar, in NLP and linguistics. The concerns are not with the results themselves, but the conclusions drawn from them, and how they compare to other techniques.</p>
+<p>I’ve heard some of the results reviewed above criticized by researchers in other fields, in particular, in NLP and linguistics. The concerns are not with the results themselves, but the conclusions drawn from them, and how they compare to other techniques.</p>
 <p>I don’t feel qualified to articulate these concerns. I’d encourage someone who feels this way to describe the concerns in the comments.</p>
 <h1 id="conclusion">Conclusion</h1>
 <p>The representation perspective of deep learning is a powerful view that seems to answer why deep neural networks are so effective. Beyond that, I think there’s something extremely beautiful about it: why are neural networks effective? Because better ways of representing data can pop out of optimizing layered models.</p>
@@ -440,11 +680,12 @@ Small section of the t-SNE of the phrase representation <br /> (From <a href="ht
 <section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Constructing a case for every possible input requires <span class="math">\(2^n\)</span> hidden neurons, when you have <span class="math">\(n\)</span> input neurons. In reality, the situation isn’t usually that bad. You can have cases that encompass multiple inputs. And you have can have overlapping cases that add together to achieve the right input on their intersection.<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>Constructing a case for every possible input requires <span class="math">\(2^n\)</span> hidden neurons, when you have <span class="math">\(n\)</span> input neurons. In reality, the situation isn’t usually that bad. You can have cases that encompass multiple inputs. And you can have overlapping cases that add together to achieve the right input on their intersection.<a href="#fnref1">↩</a></p></li>
 <li id="fn2"><p>(It isn’t only perceptron networks that have universality. Networks of sigmoid neurons (and other activation functions) are also universal: give enough hidden neurons, they can approximate any continuous function arbitrarily well. Seeing this is significantly trickier because you can’t just isolate inputs.)<a href="#fnref2">↩</a></p></li>
-<li id="fn3"><p>The seminal paper, <a href="http://machinelearning.wustl.edu/mlpapers/paper_files/BengioDVJ03.pdf"><em>A Neural Probabilistic Language Model</em> (Bengio, <em>et al.</em> 2003)</a> has a great deal of insight about why word embeddings are powerful.<a href="#fnref3">↩</a></p></li>
-<li id="fn4"><p>Previous work has been done modeling the joint distributions of tags and images, but it took a very different perspective.<a href="#fnref4">↩</a></p></li>
-<li id="fn5"><p>I’m very conscious that physical indicators of gender can be misleading. I don’t mean to imply, for example, that everyone who is bald is male or everyone who has breasts is female. Just that these often indicate such, and greatly adjust our prior.<a href="#fnref5">↩</a></p></li>
+<li id="fn3"><p>Word embeddings were originally developed in (<a href="http://www.iro.umontreal.ca/~lisa/publications2/index.php/publications/show/64">Bengio et al, 2001</a>; <a href="http://machinelearning.wustl.edu/mlpapers/paper_files/BengioDVJ03.pdf">Bengio et al, 2003</a>), a few years before the 2006 deep learning renewal, at a time when neural networks were out of fashion. The idea of distributed representations for symbols is even older, e.g. (<a href="http://www.cogsci.ucsd.edu/~ajyu/Teaching/Cogs202_sp13/Readings/hinton86.pdf">Hinton 1986</a>).&quot;<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>The seminal paper, <a href="http://machinelearning.wustl.edu/mlpapers/paper_files/BengioDVJ03.pdf"><em>A Neural Probabilistic Language Model</em> (Bengio, <em>et al.</em> 2003)</a> has a great deal of insight about why word embeddings are powerful.<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>Previous work has been done modeling the joint distributions of tags and images, but it took a very different perspective.<a href="#fnref5">↩</a></p></li>
+<li id="fn6"><p>I’m very conscious that physical indicators of gender can be misleading. I don’t mean to imply, for example, that everyone who is bald is male or everyone who has breasts is female. Just that these often indicate such, and greatly adjust our prior.<a href="#fnref6">↩</a></p></li>
 </ol>
 </section>]]></description>
     <pubDate>Mon, 07 Jul 2014 00:00:00 UT</pubDate>

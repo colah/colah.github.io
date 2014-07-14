@@ -4,7 +4,7 @@
     
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Conv Nets: Understanding Convolutions - colah's blog</title>
+        <title>Understanding Convolutions - colah's blog</title>
         
         <link rel="stylesheet" href="../../fonts/Serif/cmun-serif.css" />
         <link rel="stylesheet" href="../../fonts/Serif-Slanted/cmun-serif-slanted.css" />
@@ -84,10 +84,10 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-8">
-                            <h1>Conv Nets: Understanding Convolutions</h1>
+                            <h1>Understanding Convolutions</h1>
                             <div id="body">
                                 <div class="info">
-    <p style="font-family:CMSS; font-size:130%">Posted on June 21, 2014</p>
+    <p style="font-family:CMSS; font-size:130%">Posted on July 13, 2014</p>
     <p style="font-family:CMS; font-style:italic"><a href="../../posts/tags/neural_networks.html">neural networks</a>, <a href="../../posts/tags/convolutional_neural_networks.html">convolutional neural networks</a>, <a href="../../posts/tags/convolution.html">convolution</a>, <a href="../../posts/tags/math.html">math</a>, <a href="../../posts/tags/probability.html">probability</a></p>
     <!--
         by colah
@@ -277,6 +277,9 @@ Derived from the <a href="http://docs.gimp.org/en/plug-in-convmatrix.html">Gimp 
 <div class="spaceafterimg">
 
 </div>
+<p>Which corresponds to the equations:</p>
+<p><span class="math">\[y_0 = \sigma(W_0x_0 + W_1x_1 -b)\]</span></p>
+<p><span class="math">\[y_1 = \sigma(W_0x_1 + W_1x_2 -b)\]</span></p>
 <p>So while, normally, a weight matrix connects every input to every neuron with different weights:</p>
 <p><span class="math">\[W = \left[\begin{array}{ccccc} 
 W_{0,0} &amp; W_{0,1} &amp; W_{0,2} &amp; W_{0,3} &amp; ...\\
@@ -293,7 +296,7 @@ w_0 &amp; w_1 &amp;  0  &amp;  0  &amp; ...\\
  0  &amp;  0  &amp;  0  &amp; w_0 &amp; ...\\
 ... &amp; ... &amp; ... &amp; ... &amp; ...\\
 \end{array}\right]\]</span></p>
-<p>Multiplying by the above matrix is the same thing as convolving with <span class="math">\([...0, w_1, w_0, 0...]\)</span>.</p>
+<p>Multiplying by the above matrix is the same thing as convolving with <span class="math">\([...0, w_1, w_0, 0...]\)</span>. The function sliding to different positions corresponds to having neurons at those positions.</p>
 <p>What about two-dimensional convolutional layers?</p>
 <div class="centerimgcontainer">
 <img src="img/Conv2-5x5-Conv2-XY.png" alt style>
@@ -307,11 +310,13 @@ w_0 &amp; w_1 &amp;  0  &amp;  0  &amp; ...\\
 <p>We introduced a lot of mathematical machinery in this blog post, but it may not be obvious what we gained. Convolution is obviously a useful tool in probability theory and computer graphics, but what do we gain from phrasing convolutional neural networks in terms of convolutions?</p>
 <p>The first advantage is that we have some very powerful language for describing the wiring of networks. The examples we’ve dealt with so far haven’t been complicated enough for this benefit to become clear, but convolutions will allow us to get rid of huge amounts of unpleasant book-keeping for us.</p>
 <p>Secondly, convolutions come with significant implementational advantages. Many libraries provide highly efficient convolution routines. Further, while convolution naively appears to be an <span class="math">\(O(n^2)\)</span> operation, using some rather deep mathematical insights, it is possible to create a <span class="math">\(O(n\log(n))\)</span> implementation. We will discuss this in much greater detail in a future post.</p>
+<p>In fact, he use of highly-efficient parallel convolution implementations on GPUs has been essential to recent progress in computer vision.</p>
 <h2 id="next-posts-in-this-series">Next Posts in this Series</h2>
 <p>This post is part of a series on convolutional neural networks and their generalizations. The first two posts will be review for those familiar with deep learning, while later ones should be of interest to everyone. To get updates, subscribe to my <a href="../../rss.xml">RSS feed</a>!</p>
 <p>Please comment below or on the side. Pull requests can be made on <a href="https://github.com/colah/Conv-Nets-Series">github</a>.</p>
 <h2 id="acknowledgments">Acknowledgments</h2>
-<p>I’m grateful to Eliana Lorch and Dario Amodei for their comments and support.</p>
+<p>I’m extremely grateful to Eliana Lorch, for extensive discussion of convolutions and help writing this post.</p>
+<p>I’m also grateful to Michael Nielsen and Dario Amodei for their comments and support.</p>
 <section class="footnotes">
 <hr />
 <ol>
