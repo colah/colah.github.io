@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Groups &amp; Group Convolutions - colah's blog</title>
+        
+        <link rel="stylesheet" href="../../fonts/Serif/cmun-serif.css" />
+        <link rel="stylesheet" href="../../fonts/Serif-Slanted/cmun-serif-slanted.css" />
+
+        <!--BOOTSTRAP-->
+        <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!--mobile first-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--removed html from url but still is html-->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <!--font awesome-->
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+        <!--fonts: allan & cardo-->
+        <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
+
+        <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
+
+        <link href="../../css/default.css" rel="stylesheet">
+
+        <link href="../../css/bootstrap-carousel.css" rel="stylesheet">
+
+
+        <link href="../../css/inlineDisqussions.css" rel="stylesheet">
+
+        <!--Highlight-->
+        <link href="../../highlight/styles/github.css" rel="stylesheet">
+        
+        <link href="../../favicon.ico" rel="shortcut icon" />
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49811703-1', 'colah.github.io');
+  ga('require', 'linkid', 'linkid.js');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+
+</script>
+
+
+    </head>
+
+    <body>
+        <div id="wrap">
+            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+                <div class="container">
+                    <!--Toggle header for mobile-->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand active" href="../../" id="home">colah's blog</a>
+                    </div>
+                    <!--normal header-->
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="../../archive.html"><span class="glyphicon glyphicon-pencil"></span>  Blog</a></li>
+                            <li><a href="../../about.html"><span class="glyphicon glyphicon-user"></span>  About</a></li>
+                            <li><a href="../../contact.html"><span class="glyphicon glyphicon-envelope"></span>  Contact</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </nav>
+
+            
+            <div id="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1>Groups &amp; Group Convolutions</h1>
+                            <div id="body">
+                                <div class="info">
+    <p style="font-family:CMSS; font-size:130%">Posted on August 16, 2014</p>
+    <p style="font-family:CMS; font-style:italic"><a href="../../posts/tags/group_theory.html">group theory</a>, <a href="../../posts/tags/probability.html">probability</a>, <a href="../../posts/tags/convolution.html">convolution</a>, <a href="../../posts/tags/math.html">math</a></p>
+    <!--
+        by colah
+    -->
+</div>
+</br>
+
+<p><span class="math">\(\newcommand{sq}[1]{   ~\raise{-1pt}{     \style{height: 15px; content: url('img/sqF-#1.png')}{       {~\over~}\over~     }   }~ } \newcommand{tri}[1]{   ~\raise{-1pt}{     \style{height: 15px; content: url('img/tri-#1.png')}{       {~\over~}\over~     }   }~ } \newcommand{Sq}[1]{   ~\raise{-3pt}{     \style{height: 30px; content: url('img/sq-#1.png')}{       \begin{array}{ccc} ~&amp;~&amp;~\\~\\\end{array}     }   } }\)</span></p>
+<h2 id="symmetry">Symmetry</h2>
+<p>Consider a square. Is it symmetric? How is it symmetric? How much symmetry does it have? What kind of symmetry does it have?</p>
+<p>What do those questions even mean?</p>
+<p>If you ask someone, they might tell you that a square has <em>rotational symmetry</em>. If you rotate a square by 90°, it’s the same shape. Without knowing which corner was which, it would seem the exact same as it was before. You could lift it up, rotate it, and set it back down so that it covers the exact same space.</p>
+<p>Let’s call this rotation transformation <span class="math">\(r\)</span>. To be precise, <span class="math">\(r\)</span> rotates a square clockwise by 90°. For example, <span class="math">\(r\sq{e} = \sq{r}\)</span>. (The “F” on the square is there to let us determine orientation and see transformations.)</p>
+<p>You might also be told that a square has <em>horizontal symmetry</em> or <em>vertical symmetry</em>. You can flip a square horizontally or vertically and still have a square. Let’s focus on horizontal symmetry for now. We’ll call horizontal flips <span class="math">\(s\)</span>. <span class="math">\(s\)</span> performs a reflection across a vertical line through the middle of the square. For example, <span class="math">\(s\sq{e} = \sq{s}\)</span>.</p>
+<p>We now have two transformations, <span class="math">\(r\)</span> and <span class="math">\(s\)</span>, which transform squares into another square of the same shape. It turns out that these two transformations form a kind of “basis” for all the others. By using them in some pattern, you can build the other transformations, like vertical flipping.</p>
+<p>Starting with our original square <span class="math">\(\sq{e}\)</span> in the bottom left corner, the following graph shows the transformed versions generated by combining <span class="math">\(r\)</span> and <span class="math">\(s\)</span> in different ways. <span class="math">\(r\)</span> and <span class="math">\(s\)</span> are represented by arrows of different colors. <span class="math">\(r\)</span> arrows are colored blue and <span class="math">\(s\)</span> arrows are colored red.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/sqF-cayley.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>We can use the graph to investigate what happens if we perform a sequence of transformations. For example, what happens if we rotate, flip and then rotate again? Well, we start at our original square, <span class="math">\(\sq{e}\)</span>, and trace: <span class="math">\(\sq{e} \xrightarrow{r} \sq{r} \xrightarrow{s} \sq{r3s} \xrightarrow{r} \sq{s}\)</span>. In the end, we’re left with just horizontally flipped version of the original, <span class="math">\(s\sq{e} = \sq{s}\)</span>. If we want to express this surprising fact, we can use multiplication like notation: <span class="math">\(rsr \sq{e} = s \sq{e}\)</span>.</p>
+<p>If we want to think about our graph a bit more abstractly, we can factor apart the transformation and the original square (eg. <span class="math">\(\sq{r2s} \to r^2s\sq{e}\)</span>).</p>
+<div class="bigcenterimgcontainer">
+<img src="img/sqF-cayley-factor.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>Here, <span class="math">\(e\)</span> is the <em>identity transformation</em>, which doesn’t transform the object at all. For example <span class="math">\(e\sq{e} = \sq{e}\)</span>.</p>
+<p>We can go a bit further. The original square, <span class="math">\(\sq{e}\)</span>, seems a bit unnecessary in <span class="math">\(rsr \sq{e} = s \sq{e}\)</span>. Why not just say <span class="math">\(rsr = s\)</span>? We can just drop the factored out <span class="math">\(\sq{e}\)</span>, both in equations and our graph.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/sqF-cayley-symb.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>Now, here’s the essential realization: <span class="math">\(r\)</span> and <span class="math">\(s\)</span> could have been other things and we would have had the exact same graph. <span class="math">\(r\)</span> could have been rotating 90° <em>counter</em>clockwise. <span class="math">\(s\)</span> could have been vertical flips. Or we could have been transforming an entirely different kind of object. All that matters is the relationship between <span class="math">\(r\)</span> and <span class="math">\(s\)</span>, how they interact. What we saw with the squares was just one particular way this graph, this abstract pattern, could appear in the real world.</p>
+<p>Mathematicians call these abstract patterns <em>groups</em>. There is an entire field of math dedicated to them. Connections between a group and an object like the square are called <em>group actions</em>.</p>
+<h2 id="but-what-is-a-group">But… What is a group?</h2>
+<p>Not all graphs are groups. Only a very special kind of graph is. (We won’t give a precise definition here, but we will get a good feel for it.)</p>
+<p>Firstly, the graph is directed (the edges are arrows) and has colored edges. At every vertex, exactly one arrow of a given color comes out and one goes in.</p>
+<p>But the key property of these graphs is more subtle. We created our graph by starting with an original square, <span class="math">\(\sq{e}\)</span>. But what if we said the original square was <span class="math">\(\sq{s} = s\sq{e}\)</span>?</p>
+<div class="bigcenterimgcontainer">
+<img src="img/sqF-cayley-alt.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>Which position we say is the “initial” position is arbitrary. No matter which position you think of as the initial one, the graph is the same. The graph is perfectly symmetrical, in some sense.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> Imagine that the edges are paths of different color you can walk on, and you’re standing on one of the nodes: from your perspective the graph is the same no matter which node you’re standing on. No matter which node you’re on, taking a red path, a blue path, and then a red path and then a blue path again will bring you back to where you started.</p>
+<p>In Euclidean space, we reason about points by their relative position to an origin. Similarly, in our group, we pick some origin (eg. <span class="math">\(\sq{e}\)</span>) and talk about points by their relative positions. We call these relative positions (such as <span class="math">\(r\)</span>, <span class="math">\(s\)</span>, or <span class="math">\(r^3s\)</span>), the <em>elements</em> of the group.</p>
+<p>Just like we can add difference vectors of points, we can “add” elements of a group together. It isn’t <em>actually</em> addition, of course, but it is a natural way to combine elements of the group. Sometimes we talk about it by analogy with addition and write combining two elements <span class="math">\(a\)</span> and <span class="math">\(b\)</span> as <span class="math">\(a+b\)</span>, while other times we make analogies to multiplication and write <span class="math">\(a\cdot b\)</span>.</p>
+<p>“Adding” or “multiplying” two group elements is actually quite similar to vector addition. We decide that one point on the graph is our identity element (the original position), and find the two elements we want to multiply, <span class="math">\(a\)</span> and <span class="math">\(b\)</span>. We pick paths from the identity to <span class="math">\(a\)</span> and <span class="math">\(b\)</span>. Then we stick the <span class="math">\(a\)</span> path on to the end of <span class="math">\(b\)</span>, to bring us to <span class="math">\(a+b\)</span> or <span class="math">\(a\cdot b\)</span> (depending on the chosen notation).</p>
+<div class="bigcenterimgcontainer">
+<img src="img/sq-add.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<h2 id="the-algebraic-perspective">The Algebraic Perspective</h2>
+<p>The above is almost unrecognizable as group theory, from a traditional perspective. Historically, group theory was motivated by a desire to abstract.</p>
+<p>As we began to study more kinds of mathematical objects, we began to see patterns between them. For example, in arithmetic, we see <span class="math">\(a\!\cdot\!(b+c) ~=~ a\!\cdot\! b ~+~ a\!\cdot\! c\)</span> and in set theory we see <span class="math">\(A\cap (B \cup C) = A\cap B ~\cup~ A\cap C\)</span>. There are many other examples of this pattern, and many other patterns.</p>
+<p>We also noticed that many interesting results held true for any kind of mathematical object that observed certain patterns. Knowing that a mathematical object obeys that pattern is sufficient to prove the results hold.</p>
+<p>So, we formalized those patterns into what we call <em>algebraic structures</em>.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> There’s a <strong>lot</strong> of them, and you can find a <a href="http://en.wikipedia.org/wiki/List_of_algebraic_structures">very long list on wikipedia</a>. We can study an algebraic structure and prove results that hold for any instance of that structure. (Programmers and computer scientists can see this as making mathematics polymorphic.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>)</p>
+<p>We can now give the classical definition of a group. Don’t worry too much if you have</p>
+<p><strong>Definition:</strong> A group <span class="math">\(G = (S, ~\cdot~)\)</span> is a set <span class="math">\(S\)</span> equipped with a binary operation <span class="math">\((~\cdot~)\)</span> with the following properties:</p>
+<ul>
+<li>For all <span class="math">\(a,b \in S\)</span>, the new element <span class="math">\(a\!\cdot\!b\)</span>, is also in <span class="math">\(S\)</span>.</li>
+<li>There exists an identity element, <span class="math">\(e \in S\)</span>, such that <span class="math">\(e\cdot x ~=~ x \cdot e ~=~ x\)</span> for all <span class="math">\(x \in S\)</span>.</li>
+<li>For all elements <span class="math">\(x \in S\)</span>, there exists an inverse element <span class="math">\(x^{-1} \in S\)</span> such that <span class="math">\(x\cdot x^{-1} = x^{-1}\cdot x = e\)</span>.</li>
+<li>The operation <span class="math">\((~\cdot~)\)</span> is associative. That is, <span class="math">\((a\cdot b)\cdot c ~=~ a\cdot (b\cdot c)\)</span> for all <span class="math">\(a,b,c \in S\)</span>,</li>
+</ul>
+<p>Why those rules? Why not more or less? Well, we could define a group to have more or less requirements. If it was weaker, had less requirements, more kinds of objects would be groups and the results we prove about groups would be more broadly applicable. If it was stronger, had more requirements, we would be talking about a more specific kind of object and could prove more about them. In mathematics one often balances generality and specificity like this.</p>
+<p>Mathematicians study both weaker and stronger versions of groups. But, somehow, groups are special. They aren’t too hot, they aren’t too cold: they’re just right.</p>
+<p>This might seem kind of arbitrary. Why should these particular rules be a particularly good collection? One thing that I find very helpful and motivating is realizing that they’re equivalent to the requirements we made when we were thinking of groups as graphs. Identity corresponds to there being a starting point, inverses to being able to go backwards on arrows, and associativity is equivalent to the perfect symmetry of the graph.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></p>
+<h2 id="group-convolutions">Group Convolutions</h2>
+<p><span class="math">\[\sq{e} \xrightarrow[0.25]{r} \sq{r} \xrightarrow[0.5]{s} \sq{r3s} \xrightarrow[0.25]{r} \sq{s}\]</span></p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Note that the graph embedding isn’t necessarily symmetrical.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>Unfortunately, some similar abstract mathematical structures go by different names, particularly in analysis. For example: <a href="http://en.wikipedia.org/wiki/Metric_space">metric spaces</a>, <a href="http://en.wikipedia.org/wiki/Topological_space">topological spaces</a> and <a href="http://en.wikipedia.org/wiki/Measure_(mathematics)">measure spaces</a>.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>This is actually a very deep analogy. In programming, we often try to write polymorphic functions that can act on many kinds of objects. In mathematics, we’re trying to make polymorphic proofs that can operate on different kinds of mathematical object. The <a href="http://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence">Curry–Howard correspondence</a> formalizes this connection between functions and proofs.</p>
+<p>(Some programming languages, like Haskell, even have implementations of common algebraic structures as classes!)</p>
+<p>It’s also worth noting that, just as most approaches to polymorphism in programming give us subclasses and superclasses, algebraic structures also kind of have “sub-structures” and “super-structures”.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>The associativity part is a bit tricky to see, especially because we never rigorously defined the “perfect symmetry” of our “group graphs.”</p>
+<p>One definition is that, given a loop originating at <span class="math">\(e\)</span> on the graph, <span class="math">\(((bc)d)... = e\)</span>, that same sequence is also a loop if it starts at a point <span class="math">\(a\)</span>, that is <span class="math">\((((ab)c)d)... = a\)</span>. It’s pretty straightforward to see that this follows from associativity, but what about the other direction?</p>
+<p>Well, we want to prove for all <span class="math">\(a,b,c\)</span>, that, <span class="math">\(a(bc) = (ab)c\)</span>. Let <span class="math">\(d = (bc)^{-1}\)</span>, the reverse of the path to <span class="math">\(bc\)</span>. Then <span class="math">\((bc)d = e\)</span> is a loop. By the graph symmetry, <span class="math">\(((ab)c)d = a\)</span>. We now right-mulitply by <span class="math">\(d^{-1} = (bc)\)</span> to get <span class="math">\((ab)c = a(bc)\)</span>, which is associativity.<a href="#fnref4">↩</a></p></li>
+</ol>
+</section>
+
+<div id="disqus_thread"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+<script src="../../js/inlineDisqussions.js"></script>
+<script src="../../js/disqus.js"></script>
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="toc-wrapper">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+
+            <div id="footer">
+                <div class="container">
+                    Subscribe to the <a href="../../rss.xml">RSS feed</a>.
+                    </br>
+                    Built by <a href="https://github.com/oinkina">Oinkina</a> with
+                    <a href="http://jaspervdj.be/hakyll">Hakyll</a> 
+                    using <a href="http://getbootstrap.com/">Bootstrap</a>, 
+                    <a href="http://www.mathjax.org/">MathJax</a>, and
+                    <a href="http://disqus.com/">Disqus</a>.
+                </div>
+            </div>
+        </div>
+
+    <!-- jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="../../js/footnotes.js"></script>
+    <script src="../../js/bootstrap-carousel.js"></script>
+    <script src="../../js/inlineDisqussions.js"></script>
+    <script src="../../js/toc.js"></script>
+
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <noscript>Enable JavaScript for footnotes, Disqus comments, and other cool stuff.</noscript>
+
+    </body>
+
+</html>
