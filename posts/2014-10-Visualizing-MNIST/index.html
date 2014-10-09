@@ -38,8 +38,6 @@
         
         <link href="../../favicon.ico" rel="shortcut icon" />
 
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -282,7 +280,7 @@ setTimeout(function() {mnist_tooltip.hide();}, 3000);
     raw_mnist.x.pixel_selector.value([7,13]);
     raw_mnist.y.pixel_selector.value([18,16]);
     raw_mnist.bindToWindowResize();
-  }, 500);
+  }, 2000);
 </script>
 
 <p>Exploring this visualization, we can see some glimpses of the structure of MNIST. Looking at the <a href="#raw_mnist" onclick="raw_mnist_show([7,13], [18,16])">pixels <span class="math">\(p_{18,16}\)</span> and <span class="math">\(p_{7,12}\)</span></a>, we are able to separate a lot of zeros to the bottom right and a lot of nines to the top left. Looking at <a href="#raw_mnist" onclick="raw_mnist_show([5,7], [7,10])">pixels <span class="math">\(p_{5,6}\)</span> and <span class="math">\(p_{7,9}\)</span></a> we can see a lot of twos at the top right and threes at the bottom right.</p>
@@ -343,7 +341,7 @@ setTimeout(function() {mnist_tooltip.hide();}, 3000);
       mnist_pca_plot.x.pixel_display.render();
       mnist_pca_plot.y.pixel_display.render();
     }, 50);
-  }, 500);
+  }, 2000);
 </script>
 <p><br></p>
 <p>While much better than before, it’s still not terribly good. Unfortunately, even looking at the data from the best angle, MNIST data doesn’t line up nicely for us to look at. It’s a non-trivial high-dimensional structure, and these sorts of linear projections just aren’t going to cut it.</p>
@@ -899,6 +897,9 @@ This is what isomap does. For every two points, we consider the shortest path be
     <script src="../../js/bootstrap-carousel.js"></script>
     <script src="../../js/inlineDisqussions.js"></script>
     <script src="../../js/toc.js"></script>
+
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     <noscript>Enable JavaScript for footnotes, Disqus comments, and other cool stuff.</noscript>
 
