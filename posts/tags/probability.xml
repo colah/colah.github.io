@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>colah's blog</title>
+        <link>http://colah.github.io/</link>
+        <description><![CDATA[]]></description>
+        <atom:link href="http://colah.github.io//posts/tags/probability.xml" rel="self"
+                   type="application/rss+xml" />
+        <lastBuildDate>Sun, 13 Jul 2014 00:00:00 UT</lastBuildDate>
+        <item>
+    <title>Understanding Convolutions</title>
+    <link>http://colah.github.io/posts/2014-07-Understanding-Convolutions/</link>
+    <description><![CDATA[<p>In a <a href="../2014-07-Conv-Nets-Modular/">previous post</a>, we built up an understanding of convolutional neural networks, without referring to any significant mathematics. To go further, however, we need to understand convolutions.</p>
+<p>If we just wanted to understand convolutional neural networks, it might suffice to roughly understand convolutions. But the aim of this series is to bring us to the frontier of convolutional neural networks and explore new options. To do that, we’re going to need to understand convolutions very deeply.</p>
+<p>Thankfully, with a few examples, convolution becomes quite a straightforward idea.</p>
+<h1 id="lessons-from-a-dropped-ball">Lessons from a Dropped Ball</h1>
+<p>Imagine we drop a ball from some height onto the ground, where it only has one dimension of motion. <em>How likely is it that a ball will go a distance <span class="math">\(c\)</span> if you drop it and then drop it again from above the point at which it landed?</em></p>
+<p>Let’s break this down. After the first drop, it will land <span class="math">\(a\)</span> units away from the starting point with probability <span class="math">\(f(a)\)</span>, where <span class="math">\(f\)</span> is the probability distribution.</p>
+<p>Now after this first drop, we pick the ball up and drop it from another height above the point where it first landed. The probability of the ball rolling <span class="math">\(b\)</span> units away from the new starting point is <span class="math">\(g(b)\)</span>, where <span class="math">\(g\)</span> may be a different probability distribution if it’s dropped from a different height.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-fagb.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>If we fix the result of the first drop so we know the ball went distance <span class="math">\(a\)</span>, for the ball to go a total distance <span class="math">\(c\)</span>, the distance traveled in the second drop is also fixed at <span class="math">\(b\)</span>, where <span class="math">\(a+b=c\)</span>. So the probability of this happening is simply <span class="math">\(f(a) \cdot g(b)\)</span>.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>Let’s think about this with a specific discrete example. We want the total distance <span class="math">\(c\)</span> to be 3. If the first time it rolls, <span class="math">\(a=2\)</span>, the second time it must roll <span class="math">\(b=1\)</span> in order to reach our total distance <span class="math">\(a+b=3\)</span>. The probability of this is <span class="math">\(f(2) \cdot g(1)\)</span>.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-split-21.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>However, this isn’t the only way we could get to a total distance of 3. The ball could roll 1 units the first time, and 2 the second. Or 0 units the first time and all 3 the second. It could go any <span class="math">\(a\)</span> and <span class="math">\(b\)</span>, as long as they add to 3.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-splits-12-03.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>The probabilities are <span class="math">\(f(1) \cdot g(2)\)</span> and <span class="math">\(f(0) \cdot g(3)\)</span>, respectively.</p>
+<p>In order to find the <em>total likelihood</em> of the ball reaching a total distance of <span class="math">\(c\)</span>, we can’t consider only one possible way of reaching <span class="math">\(c\)</span>. Instead, we consider <em>all the possible ways</em> of partitioning <span class="math">\(c\)</span> into two drops <span class="math">\(a\)</span> and <span class="math">\(b\)</span> and sum over the <em>probability of each way</em>.</p>
+<p><span class="math">\[...~~ f(0)\!\cdot\! g(3) ~+~ f(1)\!\cdot\! g(2) ~+~ f(2)\!\cdot\! g(1)~~...\]</span></p>
+<p>We already know that the probability for each case of <span class="math">\(a+b=c\)</span> is simply <span class="math">\(f(a) \cdot g(b)\)</span>. So, summing over every solution to <span class="math">\(a+b=c\)</span>, we can denote the total likelihood as:</p>
+<p><span class="math">\[\sum_{a+b=c} f(a) \cdot g(b)\]</span></p>
+<p>Turns out, we’re doing a convolution! In particular, the convolution of <span class="math">\(f\)</span> and <span class="math">\(g\)</span>, evaluated at <span class="math">\(c\)</span> is defined:</p>
+<p><span class="math">\[(f\ast g)(c) = \sum_{a+b=c} f(a) \cdot g(b)~~~~\]</span></p>
+<p>If we substitute <span class="math">\(b = c-a\)</span>, we get:</p>
+<p><span class="math">\[(f\ast g)(c) = \sum_a f(a) \cdot g(c-a)\]</span></p>
+<p>This is the standard definition<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> of convolution.</p>
+<p>To make this a bit more concrete, we can think about this in terms of positions the ball might land. After the first drop, it will land at an intermediate position <span class="math">\(a\)</span> with probability <span class="math">\(f(a)\)</span>. If it lands at <span class="math">\(a\)</span>, it has probability <span class="math">\(g(c-a)\)</span> of landing at a position <span class="math">\(c\)</span>.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-OnePath.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>To get the convolution, we consider all intermediate positions.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-SumPaths.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<h1 id="visualizing-convolutions">Visualizing Convolutions</h1>
+<p>There’s a very nice trick that helps one think about convolutions more easily.</p>
+<p>First, an observation. Suppose the probability that a ball lands a certain distance <span class="math">\(x\)</span> from where it started is <span class="math">\(f(x)\)</span>. Then, afterwards, the probability given that it started a distance <span class="math">\(x\)</span> from where it landed is <span class="math">\(f(-x)\)</span>.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-Reverse.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>If we know the ball lands at a position <span class="math">\(c\)</span> after the second drop, what is the probability that the previous position was <span class="math">\(a\)</span>?</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-BackProb.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>So the probability that the previous position was <span class="math">\(a\)</span> is <span class="math">\(g(-(a-c)) = g(c-a)\)</span>.</p>
+<p>Now, consider the probability each intermediate position contributes to the ball finally landing at <span class="math">\(c\)</span>. We know the probability of the first drop putting the ball into the intermediate position a is <span class="math">\(f(a)\)</span>. We also know that the probability of it having been in <span class="math">\(a\)</span>, if it lands at <span class="math">\(c\)</span> is <span class="math">\(g(c-a)\)</span>.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-Intermediate.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>Summing over the <span class="math">\(a\)</span>s, we get the convolution.</p>
+<p>The advantage of this approach is that it allows us to visualize the evaluation of a convolution at a value <span class="math">\(c\)</span> in a single picture. By shifting the bottom half shifting around, we can evaluate the convolution at other values of <span class="math">\(c\)</span>. This allows us to understand the convolution as a whole.</p>
+<p>For example, we can see that it peaks when the distributions align.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-Intermediate-Align.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>And shrinks as the intersection between the distributions gets smaller.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-Intermediate-Sep.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>By using this trick in an animation, it really becomes possible to visually understand convolutions.</p>
+<p>Below, we’re able to visualize the convolution of two box functions:</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Wiki-BoxConvAnim.gif" alt="" style="">
+<div class="caption">
+From Wikipedia
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>Armed with this perspective, a lot of things become more intuitive.</p>
+<p>Let’s consider a non-probabilistic example. Convolutions are sometimes used in audio manipulation. For example, one might use a function with two spikes in it, but zero everywhere else, to create an echo. As our double-spiked function slides, one spike hits a point in time first, adding that signal to the output sound, and later, another spike follows, adding a second, delayed copy.</p>
+<h1 id="higher-dimensional-convolutions">Higher Dimensional Convolutions</h1>
+<p>Convolutions are an extremely general idea. We can also use them in a higher number of dimensions.</p>
+<p>Let’s consider our example of a falling ball again. Now, as it falls, it’s position shifts not only in one dimension, but in two.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/ProbConv-TwoDim.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>Convolution is the same as before:</p>
+<p><span class="math">\[(f\ast g)(c) = \sum_{a+b=c} f(a) \cdot g(b)\]</span></p>
+<p>Except, now <span class="math">\(a\)</span>, <span class="math">\(b\)</span> and <span class="math">\(c\)</span> are vectors. To be more explicit,</p>
+<p><span class="math">\[(f\ast g)(c_1, c_2) = \sum_{\begin{array}{c}a_1+b_1=c_1\\a_2+b_2=c_2\end{array}} f(a_1,a_2) \cdot g(b_1,b_2)\]</span></p>
+<p>Or in the standard definition:</p>
+<p><span class="math">\[(f\ast g)(c_1, c_2) = \sum_{a_1, a_2} f(a_1, a_2) \cdot g(c_1-a_1,~ c_2-a_2)\]</span></p>
+<p>Just like one-dimensional convolutions, we can think of a two-dimensional convolution as sliding one function on top of another, multiplying and adding.</p>
+<p>One common application of this is image processing. We can think of images as two-dimensional functions. Many important image transformations are convolutions where you convolve the image function with a very small, local function called a “kernel.”</p>
+<div class="centerimgcontainer">
+<img src="img/RiverTrain-ImageConvDiagram.png" alt="" style="">
+<div class="caption">
+From the <a href="http://rivertrail.github.io/RiverTrail/tutorial/">River Trail documentation</a>
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>The kernel slides to every position of the image and computes a new pixel as a weighted sum of the pixels it floats over.</p>
+<p>For example, by averaging a 3x3 box of pixels, we can blur an image. To do this, our kernel takes the value <span class="math">\(1/9\)</span> on each pixel in the box,</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Gimp-Blur.png" alt="" style="">
+<div class="caption">
+Derived from the <a href="http://docs.gimp.org/en/plug-in-convmatrix.html">Gimp documentation</a>
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>We can also detect edges by taking the values <span class="math">\(-1\)</span> and <span class="math">\(1\)</span> on two adjacent pixels, and zero everywhere else. That is, we subtract two adjacent pixels. When side by side pixels are similar, this is gives us approximately zero. On edges, however, adjacent pixels are very different in the direction perpendicular to the edge.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Gimp-Edge.png" alt="" style="">
+<div class="caption">
+Derived from the <a href="http://docs.gimp.org/en/plug-in-convmatrix.html">Gimp documentation</a>
+</div>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>The gimp documentation has <a href="http://docs.gimp.org/en/plug-in-convmatrix.html">many other examples</a>.</p>
+<h1 id="convolutional-neural-networks">Convolutional Neural Networks</h1>
+<p>So, how does convolution relate to convolutional neural networks?</p>
+<p>Consider a 1-dimensional convolutional layer with inputs <span class="math">\(\{x_n\}\)</span> and outputs <span class="math">\(\{y_n\}\)</span>, like we discussed in the <a href="../2014-07-Conv-Nets-Modular/">previous post</a>:</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Conv-9-Conv2-XY.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>As we observed, we can describe the outputs in terms of the inputs:</p>
+<p><span class="math">\[y_n = A(x_{n}, x_{n+1}, ...)\]</span></p>
+<p>Generally, <span class="math">\(A\)</span> would be multiple neurons. But suppose it is a single neuron for a moment.</p>
+<p>Recall that a typical neuron in a neural network is described by:</p>
+<p><span class="math">\[\sigma(w_0x_0 + w_1x_1 + w_2x_2 ~...~ + b)\]</span></p>
+<p>Where <span class="math">\(x_0\)</span>, <span class="math">\(x_1\)</span>… are the inputs. The weights, <span class="math">\(w_0\)</span>, <span class="math">\(w_1\)</span>, … describe how the neuron connects to its inputs. A negative weight means that an input inhibits the neuron from firing, while a positive weight encourages it to. The weights are the heart of the neuron, controlling its behavior.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> Saying that multiple neurons are identical is the same thing as saying that the weights are the same.</p>
+<p>It’s this wiring of neurons, describing all the weights and which ones are identical, that convolution will handle for us.</p>
+<p>Typically, we describe all the neurons in a layers at once, rather than individually. The trick is to have a weight matrix, <span class="math">\(W\)</span>:</p>
+<p><span class="math">\[y = \sigma(Wx + b)\]</span></p>
+<p>Where <span class="math">\(\sigma\)</span> denotes sigmoid or another neuron activation function.</p>
+<p>For example, we get:</p>
+<p><span class="math">\[y_0 = \sigma(W_{0,0}x_0 + W_{0,1}x_1 + W_{0,2}x_2 ...)\]</span></p>
+<p><span class="math">\[y_1 = \sigma(W_{1,0}x_0 + W_{1,1}x_1 + W_{1,2}x_2 ...)\]</span></p>
+<p>Each row of the matrix describes the weights connect a neuron to its inputs.</p>
+<p>Returning to the convolutional layer, though, because there are multiple copies of the same neuron, many weights appear in multiple positions.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/Conv-9-Conv2-XY-W.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>Which corresponds to the equations:</p>
+<p><span class="math">\[y_0 = \sigma(W_0x_0 + W_1x_1 -b)\]</span></p>
+<p><span class="math">\[y_1 = \sigma(W_0x_1 + W_1x_2 -b)\]</span></p>
+<p>So while, normally, a weight matrix connects every input to every neuron with different weights:</p>
+<p><span class="math">\[W = \left[\begin{array}{ccccc} 
+W_{0,0} &amp; W_{0,1} &amp; W_{0,2} &amp; W_{0,3} &amp; ...\\
+W_{1,0} &amp; W_{1,1} &amp; W_{1,2} &amp; W_{1,3} &amp; ...\\
+W_{2,0} &amp; W_{2,1} &amp; W_{2,2} &amp; W_{2,3} &amp; ...\\
+W_{3,0} &amp; W_{3,1} &amp; W_{3,2} &amp; W_{3,3} &amp; ...\\
+...     &amp;   ...   &amp;   ...   &amp;  ...    &amp; ...\\
+\end{array}\right]\]</span></p>
+<p>The matrix for a convolutional layer like the one above looks quite different. The same weights appear in a bunch of positions. And because neurons don’t connect to many possible inputs, there’s lots of zeros.</p>
+<p><span class="math">\[W = \left[\begin{array}{ccccc} 
+w_0 &amp; w_1 &amp;  0  &amp;  0  &amp; ...\\
+ 0  &amp; w_0 &amp; w_1 &amp;  0  &amp; ...\\
+ 0  &amp;  0  &amp; w_0 &amp; w_1 &amp; ...\\
+ 0  &amp;  0  &amp;  0  &amp; w_0 &amp; ...\\
+... &amp; ... &amp; ... &amp; ... &amp; ...\\
+\end{array}\right]\]</span></p>
+<p>Multiplying by the above matrix is the same thing as convolving with <span class="math">\([...0, w_1, w_0, 0...]\)</span>. The function sliding to different positions corresponds to having neurons at those positions.</p>
+<p>What about two-dimensional convolutional layers?</p>
+<div class="centerimgcontainer">
+<img src="img/Conv2-5x5-Conv2-XY.png" alt="" style="">
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>The wiring of a two dimensional convolutional layer corresponds to a two-dimensional convolution.</p>
+<p>Consider our example of using a convolution to detect edges in an image, above, by sliding a kernel around and applying it to every patch. Just like this, a convolutional layer will apply a neuron to every patch of the image.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>We introduced a lot of mathematical machinery in this blog post, but it may not be obvious what we gained. Convolution is obviously a useful tool in probability theory and computer graphics, but what do we gain from phrasing convolutional neural networks in terms of convolutions?</p>
+<p>The first advantage is that we have some very powerful language for describing the wiring of networks. The examples we’ve dealt with so far haven’t been complicated enough for this benefit to become clear, but convolutions will allow us to get rid of huge amounts of unpleasant book-keeping for us.</p>
+<p>Secondly, convolutions come with significant implementational advantages. Many libraries provide highly efficient convolution routines. Further, while convolution naively appears to be an <span class="math">\(O(n^2)\)</span> operation, using some rather deep mathematical insights, it is possible to create a <span class="math">\(O(n\log(n))\)</span> implementation. We will discuss this in much greater detail in a future post.</p>
+<p>In fact, the use of highly-efficient parallel convolution implementations on GPUs has been essential to recent progress in computer vision.</p>
+<h1 id="next-posts-in-this-series">Next Posts in this Series</h1>
+<p>This post is part of a series on convolutional neural networks and their generalizations. The first two posts will be review for those familiar with deep learning, while later ones should be of interest to everyone. To get updates, subscribe to my <a href="../../rss.xml">RSS feed</a>!</p>
+<p>Please comment below or on the side. Pull requests can be made on <a href="https://github.com/colah/Conv-Nets-Series">github</a>.</p>
+<h1 id="acknowledgments">Acknowledgments</h1>
+<p>I’m extremely grateful to Eliana Lorch, for extensive discussion of convolutions and help writing this post.</p>
+<p>I’m also grateful to Michael Nielsen and Dario Amodei for their comments and support.</p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>We want the probability of the ball rolling <span class="math">\(a\)</span> units the first time and also rolling <span class="math">\(b\)</span> units the second time. The distributions <span class="math">\(P(A) = f(a)\)</span> and <span class="math">\(P(b) = g(b)\)</span> are independent, with both distributions centered at 0. So <span class="math">\(P(a,b) = P(a) * P(b) = f(a) \cdot g(b)\)</span>.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>The non-standard definition, which I haven’t previously seen, seems to have a lot of benefits. In future posts, we will find this definition very helpful because it lends itself to generalization to new algebraic structures. But it also has the advantage that it makes a lot of algebraic properties of convolutions really obvious.</p>
+<p>For example, convolution is a commutative operation. That is, <span class="math">\(f\ast g = g\ast f\)</span>. Why?</p>
+<p><span class="math">\[\sum_{a+b=c} f(a) \cdot g(b) ~~=~  \sum_{b+a=c} g(b) \cdot f(a)\]</span></p>
+<p>Convolution is also associative. That is, <span class="math">\((f\ast g)\ast h = f\ast (g\ast h)\)</span>. Why?</p>
+<p><span class="math">\[\sum_{(a+b)+c=d} (f(a) \cdot g(b)) \cdot h(c) ~~=~ \sum_{a+(b+c)=d} f(a) \cdot (g(b) \cdot h(c))\]</span><a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>There’s also the bias, which is the “threshold” for whether the neuron fires, but it’s much simpler and I don’t want to clutter this section talking about it.<a href="#fnref3">↩</a></p></li>
+</ol>
+</section>]]></description>
+    <pubDate>Sun, 13 Jul 2014 00:00:00 UT</pubDate>
+    <guid>http://colah.github.io/posts/2014-07-Understanding-Convolutions/</guid>
+</item>
+
+    </channel> 
+</rss>

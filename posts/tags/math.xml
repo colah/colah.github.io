@@ -43,7 +43,7 @@
 <p><span class="math">\[...~~ f(0)\!\cdot\! g(3) ~+~ f(1)\!\cdot\! g(2) ~+~ f(2)\!\cdot\! g(1)~~...\]</span></p>
 <p>We already know that the probability for each case of <span class="math">\(a+b=c\)</span> is simply <span class="math">\(f(a) \cdot g(b)\)</span>. So, summing over every solution to <span class="math">\(a+b=c\)</span>, we can denote the total likelihood as:</p>
 <p><span class="math">\[\sum_{a+b=c} f(a) \cdot g(b)\]</span></p>
-<p>Turns out, we’re doing a convolution! In particular, the convolution of <span class="math">\(f\)</span> and <span class="math">\(g\)</span>, evluated at <span class="math">\(c\)</span> is defined:</p>
+<p>Turns out, we’re doing a convolution! In particular, the convolution of <span class="math">\(f\)</span> and <span class="math">\(g\)</span>, evaluated at <span class="math">\(c\)</span> is defined:</p>
 <p><span class="math">\[(f\ast g)(c) = \sum_{a+b=c} f(a) \cdot g(b)~~~~\]</span></p>
 <p>If we substitute <span class="math">\(b = c-a\)</span>, we get:</p>
 <p><span class="math">\[(f\ast g)(c) = \sum_a f(a) \cdot g(c-a)\]</span></p>
@@ -181,6 +181,7 @@ Derived from the <a href="http://docs.gimp.org/en/plug-in-convmatrix.html">Gimp 
 <p>It’s this wiring of neurons, describing all the weights and which ones are identical, that convolution will handle for us.</p>
 <p>Typically, we describe all the neurons in a layers at once, rather than individually. The trick is to have a weight matrix, <span class="math">\(W\)</span>:</p>
 <p><span class="math">\[y = \sigma(Wx + b)\]</span></p>
+<p>Where <span class="math">\(\sigma\)</span> denotes sigmoid or another neuron activation function.</p>
 <p>For example, we get:</p>
 <p><span class="math">\[y_0 = \sigma(W_{0,0}x_0 + W_{0,1}x_1 + W_{0,2}x_2 ...)\]</span></p>
 <p><span class="math">\[y_1 = \sigma(W_{1,0}x_0 + W_{1,1}x_1 + W_{1,2}x_2 ...)\]</span></p>
@@ -225,7 +226,7 @@ w_0 &amp; w_1 &amp;  0  &amp;  0  &amp; ...\\
 <p>We introduced a lot of mathematical machinery in this blog post, but it may not be obvious what we gained. Convolution is obviously a useful tool in probability theory and computer graphics, but what do we gain from phrasing convolutional neural networks in terms of convolutions?</p>
 <p>The first advantage is that we have some very powerful language for describing the wiring of networks. The examples we’ve dealt with so far haven’t been complicated enough for this benefit to become clear, but convolutions will allow us to get rid of huge amounts of unpleasant book-keeping for us.</p>
 <p>Secondly, convolutions come with significant implementational advantages. Many libraries provide highly efficient convolution routines. Further, while convolution naively appears to be an <span class="math">\(O(n^2)\)</span> operation, using some rather deep mathematical insights, it is possible to create a <span class="math">\(O(n\log(n))\)</span> implementation. We will discuss this in much greater detail in a future post.</p>
-<p>In fact, he use of highly-efficient parallel convolution implementations on GPUs has been essential to recent progress in computer vision.</p>
+<p>In fact, the use of highly-efficient parallel convolution implementations on GPUs has been essential to recent progress in computer vision.</p>
 <h1 id="next-posts-in-this-series">Next Posts in this Series</h1>
 <p>This post is part of a series on convolutional neural networks and their generalizations. The first two posts will be review for those familiar with deep learning, while later ones should be of interest to everyone. To get updates, subscribe to my <a href="../../rss.xml">RSS feed</a>!</p>
 <p>Please comment below or on the side. Pull requests can be made on <a href="https://github.com/colah/Conv-Nets-Series">github</a>.</p>

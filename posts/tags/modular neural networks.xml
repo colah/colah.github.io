@@ -201,7 +201,8 @@ Filters learned by the first convolutional layer. The top half corresponds to th
 <p>I admire the elegance of your method of computation; it must be nice to ride through these fields upon the horse of true mathematics while the like of us have to make our way laboriously on foot.  — Albert Einstein</p>
 </blockquote>
 <h1 id="next-posts-in-this-series">Next Posts in this Series</h1>
-<p>This post is part of a series on convolutional neural networks and their generalizations. The first two posts will be review for those familiar with deep learning, while later ones should be of interest to everyone. To get updates, subscribe to my <a href="../../rss.xml">RSS feed</a>! I’m aiming for daily posts this week!</p>
+<p><a href="../2014-07-Understanding-Convolutions/"><strong>Read the next post!</strong></a></p>
+<p>This post is part of a series on convolutional neural networks and their generalizations. The first two posts will be review for those familiar with deep learning, while later ones should be of interest to everyone. To get updates, subscribe to my <a href="../../rss.xml">RSS feed</a>!</p>
 <p>Please comment below or on the side. Pull requests can be made on <a href="https://github.com/colah/Conv-Nets-Series">github</a>.</p>
 <h1 id="acknowledgments">Acknowledgments</h1>
 <p>I’m grateful to Eliana Lorch, Aaron Courville, and Sebastian Zany for their comments and support.</p>
