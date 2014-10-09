@@ -87,11 +87,19 @@ var RawExploreMNIST = function RawExploreMNIST(s) {
   this.plot = this.new_child( BasisPlotMNIST );
   this.x    = this.new_child( ImgPixelSelector );
   this.y    = this.new_child( ImgPixelSelector );
-  this.eqx  = this.new_child( BasicVis.Equation );
-  this.eqy  = this.new_child( BasicVis.Equation );
 
   this.axxDiv = this.inner.append('div');
   this.axyDiv = this.inner.append('div');
+
+  try {
+    // Fails if MathJax isn't loaded.
+    this.eqx  = this.new_child( BasicVis.Equation );
+    this.eqy  = this.new_child( BasicVis.Equation );
+  }
+  catch(err) {
+    // Not much we can do to recover; let's just try to avoid breaking the rest of the page
+    // by continuing rendering.
+  }
 
   var this_ = this;
 
@@ -131,14 +139,6 @@ RawExploreMNIST.prototype.child_layout = function child_layout() {
       .pos([plot + gutter, plot + gutter])
       .size([pick, pick]);
 
-  this.eqy.div
-      .style('top', plot - W/4/3 )
-      .style('left', side - W/4/3 - 20 );
-
-  this.eqx.div
-      .style('top',  plot + W/4/3 - 10)
-      .style('left', side + W/4/3);
-
   this.axyDiv
       .attr('style', 'background: -moz-linear-gradient(right, white, black); background: linear-gradient(to right, white , black);')
       .style('border', '1px solid #000000')
@@ -156,6 +156,14 @@ RawExploreMNIST.prototype.child_layout = function child_layout() {
       .style('left', side - gutter/3 -1)
       .style('width',  gutter/3)
       .style('height', plot);
+
+  this.eqy.div
+      .style('top', plot - W/4/3 )
+      .style('left', side - W/4/3 - 20 );
+
+  this.eqx.div
+      .style('top',  plot + W/4/3 - 10)
+      .style('left', side + W/4/3);
 
   return this;
 }
