@@ -245,7 +245,7 @@ Examining this allows us to explore MNIST in a very raw way.
     raw_mnist.x.pixel_selector.value([7,13]);
     raw_mnist.y.pixel_selector.value([18,16]);
     raw_mnist.bindToWindowResize();
-  }, 500);
+  }, 2000);
 </script>
 
 Exploring this visualization, we can see some glimpses of the structure of MNIST.
@@ -330,7 +330,7 @@ Now that we know what the best horizontal and vertical angle are, we can try to 
       mnist_pca_plot.x.pixel_display.render();
       mnist_pca_plot.y.pixel_display.render();
     }, 50);
-  }, 500);
+  }, 2000);
 </script>
 <br>
 
