@@ -106,8 +106,14 @@ var RawExploreMNIST = function RawExploreMNIST(s) {
   this.plot.scatter.mouseover(function(i) { this_.x.img_display.show(i); this_.y.img_display.show(i);});
 
   platex = function(v) { return 'p_{' + v[0] + ',' + (v[1]-1) +'}';};
-  this.x.pixel_selector.value.change = function(v) {this_.plot.b0(v); this_.eqx.latex(platex(v)); };
-  this.y.pixel_selector.value.change = function(v) {this_.plot.b1(v); this_.eqy.latex(platex(v)); };
+  this.x.pixel_selector.value.change = function(v) {
+        this_.plot.b0(v);
+        if (this_.eqx) this_.eqx.latex(platex(v)); 
+      };
+  this.y.pixel_selector.value.change = function(v) {
+        this_.plot.b1(v);
+        if (this_.eqy) this_.eqy.latex(platex(v));
+      };
 
 };
 
@@ -157,11 +163,13 @@ RawExploreMNIST.prototype.child_layout = function child_layout() {
       .style('width',  gutter/3)
       .style('height', plot);
 
-  this.eqy.div
+  if (this.eqy)
+    this.eqy.div
       .style('top', plot - W/4/3 )
       .style('left', side - W/4/3 - 20 );
 
-  this.eqx.div
+  if (this.eqx)
+    this.eqx.div
       .style('top',  plot + W/4/3 - 10)
       .style('left', side + W/4/3);
 
