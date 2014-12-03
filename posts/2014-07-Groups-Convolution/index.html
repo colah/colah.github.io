@@ -157,7 +157,7 @@ $ -->
 
 </div>
 <p>We can use the graph to investigate what happens if we perform a sequence of transformations. For example, what happens if we rotate, flip and then rotate again? Well, we start at our original square, <span class="math">\(\sq{e}\)</span>, and trace: <span class="math">\(\sq{e} \xrightarrow{r} \sq{r} \xrightarrow{s} \sq{r3s} \xrightarrow{r} \sq{s}\)</span>. In the end, we’re left with just horizontally flipped version of the original, <span class="math">\(s\sq{e} = \sq{s}\)</span>. If we want to express this surprising fact, we can use multiplication like notation: <span class="math">\(rsr \sq{e} = s \sq{e}\)</span>.</p>
-<p>If we want to think about our graph a bit more abstractly, we can factor apart the transformation and the original square (eg. <span class="math">\(\sq{r2s} \to r^2s\sq{e}\)</span>).</p>
+<p>If we want to think about our graph a bit more abstractly, we can factor apart the transformation and the original square. That is, we can represent any square as the original square transformed by <span class="math">\(r\)</span> and <span class="math">\(s\)</span>. For example, <span class="math">\(\sq{r2s} = r^2s\sq{e}\)</span>.</p>
 <div class="bigcenterimgcontainer">
 <img src="img/sqF-cayley-factor.png" alt style>
 </div>
@@ -175,7 +175,7 @@ $ -->
 <p>Now, here’s the essential realization: <span class="math">\(r\)</span> and <span class="math">\(s\)</span> could have been other things and we would have had the exact same graph. <span class="math">\(r\)</span> could have been rotating 90° <em>counter</em>clockwise. <span class="math">\(s\)</span> could have been vertical flips. Or we could have been transforming an entirely different kind of object. All that matters is the relationship between <span class="math">\(r\)</span> and <span class="math">\(s\)</span>, how they interact. What we saw with the squares was just one particular way this graph, this abstract pattern, could appear in the real world.</p>
 <p>Mathematicians call these abstract patterns <em>groups</em>. There is an entire field of math dedicated to them. Connections between a group and an object like the square are called <em>group actions</em>.</p>
 <h2 id="but-what-is-a-group">But… What is a group?</h2>
-<p>Not all graphs are groups. Only a very special kind of graph is. (We won’t give a precise definition here, but we will get a good feel for it.)</p>
+<p>Not all graphs are groups. Only a very special kind of graph is. (We won’t give a formal definition here, but we will get a good feel for it.)</p>
 <p>Firstly, the graph is directed (the edges are arrows) and has colored edges. At every vertex, exactly one arrow of a given color comes out and one goes in.</p>
 <p>But the key property of these graphs is more subtle. We created our graph by starting with an original square, <span class="math">\(\sq{e}\)</span>. But what if we said the original square was <span class="math">\(\sq{s} = s\sq{e}\)</span>?</p>
 <div class="bigcenterimgcontainer">
@@ -211,7 +211,7 @@ $ -->
 <p>Mathematicians study both weaker and stronger versions of groups. But, somehow, groups are special. They aren’t too hot, they aren’t too cold: they’re just right.</p>
 <p>This might seem kind of arbitrary. Why should these particular rules be a particularly good collection? One thing that I find very helpful and motivating is realizing that they’re equivalent to the requirements we made when we were thinking of groups as graphs. Identity corresponds to there being a starting point, inverses to being able to go backwards on arrows, and associativity is equivalent to the perfect symmetry of the graph.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></p>
 <h2 id="a-group-from-three-cards">A Group from Three Cards</h2>
-<p>Consider three cards, <span class="math">\(\cards{123}\)</span>. There are some natural transformations we can do to them. We’ll call the operation of switching the first two cards <span class="math">\((12)\)</span>. Similarly, we’ll call the operation of switching the second cards <span class="math">\((23)\)</span>. So,</p>
+<p>Consider three cards, <span class="math">\(\cards{123}\)</span>. There are some transformations that are natural to apply to them. We’ll call the operation of switching the first two cards <span class="math">\((12)\)</span>. Similarly, we’ll call the operation of switching the second cards <span class="math">\((23)\)</span>. So,</p>
 <p><span class="math">\[(12)\cards{123} = \cards{213} ~~~~~~~~~~~~~~~~~~~~~~~~ (23)\cards{123} = \cards{132}\]</span></p>
 <p>Together, these two operations generate a group, the <a href="http://en.wikipedia.org/wiki/Symmetric_group">Symmetric Group</a> on 3 symbols, <span class="math">\(S_3\)</span>.</p>
 <div class="bigcenterimgcontainer">
@@ -296,13 +296,13 @@ $ -->
 <p>Group convolutions provide elegant language for talking about lots of situations involving probability. But, since this is a series of blog posts on <em>convolutional neural networks</em>, you may suspect that I have other interests in them. Well, you guessed correctly. Group convolutions naturally extend convolutional neural networks, with everything fitting together extremely nicely. Since convolutional neural networks are one of the most powerful tools in machine learning right now, that’s pretty interesting. In our next post, we will explore these networks.</p>
 <h2 id="next-posts-in-this-series">Next Posts in this Series</h2>
 <p>This post is part of a series on convolutional neural networks and their generalizations. The first two posts will be review for those familiar with deep learning, while later ones should be of interest to everyone. To get updates, subscribe to my <a href="../../rss.xml">RSS feed</a>!</p>
-<p>Please comment below or on the side. Pull requests can be made on <a href="TODO!!!??????">github</a>.</p>
+<p>Please comment below or on the side. Pull requests can be made on <a href="https://github.com/colah/group-conv-post">github</a>.</p>
 <section class="footnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Note that the graph embedding isn’t necessarily symmetrical.<a href="#fnref1">↩</a></p></li>
 <li id="fn2"><p>Unfortunately, some similar abstract mathematical structures go by different names, particularly in analysis. For example: <a href="http://en.wikipedia.org/wiki/Metric_space">metric spaces</a>, <a href="http://en.wikipedia.org/wiki/Topological_space">topological spaces</a> and <a href="http://en.wikipedia.org/wiki/Measure_(mathematics)">measure spaces</a>.<a href="#fnref2">↩</a></p></li>
-<li id="fn3"><p>This is actually a very deep analogy. In programming, we often try to write polymorphic functions that can act on many kinds of objects. In mathematics, we’re trying to make polymorphic proofs that can operate on different kinds of mathematical object. The <a href="http://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence">Curry–Howard correspondence</a> formalizes this connection between functions and proofs.</p>
+<li id="fn3"><p>This is actually a very deep analogy. In programming, we often try to write polymorphic functions that can act on many kinds of objects. In mathematics, we’re trying to make polymorphic proofs that can operate on different kinds of mathematical object. The <a href="http://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence">Curry–Howard correspondence</a> formalizes this connection between programs and proofs.</p>
 <p>(Some programming languages, like Haskell, even have implementations of common algebraic structures as classes!)</p>
 <p>It’s also worth noting that, just as most approaches to polymorphism in programming give us subclasses and superclasses, algebraic structures also kind of have “sub-structures” and “super-structures”.<a href="#fnref3">↩</a></p></li>
 <li id="fn4"><p>The associativity part is a bit tricky to see, especially because we never rigorously defined the “perfect symmetry” of our “group graphs.”</p>
