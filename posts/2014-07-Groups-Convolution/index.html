@@ -95,7 +95,53 @@
 </div>
 </br>
 
-<p><span class="math">\(\newcommand{sq}[1]{   ~\raise{-1pt}{     \style{height: 15px; content: url('img/sqF-#1.png')}{       {~\over~}\over~     }   }~ } \newcommand{tri}[1]{   ~\raise{-1pt}{     \style{height: 15px; content: url('img/tri-#1.png')}{       {~\over~}\over~     }   }~ } \newcommand{Sq}[1]{   ~\raise{-3pt}{     \style{height: 30px; content: url('img/sq-#1.png')}{       \begin{array}{ccc} ~&amp;~&amp;~\\~\\\end{array}     }   } }\)</span></p>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+  var TEX = MathJax.InputJax.TeX,
+      MML = MathJax.ElementJax.mml;
+  var CheckDimen = function (dimen) {
+    if (dimen === "" ||
+        dimen.match(/^\s*([-+]?(\.\d+|\d+(\.\d*)?))\s*(pt|em|ex|mu|px|mm|cm|in|pc)\s*$/))
+            return dimen.replace(/ /g,"");
+    TEX.Error("Bad dimension for image: "+dimen);
+  };
+  TEX.Definitions.macros.img = "myImage";
+  TEX.Parse.Augment({
+    myImage: function (name) {
+      var src = this.GetArgument(name),
+          valign = CheckDimen(this.GetArgument(name)),
+          width  = CheckDimen(this.GetArgument(name)),
+          height = CheckDimen(this.GetArgument(name));
+      var def = {src:src};
+      if (valign) {def.valign = valign}
+      if (width)  {def.width  = width}
+      if (valign) {def.height = height}
+      this.Push(this.mmlToken(MML.mglyph().With(def)));
+    }
+  });
+});
+</script>
+
+<script type="math/tex">\newcommand{sq}[1]{~\img{img/sqF-#1.png}{-0.2em}{1.1em}{1.1em}~}</script>
+<script type="math/tex">\newcommand{cards}[1]{~\img{img/card-#1.png}{-0.6em}{2.0em}{2.0em}~}</script>
+
+
+<!-- $\newcommand{sq}[1]{
+  ~\raise{-1pt}{
+    \style{height: 15px; content: url('img/sqF-#1.png')}{
+      {~\over~}\over~
+    }
+  }~
+}
+\newcommand{cards}[1]{
+  ~\raise{-4pt}{
+    \style{height: 23px; content: url('img/card-#1.png')}{
+      {{~~\over~~}\over{~~\over~~}}\over{~~\over~~}
+    }
+  }~~~
+}
+$ -->
+
 <h2 id="symmetry">Symmetry</h2>
 <p>Consider a square. Is it symmetric? How is it symmetric? How much symmetry does it have? What kind of symmetry does it have?</p>
 <p>What do those questions even mean?</p>
@@ -151,9 +197,9 @@
 <h2 id="the-algebraic-perspective">The Algebraic Perspective</h2>
 <p>The above is almost unrecognizable as group theory, from a traditional perspective. Historically, group theory was motivated by a desire to abstract.</p>
 <p>As we began to study more kinds of mathematical objects, we began to see patterns between them. For example, in arithmetic, we see <span class="math">\(a\!\cdot\!(b+c) ~=~ a\!\cdot\! b ~+~ a\!\cdot\! c\)</span> and in set theory we see <span class="math">\(A\cap (B \cup C) = A\cap B ~\cup~ A\cap C\)</span>. There are many other examples of this pattern, and many other patterns.</p>
-<p>We also noticed that many interesting results held true for any kind of mathematical object that observed certain patterns. Knowing that a mathematical object obeys that pattern is sufficient to prove the results hold.</p>
+<p>We also noticed that many important results are true for a broad class of objects observing a certain pattern. Knowing that a mathematical object obeys that pattern is sufficient to prove the result holds.</p>
 <p>So, we formalized those patterns into what we call <em>algebraic structures</em>.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> There’s a <strong>lot</strong> of them, and you can find a <a href="http://en.wikipedia.org/wiki/List_of_algebraic_structures">very long list on wikipedia</a>. We can study an algebraic structure and prove results that hold for any instance of that structure. (Programmers and computer scientists can see this as making mathematics polymorphic.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>)</p>
-<p>We can now give the classical definition of a group. Don’t worry too much if you have</p>
+<p>We can now give the classical definition of a group. Don’t worry too much if you have trouble following.</p>
 <p><strong>Definition:</strong> A group <span class="math">\(G = (S, ~\cdot~)\)</span> is a set <span class="math">\(S\)</span> equipped with a binary operation <span class="math">\((~\cdot~)\)</span> with the following properties:</p>
 <ul>
 <li>For all <span class="math">\(a,b \in S\)</span>, the new element <span class="math">\(a\!\cdot\!b\)</span>, is also in <span class="math">\(S\)</span>.</li>
@@ -164,8 +210,93 @@
 <p>Why those rules? Why not more or less? Well, we could define a group to have more or less requirements. If it was weaker, had less requirements, more kinds of objects would be groups and the results we prove about groups would be more broadly applicable. If it was stronger, had more requirements, we would be talking about a more specific kind of object and could prove more about them. In mathematics one often balances generality and specificity like this.</p>
 <p>Mathematicians study both weaker and stronger versions of groups. But, somehow, groups are special. They aren’t too hot, they aren’t too cold: they’re just right.</p>
 <p>This might seem kind of arbitrary. Why should these particular rules be a particularly good collection? One thing that I find very helpful and motivating is realizing that they’re equivalent to the requirements we made when we were thinking of groups as graphs. Identity corresponds to there being a starting point, inverses to being able to go backwards on arrows, and associativity is equivalent to the perfect symmetry of the graph.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></p>
+<h2 id="a-group-from-three-cards">A Group from Three Cards</h2>
+<p>Consider three cards, <span class="math">\(\cards{123}\)</span>. There are some natural transformations we can do to them. We’ll call the operation of switching the first two cards <span class="math">\((12)\)</span>. Similarly, we’ll call the operation of switching the second cards <span class="math">\((23)\)</span>. So,</p>
+<p><span class="math">\[(12)\cards{123} = \cards{213} ~~~~~~~~~~~~~~~~~~~~~~~~ (23)\cards{123} = \cards{132}\]</span></p>
+<p>Together, these two operations generate a group, the <a href="http://en.wikipedia.org/wiki/Symmetric_group">Symmetric Group</a> on 3 symbols, <span class="math">\(S_3\)</span>.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/card-cayley.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>Each group element is a particular way to rearrange the cards, a permutation.</p>
+<h2 id="shuffling-cards">Shuffling Cards</h2>
+<p>One interesting thing to think about is shuffling. When we shuffle cards, we try to put them in a random ordering, a random permutation. This means we create a probability distribution over the group.</p>
+<p>Ideally, our shuffle would give us a uniform distribution – every permutation would be equally likely. But we can easily imagine an imperfect shuffle, where some permutations are more likely than others.</p>
+<div class="centerimgcontainer">
+<img src="img/card-shuffle1.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>Of course, if the first shuffle doesn’t randomize them, we can shuffle again!</p>
+<div class="centerimgcontainer">
+<img src="img/card-shuffle2.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>Generally, repeated shuffles will cause probability mass to diffuse, bringing us closer to the uniform distribution.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a></p>
+<p>This should feel similar to the falling ball example in the <a href="../2014-07-Understanding-Convolutions/">Understanding Convolutions post</a>. Fundamentally, they are the same thing: convolution.</p>
+<div class="centerimgcontainer">
+<img src="img/FallingBall.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
 <h2 id="group-convolutions">Group Convolutions</h2>
-<p><span class="math">\[\sq{e} \xrightarrow[0.25]{r} \sq{r} \xrightarrow[0.5]{s} \sq{r3s} \xrightarrow[0.25]{r} \sq{s}\]</span></p>
+<p>The earlier visualizations of probability distributions on the permutations were kind of messy. The natural way to visualize it is on the Cayley diagram!</p>
+<p>Let’s consider a very simple probability distribution. 40% of the time we apply the operation <span class="math">\((12)\)</span>, permuting our cards to <span class="math">\(\cards{213}\)</span>. 60% of the time we apply <span class="math">\((23)\)</span>, permuting our cards to <span class="math">\(\cards{132}\)</span>. That’s a terrible shuffle, but it is easy to think about.</p>
+<div class="centerimgcontainer">
+<img src="img/cayley-prob.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>To be a bit more explicit, let’s picture us as starting with all the probability density on the unpermuted cards <span class="math">\(\cards{123}\)</span> (ie. the identity), and then we apply our very silly shuffle. (Let’s call the probability distribution <span class="math">\(f\)</span>.)</p>
+<div class="bigcenterimgcontainer">
+<img src="img/card-conv1.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>What happens when we shuffle a second time?</p>
+<p>Well, let’s think about this in two steps. The first time we shuffle, we get a permutation <span class="math">\(a\)</span> with probability <span class="math">\(f(a)\)</span>. The second time we shuffle, we get a permutation <span class="math">\(b\)</span> with probability <span class="math">\(g(b)\)</span>. These two actions happen with probability <span class="math">\(f(a)g(b)\)</span> and result is a permutation <span class="math">\(c = b\cdot a\)</span>.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/card-conv-steps.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<p>To get the actual probability of <span class="math">\(c\)</span>, though, it is not sufficient to just look at one pair of permutations that bring us to <span class="math">\(c\)</span>. Instead, we need to sum over all possible pairs of permutations. This is the convolution of <span class="math">\(g\)</span> and <span class="math">\(f\)</span> (like in function composition, the right side goes first).</p>
+<p><span class="math">\[(g\ast f)(c) = \sum_{b \cdot a = c} g(b)f(a)\]</span></p>
+<p>Substituting <span class="math">\(a = b^{-1}c\)</span>, we get:</p>
+<p><span class="math">\[(g\ast f)(c) = \sum_{a} g(a^{-1}c)f(a)\]</span></p>
+<p>This can be nicely thought of as a sum over the intermediate permutations, <span class="math">\(a\)</span>, looking at the probability of that intermediate permutation, and the probability of the permutation necessary to bring us to <span class="math">\(c\)</span> from there.</p>
+<p>Alternatively, we can substitute <span class="math">\(a = b^{-1}c\)</span> to get:</p>
+<p><span class="math">\[(g\ast f)(c) = \sum_{b} g(b)f(b^{-1}c)\]</span></p>
+<p>The traditional definition of convolution.</p>
+<div class="bigcenterimgcontainer">
+<img src="img/card-conv2.png" alt style>
+</div>
+<div class="spaceafterimg">
+
+</div>
+<h2 id="further-generalizations-of-convolution">Further Generalizations of Convolution</h2>
+<p>(Less mathematical readers might wish to skip this section.)</p>
+<p>The traditional definition of convolution requires that you be able to take inverses, and multiply every element by every other element. This means you need to be working on a group, or perhaps a quasigroup.</p>
+<p>But if you switch to the definition <span class="math">\((g\ast f)(c) = \sum_{b \cdot a = c} g(b)f(a)\)</span>, which seems much more natural, convolution makes sense on just about any algebraic structure with a binary operator. Certainly, you can talk about convolutions on monoids, groupoids, and categories. As far as I can tell, no one’s really considered these.</p>
+<p>One cute thing about this is that convolution often inherits the algebraic properties of the domains of the functions being convolved. For example, if you convolve functions on associative domains, the convolution operation is associative:</p>
+<p><span class="math">\[((A\ast B) \ast C)(x) = \sum_{a \cdot b \cdot c = x} A(a)B(b)C(c) = (A\ast (B \ast C))(x)\]</span></p>
+<p>Similarly, if the domain is commutative, so is convolution. And if it has identity, so does convolution. Sadly, convolution doesn’t get inverses if the domain has inverses, so the parallel breaks down at Abelian loops.</p>
+<p>With the math working out so nicely, you might wonder if there’s any reason one might actually use these. Well, convolution on monoids seems natural in cases where you “can’t go backwards”. And convolution on categories allows for a kind of state. In fact, I think you could very naturally describe probabilistic automaton in terms of category convolutions.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This essay takes an unusual perspective on group theory. Cayley diagrams have been around for a long time, but, as far as I know, taking them seriously as an approach to group theory is a recent idea, engineered by Nathan Carter in his book <em>Visual Group Theory</em>. Interested readers are encouraged to look at his book.</p>
+<p>Group convolutions provide elegant language for talking about lots of situations involving probability. But, since this is a series of blog posts on <em>convolutional neural networks</em>, you may suspect that I have other interests in them. Well, you guessed correctly. Group convolutions naturally extend convolutional neural networks, with everything fitting together extremely nicely. Since convolutional neural networks are one of the most powerful tools in machine learning right now, that’s pretty interesting. In our next post, we will explore these networks.</p>
+<h2 id="next-posts-in-this-series">Next Posts in this Series</h2>
+<p>This post is part of a series on convolutional neural networks and their generalizations. The first two posts will be review for those familiar with deep learning, while later ones should be of interest to everyone. To get updates, subscribe to my <a href="../../rss.xml">RSS feed</a>!</p>
+<p>Please comment below or on the side. Pull requests can be made on <a href="TODO!!!??????">github</a>.</p>
 <section class="footnotes">
 <hr />
 <ol>
@@ -177,6 +308,7 @@
 <li id="fn4"><p>The associativity part is a bit tricky to see, especially because we never rigorously defined the “perfect symmetry” of our “group graphs.”</p>
 <p>One definition is that, given a loop originating at <span class="math">\(e\)</span> on the graph, <span class="math">\(((bc)d)... = e\)</span>, that same sequence is also a loop if it starts at a point <span class="math">\(a\)</span>, that is <span class="math">\((((ab)c)d)... = a\)</span>. It’s pretty straightforward to see that this follows from associativity, but what about the other direction?</p>
 <p>Well, we want to prove for all <span class="math">\(a,b,c\)</span>, that, <span class="math">\(a(bc) = (ab)c\)</span>. Let <span class="math">\(d = (bc)^{-1}\)</span>, the reverse of the path to <span class="math">\(bc\)</span>. Then <span class="math">\((bc)d = e\)</span> is a loop. By the graph symmetry, <span class="math">\(((ab)c)d = a\)</span>. We now right-mulitply by <span class="math">\(d^{-1} = (bc)\)</span> to get <span class="math">\((ab)c = a(bc)\)</span>, which is associativity.<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>How many times do you have to shuffle a deck of cards to make it truly random? This question was explored by the mathematician Persi Diaconis.<a href="#fnref5">↩</a></p></li>
 </ol>
 </section>
 
@@ -224,7 +356,8 @@
     <script src="../../js/toc.js"></script>
 
 
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
     <noscript>Enable JavaScript for footnotes, Disqus comments, and other cool stuff.</noscript>
 
