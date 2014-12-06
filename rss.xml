@@ -4,13 +4,14 @@
         <title>colah's blog</title>
         <link>http://colah.github.io/</link>
         <description><![CDATA[]]></description>
-        <atom:link href="http://colah.github.io//rss.xml" rel="self"
+        <atom:link href="http://colah.github.io/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Mon, 08 Dec 2014 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Mon, 08 Dec 2014 00:00:00 UTC</lastBuildDate>
         <item>
-    <title>Groups & Group Convolutions</title>
+    <title>Groups and Group Convolutions</title>
     <link>http://colah.github.io/posts/2014-12-Groups-Convolution/</link>
-    <description><![CDATA[<script type="text/x-mathjax-config">
+    <description><![CDATA[
+<script type="text/x-mathjax-config">
 MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
   var TEX = MathJax.InputJax.TeX,
       MML = MathJax.ElementJax.mml;
