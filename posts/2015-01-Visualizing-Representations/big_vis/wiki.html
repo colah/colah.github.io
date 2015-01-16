@@ -1,0 +1,72 @@
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    
+  <head>
+
+    <script src="../js/foreign/d3.v3.min.js" charset="utf-8"></script>
+    <script src="../js/foreign/jquery-1.7.0.min.js" charset="utf-8"></script>
+    <script src="../js/foreign/jquery-ui.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css">
+    <script src="../js/BasicVis.js" type="text/javascript"></script>
+    <script src="../js/MnistVis.js" type="text/javascript"></script>
+    <script src="../js/NetVis.js" type="text/javascript"></script>
+    <script src="../js/data/WikiEmbed-sub2.js"></script>
+
+    <style>
+
+      body {
+        font-size: 150%;
+      }
+
+      .hover_show {
+        opacity: 0.0;
+      }
+      .hover_show:hover {
+        opacity: 0.4;
+      }
+
+      .highlight {
+        opacity: 0.5;
+      }
+      .highlight:hover {
+        opacity: 1.0;
+      }
+
+
+    </style>
+
+  </head>
+
+  <body>
+
+  <div style="width:65%">
+    <h1 style="text-align: center; font-size: 200%;">Wikipedia Paragraph Vectors</h1>
+  </div>
+  <br>
+
+  <div id="wiki_embed" style="width: 100%; position: relative">
+    <div class="sne" style="width: 45%; margin-left:10%; margin-right:10%;"> </div>
+    <div class="legend" style="position:absolute; left:65%; top:0; width: 20%; background-color: rgb(220,220,220); border-radius: 10px; padding: 10px 10px; border: 2px solid black; font-size: 75%;">
+      Color articles by Wikipedia category (eg. <i>films</i>): <br><br>
+    </div>
+  </div>
+  <div style="width:65%">
+    <div class="caption" style="text-align:center;">
+      <b>Wikipedia Paragraph Vectors Visualized with t-SNE</b><br>
+      (Hover over a point to see the title. Click to open article.)
+    </div>
+  </div>
+
+
+    <script type="text/javascript">
+      //wiki_data.cats = wiki_data.cats.slice(0, 3000);
+      var embed_vis = new display_embed(wiki_data, "#wiki_embed");
+      /*setTimeout(function() {
+        embed_vis.tooltip.div.style("font-size", "110%");
+      }, 300);*/
+    </script>
+
+  </body>
+
+</html>
