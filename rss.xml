@@ -6,7 +6,21 @@
         <description><![CDATA[]]></description>
         <atom:link href="http://colah.github.io/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Mon, 08 Dec 2014 00:00:00 UTC</lastBuildDate>
+        <lastBuildDate>Fri, 16 Jan 2015 00:00:00 UTC</lastBuildDate>
+<item>
+    <title>Visualizing Representations: Deep Learning and Human Beings</title>
+    <link>http://colah.github.io/posts/2015-01-Visualizing-Representations/</link>
+    <description><![CDATA[
+<p>In a <a href="../2014-10-Visualizing-MNIST/">previous post</a>, we explored techniques for visualizing high-dimensional data. Trying to visualize high dimensional data is, by itself, very interesting, but my real goal is something else. I think these techniques form a set of basic building blocks to try and understand machine learning, and specifically to understand the internal operations of deep neural networks.</p>
+<p>Deep neural networks are an approach to machine learning that has revolutionized computer vision and speech recognition in the last few years, blowing the previous state of the art results out of the water. They’ve also brought promising results to many other areas, including language understanding and machine translation. Despite this, it remains challenging to understand what, exactly, these networks are doing.</p>
+<p>I think that dimensionality reduction, thoughtfully applied, can give us a lot of traction on understanding neural networks.</p>
+<p>Understanding neural networks is just scratching the surface, however, because understanding the network is fundamentally tied to understanding the data it operates on. The combination of neural networks and dimensionality reduction turns out to be a very interesting tool for visualizing high-dimensional data – a much more powerful tool than dimensionality reduction on its own.</p>
+<p>As we dig into this, we’ll observe what I believe to be an important connection between neural networks, visualization, and user interface.</p>
+<p><a href="http://colah.github.io/posts/2015-01-Visualizing-Representations/">Read more.</a></p>
+]]></description>
+    <pubDate>Fri, 16 Jan 2015 00:00:00 UTC</pubDate>
+    <guid>http://colah.github.io/posts/2015-01-Visualizing-Representations/</guid>
+</item>
         <item>
     <title>Groups and Group Convolutions</title>
     <link>http://colah.github.io/posts/2014-12-Groups-Convolution/</link>
