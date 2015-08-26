@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Understanding LSTM Networks -- colah's blog</title>
+        
+        <link rel="stylesheet" href="../../fonts/Serif/cmun-serif.css" />
+        <link rel="stylesheet" href="../../fonts/Serif-Slanted/cmun-serif-slanted.css" />
+
+        <!--BOOTSTRAP-->
+        <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!--mobile first-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--removed html from url but still is html-->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <!--font awesome-->
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+        <!--fonts: allan & cardo-->
+        <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
+
+        <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
+
+        <link href="../../css/default.css" rel="stylesheet">
+
+        <link href="../../comments/inlineDisqussions.css" rel="stylesheet">
+
+        <!--Highlight-->
+        <link href="../../highlight/styles/github.css" rel="stylesheet">
+        
+        <link href="../../favicon.ico" rel="shortcut icon" />
+
+        <!--<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+        <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
+        for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text javascript";a.async="!0;a.src=(&quot;https:&quot;===e.location.protocol?&quot;https:&quot;:&quot;http:&quot;)+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName(&quot;script&quot;)[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);" mixpanel.init("dc1ac55f121e696b2f8d54d338ec642c");< script><!-- end Mixpanel -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49811703-1', 'colah.github.io');
+  ga('require', 'linkid', 'linkid.js');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+
+</script>
+    </head>
+
+    <body>
+        <div id="wrap">
+            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+                <div class="container">
+                    <!--Toggle header for mobile-->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand active" href="../../" style="font-size:20px;">colah's blog</a>
+                    </div>
+                    <!--normal header-->
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="../../archive.html"><span class="glyphicon glyphicon-pencil"></span>  Blog</a></li>
+                            <li><a href="../../about.html"><span class="glyphicon glyphicon-user"></span>  About</a></li>
+                            <li><a href="../../contact.html"><span class="glyphicon glyphicon-envelope"></span>  Contact</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </nav>
+
+            
+            <div id="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1>Understanding LSTM Networks</h1>
+                            <div class="info">
+    <p style="font-family:CMSS; font-size:120%">Posted on August 27, 2015</p>
+    
+    <!--
+        by colah
+    -->
+</div>
+</br>
+
+<h2 id="recurrent-neural-networks">Recurrent Neural Networks</h2>
+<p>Humans don’t start their thinking from scratch every second. As you read this essay, you understand each word based on your understanding of previous words. You don’t throw everything away and start thinking from scratch again. Your thoughts have persistence.</p>
+<p>Traditional neural networks can’t do this, and it seems like a major shortcoming. For example, imagine you want to classify what kind of event is happening at every point in a movie. It’s unclear how a traditional neural network could use its reasoning about previous events in the film to inform later ones.</p>
+<p>Recurrent neural networks address this issue. They are networks with loops in them, allowing information to persist.</p>
+<div style="width:11.8%; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:17px;">
+<img src="img/RNN-rolled.png" alt>
+</div>
+<div class="caption" style="margin-bottom:20px;">
+<strong>Recurrent Neural Networks have loops.</strong>
+</div>
+<p>In the above diagram, a chunk of neural network, <span class="math">\(A\)</span>, looks at some input <span class="math">\(x_i\)</span> and outputs a value <span class="math">\(h_i\)</span>. A loop allows information to be passed from one step of the network to the next.</p>
+<p>These loops make recurrent neural networks seem kind of mysterious. However, if you think a bit more, it turns out that they aren’t all that different than a normal neural network. A recurrent neural network can be thought of as multiple copies of the same network, each passing a message to a successor. Consider what happens if we unroll the loop:</p>
+<div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:17px;">
+<img src="img/RNN-unrolled.png" alt="An unrolled recurrent neural network.">
+</div>
+<div class="caption" style="margin-bottom:20px;">
+<strong>An unrolled recurrent neural network.</strong>
+</div>
+<p>This chain-like nature reveals that recurrent neural networks are intimately related to sequences and lists. They’re the natural architecture of neural network to use for such data.</p>
+<p>And they certainly are used! In the last few years, there have been incredible success applying RNNs to a variety of problems: speech recognition, language modeling, translation, image captioning… The list goes on. I’ll leave discussion of the amazing feats one can achieve with RNNs to Andrej Karpathy’s excellent blog post, <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">The Unreasonable Effectiveness of Recurrent Neural Networks</a>. But they really are pretty amazing.</p>
+<p>Essential to these successes is the use of “LSTMs,” a very special kind of recurrent neural network which works, for many tasks, much much better than the standard version. Almost all exciting results based on recurrent neural networks are achieved with them. It’s these LSTMs that this essay will explore.</p>
+<h2 id="the-problem-of-long-term-dependencies">The Problem of Long-Term Dependencies</h2>
+<p>One of the appeals of RNNs is the idea that they might be able to connect previous information to the present task, such as using previous video frames might inform the understanding of the present frame. If RNNs could do this, they’d be extremely useful. But can they? It depends.</p>
+<p>Sometimes, we only need to look at recent information to perform the present task. For example, consider a language model trying to predict the next word based on the previous ones. If we are trying to predict the last word in “the clouds are in the <em>sky</em>,” we don’t need any further context – it’s pretty obvious the next word is going to be sky. In such cases, where the gap between the relevant information and the place that it’s needed is small, RNNs can learn to use the past information.</p>
+<div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:17px; margin-top:17px;">
+<img src="img/RNN-shorttermdepdencies.png" alt>
+</div>
+<p>But there are also cases where we need more context. Consider trying to predict the last word in the text “I grew up in France… I speak fluent <em>French</em>.” Recent information suggests that the next word is probably the name of a language, but if we want to narrow down which language, we need the context of France, from further back. It’s entirely possible for the gap between the relevant information and the point where it is needed to become very large.</p>
+<p>Unfortunately, as that gap grows, RNNs become unable to learn to connect the information.</p>
+<div style="width:65.2%; margin-left:auto; margin-right:auto; margin-bottom:17px; margin-top:17px;">
+<img src="img/RNN-longtermdependencies.png" alt="Neural networks struggle with long term dependencies.">
+</div>
+<p>In theory, RNNs are absolutely capable of handling such “long-term dependencies.” A human could carefully pick parameters for them to solve toy problems of this form. Sadly, in practice, RNNs don’t seem to be able to learn them. The problem was explored in depth by <a href="http://www-dsi.ing.unifi.it/~paolo/ps/tnn-94-gradient.pdf">Bengio, et al. (1994)</a>, who found some pretty fundamental reasons why it might be difficult.</p>
+<p>Thankfully, LSTMs don’t have this problem!</p>
+<h2 id="lstm-networks">LSTM Networks</h2>
+<p>Long Short Term Memory networks – usually just called “LSTMs” – are a special kind of RNN, capable of learning long-term dependencies. They were introduced by <a href="http://deeplearning.cs.cmu.edu/pdfs/Hochreiter97_lstm.pdf">Hochreiter &amp; Schmidhuber (1997)</a>, and were more recently refined and popularized by the work of <a href="https://scholar.google.com/citations?user=DaFHynwAAAAJ&amp;hl=en">Alex Graves</a>. They work tremendously well on a large variety of problems, and are now widely used.</p>
+<p>LSTMs are explicitly designed to avoid the long-term dependency problem. Remembering information for long periods of time is practically their default behavior, not something they struggle to learn!</p>
+<p>All recurrent neural networks have the form of a chain of repeating modules of neural network. In standard RNNs, this repeating module will have a very simple structure, such as a single tanh layer.</p>
+<div style="width:90%; margin-left:auto; margin-right:auto; margin-bottom:15px; margin-top:15px;">
+<img src="img/LSTM3-SimpleRNN.png" alt>
+<div class="caption" style="margin-bottom:10px;">
+<strong>The repeating module in a standard RNN contains a single layer.</strong>
+</div>
+</div>
+<p>LSTMs also have this chain like structure, but the repeating module has a different structure. Instead of having a single neural network layer, there are four, interacting in a very special way.</p>
+<div style="width:90%; margin-left:auto; margin-right:auto; margin-bottom:15px; margin-top:15px;">
+<img src="img/LSTM3-chain.png" alt="A LSTM neural network.">
+<div class="caption" style="margin-bottom:10px;">
+<strong>The repeating module in an LSTM contains four interacting layers.</strong>
+</div>
+</div>
+<p>Don’t worry about the details of what’s going on. We’ll walk through the LSTM diagram step by step later. For now, let’s just try to get comfortable with the notation we’ll be using.</p>
+<div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:8px; margin-top:8px;">
+<img src="img/LSTM2-notation.png" alt>
+</div>
+<p>In the above diagram, each line carries an entire vector, from the output of one node to the inputs of others. The pink circles represent pointwise operations, like vector addition, while the yellow boxes are learned neural network layers. Lines merging denote concatenation, while a line forking denote its content being copied and the copies going to different locations. <!--
+
+To be a bit more explicit, we can split up each line into lines carrying individual scalar values:
+
+<div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:8px; margin-top:8px;">
+<img src="img/LSTM-vector.png" alt="">
+</div>
+--></p>
+<h2 id="the-core-idea-behind-lstms">The Core Idea Behind LSTMs</h2>
+<p>The key to LSTMs is the cell state, the horizontal line running through the top of the diagram.</p>
+<p>The cell state is kind of like a conveyor belt. It runs straight down the entire chain, with only some minor linear interactions. It’s very easy for information to just flow along it unchanged.</p>
+<div style="width:90%; margin-left:auto; margin-right:auto; margin-bottom:8px; margin-top:8px;">
+<img src="img/LSTM3-C-line.png" alt>
+</div>
+<p>The LSTM does have the ability to remove or add information to the cell state, carefully regulated by structures called gates.</p>
+<p>Gates are a way to optionally let information through. They are composed out of a sigmoid neural net layer and a pointwise multiplication operation.</p>
+<div style="width:12%; margin-left:auto; margin-right:auto; margin-bottom:8px; margin-top:8px;">
+<img src="img/LSTM3-gate.png" alt>
+</div>
+<p>The sigmoid layer outputs numbers between zero and one, describing how much of each component should be let through. A value of zero means “let nothing through,” while a value of one means “let everything through!”</p>
+<p>An LSTM has three of these gates, to protect and control the cell state.</p>
+<h2 id="step-by-step-lstm-walk-through">Step-by-Step LSTM Walk Through</h2>
+<p>The first step in our LSTM is to decide what information we’re going to throw away from the cell state. This decision is made by a sigmoid layer called the “forget gate layer.” It looks at <span class="math">\(h_{t-1}\)</span> and <span class="math">\(x_t\)</span>, and outputs a number between <span class="math">\(0\)</span> and <span class="math">\(1\)</span> for each number in the cell state <span class="math">\(C_{t-1}\)</span>. A <span class="math">\(1\)</span> represents “completely keep this” while a <span class="math">\(0\)</span> represents “completely get rid of this.”</p>
+<p>Let’s go back to our example of a language model trying to predict the next word base on all the previous ones. In such a problem, the cell state might include the gender of the present subject, so that the correct pronouns can be used. When we see a new subject, we want to forget the gender of the old subject.</p>
+<div style="width:90%; margin-left:auto; margin-right:auto; margin-bottom:8px; margin-top:8px;">
+<img src="img/LSTM3-focus-f.png" alt>
+</div>
+<p>The next step is to decide what new information we’re going to store in the cell state. This has two parts. First, a sigmoid layer called the “input gate layer” decides which values we’ll update. Next, a tanh layer creates a vector of new candidate values, <span class="math">\(\tilde{C}_t\)</span>, that could be added to the state. In the next step, we’ll combine these two to create an update to the state.</p>
+<p>In the example of our language model, we’d want to add the gender of the new subject to the cell state, to replace the old one we’re forgetting.</p>
+<div style="width:90%; margin-left:auto; margin-right:auto; margin-bottom:8px; margin-top:8px;">
+<img src="img/LSTM3-focus-i.png" alt>
+</div>
+<p>It’s now time to update the old cell state, <span class="math">\(C_{t-1}\)</span>, into the new cell state <span class="math">\(C_t\)</span>. The previous steps already decided what to do, we just need to actually do it.</p>
+<p>We multiply the old state by <span class="math">\(f_t\)</span>, forgetting the things we decided to forget earlier. Then we add <span class="math">\(i_t*\tilde{C}_t\)</span>. This is the new candidate values, scaled by how much we decided to update each state value.</p>
+<p>In the case of the language model, this is where we’d actually drop the information about the old subject’s gender and add the new information, as we decided in the previous steps.</p>
+<div style="width:90%; margin-left:auto; margin-right:auto; margin-bottom:8px; margin-top:8px;">
+<img src="img/LSTM3-focus-C.png" alt>
+</div>
+<p>Finally, we need to decide what we’re going to output. This output will be based on our cell state, but will be a filtered version. First, we run a sigmoid layer which decides what parts of the cell state we’re going to output. Then, we put the cell state through <span class="math">\(\tanh\)</span> (to push the values to be between <span class="math">\(-1\)</span> and <span class="math">\(1\)</span>) and multiply it by the output of the sigmoid gate, so that we only output the parts we decided to.</p>
+<p>For the language model example, since it just saw a subject, it might want to output information relevant to a verb, in case that’s what is coming next. For example, it might output whether the subject is singular or plural, so that we know what form a verb should be conjugated into if that’s what follows next.</p>
+<div style="width:90%; margin-left:auto; margin-right:auto; margin-bottom:8px; margin-top:8px;">
+<img src="img/LSTM3-focus-o.png" alt>
+</div>
+<h2 id="variants-on-long-short-term-memory">Variants on Long Short Term Memory</h2>
+<p>What I’ve described so far is a pretty normal LSTM. But not all LSTMs are the same as the above. In fact, it seems like almost every paper involving LSTMs uses a slightly different version. The differences are minor, but it’s worth mentioning some of them.</p>
+<p>One popular LSTM variant, introduced by <a href="ftp://ftp.idsia.ch/pub/juergen/TimeCount-IJCNN2000.pdf">Gers &amp; Schmidhuber (2000)</a>, is adding “peephole connections.” This means that we let the gate layers look at the cell state.</p>
+<div style="width:90%; margin-left:auto; margin-right:auto; margin-bottom:8px; margin-top:8px;">
+<img src="img/LSTM3-var-peepholes.png" alt>
+</div>
+<p>The above diagram adds peepholes to all the gates, but many papers will give some peepholes and not others.</p>
+<p>Another variation is to use coupled forget and input gates. Instead of separately deciding what to forget and what we should add new information to, we make those decisions together. We only forget when we’re going to input something in its place. We only input new values to the state when we forget something older.</p>
+<div style="width:90%; margin-left:auto; margin-right:auto; margin-bottom:8px; margin-top:8px;">
+<img src="img/LSTM3-var-tied.png" alt>
+</div>
+<p>A slightly more dramatic variation on the LSTM is the Gated Recurrent Unit, or GRU, introduced by <a href="http://arxiv.org/pdf/1406.1078v3.pdf">Cho, et al. (2014)</a>. It combines the forget and input gates into a single “update gate.” It also merges the cell state and hidden state, and makes some other changes. The resulting model is simpler than standard LSTM models, and has been growing increasingly popular.</p>
+<div style="width:90%; margin-left:auto; margin-right:auto; margin-bottom:8px; margin-top:8px;">
+<img src="img/LSTM3-var-GRU.png" alt="A gated recurrent unit neural network.">
+</div>
+<p>These are only a few of the most notable LSTM variants. There are lots of others, like Depth Gated RNNs by <a href="http://arxiv.org/pdf/1508.03790v2.pdf">Yao, et al. (2015)</a>. There’s also some completely different approach to tackling long-term dependencies, like Clockwork RNNs by <a href="http://arxiv.org/pdf/1402.3511v1.pdf">Koutnik, et al. (2014)</a>.</p>
+<p>Which of these variants is best? Do the differences matter? <a href="http://arxiv.org/pdf/1503.04069.pdf">Greff, et al. (2015)</a> do a nice comparison of popular variants, finding that they’re all about the same. <a href="http://jmlr.org/proceedings/papers/v37/jozefowicz15.pdf">Jozefowicz, et al. (2015)</a> tested more than ten thousand RNN architectures, finding some that worked better than LSTMs on certain tasks.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Earlier, I mentioned the remarkable results people are achieving with RNNs. Essentially all of these are achieved using LSTMs. They really work a lot better for most tasks!</p>
+<p>Written down as a set of equations, LSTMs look pretty intimidating. Hopefully, walking through them step by step in this essay has made them a bit more approachable.</p>
+<p>LSTMs were a big step in what we can accomplish with RNNs. It’s natural to wonder: is there another big step? A common opinion among researchers is: “Yes! There is a next step and it’s attention!” The idea is to let every step of an RNN pick information to look at from some larger collection of information. For example, if you are using an RNN to create a caption describing an image, it might pick a part of the image to look at for every word it outputs. In fact, <a href="http://arxiv.org/pdf/1502.03044v2.pdf">Xu, <em>et al.</em> (2015)</a> do exactly this – it might be a fun starting point if you want to explore attention! There’s been a number of really exciting results using attention, and it seems like a lot more are around the corner…</p>
+<p>Attention isn’t the only exciting thread in RNN research. For example, Grid LSTMs by <a href="http://arxiv.org/pdf/1507.01526v1.pdf">Kalchbrenner, <em>et al.</em> (2015)</a> seem extremely promising. Work using RNNs in generative models – such as <a href="http://arxiv.org/pdf/1502.04623.pdf">Gregor, <em>et al.</em> (2015)</a> or <a href="http://arxiv.org/pdf/1506.02216v3.pdf">Chung, <em>et al.</em> (2015)</a> – also seems very interesting. The last few years have been an exciting time for recurrent neural networks, and the coming ones promise to only be more so!</p>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>I’m grateful to a number of people for helping me better understand LSTMs, commenting on the visualizations, and providing feedback on this post.</p>
+<p>I’m very grateful to my colleagues at Google for their helpful feedback, especially <a href="http://research.google.com/pubs/OriolVinyals.html">Oriol Vinyals</a>, <a href="http://research.google.com/pubs/GregCorrado.html">Greg Corrado</a>, <a href="http://research.google.com/pubs/JonathonShlens.html">Jon Shlens</a>, <a href="http://people.cs.umass.edu/~luke/">Luke Vilnis</a>, and <a href="http://www.cs.toronto.edu/~ilya/">Ilya Sutskever</a>. I’m also thankful to many other friends and colleagues for taking the time to help me, including <a href="https://www.linkedin.com/pub/dario-amodei/4/493/393">Dario Amodei</a>, and <a href="http://cs.stanford.edu/~jsteinhardt/">Jacob Steinhardt</a>. I’m especially thankful to <a href="http://www.kyunghyuncho.me/">Kyunghyun Cho</a> for extremely thoughtful correspondence about my diagrams.</p>
+<p>Before this post, I practiced explaining LSTMs during two seminar series I taught on neural networks. Thanks to everyone who participated in those for their patience with me, and for their feedback.</p>
+
+<div id="disqus_thread"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+<script src="../../comments/inlineDisqussions.js"></script>
+<script src="../../js/disqus.js"></script>
+
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+            </div>
+        
+
+            <div id="footer">
+                <div class="container">
+                    Built by <a href="https://github.com/oinkina">Oinkina</a> with
+                    <a href="http://jaspervdj.be/hakyll">Hakyll</a> 
+                    using <a href="http://getbootstrap.com/">Bootstrap</a>, 
+                    <a href="http://www.mathjax.org/">MathJax</a>,
+                    <a href="http://disqus.com/">Disqus</a>,
+                    <a href="https://github.com/unconed/MathBox.js">MathBox.js</a>,
+                    <a href="http://highlightjs.org/">Highlight.js</a>, 
+                    and <a href="http://ignorethecode.net/blog/2010/04/20/footnotes/">Footnotes.js</a>.
+                </div>
+            </div>
+        </div>
+
+    <!-- jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="../../js/footnotes.js"></script>
+
+    <script src="../../comments/inlineDisqussions.js"></script>
+    
+    <noscript>Enable JavaScript for footnotes, Disqus comments, and other cool stuff.</noscript>
+
+    </body>
+
+</html>
