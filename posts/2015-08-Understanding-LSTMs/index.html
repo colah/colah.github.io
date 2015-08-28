@@ -170,7 +170,7 @@ To be a bit more explicit, we can split up each line into lines carrying individ
 <p>An LSTM has three of these gates, to protect and control the cell state.</p>
 <h2 id="step-by-step-lstm-walk-through">Step-by-Step LSTM Walk Through</h2>
 <p>The first step in our LSTM is to decide what information we’re going to throw away from the cell state. This decision is made by a sigmoid layer called the “forget gate layer.” It looks at <span class="math">\(h_{t-1}\)</span> and <span class="math">\(x_t\)</span>, and outputs a number between <span class="math">\(0\)</span> and <span class="math">\(1\)</span> for each number in the cell state <span class="math">\(C_{t-1}\)</span>. A <span class="math">\(1\)</span> represents “completely keep this” while a <span class="math">\(0\)</span> represents “completely get rid of this.”</p>
-<p>Let’s go back to our example of a language model trying to predict the next word base on all the previous ones. In such a problem, the cell state might include the gender of the present subject, so that the correct pronouns can be used. When we see a new subject, we want to forget the gender of the old subject.</p>
+<p>Let’s go back to our example of a language model trying to predict the next word based on all the previous ones. In such a problem, the cell state might include the gender of the present subject, so that the correct pronouns can be used. When we see a new subject, we want to forget the gender of the old subject.</p>
 <div style="width:90%; margin-left:auto; margin-right:auto; margin-bottom:8px; margin-top:8px;">
 <img src="img/LSTM3-focus-f.png" alt>
 </div>
