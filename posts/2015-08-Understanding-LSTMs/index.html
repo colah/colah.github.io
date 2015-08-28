@@ -127,7 +127,7 @@
 <p>In theory, RNNs are absolutely capable of handling such “long-term dependencies.” A human could carefully pick parameters for them to solve toy problems of this form. Sadly, in practice, RNNs don’t seem to be able to learn them. The problem was explored in depth by <a href="http://people.idsia.ch/~juergen/SeppHochreiter1991ThesisAdvisorSchmidhuber.pdf">Hochreiter (1991) [German]</a> and <a href="http://www-dsi.ing.unifi.it/~paolo/ps/tnn-94-gradient.pdf">Bengio, et al. (1994)</a>, who found some pretty fundamental reasons why it might be difficult.</p>
 <p>Thankfully, LSTMs don’t have this problem!</p>
 <h2 id="lstm-networks">LSTM Networks</h2>
-<p>Long Short Term Memory networks – usually just called “LSTMs” – are a special kind of RNN, capable of learning long-term dependencies. They were introduced by <a href="http://deeplearning.cs.cmu.edu/pdfs/Hochreiter97_lstm.pdf">Hochreiter &amp; Schmidhuber (1997)</a>, and were more recently refined and popularized by the work of <a href="https://scholar.google.com/citations?user=DaFHynwAAAAJ&amp;hl=en">Alex Graves</a>. They work tremendously well on a large variety of problems, and are now widely used.</p>
+<p>Long Short Term Memory networks – usually just called “LSTMs” – are a special kind of RNN, capable of learning long-term dependencies. They were introduced by <a href="http://deeplearning.cs.cmu.edu/pdfs/Hochreiter97_lstm.pdf">Hochreiter &amp; Schmidhuber (1997)</a>, and were refined and popularized by many people in following work.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> They work tremendously well on a large variety of problems, and are now widely used.</p>
 <p>LSTMs are explicitly designed to avoid the long-term dependency problem. Remembering information for long periods of time is practically their default behavior, not something they struggle to learn!</p>
 <p>All recurrent neural networks have the form of a chain of repeating modules of neural network. In standard RNNs, this repeating module will have a very simple structure, such as a single tanh layer.</p>
 <div style="width:90%; margin-left:auto; margin-right:auto; margin-bottom:15px; margin-top:15px;">
@@ -216,6 +216,13 @@ To be a bit more explicit, we can split up each line into lines carrying individ
 <p>I’m grateful to a number of people for helping me better understand LSTMs, commenting on the visualizations, and providing feedback on this post.</p>
 <p>I’m very grateful to my colleagues at Google for their helpful feedback, especially <a href="http://research.google.com/pubs/OriolVinyals.html">Oriol Vinyals</a>, <a href="http://research.google.com/pubs/GregCorrado.html">Greg Corrado</a>, <a href="http://research.google.com/pubs/JonathonShlens.html">Jon Shlens</a>, <a href="http://people.cs.umass.edu/~luke/">Luke Vilnis</a>, and <a href="http://www.cs.toronto.edu/~ilya/">Ilya Sutskever</a>. I’m also thankful to many other friends and colleagues for taking the time to help me, including <a href="https://www.linkedin.com/pub/dario-amodei/4/493/393">Dario Amodei</a>, and <a href="http://cs.stanford.edu/~jsteinhardt/">Jacob Steinhardt</a>. I’m especially thankful to <a href="http://www.kyunghyuncho.me/">Kyunghyun Cho</a> for extremely thoughtful correspondence about my diagrams.</p>
 <p>Before this post, I practiced explaining LSTMs during two seminar series I taught on neural networks. Thanks to everyone who participated in those for their patience with me, and for their feedback.</p>
+
+<section class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>In addition to the original authors, a lot of people contributed to the modern LSTM. A non-comprehensive list is: Felix Gers, Fred Cummins, Santiago Fernandez, Justin Bayer, Daan Wierstra, Julian Togelius, Faustian Gomez, Matteo Gagliolo, and <a href="https://scholar.google.com/citations?user=DaFHynwAAAAJ&amp;hl=en">Alex Graves</a>.<a href="#fnref1">↩</a></p></li>
+</ol>
+</section>
 
 <div id="disqus_thread"></div>
 
