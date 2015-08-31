@@ -51,10 +51,33 @@
 
 </script>
 
+<style>
+
+.profile {
+    background-color:rgba(245,245,245,.9);
+    width:45%;
+    margin-left:50%;
+    margin-top:5%;
+    padding:20px;
+    border-radius: 20px;
+}
+
+.profile h2 {
+    margin-top: 10px;
+    font-size: 175%;
+}
+
+.profile p {
+    font-size: 150%;
+}
+
+
+</style>
+
 
     </head>
 
-    <body>
+    <body style="background: #ffffff url('images/portrait.jpg') no-repeat center center fixed;-moz-background-size:cover;-webkit-background-size:cover;-o-background-size:cover;background-size:cover; min-width: 394px;">
         <div id="wrap">
             <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
                 <div class="container">
@@ -71,7 +94,7 @@
                     <!--normal header-->
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="./archive.html"><span class="glyphicon glyphicon-pencil"></span>  Blog</a></li>
+                            <li><a href="./"><span class="glyphicon glyphicon-pencil"></span>  Blog</a></li>
                             <li><a href="./about.html"><span class="glyphicon glyphicon-user"></span>  About</a></li>
                             <li><a href="./contact.html"><span class="glyphicon glyphicon-envelope"></span>  Contact</a></li>
                         </ul>
@@ -79,11 +102,26 @@
                 </div>
             </nav>
 
-            
+          
+
+            <div class="profile">
+                <h2 >Christopher Olah</h2>
+
+                <p>A wandering machine learning researcher, bouncing between groups. I want to understand things clearly, and explain them well.</p>
+
+                <p style="text-align:center;"><a href="https://github.com/colah/">Github</a> - <a href="https://twitter.com/ch402">Twitter</a> - <a href="http://christopherolah.wordpress.com/">Old Blog</a> - <a href="http://christopherolah.files.wordpress.com/2010/02/cv.pdf">Academic CV (out of date)</a></p>
+
+            </div>
+
+
+            <div class="col-md-4" id="toc-wrapper">
+            </div>  
+
+            <!--
             <div id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-8" style="background-color:rgba(245,245,245,.6);">
                             <h1>About Me</h1>
                             <div id="body">
                                 <p><strong>Christopher Olah</strong>: Math-obsessed, Haskell-loving, Linux-using, vegan, rambling, member of hacklab.to!</p>
@@ -95,19 +133,10 @@
                     </div>
                 </div>
             </div>
-        
+            -->
 
-            <div id="footer">
-                <div class="container">
-                    Subscribe to the <a href="./rss.xml">RSS feed</a>.
-                    </br>
-                    Built by <a href="https://github.com/oinkina">Oinkina</a> with
-                    <a href="http://jaspervdj.be/hakyll">Hakyll</a> 
-                    using <a href="http://getbootstrap.com/">Bootstrap</a>, 
-                    <a href="http://www.mathjax.org/">MathJax</a>, and
-                    <a href="http://disqus.com/">Disqus</a>.
-                </div>
-            </div>
+
+
         </div>
 
     <!-- jQuery-->
