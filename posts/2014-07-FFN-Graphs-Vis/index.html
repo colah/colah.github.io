@@ -95,12 +95,12 @@
 </div>
 </br>
 
-<p>On a website called fanfiction.net, users write millions of stories about their favorite stories. They have diverse opinions about them. They love some stories, and hate others. The opinions are noisy, and it’s hard to see the big picture.</p>
+<p>On a website called fanfiction.net, users write millions of stories about their favourite stories. They have diverse opinions about them. They love some stories, and hate others. The opinions are noisy, and it’s hard to see the big picture.</p>
 <p>With tools from mathematics and some helpful software, however, we can visualize the underlying structure.</p>
 <div class="bigcenterimgcontainer">
 <img src="img/graph-HP-ships-labeled.png" alt style>
 <div class="caption">
-Graph of Harry Potter Fanfiction, colored by ship
+Graph of Harry Potter Fanfiction, coloured by ship
 </div>
 </div>
 <div class="spaceafterimg">
@@ -113,12 +113,12 @@ Graph of Harry Potter Fanfiction, colored by ship
 <p><strong>Story Recommendations</strong>: <a href="recs/hp.html">Harry Potter</a>, <a href="recs/nar.html">Naruto</a>, <a href="recs/twi.html">Twilight</a></p>
 <p>And of course, you might skim below to see the pretty pictures!</p>
 <h3 id="introduction">Introduction</h3>
-<p>Fanfiction is a wide-spread phenomenon where fans of different works write derivative stories. This ranges from young children writing their first stories about their favorite fictional characters, to professional-quality stories written by aspiring novelists. Many such stories are posted to websites where they are read by a large audience and commented on. The largest such website is <a href="https://www.fanfiction.net/">fanficiton.net</a>.</p>
+<p>Fanfiction is a wide-spread phenomenon where fans of different works write derivative stories. This ranges from young children writing their first stories about their favourite fictional characters, to professional-quality stories written by aspiring novelists. Many such stories are posted to websites where they are read by a large audience and commented on. The largest such website is <a href="https://www.fanfiction.net/">fanficiton.net</a>.</p>
 <p>The sheer amount of fanfiction out there is rather staggering. The total number of stories on fanfiction.net exceeds six million. Harry Potter stories account for around 14% of these, followed by Naruto (around 7%) and Twilight (around 4%) (<a href="http://ffnresearch.blogspot.com/2010/07/fanfictionnet-story-totals.html">FFN Research</a>). The majority of these stories have very little in the way of readership, but popular stories can have a large number of readers.</p>
 <p>Some research was done into the demographics of fanfiction.net users and other topics by <a href="http://ffnresearch.blogspot.com/">FFN Research</a>. They found that 78% of fanfiction.net authors who joined in 2010 identified as female. Further, around 80% of users who report their age are between 13 and 17.</p>
 <p>A lot of other interesting research and analysis has been done on the blogs <a href="http://destinationtoast.tumblr.com/stats">Destination: Toast!</a> and <a href="http://toastystats.tumblr.com/">TOASTYSTATS</a>.</p>
 <h3 id="basic-methods">Basic Methods</h3>
-<p>In addition to allowing users to post stories they write, fanfiction.net allows authors to “favorite” stories they like. Looking at which stories tend to be favorited by the same users gives us a way to understand connections between stories.</p>
+<p>In addition to allowing users to post stories they write, fanfiction.net allows authors to “favourite” stories they like. Looking at which stories tend to be favourited by the same users gives us a way to understand connections between stories.</p>
 <div class="floatrightimgcontainer">
 <img src="img/explanation.png" alt style>
 <div class="caption">
@@ -134,7 +134,7 @@ Graph of Harry Potter Fanfiction, colored by ship
 </blockquote>
 <p>In order to ensure compliance with these terms, the author intentionally built significant rate limiting into the scraper and took care to minimize the load put on fanfiction.net. While the issue of academic analysis was not mentioned, it was not excluded and fanfiction.net’s operators have not previously objected to similar academic work. Further, this work could be the preliminary research needed for someone to build a good fanficiton search engine.</p>
 <p>Another section of the terms of service prohibits collecting personally identifiable information, which they define to include usernames. As such, I have deliberately discarded all such information and don’t use it. (Though, I note that several search engines do – try searching for an authors name on any major search engine.) I do refer to some usernames in this post, but that was done entirely by hand.</p>
-<p>In collecting data, since we are only looking at a subset of users, it is important to be wary of sampling bias. For example, if we sampled authors starting from the favorites of a particular author, or from those who had contributed stories to a community, we might get a very skewed perspective of the stories on fanfiction.net. The author considered a number of approaches, but concluded the fairest approach would be to use the authors of the most reviewed stories on fanfiction.net. This is a bias, but it should bias us towards the most interesting and important parts of the graph.</p>
+<p>In collecting data, since we are only looking at a subset of users, it is important to be wary of sampling bias. For example, if we sampled authors starting from the favourites of a particular author, or from those who had contributed stories to a community, we might get a very skewed perspective of the stories on fanfiction.net. The author considered a number of approaches, but concluded the fairest approach would be to use the authors of the most reviewed stories on fanfiction.net. This is a bias, but it should bias us towards the most interesting and important parts of the graph.</p>
 <h3 id="graph-construction">Graph Construction</h3>
 <p>A <a href="http://en.wikipedia.org/wiki/Graph_(mathematics)">graph</a>, in the context of mathematics, is a collection of objects called vertices joined by connections called edges. For example, cities can be thought of as the vertices a graph connected by different highways and roads (the edges).</p>
 <div class="centerimgcontainer">
@@ -147,17 +147,17 @@ An example of a graph (from Wikipedia)
 
 </div>
 <p>A weighted graph is a graph where some edges are “stronger” than others. For example, some cities are connected by giant 6-lane highways, while others are connected by gravel roads. Larger weights represent stronger connections and smaller weights represent weaker ones. A weight of zero is the same thing as having no connection at all.</p>
-<p>We will be interpreting fanfiction as a weighted graph, where edges represent a “connection” between stories. We will be using as our weights for edges the probability that someone will like both stories, given that they like one. That is, <span class="math">\(W_{a, b} = \frac{|F_a \cap F_b|}{|F_a \cup F_b|}\)</span> where <span class="math">\(F_s\)</span> is the users who favorited the story <span class="math">\(s\)</span>.</p>
+<p>We will be interpreting fanfiction as a weighted graph, where edges represent a “connection” between stories. We will be using as our weights for edges the probability that someone will like both stories, given that they like one. That is, <span class="math">\(W_{a, b} = \frac{|F_a \cap F_b|}{|F_a \cup F_b|}\)</span> where <span class="math">\(F_s\)</span> is the users who favourited the story <span class="math">\(s\)</span>.</p>
 <p>There are lots of other possibilities, some resulting in directed graphs:</p>
 <ul>
-<li>(directed) The probability that someone who favorites <span class="math">\(a\)</span> will favorite <span class="math">\(b\)</span>: <span class="math">\(W_{a\to b} = \frac{|F_a \cap F_b|}{|F_a|}\)</span></li>
-<li>The probability that someone who favorites <span class="math">\(a\)</span> favorites <span class="math">\(b\)</span> times the probability that someone who favorites <span class="math">\(b\)</span> favorites <span class="math">\(a\)</span>: <span class="math">\(W_{a,b} = \frac{|F_a \cap F_b|^2}{|F_a| * |F_b|}\)</span></li>
-<li>The lesser of the probability that someone who favorites <span class="math">\(a\)</span> favorites <span class="math">\(b\)</span> and the probability that someone who favorites <span class="math">\(b\)</span> favorites <span class="math">\(a\)</span>: <span class="math">\(W_{a,b} = \min\left(\frac{|F_a \cap F_b|}{|F_a|}, \frac{|F_a \cap F_b|}{|F_b|} \right)\)</span></li>
+<li>(directed) The probability that someone who favourites <span class="math">\(a\)</span> will favourite <span class="math">\(b\)</span>: <span class="math">\(W_{a\to b} = \frac{|F_a \cap F_b|}{|F_a|}\)</span></li>
+<li>The probability that someone who favourites <span class="math">\(a\)</span> favourites <span class="math">\(b\)</span> times the probability that someone who favourites <span class="math">\(b\)</span> favourites <span class="math">\(a\)</span>: <span class="math">\(W_{a,b} = \frac{|F_a \cap F_b|^2}{|F_a| * |F_b|}\)</span></li>
+<li>The lesser of the probability that someone who favourites <span class="math">\(a\)</span> favourites <span class="math">\(b\)</span> and the probability that someone who favourites <span class="math">\(b\)</span> favourites <span class="math">\(a\)</span>: <span class="math">\(W_{a,b} = \min\left(\frac{|F_a \cap F_b|}{|F_a|}, \frac{|F_a \cap F_b|}{|F_b|} \right)\)</span></li>
 </ul>
 <p>Our experience was that it didn’t matter too much for the results, for large graphs.</p>
 <p>(It’s worth noting that many of these could easily generalize to higher-dimensional edges for a weighted hyper-graph.)</p>
-<p>In our selected weight definition, <span class="math">\(W_{a, b} = \frac{|F_a \cap F_b|}{|F_a \cup F_b|}\)</span>, we give equal weight to the preferences of all users. But there’s a lot of variance between users: some favorite everything under the sun, while others very selectively favorite stories they really like. If we give the users who favorite thousands of stories the same weight as users who favorite ten, the users who favorite thousands dominate everything (and aren’t a very good signal).</p>
-<p>Instead, we give each user <span class="math">\(u\)</span> a weight of <span class="math">\(\frac{1}{20+n(u)}\)</span> where <span class="math">\(n(u)\)</span> denotes the number of stories <span class="math">\(u\)</span> has favorited. This results in a measure on the space of users, <span class="math">\(\mu(S) = \sum_{u \in S} \frac{1}{20+n(u)}\)</span>, and the equation for our weights becomes <span class="math">\(W_{a, b} = \frac{\mu(F_a \cap F_b)}{\mu(F_a \cup F_b)}\)</span>.</p>
+<p>In our selected weight definition, <span class="math">\(W_{a, b} = \frac{|F_a \cap F_b|}{|F_a \cup F_b|}\)</span>, we give equal weight to the preferences of all users. But there’s a lot of variance between users: some favourite everything under the sun, while others very selectively favourite stories they really like. If we give the users who favourite thousands of stories the same weight as users who favourite ten, the users who favourite thousands dominate everything (and aren’t a very good signal).</p>
+<p>Instead, we give each user <span class="math">\(u\)</span> a weight of <span class="math">\(\frac{1}{20+n(u)}\)</span> where <span class="math">\(n(u)\)</span> denotes the number of stories <span class="math">\(u\)</span> has favourited. This results in a measure on the space of users, <span class="math">\(\mu(S) = \sum_{u \in S} \frac{1}{20+n(u)}\)</span>, and the equation for our weights becomes <span class="math">\(W_{a, b} = \frac{\mu(F_a \cap F_b)}{\mu(F_a \cup F_b)}\)</span>.</p>
 <p>Applying these techniques to a couple of the top Harry Potter stories, we get the following graph (using <a href="http://www.graphviz.org/">graphviz</a>):</p>
 <div class="bigcenterimgcontainer">
 <img src="img/HP-basic.png" alt="Small labeled graph of top Harry Potter stories" style>
@@ -178,7 +178,7 @@ Small labeled graph of top Harry Potter stories
 <p>A quick Google search reveals that this triangular clique consists of the “Dark Prince Trilogy” by Kurinoone. The stories are more strongly linked to their immediate predecessor/successor than the pair separated by a story are to eachother.</p>
 <h3 id="large-graph-visualizations-for-harry-potter">Large Graph visualizations for Harry Potter</h3>
 <p>If we use different tools, we can visualize much larger graphs.</p>
-<p>We consider the top 2,000 most reviewed Harry Potter stories and their authors. Based on the author’s favorite lists, we construct a weighted graph, with the stories as nodes (edge weights are calculated as above).</p>
+<p>We consider the top 2,000 most reviewed Harry Potter stories and their authors. Based on the author’s favourite lists, we construct a weighted graph, with the stories as nodes (edge weights are calculated as above).</p>
 <p>We then prune the graph’s edges, keeping the top 8,000 most strongly weighted edges. We also prune the nodes, keeping only those with at least one edge. This leaves us with a graph of 1,623 nodes and 8,000 edges.</p>
 <p>We then load this graph into the graph visualization tool <a href="https://gephi.org/">gephi</a>. We layout the graph using the OpenOrd and ForceAtlas2 layout algorithms. (OpenOrd was particularly good at extracting clusters. Beyond that, this was largely a matter of aesthetic taste.)</p>
 <div class="bigcenterimgcontainer">
@@ -195,7 +195,7 @@ Graph of Harry Potter Fanfiction (top 1,623 stories)
 <div class="bigcenterimgcontainer">
 <img src="img/graph-HP-lang-labeled.png" alt style>
 <div class="caption">
-Graph of Harry Potter Fanfiction, colored by language
+Graph of Harry Potter Fanfiction, coloured by language
 </div>
 </div>
 <div class="spaceafterimg">
@@ -205,7 +205,7 @@ Graph of Harry Potter Fanfiction, colored by language
 <div class="bigcenterimgcontainer">
 <img src="img/graph-HP-ships-labeled.png" alt style>
 <div class="caption">
-Graph of Harry Potter Fanfiction, colored by ship
+Graph of Harry Potter Fanfiction, coloured by ship
 </div>
 </div>
 <div class="spaceafterimg">
@@ -217,7 +217,7 @@ Graph of Harry Potter Fanfiction, colored by ship
 <div class="bigcenterimgcontainer">
 <img src="img/graph-HP-slash-labeled.png" alt style>
 <div class="caption">
-Graph of Harry Potter Fanfiction, colored by slash
+Graph of Harry Potter Fanfiction, coloured by slash
 </div>
 </div>
 <div class="spaceafterimg">
@@ -244,7 +244,7 @@ Graph of top Naruto fanfiction (1,123 nodes and 4,000 edges)
 <div class="bigcenterimgcontainer">
 <img src="img/graph-NAR-lang-labeled.png" alt style>
 <div class="caption">
-Graph of top Naruto fanfiction, colored by language
+Graph of top Naruto fanfiction, coloured by language
 </div>
 </div>
 <div class="spaceafterimg">
@@ -254,7 +254,7 @@ Graph of top Naruto fanfiction, colored by language
 <div class="bigcenterimgcontainer">
 <img src="img/graph-NAR-ships-labeled.png" alt style>
 <div class="caption">
-Graph of top Naruto fanfiction, colored by ship
+Graph of top Naruto fanfiction, coloured by ship
 </div>
 </div>
 <div class="spaceafterimg">
@@ -271,11 +271,11 @@ Graph of top Twilight fanfiction (1,031 nodes, 5,00 edges)
 <div class="spaceafterimg">
 
 </div>
-<p>We can color it by language:</p>
+<p>We can colour it by language:</p>
 <div class="bigcenterimgcontainer">
 <img src="img/graph-TWI-lang-labeled.png" alt style>
 <div class="caption">
-Graph of top Twilight fanfiction, colored by language
+Graph of top Twilight fanfiction, coloured by language
 </div>
 </div>
 <div class="spaceafterimg">
@@ -285,7 +285,7 @@ Graph of top Twilight fanfiction, colored by language
 <div class="bigcenterimgcontainer">
 <img src="img/graph-TWI-ships-labeled.png" alt style>
 <div class="caption">
-Graph of top Twilight fanfiction, colored by ship
+Graph of top Twilight fanfiction, coloured by ship
 </div>
 </div>
 <div class="spaceafterimg">
@@ -295,7 +295,7 @@ Graph of top Twilight fanfiction, colored by ship
 <p>You can also explore an <a href="graphs/NAR-ship/">interactive graph of Naruto fanfiction</a> and of <a href="graphs/TWI-ship/">Twilight fanfiction</a>.</p>
 <h3 id="pagerank">PageRank</h3>
 <p>What are the best fanfics on fanfiction.net? How can we identify them?</p>
-<p>A naive approach would be to select the most favorited or reviewed stories. But people’s quality of taste varies. A more sophisticated approach is Google’s PageRank algorithm which is used to determine which web pages are of high quality.</p>
+<p>A naive approach would be to select the most favourited or reviewed stories. But people’s quality of taste varies. A more sophisticated approach is Google’s PageRank algorithm which is used to determine which web pages are of high quality.</p>
 <p>In a normal vote gives equal weight to every voter. But some voters are better qualified to decide than others. In PageRank, we recalculate the votes again and again, giving each “person’s” vote a weight based on how many votes they received in the previous step.</p>
 <p>In the case of the Internet, we interpret a website linking to another website as that website voting for the one it links to. Similarly, we can apply it to fanfiction by interpreting story A as “voting” for a story B with a weight of the probability that a user who likes A also likes B.</p>
 <p><strong>Harry Potter top stories by PageRank:</strong></p>
@@ -364,7 +364,7 @@ Graph of top Twilight fanfiction, colored by ship
 <a href="pagerank/twi.html"><b>More</b></a>
 </ol>
 
-<p>One neat thing we can do is give nodes on our graphs a size based on their PageRank. (We can also color nodes based on the first three components of the singular value decomposition of the adjacency matrix.)</p>
+<p>One neat thing we can do is give nodes on our graphs a size based on their PageRank. (We can also colour nodes based on the first three components of the singular value decomposition of the adjacency matrix.)</p>
 <div class="bigcenterimgcontainer">
 <img src="img/HP_union_size_larger.png" alt style>
 </div>
@@ -376,8 +376,8 @@ Graph of top Twilight fanfiction, colored by ship
 <p>This problem is called collaborative filtering, and is a well-established area. Unfortunately, it isn’t something I’m terribly knowledgeable about, so I took a relatively naive approach: sum over the preferences of all users, weighted by how similar their preferences are to the user you are trying to predict.</p>
 <p>Specifically, we give each story, <span class="math">\(s\)</span>, a rank <span class="math">\(R_u(s)\)</span>, for a user <span class="math">\(u\)</span>. If the rank is high, we think <span class="math">\(u\)</span> is likely to like <span class="math">\(s\)</span>.</p>
 <p><span class="math">\[R_u(s) = \sum_{v\in F_s \setminus \{u\}} \left(\frac{|S(u)\cap S(v)|}{20+|S(v)|}\right)^2\]</span></p>
-<p>where <span class="math">\(F_s\)</span> is the set of users who favorited <span class="math">\(s\)</span> and <span class="math">\(S(u)\)</span> is the stories favorited by the user <span class="math">\(u\)</span>.</p>
-<p>For example, we can make recommendations for S’TarKan, the author of the most favorited Harry Potter story on fanfiction.net:</p>
+<p>where <span class="math">\(F_s\)</span> is the set of users who favourited <span class="math">\(s\)</span> and <span class="math">\(S(u)\)</span> is the stories favourited by the user <span class="math">\(u\)</span>.</p>
+<p>For example, we can make recommendations for S’TarKan, the author of the most favourited Harry Potter story on fanfiction.net:</p>
 <ul>
 	<li>
 *<a href="http://fanfiction.net/s/2559745">Learning to Breathe</a> (1.459)
@@ -399,7 +399,7 @@ Graph of top Twilight fanfiction, colored by ship
 </li>
 </ul>
 
-<p>A * denotes that this is already one of the users favorite stories or one of their own stories. We can exclude their favorite stories, and their own stories:</p>
+<p>A * denotes that this is already one of the users favourite stories or one of their own stories. We can exclude their favourite stories, and their own stories:</p>
 <ul>
 	<li>
 <a href="http://fanfiction.net/s/2318355">Make A Wish</a> (0.949)
@@ -452,7 +452,7 @@ Graph of top Twilight fanfiction, colored by ship
 <p>In light of all this, I’d like to reflect on a few things.</p>
 <p><strong>Big Data</strong>: A year ago, I was very dismissive of “big data” as a buzzword. Primarily, it seems to be thrown around by business people who don’t really understand much. But one thing I’ve learned in explorations of data like this one and working in machine learning, is that there is something very powerful about larger amounts of data. There’s something very qualitatively different. The fanfiction data I used was actually quite small, only a few hundred users, because of how I limited the amount I downloaded, but I think it still demonstrates the sorts of things that become possible as you have larger amounts of data. (To be honest, a much more compelling example is the progress that’s been made in computer vision using ImageNet… But this still influenced my views.)</p>
 <p><strong>Digital Humanities</strong>: Digital humanities also seems to be a bit of a buzzword. But I hope this provides a simple example of the power that can come from applying a little bit of math and computer science to humanities problems.</p>
-<p><strong>Metadata and Privacy</strong>: In this essay, we analyzed stories by looking at whether they were favorited by the same users. There’s a natural “dual” to this: analyzing users by looking at whether they favorited the same stories. This would give us a graph of connections between users and allow us to find clusters of users. But what if you use other forms of metadata? For example, we now know that the US government has metadata on who phones who. It seems very likely that many companies and governments have information on where your cellphone is as a function of time. All this can construct a graph of society. I can’t really fathom how much one must be able to learn about someone from that. (And how easy it would be to misinterpret.)</p>
+<p><strong>Metadata and Privacy</strong>: In this essay, we analyzed stories by looking at whether they were favourited by the same users. There’s a natural “dual” to this: analyzing users by looking at whether they favourited the same stories. This would give us a graph of connections between users and allow us to find clusters of users. But what if you use other forms of metadata? For example, we now know that the US government has metadata on who phones who. It seems very likely that many companies and governments have information on where your cellphone is as a function of time. All this can construct a graph of society. I can’t really fathom how much one must be able to learn about someone from that. (And how easy it would be to misinterpret.)</p>
 <p><strong>Fanfiction Websites</strong>: I think there’s a lot of potential for fanfiction websites to better serve their users based on the techniques outlined here. I’d be really thrilled to see fanfiction.net or Archive Of Our Own adopt some of these ideas. Imagine being able to list a handful of stories in some category you’re interested in and discover others? Or get good recommendations? The ideas are all pretty straightforward once you think of them. I’d be very happy to talk to the groups behind different fanfiction websites and provide some help or share example code.</p>
 <p><strong>Deep Learning and NLP</strong>: Recently, there’s been some really cool results in applying Deep Learning to Natural Language Processing. One would need a lot more data than I collected, and it would take more effort, but I bet one could do some really interesting things here.</p>
 <p><strong>t-SNE</strong>: <a href="http://homepage.tudelft.nl/19j49/t-SNE.html">t-Distributed Stochastic Neighbor Embedding</a>, is an algorithm for visualizing the structure of high-dimensional data. It would be a much simpler approach to understanding the structure of fanfiction than the graph based one I used here, and probably give much better results. If I was starting again, I would use it.</p>
