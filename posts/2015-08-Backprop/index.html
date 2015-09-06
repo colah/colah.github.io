@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Calculus on Computational Graphs: Backpropagation -- colah's blog</title>
+        
+        <link rel="stylesheet" href="../../fonts/Serif/cmun-serif.css" />
+        <link rel="stylesheet" href="../../fonts/Serif-Slanted/cmun-serif-slanted.css" />
+
+        <!--BOOTSTRAP-->
+        <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!--mobile first-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--removed html from url but still is html-->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <!--font awesome-->
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+        <!--fonts: allan & cardo-->
+        <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
+
+        <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
+
+        <link href="../../css/default.css" rel="stylesheet">
+
+        <link href="../../comments/inlineDisqussions.css" rel="stylesheet">
+
+        <!--Highlight-->
+        <link href="../../highlight/styles/github.css" rel="stylesheet">
+        
+        <link href="../../favicon.ico" rel="shortcut icon" />
+
+        <!--<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+        <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49811703-1', 'colah.github.io');
+  ga('require', 'linkid', 'linkid.js');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+
+</script>
+    </head>
+
+    <body>
+        <div id="wrap">
+            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+                <div class="container">
+                    <!--Toggle header for mobile-->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand active" href="../../" style="font-size:20px;">colah's blog</a>
+                    </div>
+                    <!--normal header-->
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="../../archive.html"><span class="glyphicon glyphicon-pencil"></span>  Blog</a></li>
+                            <li><a href="../../about.html"><span class="glyphicon glyphicon-user"></span>  About</a></li>
+                            <li><a href="../../contact.html"><span class="glyphicon glyphicon-envelope"></span>  Contact</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </nav>
+
+            
+            <div id="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1>Calculus on Computational Graphs: Backpropagation</h1>
+                            <div class="info">
+    <p style="font-family:CMSS; font-size:120%">Posted on August 31, 2015</p>
+    
+    <!--
+        by colah
+    -->
+</div>
+</br>
+
+<h2 id="introduction">Introduction</h2>
+<p>Backpropagation is the key algorithm that makes training deep models computationally tractable. For modern neural networks, it can make training with gradient descent as much as ten million times faster, relative to a naive implementation. That’s the difference between a model taking a week to train and taking 200,000 years.</p>
+<p>Beyond its use in deep learning, backpropagation is a powerful computational tool in many other areas, ranging from weather forecasting to analyzing numerical stability – it just goes by different names. In fact, the algorithm has been reinvented at least dozens of times in different fields (see <a href="http://www.math.uiuc.edu/documenta/vol-ismp/52_griewank-andreas-b.pdf">Griewank (2010)</a>). The general, application independent, name is “reverse-mode differentiation.”</p>
+<p>Fundamentally, it’s a technique for calculating derivatives quickly. And it’s an essential trick to have in your bag, not only in deep learning, but in a wide variety of numerical computing situations.</p>
+<h2 id="computational-graphs">Computational Graphs</h2>
+<p>Computational graphs are a nice way to think about mathematical expressions. For example, consider the expression <span class="math">\(e=(a+b)*(b+1)\)</span>. There are three operations: two additions and one multiplication. To help us talk about this, let’s introduce two intermediary variables, <span class="math">\(c\)</span> and <span class="math">\(d\)</span> so that every function’s output has a variable. We now have:</p>
+<p><span class="math">\[c=a+b\]</span></p>
+<p><span class="math">\[d=b+1\]</span></p>
+<p><span class="math">\[e=c*d\]</span></p>
+<p>To create a computational graph, we make each of these operations, along with the input variables, into nodes. When one node’s value is the input to another node, an arrow goes from one to another.</p>
+<div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:17px; margin-top:17px;">
+<img src="img/tree-def.png" alt>
+</div>
+<p>These sorts of graphs come up all the time in computer science, especially in talking about functional programs. They are very closely related to the notions of dependency graphs and call graphs. They’re also the core abstraction behind the popular deep learning framework <a href="http://deeplearning.net/software/theano/">Theano</a>.</p>
+<p>We can evaluate the expression by setting the input variables to certain values and computing nodes up through the graph. For example, let’s set <span class="math">\(a=2\)</span> and <span class="math">\(b=1\)</span>:</p>
+<div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:17px; margin-top:17px;">
+<img src="img/tree-eval.png" alt>
+</div>
+<p>The expression evaluates to <span class="math">\(6\)</span>.</p>
+<h2 id="derivatives-on-computational-graphs">Derivatives on Computational Graphs</h2>
+<p>If one wants to understand derivatives in a computational graph, the key is to understand derivatives on the edges. If <span class="math">\(a\)</span> directly affects <span class="math">\(c\)</span>, then we want to know how it affects <span class="math">\(c\)</span>. If <span class="math">\(a\)</span> changes a little bit, how does <span class="math">\(c\)</span> change? We call this the <a href="https://en.wikipedia.org/wiki/Partial_derivative">partial derivative</a> of <span class="math">\(c\)</span> with respect to <span class="math">\(a\)</span>.</p>
+<p>To evaluate the partial derivatives in this graph, we need the <a href="https://en.wikipedia.org/wiki/Sum_rule_in_differentiation">sum rule</a> and the <a href="https://en.wikipedia.org/wiki/Product_rule">product rule</a>:</p>
+<p><span class="math">\[\frac{\partial}{\partial a}(a+b) = \frac{\partial a}{\partial a} + \frac{\partial b}{\partial a} = 1\]</span></p>
+<p><span class="math">\[\frac{\partial}{\partial u}uv = u\frac{\partial v}{\partial u} + v\frac{\partial u}{\partial u} = v\]</span></p>
+<p>Below, the graph has the derivative on each edge labeled.</p>
+<div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:17px; margin-top:17px;">
+<img src="img/tree-eval-derivs.png" alt>
+</div>
+<p>What if we want to understand how nodes that aren’t directly connected affect each other? Let’s consider how <span class="math">\(e\)</span> is affected by <span class="math">\(a\)</span>. If we change <span class="math">\(a\)</span> at a speed of 1, <span class="math">\(c\)</span> also changes at a speed of <span class="math">\(1\)</span>. In turn, <span class="math">\(c\)</span> changing at a speed of <span class="math">\(1\)</span> causes <span class="math">\(e\)</span> to change at a speed of <span class="math">\(2\)</span>. So <span class="math">\(e\)</span> changes at a rate of <span class="math">\(1*2\)</span> with respect to <span class="math">\(a\)</span>.</p>
+<p>The general rule is to sum over all possible paths from one node to the other, multiplying the derivatives on each edge of the path together. For example, to get the derivative of <span class="math">\(e\)</span> with respect to <span class="math">\(b\)</span> we get:</p>
+<p><span class="math">\[\frac{\partial e}{\partial b}= 1*2 + 1*3\]</span></p>
+<p>This accounts for how b affects e through c and also how it affects it through d.</p>
+<p>This general “sum over paths” rule is just a different way of thinking about the <a href="https://en.wikipedia.org/wiki/Chain_rule#Higher_dimensions">multivariate chain rule</a>.</p>
+<h2 id="factoring-paths">Factoring Paths</h2>
+<p>The problem with just “summing over the paths” is that it’s very easy to get a combinatorial explosion in the number of possible paths.</p>
+<div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:17px; margin-top:17px;">
+<img src="img/chain-def-greek.png" alt>
+</div>
+<p>In the above diagram, there are three paths from <span class="math">\(X\)</span> to <span class="math">\(Y\)</span>, and a further three paths from <span class="math">\(Y\)</span> to <span class="math">\(Z\)</span>. If we want to get the derivative <span class="math">\(\frac{\partial Z}{\partial X}\)</span> by summing over all paths, we need to sum over <span class="math">\(3*3 = 9\)</span> paths:</p>
+<p><span class="math">\[\frac{\partial Z}{\partial X} = \alpha\delta + \alpha\epsilon + \alpha\zeta + \beta\delta + \beta\epsilon + \beta\zeta + \gamma\delta + \gamma\epsilon + \gamma\zeta\]</span></p>
+<p>The above only has nine paths, but it would be easy to have the number of paths to grow exponentially as the graph becomes more complicated.</p>
+<p>Instead of just naively summing over the paths, it would be much better to factor them:</p>
+<p><span class="math">\[\frac{\partial Z}{\partial X} = (\alpha + \beta + \gamma)(\delta + \epsilon + \zeta)\]</span></p>
+<p>This is where “forward-mode differentiation” and “reverse-mode differentiation” come in. They’re algorithms for efficiently computing the sum by factoring the paths. Instead of summing over all of the paths explicitly, they compute the same sum more efficiently by merging paths back together at every node. In fact, both algorithms touch each edge exactly once!</p>
+<p>Forward-mode differentiation starts at an input to the graph and moves towards the end. At every node, it sums all the paths feeding in. Each of those paths represents one way in which the input affects that node. By adding them up, we get the total way in which the node is affected by the input, it’s derivative.</p>
+<div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:17px; margin-top:17px;">
+<img src="img/chain-forward-greek.png" alt>
+</div>
+<p>Though you probably didn’t think of it in terms of graphs, forward-mode differentiation is very similar to what you implicitly learned to do if you took an introduction to calculus class.</p>
+<p>Reverse-mode differentiation, on the other hand, starts at an output of the graph and moves towards the beginning. At each node, it merges all paths which originated at that node.</p>
+<div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:17px; margin-top:17px;">
+<img src="img/chain-backward-greek.png" alt>
+</div>
+<p>Forward-mode differentiation tracks how one input affects every node. Reverse-mode differentiation tracks how every node affects one output. That is, forward-mode differentiation applies the operator <span class="math">\(\frac{\partial}{\partial X}\)</span> to every node, while reverse mode differentiation applies the operator <span class="math">\(\frac{\partial Z}{\partial}\)</span> to every node.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<!--
+The problem with just “summing over the paths” is that it’s very easy to get a combinatorial explosion in the number of possible paths.
+
+<div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:17px; margin-top:17px;">
+<img src="img/chain-def.png" alt="">
+</div>
+
+In the above diagram, there are three paths from $X$ to $Y$, and a further three paths from $Y$ to $Z$. If we want to get the derivative $\frac{\partial Z}{\partial X}$ by summing over all paths, we need to sum over $3*3 = 9$  paths:
+
+$$\frac{\partial Z}{\partial X} = ad + ae + af + bd + be+bf + cd + ce + cf$$
+
+The above only has nine paths, but it would be easy to have the number of paths to grow exponentially as the graph becomes more complicated.
+
+Instead of just naively summing over the paths, it would be much better to factor them:
+
+$$\frac{\partial Z}{\partial X} = (a+b+c)(d+e+f)$$
+
+This is where "forward-mode differentiation" and "reverse-mode differentiation" come in. They’re algorithms for efficiently computing the sum by factoring the paths. Instead of summing over all of the paths explicitly, they compute the same sum more efficiently by merging paths back together as possible. In fact, both algorithms touch each edge exactly once!
+
+Forward-mode differentiation starts at an input to the graph and moves towards the end. At every node, it sums all the paths feeding in. Each of those paths represents one way in which the input affects that node. By adding them up, we get the total way in which the node is affected by the input, it’s derivative.
+
+<div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:17px; margin-top:17px;">
+<img src="img/chain-forward.png" alt="">
+</div>
+
+Though you probably didn’t think of it in terms of graphs, forward-mode differentiation is very similar to what you implicitly learned to do if you took an introduction to calculus class.
+
+Reverse-mode differentiation, on the other hand, starts at an output of the graph and moves towards the beginning. At each node, it merges all paths which originated at that node.
+
+<div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:17px; margin-top:17px;">
+<img src="img/chain-reverse.png" alt="">
+</div>
+
+Forward-mode differentiation tracks how one input affects every node. Reverse-mode differentiation tracks how every node affects one output. That is, forward-mode differentiation applies the operator $\frac{\partial}{\partial X}$ to every node, while reverse mode differentiation applies the operator $\frac{\partial Z}{\partial}$ to every node.[^DynamicProgramming]
+
+[^DynamicProgramming]: This might feel a bit like [dynamic programming](https://en.wikipedia.org/wiki/Dynamic_programming). That's because it is!
+-->
+
+<h2 id="computational-victories">Computational Victories</h2>
+<p>At this point, you might wonder why anyone would care about reverse-mode differentiation. It looks like a strange way of doing the same thing as the forward-mode. Is there some advantage?</p>
+<p>Let’s consider our original example again:</p>
+<div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:17px; margin-top:17px;">
+<img src="img/tree-eval-derivs.png" alt>
+</div>
+<p>We can use forward-mode differentiation from <span class="math">\(b\)</span> up. This gives us the derivative of every node with respect to <span class="math">\(b\)</span>.</p>
+<div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:17px; margin-top:17px;">
+<img src="img/tree-forwradmode.png" alt>
+</div>
+<p>We’ve computed <span class="math">\(\frac{\partial e}{\partial b}\)</span>, the derivative of our output with respect to one of our inputs.</p>
+<p>What if we do reverse-mode differentiation from <span class="math">\(e\)</span> down? This gives us the derivative of <span class="math">\(e\)</span> with respect to every node:</p>
+<div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:17px; margin-top:17px;">
+<img src="img/tree-backprop.png" alt>
+</div>
+<p>When I say that reverse-mode differentiation gives us the derivative of e with respect to every node, I really do mean <em>every node</em>. We get both <span class="math">\(\frac{\partial e}{\partial a}\)</span> and <span class="math">\(\frac{\partial e}{\partial b}\)</span>, the derivatives of <span class="math">\(e\)</span> with respect to both inputs. Forward-mode differentiation gave us the derivative of our output with respect to a single input, but reverse-mode differentiation gives us all of them.</p>
+<p>For this graph, that’s only a factor of two speed up, but imagine a function with a million inputs and one output. Forward-mode differentiation would require us to go through the graph a million times to get the derivatives. Reverse-mode differentiation can get them all in one fell swoop! A speed up of a factor of a million is pretty nice!</p>
+<p>When training neural networks, we think of the cost (a value describing how bad a neural network performs) as a function of the parameters (numbers describing how the network behaves). We want to calculate the derivatives of the cost with respect to all the parameters, for use in <a href="https://en.wikipedia.org/wiki/Gradient_descent">gradient descent</a>. Now, there’s often millions, or even tens of millions of parameters in a neural network. So, reverse-mode differentiation, called backpropagation in the context of neural networks, gives us a massive speed up!</p>
+<p>(Are there any cases where forward-mode differentiation makes more sense? Yes, there are! Where the reverse-mode gives the derivatives of one output with respect to all inputs, the forward-mode gives us the derivatives of all outputs with respect to one input. If one has a function with lots of outputs, forward-mode differentiation can be much, much, much faster.)</p>
+<h2 id="isnt-this-trivial">Isn’t This Trivial?</h2>
+<p>When I first understood what backpropagation was, my reaction was: “Oh, that’s just the chain rule! How did it take us so long to figure out?” I’m not the only one who’s had that reaction. It’s true that if you ask “is there a smart way to calculate derivatives in feedforward neural networks?” the answer isn’t that difficult.</p>
+<p>But I think it was much more difficult than it might seem. You see, at the time backpropagation was invented, people weren’t very focused on the feedforward neural networks that we study. It also wasn’t obvious that derivatives were the right way to train them. Those are only obvious once you realize you can quickly calculate derivatives. There was a circular dependency.</p>
+<p>Worse, it would be very easy to write off any piece of the circular dependency as impossible on casual thought. Training neural networks with derivatives? Surely you’d just get stuck in local minima. And obviously it would be expensive to compute all those derivatives. It’s only because we know this approach works that we don’t immediately start listing reasons it’s likely not to.</p>
+<p>That’s the benefit of hindsight. Once you’ve framed the question, the hardest work is already done.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Derivatives are cheaper than you think. That’s the main lesson to take away from this post. In fact, they’re unintuitively cheap, and us silly humans have had to repeatedly rediscover this fact. That’s an important thing to understand in deep learning. It’s also a really useful thing to know in other fields, and only more so if it isn’t common knowledge.</p>
+<p>Are there other lessons? I think there are.</p>
+<p>Backpropagation is also a useful lens for understanding how derivatives flow through a model. This can be extremely helpful in reasoning about why some models are difficult to optimize. The classic example of this is the problem of vanishing gradients in recurrent neural networks.</p>
+<p>Finally, I claim there is a broad algorithmic lesson to take away from these techniques. Backpropagation and forward-mode differentiation use a powerful pair of tricks (linearization and dynamic programming) to compute derivatives more efficiently than one might think possible. If you really understand these techniques, you can use them to efficiently calculate several other interesting expressions involving derivatives. We’ll explore this in a later blog post.</p>
+<p>This post gives a very abstract treatment of backpropagation. I strongly recommend reading Michael Nielsen’s <a href="http://neuralnetworksanddeeplearning.com/chap2.html">chapter on it</a> for an excellent discussion, more concretely focused on neural networks.</p>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>Thank you to <a href="http://research.google.com/pubs/GregCorrado.html">Greg Corrado</a>, <a href="https://shlens.wordpress.com/">Jon Shlens</a>, <a href="http://bengio.abracadoudou.com/">Samy Bengio</a> and <a href="http://www.vision.caltech.edu/anelia/">Anelia Angelova</a> for taking the time to proofread this post.</p>
+<p>Thanks also to <a href="https://www.linkedin.com/pub/dario-amodei/4/493/393">Dario Amodei</a>, <a href="http://michaelnielsen.org/">Michael Nielsen</a> and <a href="http://www.iro.umontreal.ca/~bengioy/yoshua_en/index.html">Yoshua Bengio</a> for discussion of approaches to explaining backpropagation. Also thanks to all those who tolerated me practicing explaining backpropagation in talks and seminar series!</p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>This might feel a bit like <a href="https://en.wikipedia.org/wiki/Dynamic_programming">dynamic programming</a>. That’s because it is!<a href="#fnref1">↩</a></p></li>
+</ol>
+</section>
+
+<style>
+.post{width:160px;min-height:215px;margin-bottom:15px;margin-left:5px;margin-right:5px;float:left;border:2px solid black;background-color:white;border-radius:5px}
+.post h3{margin:5px;font-size:65%;text-align:center}
+.post h4{margin:0px;font-size:50%;text-align:center}
+.post img{margin:0px;padding:2px;margin-bottom:10px;width:100%;height:155px}
+</style>
+
+
+<section>
+<hr>
+<h4>More Posts</h4>
+
+<a href="../../posts/2014-07-Understanding-Convolutions/">
+<div class="post">
+<img src="../../posts/2014-07-Understanding-Convolutions/img/fig.png">
+<h3>Understanding Convolutions</h3>
+</div>
+</a>
+
+<a href="../../posts/2015-08-Understanding-LSTMs/">
+<div class="post">
+<img src="../../images/post-covers/lstm.png">
+<h3>Understanding LSTM Networks</h3>
+</div>
+</a>
+
+<a href="../../posts/2014-10-Visualizing-MNIST/">
+<div class="post">
+<img src="../../posts/2014-10-Visualizing-MNIST/img/fig.png">
+<h3>Visualizing MNIST</h3>
+<h4>An Exploration of Dimensionality Reduction</h4>
+</div>
+</a>
+
+<a href="../../posts/2014-07-Conv-Nets-Modular/">
+<div class="post">
+<img src="../../posts/2014-07-Conv-Nets-Modular/img/fig.png">
+<h3>Conv Nets</h3> <h4>A Modular Perspective</h4>
+</div>
+</a>
+
+<!--
+
+
+
+<a href="../../posts/2014-10-Visualizing-MNIST/">
+<div class="post">
+<img src="../../posts/2014-10-Visualizing-MNIST/img/fig.png">
+<h3>Visualizing MNIST</h3>
+<h4>An Exploration of Dimensionality Reduction</h4>
+</div>
+</a>
+
+<a href="../../posts/2015-01-Visualizing-Representations/">
+<div class="post">
+<img src="../../posts/2015-01-Visualizing-Representations/img/fig.png">
+<h3>Visualizing Representations</h3>
+<h4>Deep Learning and Human Beings</h4>
+</div>
+</a>
+
+
+<a href="../../posts/2014-07-Understanding-Convolutions/">
+<div class="post">
+<img src="../../posts/2014-07-Understanding-Convolutions/img/fig.png">
+<h3>Understanding Convolutions</h3>
+</div>
+</a>
+
+
+<a href="../../posts/2014-12-Groups-Convolution/">
+<div class="post">
+<img src="../../posts/2014-12-Groups-Convolution/img/fig.png">
+<h3>Groups &amp; Group Convolutions</h3>
+</div>
+</a>
+
+<a href="https://christopherolah.wordpress.com/2011/08/08/the-real-3d-mandelbrot-set/">
+<div class="post">
+<img src="../../images/post-covers/mandelbrot.png">
+<h3>The Real 3D Mandelbrot Set</h3>
+<h4 style="margin-top:2px;"><i>On my old blog</i></h4>
+</div>
+</a>
+
+<a href="../../posts/2014-07-FFN-Graphs-Vis/">
+<div class="post">
+<img src="../../posts/2014-07-FFN-Graphs-Vis/img/graph-HP-ships-labeled.png">
+<h3>Fanfiction, Graphs, and PageRank</h3>
+</div>
+</a>
+
+-->
+
+<br style="clear:left;">
+
+</section>
+
+<div id="disqus_thread"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+<script src="../../comments/inlineDisqussions.js"></script>
+<script src="../../js/disqus.js"></script>
+
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+            </div>
+        
+
+            <div id="footer">
+                <div class="container">
+                    Built by <a href="https://github.com/oinkina">Oinkina</a> with
+                    <a href="http://jaspervdj.be/hakyll">Hakyll</a> 
+                    using <a href="http://getbootstrap.com/">Bootstrap</a>, 
+                    <a href="http://www.mathjax.org/">MathJax</a>,
+                    <a href="http://disqus.com/">Disqus</a>,
+                    <a href="https://github.com/unconed/MathBox.js">MathBox.js</a>,
+                    <a href="http://highlightjs.org/">Highlight.js</a>, 
+                    and <a href="http://ignorethecode.net/blog/2010/04/20/footnotes/">Footnotes.js</a>.
+                </div>
+            </div>
+        </div>
+
+    <!-- jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="../../js/footnotes.js"></script>
+
+    <script src="../../comments/inlineDisqussions.js"></script>
+    
+    <noscript>Enable JavaScript for footnotes, Disqus comments, and other cool stuff.</noscript>
+
+    </body>
+
+</html>

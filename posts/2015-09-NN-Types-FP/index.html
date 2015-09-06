@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Neural Networks, Types, and Functional Programming -- colah's blog</title>
+        
+        <link rel="stylesheet" href="../../fonts/Serif/cmun-serif.css" />
+        <link rel="stylesheet" href="../../fonts/Serif-Slanted/cmun-serif-slanted.css" />
+
+        <!--BOOTSTRAP-->
+        <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!--mobile first-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--removed html from url but still is html-->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <!--font awesome-->
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+        <!--fonts: allan & cardo-->
+        <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
+
+        <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
+
+        <link href="../../css/default.css" rel="stylesheet">
+
+        <link href="../../comments/inlineDisqussions.css" rel="stylesheet">
+
+        <!--Highlight-->
+        <link href="../../highlight/styles/github.css" rel="stylesheet">
+        
+        <link href="../../favicon.ico" rel="shortcut icon" />
+
+        <!--<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+        <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49811703-1', 'colah.github.io');
+  ga('require', 'linkid', 'linkid.js');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+
+</script>
+    </head>
+
+    <body>
+        <div id="wrap">
+            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+                <div class="container">
+                    <!--Toggle header for mobile-->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand active" href="../../" style="font-size:20px;">colah's blog</a>
+                    </div>
+                    <!--normal header-->
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="../../archive.html"><span class="glyphicon glyphicon-pencil"></span>  Blog</a></li>
+                            <li><a href="../../about.html"><span class="glyphicon glyphicon-user"></span>  About</a></li>
+                            <li><a href="../../contact.html"><span class="glyphicon glyphicon-envelope"></span>  Contact</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </nav>
+
+            
+            <div id="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1>Neural Networks, Types, and Functional Programming</h1>
+                            <div class="info">
+    <p style="font-family:CMSS; font-size:120%">Posted on September  3, 2015</p>
+    
+    <!--
+        by colah
+    -->
+</div>
+</br>
+
+<!--<br> <i style="font-size:80%">Deep Learning Thirty Years in the Future</i> -->
+
+
+<h2 id="an-ad-hoc-field">An Ad-Hoc Field</h2>
+<p>Deep learning, despite its remarkable successes, is a young field. While models called artificial neural networks have been studied for decades, much of that work seems only tenuously connected to modern results.</p>
+<p>It’s often the case that young fields start in a very ad-hoc manner. Later, the mature field is understood very differently than it was understood by its early practitioners. For example, in taxonomy, people have grouped plants and animals for thousands of years, but the way we understood what we were doing changed a lot in light of evolution and molecular biology. In chemistry, we have explored chemical reactions for a long time, but what we understood ourselves to do changed a lot with the discovery of irreducible elements, and again later with models of the atom. Those are grandiose examples, but the history of science and mathematics has seen this pattern again and again, on many different scales.</p>
+<p>It seems quite likely that deep learning is in this ad-hoc state.</p>
+<p>At the moment, deep learning is held together by an extremely successful tool. This tool doesn’t seem fundamental; it’s something we’ve stumbled on, with seemingly arbitrary details that change regularly. As a field, we don’t yet have some unifying insight or shared understanding. In fact, the field has several competing narratives!</p>
+<p>I think it is very likely that, reflecting back in 30 years, we will see deep learning very differently.</p>
+<h2 id="deep-learning-30-years-in-the-future">Deep Learning 30 Years in the Future</h2>
+<p>If we think we’ll probably see deep learning very differently in 30 years, that suggests an interesting question: how are we going to see it? Of course, no one can actually know how we’ll come to understand the field. But it is interesting to speculate.</p>
+<p>At present, three narratives are competing to be the way we understand deep learning. There’s the neuroscience narrative, drawing analogies to biology. There’s the representations narrative, centered on transformations of data and the manifold hypothesis. Finally, there’s a probabilistic narrative, which interprets neural networks as finding latent variables. These narratives aren’t mutually exclusive, but they do present very different ways of thinking about deep learning.</p>
+<p>This essay extends the representations narrative to a new answer: deep learning studies a connection between optimization and functional programming.</p>
+<p>In this view, the representations narrative in deep learning corresponds to type theory in functional programming. It sees deep learning as the junction of two fields we already know to be incredibly rich. What we find, seems so beautiful to me, feels so natural, that the mathematician in me could believe it to be something fundamental about reality.</p>
+<p>This is an extremely speculative idea. I am not arguing that it is true. I wish to argue only that it is plausible, that one could imagine deep learning evolving in this direction. To be clear: I am primarily making an aesthetic argument, rather than an argument of fact. I wish to show that this is a natural and elegant idea, encompassing what we presently call deep learning.</p>
+<h2 id="optimization-function-composition">Optimization &amp; Function Composition</h2>
+<p>The distinctive property of deep learning is that it studies deep neural networks – neural networks with many layers. Over the course of multiple layers, these models <a href="http://colah.github.io/posts/2015-01-Visualizing-Representations/#neural-networks-transform-space">progressively bend data</a>, warping it into a form where it is easy to solve the given task.</p>
+<div style="width:80%; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:17px;">
+<img src="img/netvis.png" alt>
+</div>
+<p>The details of these layers change every so often.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> What has remained constant is that there is a sequence of layers.</p>
+<p>Each layer is a function, acting on the output of a previous layer. As a whole, the network is a chain of composed functions. This chain of composed functions is optimized to perform a task.</p>
+<p>Every model in deep learning that I am aware of involves optimizing composed functions. I believe this is the heart of what we are studying.</p>
+<h2 id="representations-are-types">Representations are Types</h2>
+<p>With every layer, neural networks transform data, molding it into a form that makes their task easier to do. We call these transformed versions of data “representations.”</p>
+<p>Representations correspond to types.</p>
+<p>At their crudest, types in computer science are a way of embedding some kind of data in <span class="math">\(n\)</span> bits. Similarly, representations in deep learning are a way to embed a data manifold in <span class="math">\(n\)</span> dimensions.</p>
+<p>Just as two functions can only be composed together if their types agree, two layers can only be composed together when their representations agree. Data in the wrong representation is nonsensical to a neural network. Over the course of training, adjacent layers negotiate the representation they will communicate in; the performance of the network depends on data being in the representation the network expects.</p>
+<div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:17px;">
+<img src="img/types-compose.png" alt>
+</div>
+<div class="caption" style="margin-bottom:20px; font-weight: bold;">
+A layer <span class="math">\(f_1\)</span> followed by a layer <span class="math">\(f_2\)</span>. The output representation of <span class="math">\(f_1\)</span> is the input of <span class="math">\(f_2\)</span>.
+</div>
+<p>In the case of very simple neural network architectures, where there’s just a linear sequence of layers, this isn’t very interesting. The representation of one layer’s output needs to match the representation of the next layer’s input – so what? It’s a trivial and boring requirement.</p>
+<p>But many neural networks have more complicated architectures where this becomes a more interesting constraint. For a very simple example, let’s imagine a neural network with multiple similar kinds of inputs, which performs multiple, related tasks. Perhaps it takes in RGB images and also grayscale images. Maybe it’s looking at pictures of people, and trying to predict age and gender. Because the similarities between the kinds of inputs and between the kinds of tasks, it can be helpful to do all of this in one model, so that training data helps them all. The result is multiple input layers mapping into one representation, and multiple outputs mapping from the same representation.</p>
+<div style="width:80%; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:17px;">
+<img src="img/types-branchmerge.png" alt>
+</div>
+<p>Perhaps this example seems a bit contrived, but mapping different kinds of data into the same representation can lead to <a href="http://colah.github.io/posts/2014-07-NLP-RNNs-Representations/">some pretty remarkable things</a>. For example, by mapping words from two languages into one representation, we can find corresponding words that we didn’t know were translations when we started. And by mapping images and words into the same representation, we can classify images of classes we’ve never seen!</p>
+<p>Representations and types can be seen as the basic building blocks for deep learning and functional programming respectively. One of the major narratives of deep learning, the manifolds and representations narrative, is entirely centered on neural networks bending data into new representations. The known connection between geometry, logic, topology, and functional programming suggests that the connections between representations and types may be of fundamental significance.</p>
+<h2 id="deep-learning-functional-programming">Deep Learning &amp; Functional Programming</h2>
+<p>One of the key insights behind modern neural networks is the idea that many copies of one neuron can be used in a neural network.</p>
+<p>In programming, the abstraction of functions is essential. Instead of writing the same code dozens, hundreds, or even thousands of times, we can write it once and use it as we need it. Not only does this massively reduce the amount of code we need to write and maintain, speeding the development process, but it also reduces the risk of us introducing bugs, and makes the mistakes we do make easier to catch.</p>
+<p>Using multiple copies of a neuron in different places is the neural network equivalent of using functions. Because there is less to learn, the model learns more quickly and learns a better model. This technique – the technical name for it is ‘weight tying’ – is essential to the phenomenal results we’ve recently seen from deep learning.</p>
+<p>Of course, one can’t just arbitrarily put copies of neurons all over the place. For the model to work, you need to do it in a principled way, exploiting some structure in your data. In practice, there are a handful of patterns that are widely used, such as recurrent layers and convolutional layers.</p>
+<p>These neural network patterns are just higher order functions – that is, functions which take functions as arguments. Things like that have been studied extensively in functional programming. In fact, many of these network patterns correspond to extremely common functions, like fold. The only unusual thing is that, instead of receiving normal functions as arguments, they receive chunks of neural network.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<ul style="margin-top:20px;">
+
+<li>
+<p><strong>Encoding Recurrent Neural Networks</strong> are just folds. They’re often used to allow a neural network to take a variable length list as input, for example taking a sentence as input.</p>
+<div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:3px;">
+<img src="img/RNN-encoding.png" alt style="margin-top:1px;">
+</div>
+<div class="caption" style="margin-bottom:20px; font-weight: normal;">
+<div style="font-size:110%; font-weight: bold;">
+fold = Encoding RNN
+</div>
+Haskell: <span style="font-family:monospace; font-size:90%;">foldl a s</span>
+</div>
+</li>
+
+<li>
+<p><strong>Generating Recurrent Neural Networks</strong> are just unfolds. They’re often used to allow a neural network to produce a list of outputs, such as words in a sentence.</p>
+<div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:3px;">
+<img src="img/RNN-generating.png" alt style="margin-top:1px;">
+</div>
+<div class="caption" style="margin-bottom:20px; font-weight: normal;">
+<div style="font-size:110%; font-weight: bold;">
+unfold = Generating RNN
+</div>
+Haskell: <span style="font-family:monospace; font-size:90%;">unfoldr a s</span>
+</div>
+</li>
+
+<li>
+<p><strong>General Recurrent Neural Networks</strong> are accumulating maps. They’re often used when we’re trying to make predictions in a sequence. For example, in voice recognition, we might wish to predict a phenome for every time step in an audio segment, based on past context.</p>
+<div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:3px;">
+<img src="img/RNN-general.png" alt style="margin-top:1px;">
+</div>
+<div class="caption" style="margin-bottom:20px; font-weight: normal;">
+<div style="font-size:110%; font-weight: bold;">
+Accumulating Map = RNN
+</div>
+Haskell: <span style="font-family:monospace; font-size:90%;">mapAccumR a s</span>
+</div>
+</li>
+
+<li>
+<p><strong>Bidirectional Recursive Neural Networks</strong> are a more obscure variant, which I mention primarily for flavor. In functional programming terms, they are a left and a right accumulating map zipped together. They’re used to make predictions over a sequence with both past and future context.</p>
+<div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:3px;">
+<img src="img/RNN-bidirectional.png" alt style="margin-top:1px;">
+</div>
+<div class="caption" style="margin-bottom:20px; font-weight: normal;">
+<div style="font-size:110%; font-weight: bold;">
+Zipped Left &amp; Right Accumulating Map = Bidirectional RNN
+</div>
+Haskell: <span style="font-family:monospace; font-size:90%;">zip (mapAccumR a s xs) (mapAccumL a` s` xs)</span>
+</div>
+</li>
+
+<li>
+<p><strong>Convolutional Neural Networks</strong> are a close relative of map. A normal map applies a function to every element. Convolutional neural networks also look at neighboring elements, applying a function to a small window around every element.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:5px;">
+<img src="img/Conv1.png" alt style="margin-top:1px;">
+</div>
+<div class="caption" style="margin-bottom:10px; font-weight: normal;">
+<div style="font-size:110%; font-weight: bold;">
+Windowed Map = Convolutional Layer
+</div>
+Haskell: <span style="font-family:monospace; font-size:90%;">zipWith a xs (tail xs)</span>
+</div>
+<p>Two dimensional convolutional neural networks are particularly notable. They have been behind recent successes in computer vision. (<a href="http://colah.github.io/posts/2014-07-Conv-Nets-Modular/">More on conv nets.</a>)</p>
+<div style="width:40%; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:17px;">
+<img src="img/Conv2.png" alt>
+</div>
+<div class="caption" style="margin-bottom:25px; font-weight: normal;">
+<div style="font-size:110%; font-weight: bold;">
+Two Dimensional Convolutional Network
+</div>
+</div>
+<li>
+<p><strong>Recursive Neural Networks</strong> (“TreeNets”) are catamorphisms, a generalization of folds. They consume a data structure from the bottom up. They’re mostly used for natural language processing, to allow neural networks to operate on parse trees.</p>
+<div style="width:55%; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:17px;">
+<img src="img/TreeNet.png" alt>
+</div>
+<div class="caption" style="margin-bottom:20px; font-weight: normal;">
+<div style="font-size:110%; font-weight: bold;">
+Catamorphism = TreeNet
+</div>
+Haskell: <span style="font-family:monospace; font-size:90%;">cata a</span>
+</div>
+</li>
+
+<p>The above examples demonstrate how common patterns in neural networks correspond to very natural, simple functional programs.</p>
+<h2 id="a-new-kind-of-programming">A New Kind of Programming</h2>
+<p>These patterns are building blocks which can be combined together into larger networks. Like the building blocks, these combinations are functional programs, with chunks of neural network throughout. The functional program provides high level structure, while the chunks are flexible pieces that learn to perform the actual task within the framework provided by the functional program.</p>
+<p>These combinations of building blocks can do really, really remarkable things. I’d like to look at a few examples.</p>
+<ul>
+
+<li>
+<p><a href="http://arxiv.org/pdf/1409.3215.pdf">Sutskever, <em>et al.</em> (2014)</a> perform state of the art English to French translation by combining an encoding RNN and a generating RNN. In functional programming terms, they essentially fold over the (backwards) English sentence and then unfold to produce the French translation.</p>
+<div style="width:75%; margin-left:auto; margin-right:auto; margin-bottom:18px; margin-top:18px;">
+<img src="img/Translation2-Backwards.png" alt>
+</div>
+</li>
+
+<li>
+<p><a href="http://arxiv.org/pdf/1411.4555.pdf">Vinyals, <em>et al.</em> (2014)</a> generate image captions with a convolutional network and a generating RNN. Essentially, they consume the image with a convolutional network, and then unfold the resulting vector into a sentence describing it.</p>
+<div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:18px; margin-top:18px;">
+<img src="img/image-caption.png" alt>
+<div class="caption" style="margin-bottom:10px; font-weight: normal;">
+(<a href="http://arxiv.org/pdf/1411.4555.pdf">Vinyals, <em>et al.</em> (2014)</a>)
+</div>
+</div>
+</li>
+</ul>
+
+<p>These sorts of models can be seen as a kind of differentiable functional programming.</p>
+<p>But it’s not just an abstract thing! They’re imbued with the flavor of functional programming, even if people don’t use that language. When I hear colleagues talk at a high level about their models, it has a very different feeling to it than people talking about more classical models. People talk about things in lots of different ways, of course – there’s lots of variance in how people see deep learning – but there’s often an undercurrent that feels very similar to functional programming conversations.</p>
+<p>It feels like a new kind of programming altogether, a kind of differentiable functional programming. One writes a very rough functional program, with these flexible, learnable pieces, and defines the correct behavior of the program with lots of data. Then you apply gradient descent, or some other optimization algorithm. The result is a program capable of doing remarkable things that we have no idea how to create directly, like generating captions describing images.</p>
+<p>It’s the natural intersection of functional programming and optimization, and I think it’s beautiful.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>I find this idea really beautiful. At the same time, this is a pretty strange article and I feel a bit weird posting it. I’m very strongly presenting a speculative idea with little support behind it besides my own enthusiasm. Honestly, adopting the most objective perspective I can, I expect this idea is wrong, because most untested ideas are wrong. But it could be right, and I think it’s worth talking about.</p>
+<p>Beyond that, I’m not really the right person to explore a lot of the directions this suggests – for example, one of the obvious things to do is to analyze neural networks from a homotopy type theory perspective, but I don’t have the relevant background. This is an idea that’s begging for broader discussion. It really seems like publishing this is the right thing to do.</p>
+<p>Finally, I’m hoping this essay might stir up more discussion and thoughts about what deep learning is really about. I think there’s an important discussion waiting to be had.</p>
+<p>Besides, what’s the point of writing a blog if I can’t speculate? Hopefully, I’ve been able to appropriately balance my excitement with my uncertainty.</p>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>Firstly, I’m incredibly grateful to <a href="http://research.google.com/pubs/GregCorrado.html">Greg Corrado</a> and <a href="https://aaroncourville.wordpress.com/">Aaron Courville</a>. They are the deep learning researchers I know who most strongly empathize with these ideas, and I’m really grateful for their intellectual support.</p>
+<p>Several other people have had really extended and helpful conversations with me. Sebastian Zany spent several hours talking about type theory and neural networks with me. <a href="http://michaelnielsen.org/">Michael Nielsen</a> gave thorough feedback on a draft of this essay. <a href="https://twitter.com/flower_snark">Chas Leichner</a> thought really deeply about these ideas, and was very encouraging. A big thank you to the three of them!</p>
+<p>I’m also thankful for the comments of <a href="http://www.jameskoppel.com/">James Koppel</a>, <a href="http://people.cs.umass.edu/~luke/">Luke Vilnis</a>, <a href="http://stanford.edu/~sbowman/">Sam Bowman</a>, <a href="https://gregbrockman.com/">Greg Brockman</a> and <a href="https://github.com/D1plo1d">Rob Gilson</a>. Finally, I’ve spoken with a number of other people about these ideas in the last few months – thanks to all of them!</p>
+<h2 id="appendix-functional-names-of-common-layers">Appendix: Functional Names of Common Layers</h2>
+<table class="table table-bordered table-condensed" style="width:70%; margin-left:auto; margin-right:auto;">
+<tr><th>
+Deep Learning Name
+</th><th>
+Functional Name
+</th></th>
+<tr><td>
+Learned Vector
+</td><td>
+Constant
+</td></tr>
+<tr><td>
+Embedding Layer
+</td><td>
+List Indexing
+</td></tr>
+<tr><td>
+Encoding RNN
+</td><td>
+Fold
+</td></tr>
+<tr><td>
+Generating RNN
+</td><td>
+Unfold
+</td></tr>
+<tr><td>
+General RNN
+</td><td>
+Accumulating Map
+</td></tr>
+<tr><td>
+Bidirectional RNN
+</td><td>
+Zipped Left/Right Accumulating Maps
+</td></tr>
+<tr><td>
+Conv Layer
+</td><td>
+“Window Map”
+</td></tr>
+<tr><td>
+TreeNet
+</td><td>
+Catamorphism
+</td></tr>
+<tr><td>
+Inverse TreeNet
+</td><td>
+Anamorphism
+</td></tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>For example, the once ubiquitous sigmoid layer has been substantially replaced by ReLU layers.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>I think it’s actually kind of surprising that these sort of models are possible at all, and it’s because of a surprising fact. Many higher order functions, given differentiable functions as arguments, produce a function which is differentiable almost everywhere. Further, given the derivatives of argument functions, you can simply use chain rule to calculate the derivative of the resulting function.<a href="#fnref2">↩</a></p></li>
+<li id="fn3">This operation is also closely related to stencil/convolution functions, which are their linear version. They’re typically implemented using those. However, in modern neural net research, where “MLP convolution layers” are becoming more popular, it seems preferable to think of this as an arbitrary function.
+</li>
+
+
+<a href="#fnref3">↩</a></li>
+</ol>
+</section>
+
+
+<style>
+.post{width:160px;min-height:210px;margin-bottom:15px;margin-left:5px;margin-right:5px;float:left;border:2px solid black;background-color:white;border-radius:5px}
+.post h3{margin:5px;font-size:65%;text-align:center}
+.post h4{margin:0px;font-size:50%;text-align:center}
+.post img{margin:0px;padding:2px;margin-bottom:10px;width:100%;height:155px}
+</style>
+
+
+<section>
+<hr>
+<h4>More Posts</h4>
+
+<a href="../../posts/2014-07-NLP-RNNs-Representations/">
+<div class="post">
+<img src="../../posts/2014-07-NLP-RNNs-Representations/img/Mikolov-GenderVecs.png">
+<h3>Deep Learning, NLP, and Representations</h3>
+</div>
+</a>
+
+<a href="../../posts/2015-08-Understanding-LSTMs/">
+<div class="post">
+<img src="../../images/post-covers/lstm.png">
+<h3>Understanding LSTM Networks</h3>
+</div>
+</a>
+
+<a href="../../posts/2014-03-NN-Manifolds-Topology/">
+<div class="post">
+<img src="../../images/post-covers/topology.png">
+<h3>Neural Networks, Manifolds, and Topology</h3>
+</div>
+</a>
+
+<a href="../../posts/2015-02-DataList-Illustrated/">
+<div class="post">
+<img src="../../images/post-covers/DataList.png">
+<h3>Data.List Recursion Illustrated</h3>
+</div>
+</a>
+
+
+<!--
+
+
+<a href="../../posts/2015-08-Understanding-LSTMs/">
+<div class="post">
+<img src="../../images/post-covers/lstm.png">
+<h3>Understanding LSTM Networks</h3>
+</div>
+</a>
+
+<a href="../../posts/2014-10-Visualizing-MNIST/">
+<div class="post">
+<img src="../../posts/2014-10-Visualizing-MNIST/img/fig.png">
+<h3>Visualizing MNIST</h3>
+<h4>An Exploration of Dimensionality Reduction</h4>
+</div>
+</a>
+
+<a href="../../posts/2015-01-Visualizing-Representations/">
+<div class="post">
+<img src="../../posts/2015-01-Visualizing-Representations/img/fig.png">
+<h3>Visualizing Representations</h3>
+<h4>Deep Learning and Human Beings</h4>
+</div>
+</a>
+
+
+<a href="../../posts/2014-07-Understanding-Convolutions/">
+<div class="post">
+<img src="../../posts/2014-07-Understanding-Convolutions/img/fig.png">
+<h3>Understanding Convolutions</h3>
+</div>
+</a>
+
+
+<a href="../../posts/2014-12-Groups-Convolution/">
+<div class="post">
+<img src="../../posts/2014-12-Groups-Convolution/img/fig.png">
+<h3>Groups &amp; Group Convolutions</h3>
+</div>
+</a>
+
+<a href="https://christopherolah.wordpress.com/2011/08/08/the-real-3d-mandelbrot-set/">
+<div class="post">
+<img src="../../images/post-covers/mandelbrot.png">
+<h3>The Real 3D Mandelbrot Set</h3>
+<h4 style="margin-top:2px;"><i>On my old blog</i></h4>
+</div>
+</a>
+
+<a href="../../posts/2014-07-FFN-Graphs-Vis/">
+<div class="post">
+<img src="../../posts/2014-07-FFN-Graphs-Vis/img/graph-HP-ships-labeled.png">
+<h3>Fanfiction, Graphs, and PageRank</h3>
+</div>
+</a>
+
+-->
+
+<br style="clear:left;">
+
+</section>
+
+<div id="disqus_thread"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+<script src="../../comments/inlineDisqussions.js"></script>
+<script src="../../js/disqus.js"></script>
+
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+            </div>
+        
+
+            <div id="footer">
+                <div class="container">
+                    Built by <a href="https://github.com/oinkina">Oinkina</a> with
+                    <a href="http://jaspervdj.be/hakyll">Hakyll</a> 
+                    using <a href="http://getbootstrap.com/">Bootstrap</a>, 
+                    <a href="http://www.mathjax.org/">MathJax</a>,
+                    <a href="http://disqus.com/">Disqus</a>,
+                    <a href="https://github.com/unconed/MathBox.js">MathBox.js</a>,
+                    <a href="http://highlightjs.org/">Highlight.js</a>, 
+                    and <a href="http://ignorethecode.net/blog/2010/04/20/footnotes/">Footnotes.js</a>.
+                </div>
+            </div>
+        </div>
+
+    <!-- jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="../../js/footnotes.js"></script>
+
+    <script src="../../comments/inlineDisqussions.js"></script>
+    
+    <noscript>Enable JavaScript for footnotes, Disqus comments, and other cool stuff.</noscript>
+
+    </body>
+
+</html>
