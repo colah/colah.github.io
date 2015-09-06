@@ -272,8 +272,8 @@ $ -->
 </div>
 <p>To get the actual probability of <span class="math">\(c\)</span>, though, it is not sufficient to just look at one pair of permutations that bring us to <span class="math">\(c\)</span>. Instead, we need to sum over all possible pairs of permutations. This is the convolution of <span class="math">\(g\)</span> and <span class="math">\(f\)</span> (like in function composition, the right side goes first).</p>
 <p><span class="math">\[(g\ast f)(c) = \sum_{b \cdot a = c} g(b)f(a)\]</span></p>
-<p>Substituting <span class="math">\(a = b^{-1}c\)</span>, we get:</p>
-<p><span class="math">\[(g\ast f)(c) = \sum_{a} g(a^{-1}c)f(a)\]</span></p>
+<p>Substituting <span class="math">\(b = ca^{-1}\)</span>, we get:</p>
+<p><span class="math">\[(g\ast f)(c) = \sum_{a} g(ca^{-1})f(a)\]</span></p>
 <p>This can be nicely thought of as a sum over the intermediate permutations, <span class="math">\(a\)</span>, looking at the probability of that intermediate permutation, and the probability of the permutation necessary to bring us to <span class="math">\(c\)</span> from there.</p>
 <div class="bigcenterimgcontainer">
 <img src="img/card-conv2.png" alt style>
