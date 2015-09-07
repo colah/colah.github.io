@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Fanfiction.net, Graphs, and PageRank: Oh My! -- colah's blog</title>
@@ -129,7 +129,7 @@
 <p>Another section of the terms of service prohibits collecting personally identifiable information, which they define to include usernames. As such, I have deliberately discarded all such information and don’t use it. (Though, I note that several search engines do – try searching for an authors name on any major search engine.) I do refer to some usernames in this post, but that was done entirely by hand.</p>
 <p>In collecting data, since we are only looking at a subset of users, it is important to be wary of sampling bias. For example, if we sampled authors starting from the favorites of a particular author, or from those who had contributed stories to a community, we might get a very skewed perspective of the stories on fanfiction.net. The author considered a number of approaches, but concluded the fairest approach would be to use the authors of the most reviewed stories on fanfiction.net. This is a bias, but it should bias us towards the most interesting and important parts of the graph.</p>
 <h2 id="graph-construction">Graph Construction</h2>
-<p>A <a href="http://en.wikipedia.org/wiki/Graph_(mathematics)">graph</a>, in the context of mathematics, is a collection of objects called vertices joined by connections called edges. For example, cities can be thought of as the vertices a graph connected by different highways and roads (the edges).</p>
+<p>A <a href="http://en.wikipedia.org/wiki/Graph_(mathematics)">graph</a>, in the context of mathematics, is a collection of objects called vertices joined by connections called edges. For example, cities can be thought of as the vertices of a graph connected by different highways and roads (the edges).</p>
 <div class="centerimgcontainer">
 <img src="img/example-graph.svg" alt style>
 <div class="caption">
@@ -258,7 +258,7 @@ Graph of top Naruto fanfiction, colored by ship
 <div class="bigcenterimgcontainer">
 <img src="img/graph-TWI-blank.png" alt style>
 <div class="caption">
-Graph of top Twilight fanfiction (1,031 nodes, 5,00 edges)
+Graph of top Twilight fanfiction (1,031 nodes, 5,000 edges)
 </div>
 </div>
 <div class="spaceafterimg">
@@ -288,7 +288,7 @@ Graph of top Twilight fanfiction, colored by ship
 <h2 id="pagerank">PageRank</h2>
 <p>What are the best fanfics on fanfiction.net? How can we identify them?</p>
 <p>A naive approach would be to select the most favorited or reviewed stories. But people’s quality of taste varies. A more sophisticated approach is Google’s PageRank algorithm which is used to determine which web pages are of high quality.</p>
-<p>In a normal vote gives equal weight to every voter. But some voters are better qualified to decide than others. In PageRank, we recalculate the votes again and again, giving each “person’s” vote a weight based on how many votes they received in the previous step.</p>
+<p>A normal vote gives equal weight to every voter. But some voters are better qualified to decide than others. In PageRank, we recalculate the votes again and again, giving each “person’s” vote a weight based on how many votes they received in the previous step.</p>
 <p>In the case of the Internet, we interpret a website linking to another website as that website voting for the one it links to. We can similarly apply it to fanfiction by interpreting stories “voting” for the stories users are most likely to like, given that they like the voter.</p>
 <p><strong>Harry Potter top stories by PageRank:</strong></p>
 <ol>
