@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Understanding Convolutions - colah's blog</title>
@@ -149,7 +149,7 @@
 </div>
 <h2 id="visualizing-convolutions">Visualizing Convolutions</h2>
 <p>There’s a very nice trick that helps one think about convolutions more easily.</p>
-<p>First, an observation. Suppose the probability that a ball lands a certain distance <span class="math">\(x\)</span> from where it started is <span class="math">\(f(x)\)</span>. Then, afterwards, the probability given that it started a distance <span class="math">\(x\)</span> from where it landed is <span class="math">\(f(-x)\)</span>.</p>
+<p>First, an observation. Suppose the probability that a ball lands a certain distance <span class="math">\(x\)</span> from where it started is <span class="math">\(f(x)\)</span>. Then, afterwards, the probability that it started a distance <span class="math">\(x\)</span> from where it landed is <span class="math">\(f(-x)\)</span>.</p>
 <div class="bigcenterimgcontainer">
 <img src="img/ProbConv-Reverse.png" alt style>
 </div>
@@ -172,7 +172,7 @@
 
 </div>
 <p>Summing over the <span class="math">\(a\)</span>s, we get the convolution.</p>
-<p>The advantage of this approach is that it allows us to visualize the evaluation of a convolution at a value <span class="math">\(c\)</span> in a single picture. By shifting the bottom half shifting around, we can evaluate the convolution at other values of <span class="math">\(c\)</span>. This allows us to understand the convolution as a whole.</p>
+<p>The advantage of this approach is that it allows us to visualize the evaluation of a convolution at a value <span class="math">\(c\)</span> in a single picture. By shifting the bottom half around, we can evaluate the convolution at other values of <span class="math">\(c\)</span>. This allows us to understand the convolution as a whole.</p>
 <p>For example, we can see that it peaks when the distributions align.</p>
 <div class="bigcenterimgcontainer">
 <img src="img/ProbConv-Intermediate-Align.png" alt style>
@@ -220,7 +220,7 @@ From Wikipedia
 <div class="centerimgcontainer">
 <img src="img/RiverTrain-ImageConvDiagram.png" alt style>
 <div class="caption">
-From the <a href="http://rivertrail.github.io/RiverTrail/tutorial/">River Trail documentation</a>
+From the <a href="http://intellabs.github.io/RiverTrail/tutorial/">River Trail documentation</a>
 </div>
 </div>
 <div class="spaceafterimg">

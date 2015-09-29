@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Fanfiction.net, Graphs, and PageRank: Oh My! -- colah's blog</title>
@@ -105,7 +105,7 @@
 </div>
 <p>This blog post will explore the structure of the relationships between stories on fanfiction.net by constructing visualizations like the above, and much much larger ones. It will also provide story recommendations for many of the top users of fanfiction.net.</p>
 <h2 id="introduction">Introduction</h2>
-<p>Fanfiction is a wide-spread phenomenon where fans of different works write derivative stories. This ranges from young children writing their first stories about their favorite fictional characters, to professional-quality stories written by aspiring novelists. Many such stories are posted to websites where they are read by a large audience and commented on. The largest such website is <a href="https://www.fanfiction.net/">fanficiton.net</a>.</p>
+<p>Fanfiction is a wide-spread phenomenon where fans of different works write derivative stories. This ranges from young children writing their first stories about their favorite fictional characters, to professional-quality stories written by aspiring novelists. Many such stories are posted to websites where they are read by a large audience and commented on. The largest such website is <a href="https://www.fanfiction.net/">fanfiction.net</a>.</p>
 <p>The sheer amount of fanfiction out there is rather staggering. The total number of stories on fanfiction.net exceeds six million. Harry Potter stories account for around 14% of these, followed by Naruto (around 7%) and Twilight (around 4%) (<a href="http://ffnresearch.blogspot.com/2010/07/fanfictionnet-story-totals.html">FFN Research</a>). The majority of these stories have very little in the way of readership, but popular stories can have a large number of readers.</p>
 <p>Some research was done into the demographics of fanfiction.net users and other topics by <a href="http://ffnresearch.blogspot.com/">FFN Research</a>. They found that 78% of fanfiction.net authors who joined in 2010 identified as female. Further, around 80% of users who report their age are between 13 and 17.</p>
 <p>A lot of other interesting research and analysis has been done on the blogs <a href="http://destinationtoast.tumblr.com/stats">Destination: Toast!</a> and <a href="http://toastystats.tumblr.com/">TOASTYSTATS</a>.</p>
@@ -125,11 +125,11 @@
 <blockquote>
 <p>4(E) You agree not to use or launch any automated system, including without limitation, “robots,” “spiders,” or “offline readers,” that accesses the Website in a manner that sends more request messages to the FanFiction.Net servers in a given period of time than a human can reasonably produce in the same period by using a conventional on-line web browser. Notwithstanding the foregoing, FanFiction.Net grants the operators of public search engines permission to use spiders to copy materials from the site for the sole purpose of and solely to the extent necessary for creating publicly available searchable indices of the materials, but not caches or archives of such materials…</p>
 </blockquote>
-<p>In order to ensure compliance with these terms, the author intentionally built significant rate limiting into the scraper and took care to minimize the load put on fanfiction.net. While the issue of academic analysis was not mentioned, it was not excluded and fanfiction.net’s operators have not previously objected to similar academic work. Further, this work could be the preliminary research needed for someone to build a good fanficiton search engine.</p>
+<p>In order to ensure compliance with these terms, the author intentionally built significant rate limiting into the scraper and took care to minimize the load put on fanfiction.net. While the issue of academic analysis was not mentioned, it was not excluded and fanfiction.net’s operators have not previously objected to similar academic work. Further, this work could be the preliminary research needed for someone to build a good fanfiction search engine.</p>
 <p>Another section of the terms of service prohibits collecting personally identifiable information, which they define to include usernames. As such, I have deliberately discarded all such information and don’t use it. (Though, I note that several search engines do – try searching for an authors name on any major search engine.) I do refer to some usernames in this post, but that was done entirely by hand.</p>
 <p>In collecting data, since we are only looking at a subset of users, it is important to be wary of sampling bias. For example, if we sampled authors starting from the favorites of a particular author, or from those who had contributed stories to a community, we might get a very skewed perspective of the stories on fanfiction.net. The author considered a number of approaches, but concluded the fairest approach would be to use the authors of the most reviewed stories on fanfiction.net. This is a bias, but it should bias us towards the most interesting and important parts of the graph.</p>
 <h2 id="graph-construction">Graph Construction</h2>
-<p>A <a href="http://en.wikipedia.org/wiki/Graph_(mathematics)">graph</a>, in the context of mathematics, is a collection of objects called vertices joined by connections called edges. For example, cities can be thought of as the vertices a graph connected by different highways and roads (the edges).</p>
+<p>A <a href="http://en.wikipedia.org/wiki/Graph_(mathematics)">graph</a>, in the context of mathematics, is a collection of objects called vertices joined by connections called edges. For example, cities can be thought of as the vertices of a graph connected by different highways and roads (the edges).</p>
 <div class="centerimgcontainer">
 <img src="img/example-graph.svg" alt style>
 <div class="caption">
@@ -206,7 +206,7 @@ Graph of Harry Potter Fanfiction, colored by ship
 </div>
 <p>(Note: Ships are inferred from tags story summaries. HP = Harry Potter, HG = Hermione Granger, GW = Ginny Weasley, DM = Draco Malfoy, SS = Severus Snape and LV = Lord Voldemort.)</p>
 <p>One interesting point is that by far the most diffuse ship is HP/GW. It seems likely that this is because it is the ship we see in cannon Harry Potter, and so many stories not focused on romance default to it and unaligned readers are more tolerant of it.</p>
-<p>One striking pattern in fanfiction is that a massive fraction of stories are male/male pairings. Such stories are frequently referred to as “slash.” (For an exploration of why there is so much slash fanficiton, see this article.)</p>
+<p>One striking pattern in fanfiction is that a massive fraction of stories are male/male pairings. Such stories are frequently referred to as “slash.” (For an exploration of why there is so much slash fanfiction, see this article.)</p>
 <div class="bigcenterimgcontainer">
 <img src="img/graph-HP-slash-labeled.png" alt style>
 <div class="caption">
@@ -258,7 +258,7 @@ Graph of top Naruto fanfiction, colored by ship
 <div class="bigcenterimgcontainer">
 <img src="img/graph-TWI-blank.png" alt style>
 <div class="caption">
-Graph of top Twilight fanfiction (1,031 nodes, 5,00 edges)
+Graph of top Twilight fanfiction (1,031 nodes, 5,000 edges)
 </div>
 </div>
 <div class="spaceafterimg">
@@ -288,7 +288,7 @@ Graph of top Twilight fanfiction, colored by ship
 <h2 id="pagerank">PageRank</h2>
 <p>What are the best fanfics on fanfiction.net? How can we identify them?</p>
 <p>A naive approach would be to select the most favorited or reviewed stories. But people’s quality of taste varies. A more sophisticated approach is Google’s PageRank algorithm which is used to determine which web pages are of high quality.</p>
-<p>In a normal vote gives equal weight to every voter. But some voters are better qualified to decide than others. In PageRank, we recalculate the votes again and again, giving each “person’s” vote a weight based on how many votes they received in the previous step.</p>
+<p>A normal vote gives equal weight to every voter. But some voters are better qualified to decide than others. In PageRank, we recalculate the votes again and again, giving each “person’s” vote a weight based on how many votes they received in the previous step.</p>
 <p>In the case of the Internet, we interpret a website linking to another website as that website voting for the one it links to. We can similarly apply it to fanfiction by interpreting stories “voting” for the stories users are most likely to like, given that they like the voter.</p>
 <p><strong>Harry Potter top stories by PageRank:</strong></p>
 <ol>
@@ -445,7 +445,7 @@ Graph of top Twilight fanfiction, colored by ship
 <p><strong>Big Data</strong>: A year ago, I was very dismissive of “big data” as a buzzword. Primarily, it seems to be thrown around by business people who don’t really understand much. But one thing I’ve learned in explorations of data like this one and working in machine learning, is that there is something very powerful about larger amounts of data. There’s something very qualitatively different. The fanfiction data I used was actually quite small, only a few hundred users, because of how I limited the amount I downloaded, but I think it still demonstrates the sorts of things that become possible as you have larger amounts of data. (To be honest, a much more compelling example is the progress that’s been made in computer vision using ImageNet… But this still influenced my views.)</p>
 <p><strong>Digital Humanities</strong>: Digital humanities also seems to be a bit of a buzzword. But I hope this provides a simple example of the power that can come from applying a little bit of math and computer science to humanities problems.</p>
 <p><strong>Metdata and Privacy</strong>: In this essay, we looked analyzed stories by looking at whether they were favorited by the same users. There’s a natural “dual” to this: analyzing users by looking at whether they favorited the same stories. This would give us a graph of connections between users and allow us to find clusters of users. But what if you use other forms of metdata? For example, we now know that the US government has metdata on who phones who. It seems very likely that many companies and governments have information on where your cellphone is as a function of time. All this can construct a graph of society. I can’t really fathom how much one must be able to learn about someone from that. (And how easy it would be to misinterpret.)</p>
-<p><strong>Fanfiction Websites</strong>: I think there’s a lot of potential for fanfiction websites to better serve their users based on the techniques outlined here. I’d be really thrilled to see fanficiton.net or Archive Of Our Own adopt some of these ideas. Imagine being able to list a handful of stories in some category you’re interested in and discover others? Or get good recommendations? The ideas are all pretty straightforward once you think of them. I’d be very happy to talk to the groups behind different fanfiction websites and provide some help or share example code.</p>
+<p><strong>Fanfiction Websites</strong>: I think there’s a lot of potential for fanfiction websites to better serve their users based on the techniques outlined here. I’d be really thrilled to see fanfiction.net or Archive Of Our Own adopt some of these ideas. Imagine being able to list a handful of stories in some category you’re interested in and discover others? Or get good recommendations? The ideas are all pretty straightforward once you think of them. I’d be very happy to talk to the groups behind different fanfiction websites and provide some help or share example code.</p>
 <p><strong>Deep Learning and NLP</strong>: Recently, there’s been some really cool results in applying Deep Learning to Natural Language Processing. One would need a lot more data than I collected, and it would take more effort, but I bet one could do some really interesting things here.</p>
 <p><strong>Resources</strong>: In principle, I’d really like to share my code and make it easy for people to replicate the work I described here. However, I think that would be really rude to fanfiction.net because it could result in lots of people scraping their website, and it seems likely many would remove my rate limiter. An alternative would be to share my extracted metadata, but, again, I think it would be really rude to do that without fanfiction.net’s permission, and possibly a violation of their terms of service. So, in the end, I’m not sharing any resources. That said, all of this can be done pretty easily.</p>
 
