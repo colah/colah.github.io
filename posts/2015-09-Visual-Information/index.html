@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Visual Information Theory -- colah's blog</title>
+        
+        <link rel="stylesheet" href="../../fonts/Serif/cmun-serif.css" />
+        <link rel="stylesheet" href="../../fonts/Serif-Slanted/cmun-serif-slanted.css" />
+
+        <!--BOOTSTRAP-->
+        <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!--mobile first-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--removed html from url but still is html-->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <!--font awesome-->
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+        <!--fonts: allan & cardo-->
+        <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
+
+        <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
+
+        <link href="../../css/default.css" rel="stylesheet">
+
+        <link href="../../comments/inlineDisqussions.css" rel="stylesheet">
+
+        <!--Highlight-->
+        <link href="../../highlight/styles/github.css" rel="stylesheet">
+        
+        <link href="../../favicon.ico" rel="shortcut icon" />
+
+        <!--<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+        <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
+        for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text javascript";a.async="!0;a.src=(&quot;https:&quot;===e.location.protocol?&quot;https:&quot;:&quot;http:&quot;)+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName(&quot;script&quot;)[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);" mixpanel.init("dc1ac55f121e696b2f8d54d338ec642c");< script><!-- end Mixpanel -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49811703-1', 'colah.github.io');
+  ga('require', 'linkid', 'linkid.js');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+
+</script>
+    </head>
+
+    <body>
+        <div id="wrap">
+            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+                <div class="container">
+                    <!--Toggle header for mobile-->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand active" href="../../" style="font-size:20px;">colah's blog</a>
+                    </div>
+                    <!--normal header-->
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="../../archive.html"><span class="glyphicon glyphicon-pencil"></span>  Blog</a></li>
+                            <li><a href="../../about.html"><span class="glyphicon glyphicon-user"></span>  About</a></li>
+                            <li><a href="../../contact.html"><span class="glyphicon glyphicon-envelope"></span>  Contact</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </nav>
+
+            
+            <div id="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1>Visual Information Theory</h1>
+                            <div class="info">
+    <p style="font-family:CMSS; font-size:120%">Posted on September 14, 2015</p>
+    
+    <!--
+        by colah
+    -->
+</div>
+</br>
+
+<div style="width:100%; background-color:red; font-size:200%; padding:20px; margin-bottom:30px; margin-top:20px;">
+Unpublished – Please Do Not Link Or Distribute
+</div>
+<p>Some of the basic ideas in information theory are really powerful. It gives us precise language for describing lots of things: How uncertain am I? How much does knowing the answer to one question tell me about another?</p>
+<p>Unfortunately, information theory can seem kind of intimidating. I don’t think there’s any reason it should be. In fact, these fundamental ideas can be explained completely visually!</p>
+<h2 id="visualizing-probability-distributions">Visualizing Probability Distributions</h2>
+<p>To start, let’s figure out how to visualize simple probability distributions.</p>
+<p>I’m in California. Sometimes it rains, but mostly there’s sun! Let’s say it’s sunny 75% of the time. It’s easy to make a picture of that:</p>
+<div style="width:13%; margin-left:auto; margin-right:auto; margin-bottom:10px; margin-top:20px;">
+<img src="img/prob-1D-rain.png" alt>
+</div>
+<p>Most days, I wear a t-shirt, but some days I wear a coat. Let’s say I wear a coat 38% of the time. It’s also easy to make a picture for that!</p>
+<div style="width:11%; margin-left:auto; margin-right:auto; margin-bottom:10px; margin-top:20px;">
+<img src="img/prob-1D-coat.png" alt>
+</div>
+<p>What if I want to visualize both at the same time? We’ll, it’s easy if they don’t interact – if they’re what we call independent. For example, whether I wear a t-shirt or a raincoat today doesn’t really interact with what the weather is next week. We can draw this by using one axis for one variable and one for the other:</p>
+<div style="width:35%; margin-left:27%; margin-bottom:5px; margin-top:17px;">
+<img src="img/prob-2D-independent-rain.png" alt>
+</div>
+<p>The problem is when the variables interact. For example, the weather today impacts the clothing I wear today. If it’s sunny, I’m more likely to wear a t-shirt and less likely to wear a coat. This means that some squares want to be bigger, while other squares want to shrink. Visually, the diagram really wants to look something like this:</p>
+<div style="width:35%; margin-left:27%; margin-bottom:5px; margin-top:17px;">
+<img src="img/prob-2D-dependant-rain-squish.png" alt>
+</div>
+<p>But while that might look kind of cool, it’s isn’t very useful for understanding what’s going on.</p>
+<p>Instead, let’s focus on one variable like the weather. We know how probable it is that it’s sunny or raining. For both cases, we can look at the <em>conditional probabilities</em>. How likely am I to wear a t-shirt if it’s sunny? How likely am I to wear a coat if it’s raining?</p>
+<div style="width:65%; margin-left:13%; margin-bottom:5px; margin-top:20px;">
+<img src="img/prob-2D-factored-rain-arrow.png" alt>
+</div>
+<p>The probability that it’s raining and I’m wearing a coat is the probability that it is raining, time times the probability that I’d wear a coat if it is raining. We write this:</p>
+<p><span class="math">\[p(\text{rain}, \text{coat}) = p(\text{rain}) \cdot p(\text{coat} ~|~ \text{rain})\]</span></p>
+<p>This is a single case of one of the most fundamental identities of probability theory:</p>
+<p><span class="math">\[p(x,y) = p(x)\cdot p(y|x)\]</span></p>
+<p>We’re <em>factoring</em> the distribution, breaking it down into the product of two pieces. First we look at the probability that one variable, like the weather, will take on a certain value. Then we look at the probability that another variable, like my clothing, will take on a certain value conditioned on the first variable.</p>
+<p>The choice of which variable to start with is arbitrary. We could just as easily start by focusing on my clothing and then look at the weather conditioned on it. The probability that it’s raining and I’m wearing a coat is the probability that I’m wearing a coat, times the probability that it would be raining if I was wearing a coat.</p>
+<p><span class="math">\[p(\text{rain}, \text{coat}) = p(\text{coat}) \cdot p(\text{rain} ~|~ \text{coat})\]</span></p>
+<p>This gives us a second way to visualize the exact same probability distribution.</p>
+<div style="width:48%; margin-left:23%; margin-bottom:5px; margin-top:20px;">
+<img src="img/prob-2D-factored1-clothing.png" alt>
+</div>
+<p>(You may have heard of Bayes’ Theorem. If you want, you can think of it as the way to translate between these two different ways of displaying the probability distribution!)</p>
+<h2 id="aside-simpsons-paradox">Aside: Simpson’s Paradox</h2>
+<p>Are these tricks for visualizing probability distributions actually helpful? I think they are! It will be a little while before we use them for visualizing information theory, so I’d like to go on a little tangent and use them to explore Simpson’s paradox. Simpson’s paradox is an extremely unintuitive statistical situation. It’s just really hard to understand at an intuitive level. Michael Nielsen wrote a lovely essay, <a href="http://michaelnielsen.org/reinventing_explanation/">Reinventing Explanation</a>, which explored different ways to explain it. I’d like to try and take my own shot at it, using the tricks we developed in the previous section.</p>
+<p>Two treatments for kidney stones are tested. Half the patients are given treatment A while the other half are given treatment B. The patients who received treatment B were more likely to survive than those who received treatment A.</p>
+<div style="width:50%; margin-left:18%; margin-bottom:20px; margin-top:20px;">
+<img src="img/simpson-margin.png" alt>
+</div>
+<p>However, patients with small kidney stones were more likely to survive if they took treatment A. Patients with large kidney stones were also more likely to survive if they took treatment A! how can this be?</p>
+<p>The core of the issue is that the study wasn’t properly randomized. The patients who received treatment A were likely to have large kidney stones, while the patients who received treatment B were more likely to have small kidney stones.</p>
+<div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/simpson-participants.png" alt>
+</div>
+<p>As it turns out, patients with small kidney stones are much more likely to survive in general. If we split apart the small and large kidney stone cases, we see the following:</p>
+<div style="width:67%; margin-left:26%; margin-bottom:20px; margin-top:20px;">
+<img src="img/simpson-separated-note.png" alt>
+</div>
+<p>Treatment A was much better in both cases. Treatment B only seemed better because the patients it was applied to were more likely to survive in the first place!</p>
+<h2 id="codes">Codes</h2>
+<p>Now that we have ways of visualizing probability, we can dive into information theory.</p>
+<p>Let me tell you about my imaginary friend, Bob. Bob really likes animals. He constantly talks about animals. In fact, he only ever says four words: “dog”, “cat”, “fish” and “bird”.</p>
+<p>A couple weeks ago, despite being a figment of my imagination, Bob moved to Australia. Further, he decided he only wanted to communicate in binary. All my (imaginary) messages from Bob look like this:</p>
+<div style="width:22%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/message.png" alt>
+</div>
+<p>To communicate, Bob and I have to establish a code, a way of mapping words into sequences of bits.</p>
+<div style="width:40%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/code-2bit.png" alt>
+</div>
+<p>To send a message, Bob replaces each symbol (word) with the corresponding codeword, and then concatenates them together to form the encoded string.</p>
+<div style="width:40%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/encode-2bit.png" alt>
+</div>
+<h2 id="variable-length-codes">Variable-Length Codes</h2>
+<p>Unfortunately, communication services in imaginary-Australia are expensive. I have to pay $5 per bit of every message I receive from Bob. Have I mentioned that Bob likes to talk a lot? To prevent me from going bankrupt, Bob and I decided we should investigate whether there was some way we could make our average message length shorter.</p>
+<p>As it turns out Bob doesn’t say all words equally often. Bob really likes dogs. He talks about dogs all the time. On occasion, he’ll talk about other animals – especially the cat his dog likes to chase – but mostly he talks about dogs. Here’s a graph of his word frequency:</p>
+<div style="width:45%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/DogWordFreq.png" alt>
+</div>
+<p>That seems promising. Our old code uses codewords that are 2 bits long, regardless of how common they are.</p>
+<p>There’s a nice way to visualize this. In the following diagram, we use the vertical axis to visualize the probability of each codeword and the horizontal axis to visualize its length. Notice that the area is the area is the average length of a codeword we send – in this case 2 bits.</p>
+<div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/OldCode.png" alt>
+</div>
+<p>Perhaps we could be very clever and make a variable-length code where codewords for common words are made especially short. The challenge is that there’s competition between codewords – making some shorter forces us to make others longer. To minimize the message length, we’d ideally like all codewords to be short, but we especially want the commonly used ones to be. So the resulting code has shorter codewords for common words (like “dog”) and longer codewords for less common words (like “bird”).</p>
+<div style="width:40%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/code.png" alt>
+</div>
+<p>Let’s visualize this again. Notice that the most common codeword became shorter, even as the uncommon ones became longer. The result was, on net, a smaller amount of area. This corresponds to a smaller expected codeword length. On average, the length of a codeword is now 1.75 bits!</p>
+<div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/NewCode.png" alt>
+</div>
+<p>It turns out that this code is the best possible code. There is no code which, for this distribution, will give us an average codeword length of less than 1.75 bits.</p>
+<p>There is a simply a fundamental limit. Communicating what word was said, what event from this distribution occurred, requires us to communicate at least 1.75 bits on average. No matter how clever our code, it’s impossible to get the average message length to be less. We call this fundamental limit the entropy of the distribution – we’ll discuss it in much more detail shortly.</p>
+<div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/EntropOptimalLengthExample.png" alt>
+</div>
+<p>If we want to understand this limit, the crux of the matter is understanding the trade off between making some codewords short and others long. Once we understand that, we’ll be able to understand what the best possible codes are like.</p>
+<h2 id="the-space-of-codewords">The Space of Codewords</h2>
+<p>There are two codes with a length of 1 bit: 0 and 1. There are four codes with a length of 2 bits: 00, 01, 10, and 11. Every bit you add on doubles the number of possible codes.</p>
+<div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/CodeSpace.png" alt>
+</div>
+<p>We’re interested in variable-length codes, where some codewords are longer than others. We might have simple situations where we have eight codewords that are 3 bits long. We might also have more complicated mixtures, like two codewords of length 2, and four codewords of length 3. What decides how many codewords we can have of different lengths?</p>
+<p>Recall that Bob turns his messages into encoded strings by replacing each word with its codeword and concatenating them.</p>
+<div style="width:40%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/encode.png" alt>
+</div>
+<p>There’s a slightly subtle issue one needs to be careful of, when crafting a variable length code. We never want it to be ambiguous which codewords make up the encoded string. For example, imagine that 0 and 01 were both codewords. Then it would be unclear what the first codeword of the encoded string 0100111 is – it could be either! The property we want is that if we see a particular codeword, there shouldn’t be some longer version that is also a codeword. Another way of putting this is that no codeword should be the prefix of another codeword. This is called the prefix property, and codes that obey it are called prefix codes.</p>
+<p>One useful way to think about this is that every codeword requires a sacrifice from the space of possible codewords. If we take the codeword 01, we lose the ability to use any codewords it’s a prefix of. We can’t use 010 or 011010110 anymore because of ambiguity – they’re lost to us.</p>
+<div style="width:60%; margin-left:25%; margin-bottom:20px; margin-top:20px;">
+<img src="img/CodeSpaceUsed.png" alt>
+</div>
+<p>Since a quarter of all codewords start with 01, we’ve sacrificed a quarter of all possible codewords. That’s the price we pay in exchange for having one codeword that’s only 2 bits long! In turn this sacrifice means that all the other codewords need to be a bit longer. There’s always this sort of trade off between the lengths of the different codewords. A short codeword requires you to sacrifice more of the space of possible codewords, preventing other codewords from being short. What we need to figure out is what the right trade off to make is!</p>
+<h2 id="optimal-encodings">Optimal Encodings</h2>
+<p>You can think of this like having a limited budget to spend on getting short codewords. We pay for one word by sacrificing a fraction of possible codewords. Note that the cost decreases exponentially as codewords become longer, because the number of possible codewords doubles every bit you add! On the other hand, the benefit of making a codeword shorter is linear, because all we care about is its contribution to the average message length.</p>
+<div style="width:75%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/code-cost.png" alt>
+</div>
+<p>Short codewords are expensive, while long codewords are cheap.</p>
+<div style="width:85%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/code-cost-longshort.png" alt>
+</div>
+<p>What’s the best way to use our limited budget? How much should we spend on the codeword for each event?</p>
+<p>Just like one wants to invest more in tools that one uses regularly, we want to spend more on frequently used codewords. There’s one particularly natural way to do this: distribute our budget in proportion to how common an event is. So, if one event happens 50% of the time, we spend 50% of our budget buying a short codeword for it. But if an event only happens 1% of the time, we only spend 1% of our budget, because we don’t care very much if the codeword is long.</p>
+<p>That’s a pretty natural thing to do, but is it the optimal thing to do? To answer that question, we’ll consider what happens if we slightly perturb our budget, spending a bit more on one codeword and less on another.</p>
+<p>Our initial budget has the interesting property that, if you had a bit more to spend, it would be equally good to invest in making any codeword shorter. To see this, let’s consider a specific example.</p>
+<div style="width:95%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/code-auction-balanced.png" alt>
+</div>
+<p>In the above diagram, we have two events, <span class="math">\(a\)</span> and <span class="math">\(b\)</span>. The probability of <span class="math">\(a\)</span> is <span class="math">\(p(a)\)</span> and the probability of <span class="math">\(b\)</span> is <span class="math">\(p(b)\)</span>. As we planned, we’ve spent <span class="math">\(p(a)\)</span> of our codeword-budget on making the codeword for <span class="math">\(a\)</span> short, and <span class="math">\(p(b)\)</span> on making b short. (However, because the cost of making a codeword shorter increases exponentially, the codeword for <span class="math">\(a\)</span> isn’t that much shorter than <span class="math">\(b\)</span>.)</p>
+<p>Recall that the rate at which an exponential changes is proportional to its present value. For us, that means that the amount we need to pay to make a codeword shorter is proportional to the amount we’ve already paid. So, the cost to make the codeword for <span class="math">\(a\)</span> shorter is <span class="math">\(p(a)\)</span>. At the same time, we don’t care about the length of each codeword equally, we care about them in proportion to how much we have to use them. In the case of <span class="math">\(a\)</span>, that is <span class="math">\(p(a)\)</span>. The benefit to us of making the codeword for <span class="math">\(a\)</span> a bit shorter is <span class="math">\(p(a)\)</span>.</p>
+<p>What we really care about, in the end, is benefit/cost – that’s what decides what we should invest more in. In this case, the ratio is <span class="math">\(\frac{p(a)}{p(a)}\)</span>, which is equal to one. Critically, this is independent of the value of <span class="math">\(p(a)\)</span> – it’s always one. And we can apply the same argument to other events. The benefit/cost is always one, so it makes equal sense to invest a bit more in any of them.</p>
+<p>Now let’s consider a perturbed form of that budget. We’ll invest <span class="math">\(\epsilon\)</span> less in <span class="math">\(b\)</span>, and invest it in <span class="math">\(a\)</span> instead. This makes the codeword for <span class="math">\(a\)</span> a bit shorter, and the codeword for <span class="math">\(b\)</span> a bit longer.</p>
+<div style="width:95%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/code-auction-eps.png" alt>
+</div>
+<p>Now the cost of buying a shorter codeword for <span class="math">\(a\)</span> is <span class="math">\(p(a) + \epsilon\)</span>, and the cost of buying a shorter codeword for <span class="math">\(b\)</span> is <span class="math">\(p(b) - \epsilon\)</span>. But the benefits are still the same. This leads the benefit cost ratio for buying <span class="math">\(a\)</span> to be <span class="math">\(\frac{p(a)}{p(a) + \epsilon}\)</span> which is less than one. On the other hand, the benefit cost ratio of buying <span class="math">\(b\)</span> is <span class="math">\(\frac{p(b)}{p(b) - \epsilon}\)</span> which is greater than one.</p>
+<p>The prices are no longer balanced. <span class="math">\(b\)</span> is a better deal than <span class="math">\(a\)</span>. The investors scream: “Buy <span class="math">\(b\)</span>! Sell <span class="math">\(a\)</span>!” We do this, and end back at our original budget plan. All budgets can be improved by shifting towards our original plan.</p>
+<p>The original budget – investing in each codeword in proportion to how often we use it – wasn’t just the natural thing to do, it was the optimal thing to do.</p>
+<p>Recall that the cost of a message of length <span class="math">\(L\)</span> is <span class="math">\(\frac{1}{2^L}\)</span>. We can invert this to get the length of a message that costs a given amount: <span class="math">\(\log_2\left(\frac{1}{\text{cost}}\right)\)</span>. Since we spend <span class="math">\(p(x)\)</span> on a codeword for <span class="math">\(x\)</span>, the length is <span class="math">\(\log_2\left(\frac{1}{p(x)}\right)\)</span>. Those are the best choices of lengths.</p>
+<div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/entropy-def-notitle.png" alt>
+</div>
+<p>Earlier, we discussed how there is a fundamental limit to how short one can get the average message to communicate events from a particular probability distribution, <span class="math">\(p\)</span>. This limit, the average message length using the best possible code, is called the entropy of <span class="math">\(p\)</span>, <span class="math">\(H(p)\)</span>. Now that we know the optimal lengths of the codewords, we can actually calculate it!</p>
+<p><span class="math">\[H(p) = \sum_x p(x)\log_2\left(\frac{1}{p(x)}\right)\]</span></p>
+<!--
+<div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/entropy-def.png" alt="">
+</div>
+-->
+
+<p>No matter what I do, on average I need to send at least that number of bits if I want to communicate which event occurred.</p>
+<p>The average amount of information needed to communicate something has clear implications for compression. But are there other reasons we should care about it? Yes! It describes how uncertain I am and gives a way to quantify information.</p>
+<p>If I knew for sure what was going to happen, I wouldn’t have to send a message at all! If there’s two things that could happen with 50% probability, I only need to send 1 bit. But if there’s 64 different things that could happen with equal probability, I’d have to send 6 bits. The more concentrated the probability, the more I can craft a clever code with short average messages. The more diffuse the probability, the longer my messages have to be.</p>
+<p>The more uncertain the outcome, the more I learn, on average, when I find out what happened.</p>
+<h2 id="cross-entropy">Cross-Entropy</h2>
+<p>Shortly before his move to Australia, Bob married Alice, another figment of my imagination. To the surprise of myself, and also the other characters in my head, Alice was not a dog lover. She was a cat lover. Despite this, the two of them were able to find common ground in their shared obsession with animals and very limited vocabulary size.</p>
+<div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/DogCatWordFreq.png" alt>
+</div>
+<p>The two of them say the same words, just at different frequencies. Bob talks about dogs all the time, Alice talks about cats all the time.</p>
+<p>Initially, Alice sent me messages using Bob’s code. Unfortunately, her messages were longer than they needed to be. Bob’s code was optimized to his probability distribution. Alice has a different probability distribution, and the code is suboptimal for it. While the average length of a codeword when Bob uses his own code is 1.75 bits, when Alice uses his code its 2.25. It would be worse if the two weren’t so similar!</p>
+<p>This length – the average length of communicating an event from one distribution with the optimal code for another distribution – is called the cross-entropy. In this case, it’s the cross-entropy of Alice the cat-lovers word frequency with respect to the Bob the dog-lovers word frequency.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/CrossEntropyDef.png" alt>
+</div>
+<p>To keep the cost of our communications down, I asked Alice to user her own code. To my relief, this pushed down her average message length. But it introduced a new problem: sometimes Bob would accidentally use Alice’s code. Surprisingly, it’s worse for Bob to accidentally use Alice code than for Alice to use his!</p>
+<p>Consider the following visualization of the cross-entropy of <span class="math">\(p\)</span> and <span class="math">\(q\)</span> with respect to <span class="math">\(p\)</span> and <span class="math">\(q\)</span>. The area of the four subplots. For each subplot, the vertical axis is a probability distribution, while the horizontal axis is the optimal code for some distribution. The area is the cross-entropy of the two distributions.</p>
+<div style="width:80%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/CrossEntropyCompare.png" alt>
+</div>
+<p>Cross-entropy isn’t symmetric.</p>
+<p>So, why should you care about cross-entropy? Well, cross-entropy gives us a way to express how different two probability distributions are. The more different the distributions <span class="math">\(p\)</span> and <span class="math">\(q\)</span> are, the more the cross-entropy of <span class="math">\(p\)</span> with respect to <span class="math">\(q\)</span> will be bigger than the entropy of <span class="math">\(p\)</span>.</p>
+<div style="width:30%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/CrossEntropyPQ.png" alt>
+</div>
+<p>Similarly, the more different <span class="math">\(p\)</span> is from <span class="math">\(q\)</span>, the more the cross-entropy of <span class="math">\(q\)</span> with respect to <span class="math">\(p\)</span> will be bigger than the entropy of <span class="math">\(q\)</span>.</p>
+<div style="width:30%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/CrossEntropyQP.png" alt>
+</div>
+<p>The really interesting thing is that difference between the entropy the cross-entropy. That difference is how much longer our messages are because we used a code optimized for a different distribution. If the distributions are the same, this difference will be zero. As the difference grows, it will get bigger.</p>
+<p>We call this difference the Kullback–Leibler divergence, or just the KL divergence. The KL divergence of <span class="math">\(p\)</span> with respect to <span class="math">\(q\)</span>, <span class="math">\(D_q(p)\)</span>,<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> is defined:<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<p><span class="math">\[D_q(p) = H_q(p) - H(p)\]</span></p>
+<p>The really neat thing about KL divergence is that it’s like a distance between two distributions. It measures how different they are! (If you take that idea seriously, you end up with information geometry.)</p>
+<p>Cross-Entropy and KL divergence are incredibly useful in machine learning. Often, we want one distribution to be close to another. For example, we might want a predicted distribution to be close to the ground truth. KL divergence gives us a natural way to do this, and so it shows up everywhere.</p>
+<h2 id="entropy-and-multiple-variables">Entropy and Multiple Variables</h2>
+<p>Let’s return to our weather and clothing example from earlier:</p>
+<div style="width:45%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/prob-2D-factored1-detail.png" alt>
+</div>
+<p>My mother, like many parents, sometimes worries that I don’t dress appropriately for the weather. (She has reasonable cause for suspicion – I have often failed to wear coats in winter.) So, she often wants to know both the weather and what clothing I’m wearing. How many bits do I have to send her to communicate this?</p>
+<p>Well, the easy way to think about this is to flatten the probability distribution:</p>
+<div style="width:80%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/prob-2D-factored1-flat.png" alt>
+</div>
+<p>Now we can figure out the optimal codewords for events of these probabilities and compute the average message length:</p>
+<div style="width:80%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/Hxy-flat.png" alt>
+</div>
+<p>We call this the joint entropy of <span class="math">\(X\)</span> and <span class="math">\(Y\)</span>, defined</p>
+<p><span class="math">\[H(X,Y) = \sum_{x,y} p(x,y) \log_2\left(\frac{1}{p(x,y)}\right)\]</span></p>
+<p>This is the exact same as our normal definition, except with two variables instead of one.</p>
+<p>A slightly nicer way to think about this is to avoid flattening the distribution, and just think of the code lengths as a third dimension. Now the entropy is the volume!</p>
+<div style="width:35%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/Hxy-3D.png" alt>
+</div>
+<p>But suppose my mom already knows the weather. She can check it on the news. Now how much information do I need to provide?</p>
+<p>It seems like I need to send how ever much information I need to communicate the clothes I’m wearing. But I actually need to send less, because the weather strongly implies what clothing I’ll wear! Let’s consider the case where it’s raining and where it’s sunny separately.</p>
+<div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/HxCy-sep.png" alt>
+</div>
+<p>In both cases, I don’t need to send very much information on average, because the weather gives me a good guess at what the right answer will be. To get the average amount of information I need to send my mother, I just put these two cases together…</p>
+<div style="width:30%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/HxCy.png" alt>
+</div>
+<p>We call this the conditional entropy. If you formalize it into an equation, you get:</p>
+<p><span class="math">\[H(X|Y) = \sum_y p(y) \sum_x p(x) \log_2\left(\frac{1}{p(x|y)}\right)\]</span> <span class="math">\[~~~~ = \sum_{x,y} p(x,y) \log_2\left(\frac{1}{p(x|y)}\right)\]</span></p>
+<h2 id="mutual-information">Mutual Information</h2>
+<p>In the previous section, we observed that knowing one variable can mean that communicating another variable requires less information.</p>
+<p>One nice way to think about this is to imagine amounts of information as bars. These bars overlap if there’s shared information between them. For example, some of the information in <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> is shared between them, so <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span> are overlapping bars. And since <span class="math">\(H(X,Y)\)</span> is the information in both, it’s the union of the bars <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span>.</p>
+<div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/Hxy-info-1.png" alt>
+</div>
+<p>Once we think about things this way, a lot of things become easier to see.</p>
+<p>For example, we previously noted it takes more information to communicate both <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> (the “joint entropy,” <span class="math">\(H(X,Y)\)</span>) than it takes to just communicate <span class="math">\(X\)</span> (the “marginal entropy,” <span class="math">\(H(X)\)</span>). But if you already know <span class="math">\(Y\)</span>, then it takes less information to communicate <span class="math">\(X\)</span> (the “conditional entropy,” <span class="math">\(H(X|Y)\)</span>) than it would if you didn’t!</p>
+<div style="width:80%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/Hxy-overview.png" alt>
+</div>
+<p>That sounds a bit complicated, but it’s very simple when we think about it from the bar perspective. <span class="math">\(H(X|Y)\)</span> is the information we need to send to communicate <span class="math">\(X\)</span> to someone who already knows <span class="math">\(Y\)</span>, the information in <span class="math">\(X\)</span> which isn’t also in <span class="math">\(Y\)</span>. Visually, that means <span class="math">\(H(X|Y)\)</span> is the part part of <span class="math">\(H(X)\)</span> bar which doesn’t overlap with <span class="math">\(H(Y)\)</span>.</p>
+<p>You can now read the inequality <span class="math">\(H(X,Y) \geq H(X) \geq H(X|Y)\)</span> right off the following diagram.</p>
+<div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/Hxy-info-4.png" alt>
+</div>
+<p>Another identity is that <span class="math">\(H(X,Y) = H(Y) + H(X|Y)\)</span>. That is, the information in <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> is the information in <span class="math">\(Y\)</span> plus the information in <span class="math">\(X\)</span> which is not in <span class="math">\(Y\)</span>.</p>
+<div style="width:80%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/Hxy-overview-sum.png" alt>
+</div>
+<p>Again, it’s difficult to see in the equations, but easy to see if you’re thinking in terms of these overlapping bars of information.</p>
+<p>At this point, we’ve broken the information in <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> up in several ways. We have the information in each variable, <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span>. We have the information in the union of the information in both, <span class="math">\(H(X,Y)\)</span>. We have the information which is in one but not the other, <span class="math">\(H(X|Y)\)</span> and <span class="math">\(H(Y|X)\)</span>. A lot of this seems to revolve around the information shared between the variables, the intersection of their information. We call this “mutual information,” <span class="math">\(I(X,Y)\)</span>, defined as:<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> <span class="math">\[I(X,Y) = H(X) + H(Y) - H(X,Y)\]</span> This definition works because <span class="math">\(H(X) + H(Y)\)</span> has two copies of the mutual information, while <span class="math">\(H(X,Y)\)</span> only has one.</p>
+<p>Closely related to the mutual information is the mutual information is the variation of information. The variation of information is the information information which isn’t shared between the variables. We can define it like so: <span class="math">\[V(X,Y) = H(X,Y) - I(X,Y)\]</span> Variation of information is interesting because it gives us a metric, a notion of distance, between different variables.</p>
+<p>We can bring this all together into a single diagram relating all these different kinds of information:</p>
+<div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/Hxy-info.png" alt>
+</div>
+<h2 id="fractional-bits">Fractional Bits</h2>
+<p>A very unintuitive thing about information theory is that we can have fractional numbers of bits. That’s pretty weird. What does it mean to have half a bit?</p>
+<p>Here’s the easy answer: often, we’re interested in the average length of a message rather than any particular message length. If half the time one sends a single bit, and half the time one sends two bits, on average one sends one and a half bits. There’s nothing strange about averages being fractional.</p>
+<p>But that answer is really dodging the issue. Often, the optimal lengths of codewords are fractional. What do those mean?</p>
+<p>To be concrete, let’s consider a probability distribution where one event, <span class="math">\(a\)</span>, happens 71% of the time and another event, <span class="math">\(b\)</span>, occurs 29% of the time.</p>
+<div style="width:35%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/halfbit-ab.png" alt>
+</div>
+<p>The optimal code would use 0.5 bits to represent <span class="math">\(a\)</span>, and 1.7 bits to represent <span class="math">\(b\)</span>. Well, if we want to send a single one of these codewords, it simply isn’t possible. We’re forced to round to a whole number of bits, and send on average 1 bit.</p>
+<p>… But if we’re sending multiple messages at once, it turns out that we can do better. Let’s consider communicating two events from this distribution. If we sent them independently, we’d need to send two bits. Can we do better?</p>
+<div style="width:35%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/halfbit-ab2.png" alt>
+</div>
+<p>Half the time, we need to communicate <span class="math">\(aa\)</span>, <span class="math">\(21\%\)</span> of the time we need to send <span class="math">\(ab\)</span> or <span class="math">\(ba\)</span>, and <span class="math">\(8\%\)</span> of the time we need to communicate <span class="math">\(bb\)</span>. Again, the ideal code involves fractional numbers of bits.</p>
+<div style="width:79%; margin-left:15%; margin-bottom:15px; margin-top:20px;">
+<img src="img/halfbit-ab-idealcode.png" alt>
+</div>
+<p>If we round the codeword lengths, we’ll get something like this:</p>
+<div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:15px; margin-top:20px;">
+<img src="img/halfbit-ab-code.png" alt>
+</div>
+<p>This codes give us an average message length of 1.8 bits. That’s less than the 2 bits when we send them independently. Another way of thinking of this is that we’re sending 0.9 bits on average for each event. If we were to send more events at once, it would become smaller still. The overhead due to rounding our code would vanish, and the number of bits per codeword would approach the entropy.</p>
+<p>Further, notice that the ideal codeword length for <span class="math">\(a\)</span> was 0.5 bits, and the ideal codeword length for <span class="math">\(aa\)</span> was 1 bit. Ideal codeword lengths add, even when they’re fractional! So, if we communicate a lot of events at once, the lengths will add.</p>
+<p>There is a very real sense in which one can have fractional numbers of bits of information, even if actual codes can only use whole numbers.</p>
+<h2 id="conclusion">Conclusion</h2>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>I’m very grateful to <a href="https://github.com/danmane">Dan Mané</a> and <a href="https://www.cs.cmu.edu/~dga/">David Andersen</a> for taking time to give really incredibly detailed and extensive comments on this essay. I’m also grateful for the comments of <a href="http://michaelnielsen.org/">Michael Nielsen</a>, Greg Corrado, Yoshua Bengio, Aaron Courville and Dario Amodei.</p>
+<p>Thanks also to my first two neural network seminar series for acting as guinea pigs for these ideas.</p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Note that this notation for cross-entropy is non-standard. The normal notation is <span class="math">\(H(p,q)\)</span>. This notation is horrible for two reasons. Firstly, the exact same notation is also used for joint entropy. Secondly, it makes it seem like cross-entropy is symmetric. This is ridiculous, and I’ll be writing <span class="math">\(H_q(p)\)</span> instead.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>Also non-standard notation.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>If you expand the definition of KL divergence, you get: <span class="math">\[D_q(p) = \sum_x p(x)\log_2\left(\frac{q(x)}{p(x)} \right)\]</span> That might look a bit strange. How should we interpret it? Well, <span class="math">\(\log_2\left(\frac{q(x)}{p(x)} \right)\)</span> is just the difference between how many bits a code optimized for <span class="math">\(p\)</span> and a code optimized for <span class="math">\(q\)</span> would use to represent <span class="math">\(x\)</span>. The expression as a whole is the expected difference in how many bits the two codes would use.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>If you expand the definition of mutual information out, you get: <span class="math">\[I(X,Y) = \sum_{x,y} p(x,y) \log_2\left(\frac{p(x,y)}{p(x)p(y)} \right)\]</span> That looks suspciously like KL divergence! What’s going on? Well, it is KL divergence. It’s the KL divergence of P(X,Y) and it’s naive approximation P(X)P(Y). That is, mutual information is the difference between the number of bits you need to represent <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> if you assume they’re independent and the number you need if you understand the relationship between them.<a href="#fnref4">↩</a></p></li>
+</ol>
+</section>
+
+<div id="disqus_thread"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+<script src="../../comments/inlineDisqussions.js"></script>
+<script src="../../js/disqus.js"></script>
+
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+            </div>
+        
+
+            <div id="footer">
+                <div class="container">
+                    Built by <a href="https://github.com/oinkina">Oinkina</a> with
+                    <a href="http://jaspervdj.be/hakyll">Hakyll</a> 
+                    using <a href="http://getbootstrap.com/">Bootstrap</a>, 
+                    <a href="http://www.mathjax.org/">MathJax</a>,
+                    <a href="http://disqus.com/">Disqus</a>,
+                    <a href="https://github.com/unconed/MathBox.js">MathBox.js</a>,
+                    <a href="http://highlightjs.org/">Highlight.js</a>, 
+                    and <a href="http://ignorethecode.net/blog/2010/04/20/footnotes/">Footnotes.js</a>.
+                </div>
+            </div>
+        </div>
+
+    <!-- jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="../../js/footnotes.js"></script>
+
+    <script src="../../comments/inlineDisqussions.js"></script>
+    
+    <noscript>Enable JavaScript for footnotes, Disqus comments, and other cool stuff.</noscript>
+
+    </body>
+
+</html>
