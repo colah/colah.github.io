@@ -87,7 +87,7 @@
                         <div class="col-md-8">
                             <h1>Visual Information Theory</h1>
                             <div class="info">
-    <p style="font-family:CMSS; font-size:120%">Posted on September 14, 2015</p>
+    <p style="font-family:CMSS; font-size:120%">Posted on October  8, 2015</p>
     
     <!--
         by colah
@@ -95,19 +95,24 @@
 </div>
 </br>
 
+<!--
 <div style="width:100%; background-color:red; font-size:200%; padding:20px; margin-bottom:30px; margin-top:20px;">
-Unpublished – Please Do Not Link Or Distribute
+Unpublished -- Please Do Not Link Or Distribute
 </div>
-<p>Some of the basic ideas in information theory are really powerful. It gives us precise language for describing lots of things: How uncertain am I? How much does knowing the answer to one question tell me about another?</p>
-<p>Unfortunately, information theory can seem kind of intimidating. I don’t think there’s any reason it should be. In fact, these fundamental ideas can be explained completely visually!</p>
+-->
+
+
+<p>I love the feeling of having a new way to think about the world. I especially love when there’s some vague idea that gets formalized into a concrete concept. Information theory is a prime example of this.</p>
+<p>Information theory gives us precise language for describing a lot of things. How uncertain am I? How much does knowing the answer to question A tell me about the answer to question B? How similar is one set of beliefs to another? I’ve had informal versions of these ideas since I was a young child, but information theory crystallizes them into precise, powerful ideas.</p>
+<p>Unfortunately, information theory can seem kind of intimidating. I don’t think there’s any reason it should be. In fact, many core ideas can be explained completely visually!</p>
 <h2 id="visualizing-probability-distributions">Visualizing Probability Distributions</h2>
-<p>To start, let’s figure out how to visualize simple probability distributions.</p>
+<p>Before we dive into information theory, let’s figure out how to visualize simple probability distributions. We’ll need this later on, and it’s convenient to address now. As a bonus, these tricks for visualizing probability are pretty useful in and of themselves!</p>
 <p>I’m in California. Sometimes it rains, but mostly there’s sun! Let’s say it’s sunny 75% of the time. It’s easy to make a picture of that:</p>
-<div style="width:13%; margin-left:auto; margin-right:auto; margin-bottom:10px; margin-top:20px;">
+<div style="width:13%; margin-left:46%; margin-bottom:10px; margin-top:20px;">
 <img src="img/prob-1D-rain.png" alt>
 </div>
 <p>Most days, I wear a t-shirt, but some days I wear a coat. Let’s say I wear a coat 38% of the time. It’s also easy to make a picture for that!</p>
-<div style="width:11%; margin-left:auto; margin-right:auto; margin-bottom:10px; margin-top:20px;">
+<div style="width:11%; margin-left:47%; margin-bottom:10px; margin-top:20px;">
 <img src="img/prob-1D-coat.png" alt>
 </div>
 <p>What if I want to visualize both at the same time? We’ll, it’s easy if they don’t interact – if they’re what we call independent. For example, whether I wear a t-shirt or a raincoat today doesn’t really interact with what the weather is next week. We can draw this by using one axis for one variable and one for the other:</p>
@@ -186,7 +191,7 @@ Unpublished – Please Do Not Link Or Distribute
 <img src="img/NewCode.png" alt>
 </div>
 <p>It turns out that this code is the best possible code. There is no code which, for this distribution, will give us an average codeword length of less than 1.75 bits.</p>
-<p>There is a simply a fundamental limit. Communicating what word was said, what event from this distribution occurred, requires us to communicate at least 1.75 bits on average. No matter how clever our code, it’s impossible to get the average message length to be less. We call this fundamental limit the entropy of the distribution – we’ll discuss it in much more detail shortly.</p>
+<p>There is simply a fundamental limit. Communicating what word was said, what event from this distribution occurred, requires us to communicate at least 1.75 bits on average. No matter how clever our code, it’s impossible to get the average message length to be less. We call this fundamental limit the entropy of the distribution – we’ll discuss it in much more detail shortly.</p>
 <div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/EntropOptimalLengthExample.png" alt>
 </div>
@@ -201,38 +206,58 @@ Unpublished – Please Do Not Link Or Distribute
 <div style="width:40%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/encode.png" alt>
 </div>
-<p>There’s a slightly subtle issue one needs to be careful of, when crafting a variable length code. We never want it to be ambiguous which codewords make up the encoded string. For example, imagine that 0 and 01 were both codewords. Then it would be unclear what the first codeword of the encoded string 0100111 is – it could be either! The property we want is that if we see a particular codeword, there shouldn’t be some longer version that is also a codeword. Another way of putting this is that no codeword should be the prefix of another codeword. This is called the prefix property, and codes that obey it are called prefix codes.</p>
+<p>There’s a slightly subtle issue one needs to be careful of, when crafting a variable length code. How do we split the encoded string back into the codewords? When all the codewords are the same length, it’s easy – just split the string every couple of steps. But since there are codewords of different lengths, we need to actually pay attention to the content.</p>
+<p>We really want our code to be uniquely decodable, with only one way to decode an encoded string. We never want it to be ambiguous which codewords make up the encoded string. If we had some special “end of codeword” symbol, this would be easy. But we don’t – we’re only sending 0s and 1s. We need to be able to look at a sequence of concatenated codewords and tell where each one stops.</p>
+<p>It’s very possible to make codes that aren’t uniquely decodable. For example, imagine that 0 and 01 were both codewords. Then it would be unclear what the first codeword of the encoded string 0100111 is – it could be either! The property we want is that if we see a particular codeword, there shouldn’t be some longer version that is also a codeword. Another way of putting this is that no codeword should be the prefix of another codeword. This is called the prefix property, and codes that obey it are called prefix codes.</p>
 <p>One useful way to think about this is that every codeword requires a sacrifice from the space of possible codewords. If we take the codeword 01, we lose the ability to use any codewords it’s a prefix of. We can’t use 010 or 011010110 anymore because of ambiguity – they’re lost to us.</p>
 <div style="width:60%; margin-left:25%; margin-bottom:20px; margin-top:20px;">
 <img src="img/CodeSpaceUsed.png" alt>
 </div>
 <p>Since a quarter of all codewords start with 01, we’ve sacrificed a quarter of all possible codewords. That’s the price we pay in exchange for having one codeword that’s only 2 bits long! In turn this sacrifice means that all the other codewords need to be a bit longer. There’s always this sort of trade off between the lengths of the different codewords. A short codeword requires you to sacrifice more of the space of possible codewords, preventing other codewords from being short. What we need to figure out is what the right trade off to make is!</p>
 <h2 id="optimal-encodings">Optimal Encodings</h2>
-<p>You can think of this like having a limited budget to spend on getting short codewords. We pay for one word by sacrificing a fraction of possible codewords. Note that the cost decreases exponentially as codewords become longer, because the number of possible codewords doubles every bit you add! On the other hand, the benefit of making a codeword shorter is linear, because all we care about is its contribution to the average message length.</p>
+<p>You can think of this like having a limited budget to spend on getting short codewords. We pay for one word by sacrificing a fraction of possible codewords.</p>
+<p>The cost of buying a codeword of length 0 is 1, all possible codewords – if you want to have a codeword of length 0, you can’t have any other codeword. The cost of a codeword of length 1, like “0”, is 1/2 because half of possible codewords start with “0”. The cost of a codeword of length 2, like “01”, is 1/4 because a quarter of all possible codewords start with “01”. In general, the cost of codewords decreases <em>exponentially</em> with the length of the codeword.</p>
+<div style="width:95%; margin-left:5%; margin-bottom:20px; margin-top:20px;">
+<img src="img/code-costonly.png" alt>
+</div>
+<p>We want short codewords because we want short average message lengths. Each codeword makes the average message length longer by its probability times the length of the codeword. For example, if we need to send a codeword that is 4 bits long 50% of the time, our average message length is 2 bits longer than it would be if we weren’t sending that codeword. We can picture this as a rectangle.</p>
+<div style="width:30%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/code-lengthcontrib.png" alt>
+</div>
+<p>These two values are related by the length of the codeword. The amount we pay decides the length of the codeword. The length of the codeword controls how much it adds to the average message length. We can picture the two of these together, like so.</p>
 <div style="width:75%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/code-cost.png" alt>
 </div>
-<p>Short codewords are expensive, while long codewords are cheap.</p>
+<p>Short codewords reduce the average message length but are expensive, while long codewords increase the average message length but are cheap.</p>
 <div style="width:85%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/code-cost-longshort.png" alt>
 </div>
 <p>What’s the best way to use our limited budget? How much should we spend on the codeword for each event?</p>
 <p>Just like one wants to invest more in tools that one uses regularly, we want to spend more on frequently used codewords. There’s one particularly natural way to do this: distribute our budget in proportion to how common an event is. So, if one event happens 50% of the time, we spend 50% of our budget buying a short codeword for it. But if an event only happens 1% of the time, we only spend 1% of our budget, because we don’t care very much if the codeword is long.</p>
-<p>That’s a pretty natural thing to do, but is it the optimal thing to do? To answer that question, we’ll consider what happens if we slightly perturb our budget, spending a bit more on one codeword and less on another.</p>
-<p>Our initial budget has the interesting property that, if you had a bit more to spend, it would be equally good to invest in making any codeword shorter. To see this, let’s consider a specific example.</p>
+<p>That’s a pretty natural thing to do, but is it the optimal thing to do? It is, and I’ll prove it!</p>
+<p>Let’s picture a concrete example where we’re we need to communicate which of two possible events happened. Event <span class="math">\(a\)</span> happens <span class="math">\(p(a)\)</span> of the time and event <span class="math">\(b\)</span> happens <span class="math">\(p(b)\)</span> of the time. We distribute our budget in the natural way described above, spending <span class="math">\(p(a)\)</span> of our budget on getting <span class="math">\(a\)</span> a short codeword, and <span class="math">\(p(b)\)</span> on getting <span class="math">\(b\)</span> a short codeword.</p>
+<div style="width:95%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
+<img src="img/code-auction-balanced-noderivs.png" alt>
+</div>
+<p>The diagram looks “balanced” in some visually nice way. Does that mean anything?</p>
+<p>Well, consider what happens to the cost and the length contribution if we slightly change the length of the codeword. If we slightly increase the length of the codeword, the message length contribution will increase in proportion to its height at the boundary, while the cost will decrease in proportion to its height at the boundary.</p>
+<div style="width:91%; margin-left:8%; margin-bottom:20px; margin-top:20px;">
+<img src="img/code-derivs.png" alt>
+</div>
+<p>We can work that out more formally, if you prefer. Recall that the rate at which an exponential changes is proportional to its present value. For us, that means that the amount we need to pay to make a codeword shorter is proportional to the amount we’ve already paid. So, the cost to make the codeword for <span class="math">\(a\)</span> shorter is <span class="math">\(p(a)\)</span>. At the same time, we don’t care about the length of each codeword equally, we care about them in proportion to how much we have to use them. In the case of <span class="math">\(a\)</span>, that is <span class="math">\(p(a)\)</span>. The benefit to us of making the codeword for <span class="math">\(a\)</span> a bit shorter is <span class="math">\(p(a)\)</span>.</p>
+<p>It’s interesting that both derivatives are the same. It means that our initial budget has the interesting property that, if you had a bit more to spend, it would be equally good to invest in making any codeword shorter. What we really care about, in the end, is the benefit/cost ratio – that’s what decides what we should invest more in. In this case, the ratio is <span class="math">\(\frac{p(a)}{p(a)}\)</span>, which is equal to one. This is independent of the value of <span class="math">\(p(a)\)</span> – it’s always one. And we can apply the same argument to other events. The benefit/cost is always one, so it makes equal sense to invest a bit more in any of them.</p>
 <div style="width:95%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/code-auction-balanced.png" alt>
 </div>
-<p>In the above diagram, we have two events, <span class="math">\(a\)</span> and <span class="math">\(b\)</span>. The probability of <span class="math">\(a\)</span> is <span class="math">\(p(a)\)</span> and the probability of <span class="math">\(b\)</span> is <span class="math">\(p(b)\)</span>. As we planned, we’ve spent <span class="math">\(p(a)\)</span> of our codeword-budget on making the codeword for <span class="math">\(a\)</span> short, and <span class="math">\(p(b)\)</span> on making b short. (However, because the cost of making a codeword shorter increases exponentially, the codeword for <span class="math">\(a\)</span> isn’t that much shorter than <span class="math">\(b\)</span>.)</p>
-<p>Recall that the rate at which an exponential changes is proportional to its present value. For us, that means that the amount we need to pay to make a codeword shorter is proportional to the amount we’ve already paid. So, the cost to make the codeword for <span class="math">\(a\)</span> shorter is <span class="math">\(p(a)\)</span>. At the same time, we don’t care about the length of each codeword equally, we care about them in proportion to how much we have to use them. In the case of <span class="math">\(a\)</span>, that is <span class="math">\(p(a)\)</span>. The benefit to us of making the codeword for <span class="math">\(a\)</span> a bit shorter is <span class="math">\(p(a)\)</span>.</p>
-<p>What we really care about, in the end, is benefit/cost – that’s what decides what we should invest more in. In this case, the ratio is <span class="math">\(\frac{p(a)}{p(a)}\)</span>, which is equal to one. Critically, this is independent of the value of <span class="math">\(p(a)\)</span> – it’s always one. And we can apply the same argument to other events. The benefit/cost is always one, so it makes equal sense to invest a bit more in any of them.</p>
-<p>Now let’s consider a perturbed form of that budget. We’ll invest <span class="math">\(\epsilon\)</span> less in <span class="math">\(b\)</span>, and invest it in <span class="math">\(a\)</span> instead. This makes the codeword for <span class="math">\(a\)</span> a bit shorter, and the codeword for <span class="math">\(b\)</span> a bit longer.</p>
+<p>Infinitesimally, it doesn’t make sense to change the budget. But that isn’t a proof that it’s the best budget. To prove that, we’ll consider a different budget, where we spend a bit extra on one codeword at the expense of another. We’ll invest <span class="math">\(\epsilon\)</span> less in <span class="math">\(b\)</span>, and invest it in <span class="math">\(a\)</span> instead. This makes the codeword for <span class="math">\(a\)</span> a bit shorter, and the codeword for <span class="math">\(b\)</span> a bit longer.</p>
+<p>Now the cost of buying a shorter codeword for <span class="math">\(a\)</span> is <span class="math">\(p(a) + \epsilon\)</span>, and the cost of buying a shorter codeword for <span class="math">\(b\)</span> is <span class="math">\(p(b) - \epsilon\)</span>. But the benefits are still the same. This leads the benefit cost ratio for buying <span class="math">\(a\)</span> to be <span class="math">\(\frac{p(a)}{p(a) + \epsilon}\)</span> which is less than one. On the other hand, the benefit cost ratio of buying <span class="math">\(b\)</span> is <span class="math">\(\frac{p(b)}{p(b) - \epsilon}\)</span> which is greater than one.</p>
 <div style="width:95%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/code-auction-eps.png" alt>
 </div>
-<p>Now the cost of buying a shorter codeword for <span class="math">\(a\)</span> is <span class="math">\(p(a) + \epsilon\)</span>, and the cost of buying a shorter codeword for <span class="math">\(b\)</span> is <span class="math">\(p(b) - \epsilon\)</span>. But the benefits are still the same. This leads the benefit cost ratio for buying <span class="math">\(a\)</span> to be <span class="math">\(\frac{p(a)}{p(a) + \epsilon}\)</span> which is less than one. On the other hand, the benefit cost ratio of buying <span class="math">\(b\)</span> is <span class="math">\(\frac{p(b)}{p(b) - \epsilon}\)</span> which is greater than one.</p>
 <p>The prices are no longer balanced. <span class="math">\(b\)</span> is a better deal than <span class="math">\(a\)</span>. The investors scream: “Buy <span class="math">\(b\)</span>! Sell <span class="math">\(a\)</span>!” We do this, and end back at our original budget plan. All budgets can be improved by shifting towards our original plan.</p>
-<p>The original budget – investing in each codeword in proportion to how often we use it – wasn’t just the natural thing to do, it was the optimal thing to do.</p>
+<p>The original budget – investing in each codeword in proportion to how often we use it – wasn’t just the natural thing to do, it was the optimal thing to do. (While this proof only works for two codewords, it easily generalizes to more.)</p>
+<p>(A careful reader may have noticed that it is possible for our optimal budget to suggest codes where codewords have fractional lengths. That seems pretty concerning! What does it mean? Well, of course, in practice, if you want to communicate by sending a single codeword, you have to round. But as we’ll see later, there’s a very real sense in which it is possible to send fractional codewords when we send many at a time! I’ll ask you be patient with me on this for now!)</p>
+<h2 id="calculating-entropy">Calculating Entropy</h2>
 <p>Recall that the cost of a message of length <span class="math">\(L\)</span> is <span class="math">\(\frac{1}{2^L}\)</span>. We can invert this to get the length of a message that costs a given amount: <span class="math">\(\log_2\left(\frac{1}{\text{cost}}\right)\)</span>. Since we spend <span class="math">\(p(x)\)</span> on a codeword for <span class="math">\(x\)</span>, the length is <span class="math">\(\log_2\left(\frac{1}{p(x)}\right)\)</span>. Those are the best choices of lengths.</p>
 <div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/entropy-def-notitle.png" alt>
@@ -332,7 +357,7 @@ Unpublished – Please Do Not Link Or Distribute
 <img src="img/Hxy-overview-sum.png" alt>
 </div>
 <p>Again, it’s difficult to see in the equations, but easy to see if you’re thinking in terms of these overlapping bars of information.</p>
-<p>At this point, we’ve broken the information in <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> up in several ways. We have the information in each variable, <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span>. We have the information in the union of the information in both, <span class="math">\(H(X,Y)\)</span>. We have the information which is in one but not the other, <span class="math">\(H(X|Y)\)</span> and <span class="math">\(H(Y|X)\)</span>. A lot of this seems to revolve around the information shared between the variables, the intersection of their information. We call this “mutual information,” <span class="math">\(I(X,Y)\)</span>, defined as:<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> <span class="math">\[I(X,Y) = H(X) + H(Y) - H(X,Y)\]</span> This definition works because <span class="math">\(H(X) + H(Y)\)</span> has two copies of the mutual information, while <span class="math">\(H(X,Y)\)</span> only has one.</p>
+<p>At this point, we’ve broken the information in <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> up in several ways. We have the information in each variable, <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span>. We have the the union of the information in both, <span class="math">\(H(X,Y)\)</span>. We have the information which is in one but not the other, <span class="math">\(H(X|Y)\)</span> and <span class="math">\(H(Y|X)\)</span>. A lot of this seems to revolve around the information shared between the variables, the intersection of their information. We call this “mutual information,” <span class="math">\(I(X,Y)\)</span>, defined as:<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> <span class="math">\[I(X,Y) = H(X) + H(Y) - H(X,Y)\]</span> This definition works because <span class="math">\(H(X) + H(Y)\)</span> has two copies of the mutual information, while <span class="math">\(H(X,Y)\)</span> only has one.</p>
 <p>Closely related to the mutual information is the mutual information is the variation of information. The variation of information is the information information which isn’t shared between the variables. We can define it like so: <span class="math">\[V(X,Y) = H(X,Y) - I(X,Y)\]</span> Variation of information is interesting because it gives us a metric, a notion of distance, between different variables.</p>
 <p>We can bring this all together into a single diagram relating all these different kinds of information:</p>
 <div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
@@ -363,8 +388,14 @@ Unpublished – Please Do Not Link Or Distribute
 <p>Further, notice that the ideal codeword length for <span class="math">\(a\)</span> was 0.5 bits, and the ideal codeword length for <span class="math">\(aa\)</span> was 1 bit. Ideal codeword lengths add, even when they’re fractional! So, if we communicate a lot of events at once, the lengths will add.</p>
 <p>There is a very real sense in which one can have fractional numbers of bits of information, even if actual codes can only use whole numbers.</p>
 <h2 id="conclusion">Conclusion</h2>
+<p>If we care about communicating in a minimum number of bits, these ideas are clearly fundamental. If we care about compressing data, information theory addresses the core questions and gives us the fundamentally right abstractions. But what if we don’t care – are they anything other than curiosities?</p>
+<p>Ideas from information theory turn up in lots of contexts: machine learning, quantum physics, genetics, thermodynamics, and even gambling. Practitioners in these fields typically don’t care about information theory because they want to compress information. They care because it has a compelling connection to their field. Quantum entanglement can be described with entropy. A statistical version of the second law of thermodynamics pops out of Markov chains. A gambler’s wins or losses are directly connected to KL divergence, in particular iterated setups.</p>
+<p>Information theory turns up in all these places because it offers concrete, principled formalizations for many things we need to express. It gives us ways of measuring and expressing uncertainty, how different two sets of beliefs are, and how much an answer to one question tells us about others: how diffuse probability is, the distance between probability distributions, and how dependent two variables are. Are there alternative, similar ideas? Sure. But the ideas from information theory are clean, they have really nice properties, and a principled origin. In some cases, they’re precisely what you care about, and in other cases they’re a convenient proxy in a messy world.</p>
+<p>Machine learning is what I know best, so let’s talk about that for a minute. A very common kind of task in machine learning is classification. Let’s say we want to look at a picture and predict whether it’s a picture of a dog or a cat. Our model might say something like “there’s a 80% chance this image is a dog, and a 20% chance it’s a cat.” Let’s say the correct answer is dog – how good or bad is it that we only said there was an 80% chance it was a dog? How much better would it have been to say 85%?</p>
+<p>This is an important question because we need some notion of how good or bad our model is, in order to optimize it to do well. What should we optimize? The correct answer really depends on what we’re using the model for: Do we only care about whether the top guess was right, or do we care about how confident we are in the correct answer? How bad is it to be confidently wrong? There isn’t one right answer to this. And often it isn’t possible to know the right answer, because we don’t know how the model will be used in a precise enough way to formalize what we ultimatly care about. The result is that there are situations where cross-entropy really is precisely what we care about, but that isn’t always the case. Much more often we don’t know exactly what we care about and cross-entropy is a really nice proxy.</p>
+<p>Information gives us a powerful new framework for thinking about the world. Sometimes it perfectly fits the problem at hand; other times it’s not an exact fit, but still extremely useful. This essay has only scratched the surface of information theory – there are major topics, like error-correcting codes, that we haven’t touched at all – but I hope I’ve shown that information theory is a beautiful subject that doesn’t need to be intimidating.</p>
 <h2 id="acknowledgments">Acknowledgments</h2>
-<p>I’m very grateful to <a href="https://github.com/danmane">Dan Mané</a> and <a href="https://www.cs.cmu.edu/~dga/">David Andersen</a> for taking time to give really incredibly detailed and extensive comments on this essay. I’m also grateful for the comments of <a href="http://michaelnielsen.org/">Michael Nielsen</a>, Greg Corrado, Yoshua Bengio, Aaron Courville and Dario Amodei.</p>
+<p>I’m very grateful to <a href="https://github.com/danmane">Dan Mané</a> and <a href="https://www.cs.cmu.edu/~dga/">David Andersen</a> for taking time to give really incredibly detailed and extensive comments on this essay. I’m also grateful for the comments of <a href="http://michaelnielsen.org/">Michael Nielsen</a>, <a href="http://research.google.com/pubs/GregCorrado.html">Greg Corrado</a>, <a href="http://www.iro.umontreal.ca/~bengioy/yoshua_en/index.html">Yoshua Bengio</a>, <a href="https://aaroncourville.wordpress.com/">Aaron Courville</a>, <a href="http://www.nickbeckstead.com/">Nick Beckstead</a>, and Dario Amodei.</p>
 <p>Thanks also to my first two neural network seminar series for acting as guinea pigs for these ideas.</p>
 <section class="footnotes">
 <hr />
