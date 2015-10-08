@@ -95,10 +95,11 @@
 </div>
 </br>
 
-
-<div style="width:100%; background-color:red; font-size:175%; padding:20px; margin-bottom:30px; margin-top:20px;">
+<!--
+<div style="width:100%; background-color:red; font-size:200%; padding:20px; margin-bottom:30px; margin-top:20px;">
 Unpublished -- Please Do Not Link Or Distribute
 </div>
+-->
 
 
 <p>I love the feeling of having a new way to think about the world. I especially love when there’s some vague idea that gets formalized into a concrete concept. Information theory is a prime example of this.</p>
@@ -118,7 +119,7 @@ Unpublished -- Please Do Not Link Or Distribute
 <div style="width:45%; margin-left:15%; margin-bottom:5px; margin-top:17px;">
 <img src="img/prob-2D-independent-rain.png" alt>
 </div>
-<p>Notice the straight vertical and horizontal lines going all the way through. <em>That’s what independence looks like!</em> The probability that I’m wearing a coat today and that it will rain a week from now is just the product of the probabilities. They don’t interact.</p>
+<p>Notice the straight vertical and horizontal lines going all the way through. <em>That’s what independence looks like!</em> <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> The probability that I’m wearing a coat today and that it will rain a week from now is just the product of the probabilities. They don’t interact.</p>
 <p>When variables interact, there’s extra probability for particular pairs of variables and missing probability for others. There’s extra probability that I’m wearing a coat and it’s raining because the variables are correlated, they make each other more likely. It’s more likely that I’m wearing a coat on a day that it rains than the probability I wear a coat on one day and it rains on some other random day.</p>
 <p>Visually, this looks like some of the squares swelling with extra probability, and other squares shrinking because the pair of events is unlikely together:</p>
 <div style="width:45%; margin-left:15%; margin-bottom:5px; margin-top:17px;">
@@ -180,7 +181,7 @@ Unpublished -- Please Do Not Link Or Distribute
 <img src="img/DogWordFreq.png" alt>
 </div>
 <p>That seems promising. Our old code uses codewords that are 2 bits long, regardless of how common they are.</p>
-<p>There’s a nice way to visualize this. In the following diagram, we use the vertical axis to visualize the probability of each codeword and the horizontal axis to visualize its length. Notice that the area is the area is the average length of a codeword we send – in this case 2 bits.</p>
+<p>There’s a nice way to visualize this. In the following diagram, we use the vertical axis to visualize the probability of each codeword and the horizontal axis to visualize its length. Notice that the area is the average length of a codeword we send – in this case 2 bits.</p>
 <div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/OldCode.png" alt>
 </div>
@@ -266,6 +267,7 @@ Unpublished -- Please Do Not Link Or Distribute
 </div>
 <p>Earlier, we discussed how there is a fundamental limit to how short one can get the average message to communicate events from a particular probability distribution, <span class="math">\(p\)</span>. This limit, the average message length using the best possible code, is called the entropy of <span class="math">\(p\)</span>, <span class="math">\(H(p)\)</span>. Now that we know the optimal lengths of the codewords, we can actually calculate it!</p>
 <p><span class="math">\[H(p) = \sum_x p(x)\log_2\left(\frac{1}{p(x)}\right)\]</span></p>
+<p><em>(People often write entropy as <span class="math">\(H(p) = - \sum p(x)\log_2(p(x))\)</span> using the identity <span class="math">\(\log(1/a) = -\log(a)\)</span>. I think the first version is more intuitive, and will continue to use it in this essay.)</em></p>
 <!--
 <div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/entropy-def.png" alt="">
@@ -283,7 +285,8 @@ Unpublished -- Please Do Not Link Or Distribute
 </div>
 <p>The two of them say the same words, just at different frequencies. Bob talks about dogs all the time, Alice talks about cats all the time.</p>
 <p>Initially, Alice sent me messages using Bob’s code. Unfortunately, her messages were longer than they needed to be. Bob’s code was optimized to his probability distribution. Alice has a different probability distribution, and the code is suboptimal for it. While the average length of a codeword when Bob uses his own code is 1.75 bits, when Alice uses his code its 2.25. It would be worse if the two weren’t so similar!</p>
-<p>This length – the average length of communicating an event from one distribution with the optimal code for another distribution – is called the cross-entropy. In this case, it’s the cross-entropy of Alice the cat-lovers word frequency with respect to the Bob the dog-lovers word frequency.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>This length – the average length of communicating an event from one distribution with the optimal code for another distribution – is called the cross-entropy. Formally, we can define cross-entropy as:<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> <span class="math">\[H_p(q) = \sum_x q(x)\log_2\left(\frac{1}{p(x)}\right)\]</span></p>
+<p>In this case, it’s the cross-entropy of Alice the cat-lovers word frequency with respect to the Bob the dog-lovers word frequency.</p>
 <div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/CrossEntropyDef.png" alt>
 </div>
@@ -300,7 +303,8 @@ Unpublished -- Please Do Not Link Or Distribute
 <div style="width:80%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/CrossEntropyCompare.png" alt>
 </div>
-<p>Can you see why <span class="math">\(H_p(q) \neq H_q(p)\)</span>? Cross-entropy isn’t symmetric.</p>
+<p>Can you see why <span class="math">\(H_p(q) \neq H_q(p)\)</span>? <span class="math">\(H_q(p)\)</span> is large because there is an event (blue) which is very common under <span class="math">\(p\)</span> but gets a long code because it is very uncommon under <span class="math">\(q\)</span>. On the other hand, common events under <span class="math">\(q\)</span> are less common under <span class="math">\(p\)</span>, but the difference is less drastic, so <span class="math">\(H_p(q)\)</span> isn’t as high.</p>
+<p>Cross-entropy isn’t symmetric.</p>
 <p>So, why should you care about cross-entropy? Well, cross-entropy gives us a way to express how different two probability distributions are. The more different the distributions <span class="math">\(p\)</span> and <span class="math">\(q\)</span> are, the more the cross-entropy of <span class="math">\(p\)</span> with respect to <span class="math">\(q\)</span> will be bigger than the entropy of <span class="math">\(p\)</span>.</p>
 <div style="width:30%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/CrossEntropyPQ.png" alt>
@@ -309,8 +313,8 @@ Unpublished -- Please Do Not Link Or Distribute
 <div style="width:30%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/CrossEntropyQP.png" alt>
 </div>
-<p>The really interesting thing is that difference between the entropy the cross-entropy. That difference is how much longer our messages are because we used a code optimized for a different distribution. If the distributions are the same, this difference will be zero. As the difference grows, it will get bigger.</p>
-<p>We call this difference the Kullback–Leibler divergence, or just the KL divergence. The KL divergence of <span class="math">\(p\)</span> with respect to <span class="math">\(q\)</span>, <span class="math">\(D_q(p)\)</span>,<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> is defined:<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<p>The really interesting thing is the difference between the entropy and the cross-entropy. That difference is how much longer our messages are because we used a code optimized for a different distribution. If the distributions are the same, this difference will be zero. As the difference grows, it will get bigger.</p>
+<p>We call this difference the Kullback–Leibler divergence, or just the KL divergence. The KL divergence of <span class="math">\(p\)</span> with respect to <span class="math">\(q\)</span>, <span class="math">\(D_q(p)\)</span>,<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> is defined:<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></p>
 <p><span class="math">\[D_q(p) = H_q(p) - H(p)\]</span></p>
 <p>The really neat thing about KL divergence is that it’s like a distance between two distributions. It measures how different they are! (If you take that idea seriously, you end up with information geometry.)</p>
 <p>Cross-Entropy and KL divergence are incredibly useful in machine learning. Often, we want one distribution to be close to another. For example, we might want a predicted distribution to be close to the ground truth. KL divergence gives us a natural way to do this, and so it shows up everywhere.</p>
@@ -367,8 +371,9 @@ Unpublished -- Please Do Not Link Or Distribute
 <img src="img/Hxy-overview-sum.png" alt>
 </div>
 <p>Again, it’s difficult to see in the equations, but easy to see if you’re thinking in terms of these overlapping bars of information.</p>
-<p>At this point, we’ve broken the information in <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> up in several ways. We have the information in each variable, <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span>. We have the the union of the information in both, <span class="math">\(H(X,Y)\)</span>. We have the information which is in one but not the other, <span class="math">\(H(X|Y)\)</span> and <span class="math">\(H(Y|X)\)</span>. A lot of this seems to revolve around the information shared between the variables, the intersection of their information. We call this “mutual information,” <span class="math">\(I(X,Y)\)</span>, defined as:<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> <span class="math">\[I(X,Y) = H(X) + H(Y) - H(X,Y)\]</span> This definition works because <span class="math">\(H(X) + H(Y)\)</span> has two copies of the mutual information, while <span class="math">\(H(X,Y)\)</span> only has one.</p>
-<p>Closely related to the mutual information is the mutual information is the variation of information. The variation of information is the information information which isn’t shared between the variables. We can define it like so: <span class="math">\[V(X,Y) = H(X,Y) - I(X,Y)\]</span> Variation of information is interesting because it gives us a metric, a notion of distance, between different variables.</p>
+<p>At this point, we’ve broken the information in <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> up in several ways. We have the information in each variable, <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span>. We have the the union of the information in both, <span class="math">\(H(X,Y)\)</span>. We have the information which is in one but not the other, <span class="math">\(H(X|Y)\)</span> and <span class="math">\(H(Y|X)\)</span>. A lot of this seems to revolve around the information shared between the variables, the intersection of their information. We call this “mutual information,” <span class="math">\(I(X,Y)\)</span>, defined as:<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> <span class="math">\[I(X,Y) = H(X) + H(Y) - H(X,Y)\]</span> This definition works because <span class="math">\(H(X) + H(Y)\)</span> has two copies of the mutual information, while <span class="math">\(H(X,Y)\)</span> only has one.</p>
+<p>Closely related to the mutual information is the mutual information is the variation of information. The variation of information is the information information which isn’t shared between the variables. We can define it like so: <span class="math">\[V(X,Y) = H(X,Y) - I(X,Y)\]</span> Variation of information is interesting because it gives us a metric, a notion of distance, between different variables. The variation of information between two variables is zero if knowing the value of one tells you the value of the other and increases as they become more independent.</p>
+<p>How does this relate to KL divergence, which also gave us a notion of distance? Well, KL divergence gives us a distance between two distributions over the same variable or set of variables. In contrast, variation of information gives us distance between two jointly distributed variables. KL divergence is between distributions, variation of information within a distribution.</p>
 <p>We can bring this all together into a single diagram relating all these different kinds of information:</p>
 <div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/Hxy-info.png" alt>
@@ -399,25 +404,34 @@ Unpublished -- Please Do Not Link Or Distribute
 <p>There is a very real sense in which one can have fractional numbers of bits of information, even if actual codes can only use whole numbers.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>If we care about communicating in a minimum number of bits, these ideas are clearly fundamental. If we care about compressing data, information theory addresses the core questions and gives us the fundamentally right abstractions. But what if we don’t care – are they anything other than curiosities?</p>
-<p>Ideas from information theory turn up in lots of contexts: machine learning, quantum physics, genetics, thermodynamics, and even gambling. Practitioners in these fields typically don’t care about information theory because they want to compress information. They care because it has a compelling connection to their field. Quantum entanglement can be described with entropy. A statistical version of the second law of thermodynamics pops out of Markov chains.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> A gambler’s wins or losses are directly connected to KL divergence, in particular iterated setups.<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a></p>
+<p>Ideas from information theory turn up in lots of contexts: machine learning, quantum physics, genetics, thermodynamics, and even gambling. Practitioners in these fields typically don’t care about information theory because they want to compress information. They care because it has a compelling connection to their field. Quantum entanglement can be described with entropy. A statistical version of the second law of thermodynamics pops out of Markov chains.<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a> A gambler’s wins or losses are directly connected to KL divergence, in particular iterated setups.<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a></p>
 <p>Information theory turns up in all these places because it offers concrete, principled formalizations for many things we need to express. It gives us ways of measuring and expressing uncertainty, how different two sets of beliefs are, and how much an answer to one question tells us about others: how diffuse probability is, the distance between probability distributions, and how dependent two variables are. Are there alternative, similar ideas? Sure. But the ideas from information theory are clean, they have really nice properties, and a principled origin. In some cases, they’re precisely what you care about, and in other cases they’re a convenient proxy in a messy world.</p>
 <p>Machine learning is what I know best, so let’s talk about that for a minute. A very common kind of task in machine learning is classification. Let’s say we want to look at a picture and predict whether it’s a picture of a dog or a cat. Our model might say something like “there’s a 80% chance this image is a dog, and a 20% chance it’s a cat.” Let’s say the correct answer is dog – how good or bad is it that we only said there was an 80% chance it was a dog? How much better would it have been to say 85%?</p>
 <p>This is an important question because we need some notion of how good or bad our model is, in order to optimize it to do well. What should we optimize? The correct answer really depends on what we’re using the model for: Do we only care about whether the top guess was right, or do we care about how confident we are in the correct answer? How bad is it to be confidently wrong? There isn’t one right answer to this. And often it isn’t possible to know the right answer, because we don’t know how the model will be used in a precise enough way to formalize what we ultimately care about. The result is that there are situations where cross-entropy really is precisely what we care about, but that isn’t always the case. Much more often we don’t know exactly what we care about and cross-entropy is a really nice proxy.</p>
 <p>Information gives us a powerful new framework for thinking about the world. Sometimes it perfectly fits the problem at hand; other times it’s not an exact fit, but still extremely useful. This essay has only scratched the surface of information theory – there are major topics, like error-correcting codes, that we haven’t touched at all – but I hope I’ve shown that information theory is a beautiful subject that doesn’t need to be intimidating.</p>
 <h2 id="acknowledgments">Acknowledgments</h2>
-<p>I’m very grateful to <a href="https://github.com/danmane">Dan Mané</a> and <a href="https://www.cs.cmu.edu/~dga/">David Andersen</a> for taking time to give really incredibly detailed and extensive comments on this essay. I’m also grateful for the comments of <a href="http://michaelnielsen.org/">Michael Nielsen</a>, <a href="http://research.google.com/pubs/GregCorrado.html">Greg Corrado</a>, <a href="http://www.iro.umontreal.ca/~bengioy/yoshua_en/index.html">Yoshua Bengio</a>, <a href="https://aaroncourville.wordpress.com/">Aaron Courville</a>, <a href="http://www.nickbeckstead.com/">Nick Beckstead</a>, <a href="http://research.google.com/pubs/JonathonShlens.html">Jon Shlens</a>, and Dario Amodei.</p>
+<p>I’m very grateful to <a href="https://github.com/danmane">Dan Mané</a> and <a href="https://www.cs.cmu.edu/~dga/">David Andersen</a> for taking time to give really incredibly detailed and extensive comments on this essay. I’m also grateful for the comments of <a href="http://michaelnielsen.org/">Michael Nielsen</a>, <a href="http://research.google.com/pubs/GregCorrado.html">Greg Corrado</a>, <a href="http://www.iro.umontreal.ca/~bengioy/yoshua_en/index.html">Yoshua Bengio</a>, <a href="https://aaroncourville.wordpress.com/">Aaron Courville</a>, <a href="http://www.nickbeckstead.com/">Nick Beckstead</a>, Dario Amodei, <a href="http://research.google.com/pubs/JonathonShlens.html">Jon Shlens</a>, and <a href="http://www.bewitched.com/">Martin Wattenberg</a>.</p>
 <p>Thanks also to my first two neural network seminar series for acting as guinea pigs for these ideas.</p>
 <section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Note that this notation for cross-entropy is non-standard. The normal notation is <span class="math">\(H(p,q)\)</span>. This notation is horrible for two reasons. Firstly, the exact same notation is also used for joint entropy. Secondly, it makes it seem like cross-entropy is symmetric. This is ridiculous, and I’ll be writing <span class="math">\(H_q(p)\)</span> instead.<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>Also non-standard notation.<a href="#fnref2">↩</a></p></li>
-<li id="fn3"><p>If you expand the definition of KL divergence, you get: <span class="math">\[D_q(p) = \sum_x p(x)\log_2\left(\frac{q(x)}{p(x)} \right)\]</span> That might look a bit strange. How should we interpret it? Well, <span class="math">\(\log_2\left(\frac{q(x)}{p(x)} \right)\)</span> is just the difference between how many bits a code optimized for <span class="math">\(p\)</span> and a code optimized for <span class="math">\(q\)</span> would use to represent <span class="math">\(x\)</span>. The expression as a whole is the expected difference in how many bits the two codes would use.<a href="#fnref3">↩</a></p></li>
-<li id="fn4"><p>If you expand the definition of mutual information out, you get: <span class="math">\[I(X,Y) = \sum_{x,y} p(x,y) \log_2\left(\frac{p(x,y)}{p(x)p(y)} \right)\]</span> That looks suspciously like KL divergence! What’s going on? Well, it is KL divergence. It’s the KL divergence of P(X,Y) and it’s naive approximation P(X)P(Y). That is, mutual information is the difference between the number of bits you need to represent <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> if you assume they’re independent and the number you need if you understand the relationship between them.<a href="#fnref4">↩</a></p></li>
-<li id="fn5"></li>
-<li id="fn6"><p>The connection between information theory and gambling was originally laid out by John Kelly in his paper ‘<a href="http://www.princeton.edu/~wbialek/rome/refs/kelly_56.pdf">A New Interpretation of Information Rate</a>.’ It’s a remarkably accessible paper, although it requires a few ideas we didn’t develop in this essay.</p>
+<li id="fn1"><p>It’s fun to use this to visualize naive Bayesian classifiers, which assume independence…<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>Note that this notation for cross-entropy is non-standard. The normal notation is <span class="math">\(H(p,q)\)</span>. This notation is horrible for two reasons. Firstly, the exact same notation is also used for joint entropy. Secondly, it makes it seem like cross-entropy is symmetric. This is ridiculous, and I’ll be writing <span class="math">\(H_q(p)\)</span> instead.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>Also non-standard notation.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>If you expand the definition of KL divergence, you get: <span class="math">\[D_q(p) = \sum_x p(x)\log_2\left(\frac{q(x)}{p(x)} \right)\]</span> That might look a bit strange. How should we interpret it? Well, <span class="math">\(\log_2\left(\frac{q(x)}{p(x)} \right)\)</span> is just the difference between how many bits a code optimized for <span class="math">\(p\)</span> and a code optimized for <span class="math">\(q\)</span> would use to represent <span class="math">\(x\)</span>. The expression as a whole is the expected difference in how many bits the two codes would use.<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>If you expand the definition of mutual information out, you get:</p>
+<p><span class="math">\[I(X,Y) = \sum_{x,y} p(x,y) \log_2\left(\frac{p(x,y)}{p(x)p(y)} \right)\]</span></p>
+<p>That looks suspiciously like KL divergence!</p>
+<p>What’s going on? Well, it is KL divergence. It’s the KL divergence of P(X,Y) and it’s naive approximation P(X)P(Y). That is, it’s the number of bits you save representing <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> if you understand the relationship between them instead of assuming they’re independent.</p>
+<p>One cute way to visualize this is to literally picture the ratio between a distribution and its naive approximation:</p>
+<div style="width:200px; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:5px;">
+<img src="img/mutual-visual-eq.png" alt>
+</div>
+<a href="#fnref5">↩</a></li>
+<li id="fn6"></li>
+<li id="fn7"><p>The connection between information theory and gambling was originally laid out by John Kelly in his paper ‘<a href="http://www.princeton.edu/~wbialek/rome/refs/kelly_56.pdf">A New Interpretation of Information Rate</a>.’ It’s a remarkably accessible paper, although it requires a few ideas we didn’t develop in this essay.</p>
 <p>Kelly had an interesting motivation for his work. He noticed that entropy as being used in many cost functions which had no connection to encoding information and wanted some principled reason for it. In writing this essay, I’ve been troubled by the same thing, and have really appreciated Kelly’s work as an additional perspective. That said, I don’t find it completely convincing: Kelly only winds up with entropy because he considers iterated betting where one reinvests all their capital each bet. Different setups do not lead to the entropy.</p>
-<p>A nice discussion of Kelly’s connection between betting and information theory can be found in the standard reference on information theory, Cover &amp; Thomas’ ‘Elements of Information Theory.’<a href="#fnref6">↩</a></p></li>
+<p>A nice discussion of Kelly’s connection between betting and information theory can be found in the standard reference on information theory, Cover &amp; Thomas’ ‘Elements of Information Theory.’<a href="#fnref7">↩</a></p></li>
 </ol>
 </section>
 
