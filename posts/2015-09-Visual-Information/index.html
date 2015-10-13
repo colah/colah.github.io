@@ -87,7 +87,7 @@
                         <div class="col-md-8">
                             <h1>Visual Information Theory</h1>
                             <div class="info">
-    <p style="font-family:CMSS; font-size:120%">Posted on October 12, 2015</p>
+    <p style="font-family:CMSS; font-size:120%">Posted on October 14, 2015</p>
     
     <!--
         by colah
@@ -95,26 +95,55 @@
 </div>
 </br>
 
+<!--
 <div style="width:100%; background-color:red; font-size:200%; padding:20px; margin-bottom:30px; margin-top:20px;">
-Unpublished – Please Do Not Link Or Distribute
+Unpublished -- Please Do Not Link Or Distribute
 </div>
+
+
 <style>
+
 @page {
-  margin: 25mm 35mm 25mm 35mm;
+  margin: 2cm;
+  margin-bottom:0.5cm;
   orphans: 3;
   widows: 3;
-  h1, h2, h3 {
-
-  }
 }
-</style>
 
+@page :first {
+  margin-top: 6cm;
+}
+
+@page :left {
+  margin-left: 4cm;
+}
+
+@page :right {
+  margin-right: 4cm;
+}
+
+@media print {
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+  body {
+    text-align: justify;
+    font-family: 'CMS', 'Droid Sans', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 25px;
+  }
+  #footer {display: none;}
+}
+
+
+</style>
+-->
 
 <p>I love the feeling of having a new way to think about the world. I especially love when there’s some vague idea that gets formalized into a concrete concept. Information theory is a prime example of this.</p>
-<p>Information theory gives us precise language for describing a lot of things. How uncertain am I? How much does knowing the answer to question A tell me about the answer to question B? How similar is one set of beliefs to another? I’ve had informal versions of these ideas since I was a young child, but information theory crystallizes them into precise, powerful ideas. These ideas have an enormous variety of applications, from the compression of data, to quantum physics, to machine learning, and vast fields inbetween.</p>
+<p>Information theory gives us precise language for describing a lot of things. How uncertain am I? How much does knowing the answer to question A tell me about the answer to question B? How similar is one set of beliefs to another? I’ve had informal versions of these ideas since I was a young child, but information theory crystallizes them into precise, powerful ideas. These ideas have an enormous variety of applications, from the compression of data, to quantum physics, to machine learning, and vast fields in between.</p>
 <p>Unfortunately, information theory can seem kind of intimidating. I don’t think there’s any reason it should be. In fact, many core ideas can be explained completely visually!</p>
 <h2 id="visualizing-probability-distributions">Visualizing Probability Distributions</h2>
-<p>Before we dive into information theory, let’s figure out how to visualize simple probability distributions. We’ll need this later on, and it’s convenient to address now. As a bonus, these tricks for visualizing probability are pretty useful in and of themselves!</p>
+<p>Before we dive into information theory, let’s think about how we can visualize simple probability distributions. We’ll need this later on, and it’s convenient to address now. As a bonus, these tricks for visualizing probability are pretty useful in and of themselves!</p>
 <p>I’m in California. Sometimes it rains, but mostly there’s sun! Let’s say it’s sunny 75% of the time. It’s easy to make a picture of that:</p>
 <div style="width:13%; margin-left:46%; margin-bottom:10px; margin-top:20px;">
 <img src="img/prob-1D-rain.png" alt>
@@ -127,7 +156,7 @@ Unpublished – Please Do Not Link Or Distribute
 <div style="width:45%; margin-left:15%; margin-bottom:5px; margin-top:17px;">
 <img src="img/prob-2D-independent-rain.png" alt>
 </div>
-<p>Notice the straight vertical and horizontal lines going all the way through. <em>That’s what independence looks like!</em> <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> The probability that I’m wearing a coat today and that it will rain a week from now is just the product of the probabilities. They don’t interact.</p>
+<p>Notice the straight vertical and horizontal lines going all the way through. <em>That’s what independence looks like!</em> <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> The probability I’m wearing a coat doesn’t change in response to the fact that it will be raining in a week. In other words, the probability that I’m wearing a coat and that it will rain next week is just the probability that I’m wearing a coat, times the probability that it will rain. They don’t interact.</p>
 <p>When variables interact, there’s extra probability for particular pairs of variables and missing probability for others. There’s extra probability that I’m wearing a coat and it’s raining because the variables are correlated, they make each other more likely. It’s more likely that I’m wearing a coat on a day that it rains than the probability I wear a coat on one day and it rains on some other random day.</p>
 <p>Visually, this looks like some of the squares swelling with extra probability, and other squares shrinking because the pair of events is unlikely together:</p>
 <div style="width:45%; margin-left:15%; margin-bottom:5px; margin-top:17px;">
@@ -148,8 +177,9 @@ Unpublished – Please Do Not Link Or Distribute
 <p><span class="math">\[p(\text{rain}, \text{coat}) = p(\text{coat}) \cdot p(\text{rain} ~|~ \text{coat})\]</span></p>
 <p>This gives us a second way to visualize the exact same probability distribution.</p>
 <div style="width:48%; margin-left:23%; margin-bottom:5px; margin-top:20px;">
-<img src="img/prob-2D-factored1-clothing.png" alt>
+<img src="img/prob-2D-factored1-clothing-B.png" alt>
 </div>
+<p>Note that the labels have slightly different meanings than in the previous diagram: t-shirt and coat are now <em>marginal probabilities</em>, the probability of me wearing that clothing without consideration of the weather. On the other hand, there are now two rain and sunny labels, for the probabilities of them conditional on me wearing a t-shirt and me wearing a coat respectively.</p>
 <p>(You may have heard of Bayes’ Theorem. If you want, you can think of it as the way to translate between these two different ways of displaying the probability distribution!)</p>
 <h2 id="aside-simpsons-paradox">Aside: Simpson’s Paradox</h2>
 <p>Are these tricks for visualizing probability distributions actually helpful? I think they are! It will be a little while before we use them for visualizing information theory, so I’d like to go on a little tangent and use them to explore Simpson’s paradox. Simpson’s paradox is an extremely unintuitive statistical situation. It’s just really hard to understand at an intuitive level. Michael Nielsen wrote a lovely essay, <a href="http://michaelnielsen.org/reinventing_explanation/">Reinventing Explanation</a>, which explored different ways to explain it. I’d like to try and take my own shot at it, using the tricks we developed in the previous section.</p>
@@ -162,11 +192,12 @@ Unpublished – Please Do Not Link Or Distribute
 <div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/simpson-participants.png" alt>
 </div>
-<p>As it turns out, patients with small kidney stones are much more likely to survive in general. If we split apart the small and large kidney stone cases, we see the following:</p>
-<div style="width:67%; margin-left:26%; margin-bottom:20px; margin-top:20px;">
+<p>As it turns out, patients with small kidney stones are much more likely to survive in general.</p>
+<p>To understand this better, we can combine the two previous diagrams. The result is a 3-dimensional diagram with the survival rate split apart for small and large kidney stones.</p>
+<div style="width:72%; margin-left:21%; margin-bottom:20px; margin-top:20px;">
 <img src="img/simpson-separated-note.png" alt>
 </div>
-<p>Treatment A was much better in both cases. Treatment B only seemed better because the patients it was applied to were more likely to survive in the first place!</p>
+<p>We can now <em>see</em> that in both the small case and the large case, Treatment A beats Treatment B. Treatment B only seemed better because the patients it was applied to were more likely to survive in the first place!</p>
 <h2 id="codes">Codes</h2>
 <p>Now that we have ways of visualizing probability, we can dive into information theory.</p>
 <p>Let me tell you about my imaginary friend, Bob. Bob really likes animals. He constantly talks about animals. In fact, he only ever says four words: “dog”, “cat”, “fish” and “bird”.</p>
@@ -189,7 +220,7 @@ Unpublished – Please Do Not Link Or Distribute
 <img src="img/DogWordFreq.png" alt>
 </div>
 <p>That seems promising. Our old code uses codewords that are 2 bits long, regardless of how common they are.</p>
-<p>There’s a nice way to visualize this. In the following diagram, we use the vertical axis to visualize the probability of each codeword and the horizontal axis to visualize its length. Notice that the area is the average length of a codeword we send – in this case 2 bits.</p>
+<p>There’s a nice way to visualize this. In the following diagram, we use the vertical axis to visualize the probability of each word, <span class="math">\(p(x)\)</span>, and the horizontal axis to visualize the length of the corresponding codeword, <span class="math">\(L(x)\)</span>. Notice that the area is the average length of a codeword we send – in this case 2 bits.</p>
 <div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/OldCode.png" alt>
 </div>
@@ -201,6 +232,7 @@ Unpublished – Please Do Not Link Or Distribute
 <div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/NewCode.png" alt>
 </div>
+<p>(You may wonder: why not use 1 by itself as a codeword? Sadly, this would cause ambiguity when we decode encoded strings. We’ll talk about this more shortly.)</p>
 <p>It turns out that this code is the best possible code. There is no code which, for this distribution, will give us an average codeword length of less than 1.75 bits.</p>
 <p>There is simply a fundamental limit. Communicating what word was said, what event from this distribution occurred, requires us to communicate at least 1.75 bits on average. No matter how clever our code, it’s impossible to get the average message length to be less. We call this fundamental limit the entropy of the distribution – we’ll discuss it in much more detail shortly.</p>
 <div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
@@ -218,7 +250,7 @@ Unpublished – Please Do Not Link Or Distribute
 <img src="img/encode.png" alt>
 </div>
 <p>There’s a slightly subtle issue one needs to be careful of, when crafting a variable length code. How do we split the encoded string back into the codewords? When all the codewords are the same length, it’s easy – just split the string every couple of steps. But since there are codewords of different lengths, we need to actually pay attention to the content.</p>
-<p>We really want our code to be uniquely decodable, with only one way to decode an encoded string. We never want it to be ambiguous which codewords make up the encoded string. If we had some special “end of codeword” symbol, this would be easy. But we don’t – we’re only sending 0s and 1s. We need to be able to look at a sequence of concatenated codewords and tell where each one stops.</p>
+<p>We really want our code to be uniquely decodable, with only one way to decode an encoded string. We never want it to be ambiguous which codewords make up the encoded string. If we had some special “end of codeword” symbol, this would be easy.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> But we don’t – we’re only sending 0s and 1s. We need to be able to look at a sequence of concatenated codewords and tell where each one stops.</p>
 <p>It’s very possible to make codes that aren’t uniquely decodable. For example, imagine that 0 and 01 were both codewords. Then it would be unclear what the first codeword of the encoded string 0100111 is – it could be either! The property we want is that if we see a particular codeword, there shouldn’t be some longer version that is also a codeword. Another way of putting this is that no codeword should be the prefix of another codeword. This is called the prefix property, and codes that obey it are called prefix codes.</p>
 <p>One useful way to think about this is that every codeword requires a sacrifice from the space of possible codewords. If we take the codeword 01, we lose the ability to use any codewords it’s a prefix of. We can’t use 010 or 011010110 anymore because of ambiguity – they’re lost to us.</p>
 <div style="width:60%; margin-left:25%; margin-bottom:20px; margin-top:20px;">
@@ -226,11 +258,12 @@ Unpublished – Please Do Not Link Or Distribute
 </div>
 <p>Since a quarter of all codewords start with 01, we’ve sacrificed a quarter of all possible codewords. That’s the price we pay in exchange for having one codeword that’s only 2 bits long! In turn this sacrifice means that all the other codewords need to be a bit longer. There’s always this sort of trade off between the lengths of the different codewords. A short codeword requires you to sacrifice more of the space of possible codewords, preventing other codewords from being short. What we need to figure out is what the right trade off to make is!</p>
 <h2 id="optimal-encodings">Optimal Encodings</h2>
-<p>You can think of this like having a limited budget to spend on getting short codewords. We pay for one word by sacrificing a fraction of possible codewords.</p>
+<p>You can think of this like having a limited budget to spend on getting short codewords. We pay for one codeword by sacrificing a fraction of possible codewords.</p>
 <p>The cost of buying a codeword of length 0 is 1, all possible codewords – if you want to have a codeword of length 0, you can’t have any other codeword. The cost of a codeword of length 1, like “0”, is 1/2 because half of possible codewords start with “0”. The cost of a codeword of length 2, like “01”, is 1/4 because a quarter of all possible codewords start with “01”. In general, the cost of codewords decreases <em>exponentially</em> with the length of the codeword.</p>
 <div style="width:95%; margin-left:5%; margin-bottom:20px; margin-top:20px;">
 <img src="img/code-costonly.png" alt>
 </div>
+<p>Note that if the cost decays as a (natural) exponential, it is both the height and the area!<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
 <p>We want short codewords because we want short average message lengths. Each codeword makes the average message length longer by its probability times the length of the codeword. For example, if we need to send a codeword that is 4 bits long 50% of the time, our average message length is 2 bits longer than it would be if we weren’t sending that codeword. We can picture this as a rectangle.</p>
 <div style="width:30%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/code-lengthcontrib.png" alt>
@@ -246,16 +279,17 @@ Unpublished – Please Do Not Link Or Distribute
 <p>What’s the best way to use our limited budget? How much should we spend on the codeword for each event?</p>
 <p>Just like one wants to invest more in tools that one uses regularly, we want to spend more on frequently used codewords. There’s one particularly natural way to do this: distribute our budget in proportion to how common an event is. So, if one event happens 50% of the time, we spend 50% of our budget buying a short codeword for it. But if an event only happens 1% of the time, we only spend 1% of our budget, because we don’t care very much if the codeword is long.</p>
 <p>That’s a pretty natural thing to do, but is it the optimal thing to do? It is, and I’ll prove it!</p>
+<p><em>The following proof is visual and should be accessible, but will take work to get through and is definitely the hardest part of this essay. Readers should feel free to skip to accept this as a given and jump to the next section.</em></p>
 <p>Let’s picture a concrete example where we’re we need to communicate which of two possible events happened. Event <span class="math">\(a\)</span> happens <span class="math">\(p(a)\)</span> of the time and event <span class="math">\(b\)</span> happens <span class="math">\(p(b)\)</span> of the time. We distribute our budget in the natural way described above, spending <span class="math">\(p(a)\)</span> of our budget on getting <span class="math">\(a\)</span> a short codeword, and <span class="math">\(p(b)\)</span> on getting <span class="math">\(b\)</span> a short codeword.</p>
 <div style="width:95%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/code-auction-balanced-noderivs.png" alt>
 </div>
-<p>The diagram looks “balanced” in some visually nice way. Does that mean anything?</p>
+<p>The cost and length contribution boundaries nicely line up. Does that mean anything?</p>
 <p>Well, consider what happens to the cost and the length contribution if we slightly change the length of the codeword. If we slightly increase the length of the codeword, the message length contribution will increase in proportion to its height at the boundary, while the cost will decrease in proportion to its height at the boundary.</p>
 <div style="width:91%; margin-left:8%; margin-bottom:20px; margin-top:20px;">
 <img src="img/code-derivs.png" alt>
 </div>
-<p>We can work that out more formally, if you prefer. Recall that the rate at which an exponential changes is proportional to its present value. For us, that means that the amount we need to pay to make a codeword shorter is proportional to the amount we’ve already paid. So, the cost to make the codeword for <span class="math">\(a\)</span> shorter is <span class="math">\(p(a)\)</span>. At the same time, we don’t care about the length of each codeword equally, we care about them in proportion to how much we have to use them. In the case of <span class="math">\(a\)</span>, that is <span class="math">\(p(a)\)</span>. The benefit to us of making the codeword for <span class="math">\(a\)</span> a bit shorter is <span class="math">\(p(a)\)</span>.</p>
+<p>So, the cost to make the codeword for <span class="math">\(a\)</span> shorter is <span class="math">\(p(a)\)</span>. At the same time, we don’t care about the length of each codeword equally, we care about them in proportion to how much we have to use them. In the case of <span class="math">\(a\)</span>, that is <span class="math">\(p(a)\)</span>. The benefit to us of making the codeword for <span class="math">\(a\)</span> a bit shorter is <span class="math">\(p(a)\)</span>.</p>
 <p>It’s interesting that both derivatives are the same. It means that our initial budget has the interesting property that, if you had a bit more to spend, it would be equally good to invest in making any codeword shorter. What we really care about, in the end, is the benefit/cost ratio – that’s what decides what we should invest more in. In this case, the ratio is <span class="math">\(\frac{p(a)}{p(a)}\)</span>, which is equal to one. This is independent of the value of <span class="math">\(p(a)\)</span> – it’s always one. And we can apply the same argument to other events. The benefit/cost is always one, so it makes equal sense to invest a bit more in any of them.</p>
 <div style="width:95%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/code-auction-balanced.png" alt>
@@ -293,7 +327,7 @@ Unpublished – Please Do Not Link Or Distribute
 </div>
 <p>The two of them say the same words, just at different frequencies. Bob talks about dogs all the time, Alice talks about cats all the time.</p>
 <p>Initially, Alice sent me messages using Bob’s code. Unfortunately, her messages were longer than they needed to be. Bob’s code was optimized to his probability distribution. Alice has a different probability distribution, and the code is suboptimal for it. While the average length of a codeword when Bob uses his own code is 1.75 bits, when Alice uses his code its 2.25. It would be worse if the two weren’t so similar!</p>
-<p>This length – the average length of communicating an event from one distribution with the optimal code for another distribution – is called the cross-entropy. Formally, we can define cross-entropy as:<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> <span class="math">\[H_p(q) = \sum_x q(x)\log_2\left(\frac{1}{p(x)}\right)\]</span></p>
+<p>This length – the average length of communicating an event from one distribution with the optimal code for another distribution – is called the cross-entropy. Formally, we can define cross-entropy as:<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> <span class="math">\[H_p(q) = \sum_x q(x)\log_2\left(\frac{1}{p(x)}\right)\]</span></p>
 <p>In this case, it’s the cross-entropy of Alice the cat-lovers word frequency with respect to the Bob the dog-lovers word frequency.</p>
 <div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/CrossEntropyDef.png" alt>
@@ -306,7 +340,7 @@ Unpublished – Please Do Not Link Or Distribute
 <li>Alice using her own code <span class="math">\((H(q) = 1.75 ~\text{bits})\)</span></li>
 <li>Bob using Alice’s code <span class="math">\((H_q(p) = 2.375 ~\text{bits})\)</span></li>
 </ul>
-<p>This isn’t necessarily as intuitive as one might thing. For example, we can see that <span class="math">\(H_p(q) \neq H_q(p)\)</span>. Is there some way we can see how these four values relate to each other?</p>
+<p>This isn’t necessarily as intuitive as one might think. For example, we can see that <span class="math">\(H_p(q) \neq H_q(p)\)</span>. Is there some way we can see how these four values relate to each other?</p>
 <p>In the following diagram, each subplot represents one of these 4 possibilities. Each subplot visualizes average message length the same way our previous diagrams did. They are organized in a square, so that if the messages are coming from the same distribution the plots are beside each other, and if they use the same codes they are on top of each other. This allows you to kind of visually slide the distributions and codes together.</p>
 <div style="width:80%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/CrossEntropyCompare.png" alt>
@@ -322,7 +356,7 @@ Unpublished – Please Do Not Link Or Distribute
 <img src="img/CrossEntropyQP.png" alt>
 </div>
 <p>The really interesting thing is the difference between the entropy and the cross-entropy. That difference is how much longer our messages are because we used a code optimized for a different distribution. If the distributions are the same, this difference will be zero. As the difference grows, it will get bigger.</p>
-<p>We call this difference the Kullback–Leibler divergence, or just the KL divergence. The KL divergence of <span class="math">\(p\)</span> with respect to <span class="math">\(q\)</span>, <span class="math">\(D_q(p)\)</span>,<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> is defined:<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></p>
+<p>We call this difference the Kullback–Leibler divergence, or just the KL divergence. The KL divergence of <span class="math">\(p\)</span> with respect to <span class="math">\(q\)</span>, <span class="math">\(D_q(p)\)</span>,<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> is defined:<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a></p>
 <p><span class="math">\[D_q(p) = H_q(p) - H(p)\]</span></p>
 <p>The really neat thing about KL divergence is that it’s like a distance between two distributions. It measures how different they are! (If you take that idea seriously, you end up with information geometry.)</p>
 <p>Cross-Entropy and KL divergence are incredibly useful in machine learning. Often, we want one distribution to be close to another. For example, we might want a predicted distribution to be close to the ground truth. KL divergence gives us a natural way to do this, and so it shows up everywhere.</p>
@@ -352,7 +386,7 @@ Unpublished – Please Do Not Link Or Distribute
 <div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/HxCy-sep.png" alt>
 </div>
-<p>In both cases, I don’t need to send very much information on average, because the weather gives me a good guess at what the right answer will be. To get the average amount of information I need to send my mother, I just put these two cases together…</p>
+<p>In both cases, I don’t need to send very much information on average, because the weather gives me a good guess at what the right answer will be. When it’s sunny, I can use a special sunny-optimized code, and when it’s raining I can use a raining optimized code. In both cases, I send less information than if I used a generic code for both. To get the average amount of information I need to send my mother, I just put these two cases together…</p>
 <div style="width:30%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/HxCy.png" alt>
 </div>
@@ -379,7 +413,7 @@ Unpublished – Please Do Not Link Or Distribute
 <img src="img/Hxy-overview-sum.png" alt>
 </div>
 <p>Again, it’s difficult to see in the equations, but easy to see if you’re thinking in terms of these overlapping bars of information.</p>
-<p>At this point, we’ve broken the information in <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> up in several ways. We have the information in each variable, <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span>. We have the the union of the information in both, <span class="math">\(H(X,Y)\)</span>. We have the information which is in one but not the other, <span class="math">\(H(X|Y)\)</span> and <span class="math">\(H(Y|X)\)</span>. A lot of this seems to revolve around the information shared between the variables, the intersection of their information. We call this “mutual information,” <span class="math">\(I(X,Y)\)</span>, defined as:<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> <span class="math">\[I(X,Y) = H(X) + H(Y) - H(X,Y)\]</span> This definition works because <span class="math">\(H(X) + H(Y)\)</span> has two copies of the mutual information, while <span class="math">\(H(X,Y)\)</span> only has one.</p>
+<p>At this point, we’ve broken the information in <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> up in several ways. We have the information in each variable, <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span>. We have the the union of the information in both, <span class="math">\(H(X,Y)\)</span>. We have the information which is in one but not the other, <span class="math">\(H(X|Y)\)</span> and <span class="math">\(H(Y|X)\)</span>. A lot of this seems to revolve around the information shared between the variables, the intersection of their information. We call this “mutual information,” <span class="math">\(I(X,Y)\)</span>, defined as:<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a> <span class="math">\[I(X,Y) = H(X) + H(Y) - H(X,Y)\]</span> This definition works because <span class="math">\(H(X) + H(Y)\)</span> has two copies of the mutual information, since it’s in both <span class="math">\(X\)</span> and <span class="math">\(Y\)</span>, while <span class="math">\(H(X,Y)\)</span> only has one. (Consider the previous bar diagram.)</p>
 <p>Closely related to the mutual information is the mutual information is the variation of information. The variation of information is the information information which isn’t shared between the variables. We can define it like so: <span class="math">\[V(X,Y) = H(X,Y) - I(X,Y)\]</span> Variation of information is interesting because it gives us a metric, a notion of distance, between different variables. The variation of information between two variables is zero if knowing the value of one tells you the value of the other and increases as they become more independent.</p>
 <p>How does this relate to KL divergence, which also gave us a notion of distance? Well, KL divergence gives us a distance between two distributions over the same variable or set of variables. In contrast, variation of information gives us distance between two jointly distributed variables. KL divergence is between distributions, variation of information within a distribution.</p>
 <p>We can bring this all together into a single diagram relating all these different kinds of information:</p>
@@ -407,30 +441,33 @@ Unpublished – Please Do Not Link Or Distribute
 <div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:15px; margin-top:20px;">
 <img src="img/halfbit-ab-code.png" alt>
 </div>
-<p>This codes give us an average message length of 1.8 bits. That’s less than the 2 bits when we send them independently. Another way of thinking of this is that we’re sending 0.9 bits on average for each event. If we were to send more events at once, it would become smaller still. The overhead due to rounding our code would vanish, and the number of bits per codeword would approach the entropy.</p>
+<p>This codes give us an average message length of 1.8 bits. That’s less than the 2 bits when we send them independently. Another way of thinking of this is that we’re sending 0.9 bits on average for each event. If we were to send more events at once, it would become smaller still. As <span class="math">\(n\)</span> tends to infinity, the overhead due to rounding our code would vanish, and the number of bits per codeword would approach the entropy.</p>
 <p>Further, notice that the ideal codeword length for <span class="math">\(a\)</span> was 0.5 bits, and the ideal codeword length for <span class="math">\(aa\)</span> was 1 bit. Ideal codeword lengths add, even when they’re fractional! So, if we communicate a lot of events at once, the lengths will add.</p>
 <p>There is a very real sense in which one can have fractional numbers of bits of information, even if actual codes can only use whole numbers.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>If we care about communicating in a minimum number of bits, these ideas are clearly fundamental. If we care about compressing data, information theory addresses the core questions and gives us the fundamentally right abstractions. But what if we don’t care – are they anything other than curiosities?</p>
-<p>Ideas from information theory turn up in lots of contexts: machine learning, quantum physics, genetics, thermodynamics, and even gambling. Practitioners in these fields typically don’t care about information theory because they want to compress information. They care because it has a compelling connection to their field. Quantum entanglement can be described with entropy.<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a> Many results in statistical mechanics and thermodynamics can be derived by assuming maximum entropy about the things you don’t know.<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a> A gambler’s wins or losses are directly connected to KL divergence, in particular iterated setups.<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a></p>
+<p>Ideas from information theory turn up in lots of contexts: machine learning, quantum physics, genetics, thermodynamics, and even gambling. Practitioners in these fields typically don’t care about information theory because they want to compress information. They care because it has a compelling connection to their field. Quantum entanglement can be described with entropy.<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a> Many results in statistical mechanics and thermodynamics can be derived by assuming maximum entropy about the things you don’t know.<a href="#fn9" class="footnoteRef" id="fnref9"><sup>9</sup></a> A gambler’s wins or losses are directly connected to KL divergence, in particular iterated setups.<a href="#fn10" class="footnoteRef" id="fnref10"><sup>10</sup></a></p>
 <p>Information theory turns up in all these places because it offers concrete, principled formalizations for many things we need to express. It gives us ways of measuring and expressing uncertainty, how different two sets of beliefs are, and how much an answer to one question tells us about others: how diffuse probability is, the distance between probability distributions, and how dependent two variables are. Are there alternative, similar ideas? Sure. But the ideas from information theory are clean, they have really nice properties, and a principled origin. In some cases, they’re precisely what you care about, and in other cases they’re a convenient proxy in a messy world.</p>
 <p>Machine learning is what I know best, so let’s talk about that for a minute. A very common kind of task in machine learning is classification. Let’s say we want to look at a picture and predict whether it’s a picture of a dog or a cat. Our model might say something like “there’s a 80% chance this image is a dog, and a 20% chance it’s a cat.” Let’s say the correct answer is dog – how good or bad is it that we only said there was an 80% chance it was a dog? How much better would it have been to say 85%?</p>
-<p>This is an important question because we need some notion of how good or bad our model is, in order to optimize it to do well. What should we optimize? The correct answer really depends on what we’re using the model for: Do we only care about whether the top guess was right, or do we care about how confident we are in the correct answer? How bad is it to be confidently wrong? There isn’t one right answer to this. And often it isn’t possible to know the right answer, because we don’t know how the model will be used in a precise enough way to formalize what we ultimately care about. The result is that there are situations where cross-entropy really is precisely what we care about, but that isn’t always the case. Much more often we don’t know exactly what we care about and cross-entropy is a really nice proxy.</p>
+<p>This is an important question because we need some notion of how good or bad our model is, in order to optimize it to do well. What should we optimize? The correct answer really depends on what we’re using the model for: Do we only care about whether the top guess was right, or do we care about how confident we are in the correct answer? How bad is it to be confidently wrong? There isn’t one right answer to this. And often it isn’t possible to know the right answer, because we don’t know how the model will be used in a precise enough way to formalize what we ultimately care about. The result is that there are situations where cross-entropy really is precisely what we care about, but that isn’t always the case. Much more often we don’t know exactly what we care about and cross-entropy is a really nice proxy.<a href="#fn11" class="footnoteRef" id="fnref11"><sup>11</sup></a></p>
 <p>Information gives us a powerful new framework for thinking about the world. Sometimes it perfectly fits the problem at hand; other times it’s not an exact fit, but still extremely useful. This essay has only scratched the surface of information theory – there are major topics, like error-correcting codes, that we haven’t touched at all – but I hope I’ve shown that information theory is a beautiful subject that doesn’t need to be intimidating.</p>
+<p><em>To help me become a better writer, please consider filling out this <a href="https://docs.google.com/forms/d/1zaMvi-yL04GEtS7RnGplZ9TDGO5965GLlDdd50y2zNI/viewform?usp=send_form">feedback form</a>.</em></p>
 <h2 id="further-reading">Further Reading</h2>
 <p>Claude Shannon’s original paper on information theory, <a href="http://worrydream.com/refs/Shannon%20-%20A%20Mathematical%20Theory%20of%20Communication.pdf">A Mathematical Theory of Computation</a>, is remarkably accessible. (This seems to be a recurring pattern in early information theory papers. Was it the era? A lack of page limits? A culture emanating from from Bell Labs?)</p>
 <p>Cover &amp; Thomas’ Elements of Information Theory seems to be the standard reference. I found it helpful.</p>
 <h2 id="acknowledgments">Acknowledgments</h2>
-<p>I’m very grateful to <a href="https://github.com/danmane">Dan Mané</a> and <a href="https://www.cs.cmu.edu/~dga/">David Andersen</a> for taking time to give really incredibly detailed and extensive comments on this essay. I’m also grateful for the comments of <a href="http://michaelnielsen.org/">Michael Nielsen</a>, <a href="http://research.google.com/pubs/GregCorrado.html">Greg Corrado</a>, <a href="http://www.iro.umontreal.ca/~bengioy/yoshua_en/index.html">Yoshua Bengio</a>, <a href="https://aaroncourville.wordpress.com/">Aaron Courville</a>, <a href="http://www.nickbeckstead.com/">Nick Beckstead</a>, Dario Amodei, <a href="http://research.google.com/pubs/JonathonShlens.html">Jon Shlens</a>, and <a href="http://www.bewitched.com/">Martin Wattenberg</a>.</p>
+<p>I’m very grateful to <a href="https://github.com/danmane">Dan Mané</a>, <a href="https://www.cs.cmu.edu/~dga/">David Andersen</a>, <a href="http://obsessionwithregression.blogspot.com/">Emma Pierson</a> and Dario Amodei for taking time to give really incredibly detailed and extensive comments on this essay. I’m also grateful for the comments of <a href="http://michaelnielsen.org/">Michael Nielsen</a>, <a href="http://research.google.com/pubs/GregCorrado.html">Greg Corrado</a>, <a href="http://www.iro.umontreal.ca/~bengioy/yoshua_en/index.html">Yoshua Bengio</a>, <a href="https://aaroncourville.wordpress.com/">Aaron Courville</a>, <a href="http://www.nickbeckstead.com/">Nick Beckstead</a>, <a href="http://research.google.com/pubs/JonathonShlens.html">Jon Shlens</a>, and <a href="http://www.bewitched.com/">Martin Wattenberg</a>.</p>
 <p>Thanks also to my first two neural network seminar series for acting as guinea pigs for these ideas.</p>
 <section class="footnotes">
 <hr />
 <ol>
 <li id="fn1"><p>It’s fun to use this to visualize naive Bayesian classifiers, which assume independence…<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>Note that this notation for cross-entropy is non-standard. The normal notation is <span class="math">\(H(p,q)\)</span>. This notation is horrible for two reasons. Firstly, the exact same notation is also used for joint entropy. Secondly, it makes it seem like cross-entropy is symmetric. This is ridiculous, and I’ll be writing <span class="math">\(H_q(p)\)</span> instead.<a href="#fnref2">↩</a></p></li>
-<li id="fn3"><p>Also non-standard notation.<a href="#fnref3">↩</a></p></li>
-<li id="fn4"><p>If you expand the definition of KL divergence, you get: <span class="math">\[D_q(p) = \sum_x p(x)\log_2\left(\frac{q(x)}{p(x)} \right)\]</span> That might look a bit strange. How should we interpret it? Well, <span class="math">\(\log_2\left(\frac{q(x)}{p(x)} \right)\)</span> is just the difference between how many bits a code optimized for <span class="math">\(p\)</span> and a code optimized for <span class="math">\(q\)</span> would use to represent <span class="math">\(x\)</span>. The expression as a whole is the expected difference in how many bits the two codes would use.<a href="#fnref4">↩</a></p></li>
-<li id="fn5"><p>If you expand the definition of mutual information out, you get:</p>
+<li id="fn2"><p>But horribly inefficient! If we have an extra symbol to use in our codes, only using it at the end of codewords like this would be a terrible waste.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>I’m cheating a little here. I’ve been using an exponential of base 2 where this is not true, and am going to switch to a natural exponential. This saves us having a lot of <span class="math">\(log(2)\)</span>s in our proof, and makes it visually a lot nicer.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>Note that this notation for cross-entropy is non-standard. The normal notation is <span class="math">\(H(p,q)\)</span>. This notation is horrible for two reasons. Firstly, the exact same notation is also used for joint entropy. Secondly, it makes it seem like cross-entropy is symmetric. This is ridiculous, and I’ll be writing <span class="math">\(H_q(p)\)</span> instead.<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>Also non-standard notation.<a href="#fnref5">↩</a></p></li>
+<li id="fn6"><p>If you expand the definition of KL divergence, you get: <span class="math">\[D_q(p) = \sum_x p(x)\log_2\left(\frac{q(x)}{p(x)} \right)\]</span> That might look a bit strange. How should we interpret it? Well, <span class="math">\(\log_2\left(\frac{q(x)}{p(x)} \right)\)</span> is just the difference between how many bits a code optimized for <span class="math">\(p\)</span> and a code optimized for <span class="math">\(q\)</span> would use to represent <span class="math">\(x\)</span>. The expression as a whole is the expected difference in how many bits the two codes would use.<a href="#fnref6">↩</a></p></li>
+<li id="fn7"><p>If you expand the definition of mutual information out, you get:</p>
 <p><span class="math">\[I(X,Y) = \sum_{x,y} p(x,y) \log_2\left(\frac{p(x,y)}{p(x)p(y)} \right)\]</span></p>
 <p>That looks suspiciously like KL divergence!</p>
 <p>What’s going on? Well, it is KL divergence. It’s the KL divergence of P(X,Y) and it’s naive approximation P(X)P(Y). That is, it’s the number of bits you save representing <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> if you understand the relationship between them instead of assuming they’re independent.</p>
@@ -438,15 +475,20 @@ Unpublished – Please Do Not Link Or Distribute
 <div style="width:200px; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:5px;">
 <img src="img/mutual-visual-eq.png" alt>
 </div>
-<a href="#fnref5">↩</a></li>
-<li id="fn6"><p>There’s an entire field of quantum information theory. I know precisely nothing about the subject, but I’d bet with extremely high confidence, based on Michael’s other work, that Michael Nielsen and Issac Chuang’s <em>Quantum Computation and Quantum Information</em> is an excellent introduction.<a href="#fnref6">↩</a></p></li>
-<li id="fn7"><p>As someone who knows nothing about statistical physics, I’ll very nervously try to sketch its connection to information theory as I understand it.</p>
+<a href="#fnref7">↩</a></li>
+<li id="fn8"><p>There’s an entire field of quantum information theory. I know precisely nothing about the subject, but I’d bet with extremely high confidence, based on Michael’s other work, that Michael Nielsen and Issac Chuang’s <em>Quantum Computation and Quantum Information</em> is an excellent introduction.<a href="#fnref8">↩</a></p></li>
+<li id="fn9"><p>As someone who knows nothing about statistical physics, I’ll very nervously try to sketch its connection to information theory as I understand it.</p>
 <p>After Shannon discovered information theory, many noted suspicious similarities between equations in thermodynamics and equations in information theory. E.T. Jaynes found a very deep and principled connection. Suppose you have some system, and take some measurements like the pressure and temperature. How probable should you think a particular state of the system is? Jaynes suggested we should assume the probability distribution which, subject to the constraints of our measurement, maximizes the entropy. (Note that this “principle of maximum entropy” is much more general than physics!) That is, we should assume the possibility with the most unknown information. Many results can be derived from this perspective.</p>
 <p>(Reading the first few sections of Jaynes’ papers (<a href="http://bayes.wustl.edu/etj/articles/theory.1.pdf">part 1</a>, <a href="http://bayes.wustl.edu/etj/articles/theory.2.pdf">part 2</a>) I was impressed by how accessible they seem.)</p>
-<p>If you’re interested in this connection but don’t want to work through the original papers, there’s a section in Cover &amp; Thomas which derives a statistical version of the Second Law of Thermodynamics from Markov Chains!<a href="#fnref7">↩</a></p></li>
-<li id="fn8"><p>The connection between information theory and gambling was originally laid out by John Kelly in his paper ‘<a href="http://www.princeton.edu/~wbialek/rome/refs/kelly_56.pdf">A New Interpretation of Information Rate</a>.’ It’s a remarkably accessible paper, although it requires a few ideas we didn’t develop in this essay.</p>
+<p>If you’re interested in this connection but don’t want to work through the original papers, there’s a section in Cover &amp; Thomas which derives a statistical version of the Second Law of Thermodynamics from Markov Chains!<a href="#fnref9">↩</a></p></li>
+<li id="fn10"><p>The connection between information theory and gambling was originally laid out by John Kelly in his paper ‘<a href="http://www.princeton.edu/~wbialek/rome/refs/kelly_56.pdf">A New Interpretation of Information Rate</a>.’ It’s a remarkably accessible paper, although it requires a few ideas we didn’t develop in this essay.</p>
 <p>Kelly had an interesting motivation for his work. He noticed that entropy as being used in many cost functions which had no connection to encoding information and wanted some principled reason for it. In writing this essay, I’ve been troubled by the same thing, and have really appreciated Kelly’s work as an additional perspective. That said, I don’t find it completely convincing: Kelly only winds up with entropy because he considers iterated betting where one reinvests all their capital each bet. Different setups do not lead to the entropy.</p>
-<p>A nice discussion of Kelly’s connection between betting and information theory can be found in the standard reference on information theory, Cover &amp; Thomas’ ‘Elements of Information Theory.’<a href="#fnref8">↩</a></p></li>
+<p>A nice discussion of Kelly’s connection between betting and information theory can be found in the standard reference on information theory, Cover &amp; Thomas’ ‘Elements of Information Theory.’<a href="#fnref10">↩</a></p></li>
+<li id="fn11"><p>It doesn’t resolve the issue, but I can’t resist offering a small further defense of KL divergence.</p>
+<p>There’s a result which Cover &amp; Thomas call Stein’s Lemma, although it seems unrelated to the result generally called Stein’s Lemma. At a high level, it goes like this:</p>
+<p>Suppose you have some data which you know comes from one of two probability distributions. How confidently can you determine which of the two distributions it came from? In general, as you get more data points, your confidence should increase exponentially. For example, on average you might become 1.5 times as confident about which distribution is the truth for every data point you see.</p>
+<p>How much your confidence gets multiplied depends on how different the distributions are. If they are very different, you might very quickly become confident. But if they’re only very slightly different, you might need to see lots of data before you have even a mildly confident answer.</p>
+<p>Stein’s Lemma says, roughly, that the amount you multiply by is controlled by the KL divergence. (There’s some subtlety about the trade off between false-positives and false-negatives.) This seems like a really good reason to care about KL divergence!<a href="#fnref11">↩</a></p></li>
 </ol>
 </section>
 
