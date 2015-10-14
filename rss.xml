@@ -8,6 +8,23 @@
                    type="application/rss+xml" />
         <lastBuildDate>Thurs, 3 Sep 2015 00:00:00 UTC</lastBuildDate>
 
+
+<item>
+    <title>Visual Information Theory</title>
+    <link>http://colah.github.io/posts/2015-09-Visual-Information/</link>
+    <description><![CDATA[
+<p>I love the feeling of having a new way to think about the world. I especially love when there’s some vague idea that gets formalized into a concrete concept. Information theory is a prime example of this.</p>
+
+<p>Information theory gives us precise language for describing a lot of things. How uncertain am I? How much does knowing the answer to question A tell me about the answer to question B? How similar is one set of beliefs to another? I’ve had informal versions of these ideas since I was a young child, but information theory crystallizes them into precise, powerful ideas. These ideas have an enormous variety of applications, from the compression of data, to quantum physics, to machine learning, and vast fields in between.</p>
+
+<p>Unfortunately, information theory can seem kind of intimidating. I don’t think there’s any reason it should be. In fact, many core ideas can be explained completely visually!</p>
+
+<p><a href="http://colah.github.io/posts/2015-09-Visual-Information/">Read more.</a></p>
+]]></description>
+    <pubDate>Thurs, 3 Sep 2015 00:00:00 UTC</pubDate>
+    <guid>http://colah.github.io/posts/2015-09-Visual-Information/</guid>
+</item>
+
 <item>
     <title>Neural Networks, Types, and Functional Programming</title>
     <link>http://colah.github.io/posts/2015-09-NN-Types-FP/</link>
