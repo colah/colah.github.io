@@ -92,50 +92,6 @@
 </div>
 </br>
 
-<!--
-<div style="width:100%; background-color:red; font-size:200%; padding:20px; margin-bottom:30px; margin-top:20px;">
-Unpublished -- Please Do Not Link Or Distribute
-</div>
-
-
-<style>
-
-@page {
-  margin: 2cm;
-  margin-bottom:0.5cm;
-  orphans: 3;
-  widows: 3;
-}
-
-@page :first {
-  margin-top: 6cm;
-}
-
-@page :left {
-  margin-left: 4cm;
-}
-
-@page :right {
-  margin-right: 4cm;
-}
-
-@media print {
-  h1, h2, h3 {
-    page-break-after: avoid;
-  }
-  body {
-    text-align: justify;
-    font-family: 'CMS', 'Droid Sans', Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 25px;
-  }
-  #footer {display: none;}
-}
-
-
-</style>
--->
-
 <p>I love the feeling of having a new way to think about the world. I especially love when there’s some vague idea that gets formalized into a concrete concept. Information theory is a prime example of this.</p>
 <p>Information theory gives us precise language for describing a lot of things. How uncertain am I? How much does knowing the answer to question A tell me about the answer to question B? How similar is one set of beliefs to another? I’ve had informal versions of these ideas since I was a young child, but information theory crystallizes them into precise, powerful ideas. These ideas have an enormous variety of applications, from the compression of data, to quantum physics, to machine learning, and vast fields in between.</p>
 <p>Unfortunately, information theory can seem kind of intimidating. I don’t think there’s any reason it should be. In fact, many core ideas can be explained completely visually!</p>
@@ -391,7 +347,7 @@ Unpublished -- Please Do Not Link Or Distribute
 <p><span class="math">\[H(X|Y) = \sum_y p(y) \sum_x p(x) \log_2\left(\frac{1}{p(x|y)}\right)\]</span> <span class="math">\[~~~~ = \sum_{x,y} p(x,y) \log_2\left(\frac{1}{p(x|y)}\right)\]</span></p>
 <h2 id="mutual-information">Mutual Information</h2>
 <p>In the previous section, we observed that knowing one variable can mean that communicating another variable requires less information.</p>
-<p>One nice way to think about this is to imagine amounts of information as bars. These bars overlap if there’s shared information between them. For example, some of the information in <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> is shared between them, so <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span> are overlapping bars. And since <span class="math">\(H(X,Y)\)</span> is the information in both, it’s the union of the bars <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span>.</p>
+<p>One nice way to think about this is to imagine amounts of information as bars. These bars overlap if there’s shared information between them. For example, some of the information in <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> is shared between them, so <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span> are overlapping bars. And since <span class="math">\(H(X,Y)\)</span> is the information in both, it’s the union of the bars <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span>.<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a></p>
 <div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/Hxy-info-1.png" alt>
 </div>
@@ -410,7 +366,7 @@ Unpublished -- Please Do Not Link Or Distribute
 <img src="img/Hxy-overview-sum.png" alt>
 </div>
 <p>Again, it’s difficult to see in the equations, but easy to see if you’re thinking in terms of these overlapping bars of information.</p>
-<p>At this point, we’ve broken the information in <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> up in several ways. We have the information in each variable, <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span>. We have the the union of the information in both, <span class="math">\(H(X,Y)\)</span>. We have the information which is in one but not the other, <span class="math">\(H(X|Y)\)</span> and <span class="math">\(H(Y|X)\)</span>. A lot of this seems to revolve around the information shared between the variables, the intersection of their information. We call this “mutual information,” <span class="math">\(I(X,Y)\)</span>, defined as:<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a> <span class="math">\[I(X,Y) = H(X) + H(Y) - H(X,Y)\]</span> This definition works because <span class="math">\(H(X) + H(Y)\)</span> has two copies of the mutual information, since it’s in both <span class="math">\(X\)</span> and <span class="math">\(Y\)</span>, while <span class="math">\(H(X,Y)\)</span> only has one. (Consider the previous bar diagram.)</p>
+<p>At this point, we’ve broken the information in <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> up in several ways. We have the information in each variable, <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span>. We have the the union of the information in both, <span class="math">\(H(X,Y)\)</span>. We have the information which is in one but not the other, <span class="math">\(H(X|Y)\)</span> and <span class="math">\(H(Y|X)\)</span>. A lot of this seems to revolve around the information shared between the variables, the intersection of their information. We call this “mutual information,” <span class="math">\(I(X,Y)\)</span>, defined as:<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a> <span class="math">\[I(X,Y) = H(X) + H(Y) - H(X,Y)\]</span> This definition works because <span class="math">\(H(X) + H(Y)\)</span> has two copies of the mutual information, since it’s in both <span class="math">\(X\)</span> and <span class="math">\(Y\)</span>, while <span class="math">\(H(X,Y)\)</span> only has one. (Consider the previous bar diagram.)</p>
 <p>Closely related to the mutual information is the mutual information is the variation of information. The variation of information is the information information which isn’t shared between the variables. We can define it like so: <span class="math">\[V(X,Y) = H(X,Y) - I(X,Y)\]</span> Variation of information is interesting because it gives us a metric, a notion of distance, between different variables. The variation of information between two variables is zero if knowing the value of one tells you the value of the other and increases as they become more independent.</p>
 <p>How does this relate to KL divergence, which also gave us a notion of distance? Well, KL divergence gives us a distance between two distributions over the same variable or set of variables. In contrast, variation of information gives us distance between two jointly distributed variables. KL divergence is between distributions, variation of information within a distribution.</p>
 <p>We can bring this all together into a single diagram relating all these different kinds of information:</p>
@@ -443,10 +399,10 @@ Unpublished -- Please Do Not Link Or Distribute
 <p>There is a very real sense in which one can have fractional numbers of bits of information, even if actual codes can only use whole numbers.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>If we care about communicating in a minimum number of bits, these ideas are clearly fundamental. If we care about compressing data, information theory addresses the core questions and gives us the fundamentally right abstractions. But what if we don’t care – are they anything other than curiosities?</p>
-<p>Ideas from information theory turn up in lots of contexts: machine learning, quantum physics, genetics, thermodynamics, and even gambling. Practitioners in these fields typically don’t care about information theory because they want to compress information. They care because it has a compelling connection to their field. Quantum entanglement can be described with entropy.<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a> Many results in statistical mechanics and thermodynamics can be derived by assuming maximum entropy about the things you don’t know.<a href="#fn9" class="footnoteRef" id="fnref9"><sup>9</sup></a> A gambler’s wins or losses are directly connected to KL divergence, in particular iterated setups.<a href="#fn10" class="footnoteRef" id="fnref10"><sup>10</sup></a></p>
+<p>Ideas from information theory turn up in lots of contexts: machine learning, quantum physics, genetics, thermodynamics, and even gambling. Practitioners in these fields typically don’t care about information theory because they want to compress information. They care because it has a compelling connection to their field. Quantum entanglement can be described with entropy.<a href="#fn9" class="footnoteRef" id="fnref9"><sup>9</sup></a> Many results in statistical mechanics and thermodynamics can be derived by assuming maximum entropy about the things you don’t know.<a href="#fn10" class="footnoteRef" id="fnref10"><sup>10</sup></a> A gambler’s wins or losses are directly connected to KL divergence, in particular iterated setups.<a href="#fn11" class="footnoteRef" id="fnref11"><sup>11</sup></a></p>
 <p>Information theory turns up in all these places because it offers concrete, principled formalizations for many things we need to express. It gives us ways of measuring and expressing uncertainty, how different two sets of beliefs are, and how much an answer to one question tells us about others: how diffuse probability is, the distance between probability distributions, and how dependent two variables are. Are there alternative, similar ideas? Sure. But the ideas from information theory are clean, they have really nice properties, and a principled origin. In some cases, they’re precisely what you care about, and in other cases they’re a convenient proxy in a messy world.</p>
 <p>Machine learning is what I know best, so let’s talk about that for a minute. A very common kind of task in machine learning is classification. Let’s say we want to look at a picture and predict whether it’s a picture of a dog or a cat. Our model might say something like “there’s a 80% chance this image is a dog, and a 20% chance it’s a cat.” Let’s say the correct answer is dog – how good or bad is it that we only said there was an 80% chance it was a dog? How much better would it have been to say 85%?</p>
-<p>This is an important question because we need some notion of how good or bad our model is, in order to optimize it to do well. What should we optimize? The correct answer really depends on what we’re using the model for: Do we only care about whether the top guess was right, or do we care about how confident we are in the correct answer? How bad is it to be confidently wrong? There isn’t one right answer to this. And often it isn’t possible to know the right answer, because we don’t know how the model will be used in a precise enough way to formalize what we ultimately care about. The result is that there are situations where cross-entropy really is precisely what we care about, but that isn’t always the case. Much more often we don’t know exactly what we care about and cross-entropy is a really nice proxy.<a href="#fn11" class="footnoteRef" id="fnref11"><sup>11</sup></a></p>
+<p>This is an important question because we need some notion of how good or bad our model is, in order to optimize it to do well. What should we optimize? The correct answer really depends on what we’re using the model for: Do we only care about whether the top guess was right, or do we care about how confident we are in the correct answer? How bad is it to be confidently wrong? There isn’t one right answer to this. And often it isn’t possible to know the right answer, because we don’t know how the model will be used in a precise enough way to formalize what we ultimately care about. The result is that there are situations where cross-entropy really is precisely what we care about, but that isn’t always the case. Much more often we don’t know exactly what we care about and cross-entropy is a really nice proxy.<a href="#fn12" class="footnoteRef" id="fnref12"><sup>12</sup></a></p>
 <p>Information gives us a powerful new framework for thinking about the world. Sometimes it perfectly fits the problem at hand; other times it’s not an exact fit, but still extremely useful. This essay has only scratched the surface of information theory – there are major topics, like error-correcting codes, that we haven’t touched at all – but I hope I’ve shown that information theory is a beautiful subject that doesn’t need to be intimidating.</p>
 <p><em>To help me become a better writer, please consider filling out this <a href="https://docs.google.com/forms/d/1zaMvi-yL04GEtS7RnGplZ9TDGO5965GLlDdd50y2zNI/viewform?usp=send_form">feedback form</a>.</em></p>
 <h2 id="further-reading">Further Reading</h2>
@@ -504,65 +460,6 @@ Deep Learning and Human Beings
 </h4>
 </div>
 <p></a></p>
-<!--
-
-
-<a href="../../posts/2015-08-Understanding-LSTMs/">
-<div class="post">
-<img src="../../images/post-covers/lstm.png">
-<h3>Understanding LSTM Networks</h3>
-</div>
-</a>
-
-<a href="../../posts/2014-10-Visualizing-MNIST/">
-<div class="post">
-<img src="../../posts/2014-10-Visualizing-MNIST/img/fig.png">
-<h3>Visualizing MNIST</h3>
-<h4>An Exploration of Dimensionality Reduction</h4>
-</div>
-</a>
-
-<a href="../../posts/2015-01-Visualizing-Representations/">
-<div class="post">
-<img src="../../posts/2015-01-Visualizing-Representations/img/fig.png">
-<h3>Visualizing Representations</h3>
-<h4>Deep Learning and Human Beings</h4>
-</div>
-</a>
-
-
-<a href="../../posts/2014-07-Understanding-Convolutions/">
-<div class="post">
-<img src="../../posts/2014-07-Understanding-Convolutions/img/fig.png">
-<h3>Understanding Convolutions</h3>
-</div>
-</a>
-
-
-<a href="../../posts/2014-12-Groups-Convolution/">
-<div class="post">
-<img src="../../posts/2014-12-Groups-Convolution/img/fig.png">
-<h3>Groups &amp; Group Convolutions</h3>
-</div>
-</a>
-
-<a href="https://christopherolah.wordpress.com/2011/08/08/the-real-3d-mandelbrot-set/">
-<div class="post">
-<img src="../../images/post-covers/mandelbrot.png">
-<h3>The Real 3D Mandelbrot Set</h3>
-<h4 style="margin-top:2px;"><i>On my old blog</i></h4>
-</div>
-</a>
-
-<a href="../../posts/2014-07-FFN-Graphs-Vis/">
-<div class="post">
-<img src="../../posts/2014-07-FFN-Graphs-Vis/img/graph-HP-ships-labeled.png">
-<h3>Fanfiction, Graphs, and PageRank</h3>
-</div>
-</a>
-
--->
-
 <p><br style="clear:left;"></p>
 </section>
 
@@ -576,7 +473,8 @@ Deep Learning and Human Beings
 <li id="fn4"><p>Note that this notation for cross-entropy is non-standard. The normal notation is <span class="math">\(H(p,q)\)</span>. This notation is horrible for two reasons. Firstly, the exact same notation is also used for joint entropy. Secondly, it makes it seem like cross-entropy is symmetric. This is ridiculous, and I’ll be writing <span class="math">\(H_q(p)\)</span> instead.<a href="#fnref4">↩</a></p></li>
 <li id="fn5"><p>Also non-standard notation.<a href="#fnref5">↩</a></p></li>
 <li id="fn6"><p>If you expand the definition of KL divergence, you get: <span class="math">\[D_q(p) = \sum_x p(x)\log_2\left(\frac{q(x)}{p(x)} \right)\]</span> That might look a bit strange. How should we interpret it? Well, <span class="math">\(\log_2\left(\frac{q(x)}{p(x)} \right)\)</span> is just the difference between how many bits a code optimized for <span class="math">\(p\)</span> and a code optimized for <span class="math">\(q\)</span> would use to represent <span class="math">\(x\)</span>. The expression as a whole is the expected difference in how many bits the two codes would use.<a href="#fnref6">↩</a></p></li>
-<li id="fn7"><p>If you expand the definition of mutual information out, you get:</p>
+<li id="fn7"><p>This builds off the set interpretation of information theory layed out in Raymond W. Yeung’s paper <a href="http://www.cnd.mcgill.ca/~ivan/it_ineq_script/Raymond%20Yeung%20papers/A%20New%20Outlook%20on%20Shannon%E2%80%99s%20Information%20Measures%2000079902.pdf">A New Outlook on Shannon’s Information Measures</a>.<a href="#fnref7">↩</a></p></li>
+<li id="fn8"><p>If you expand the definition of mutual information out, you get:</p>
 <p><span class="math">\[I(X,Y) = \sum_{x,y} p(x,y) \log_2\left(\frac{p(x,y)}{p(x)p(y)} \right)\]</span></p>
 <p>That looks suspiciously like KL divergence!</p>
 <p>What’s going on? Well, it is KL divergence. It’s the KL divergence of P(X,Y) and it’s naive approximation P(X)P(Y). That is, it’s the number of bits you save representing <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> if you understand the relationship between them instead of assuming they’re independent.</p>
@@ -584,20 +482,20 @@ Deep Learning and Human Beings
 <div style="width:200px; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:5px;">
 <img src="img/mutual-visual-eq.png" alt>
 </div>
-<a href="#fnref7">↩</a></li>
-<li id="fn8"><p>There’s an entire field of quantum information theory. I know precisely nothing about the subject, but I’d bet with extremely high confidence, based on Michael’s other work, that Michael Nielsen and Issac Chuang’s <em>Quantum Computation and Quantum Information</em> is an excellent introduction.<a href="#fnref8">↩</a></p></li>
-<li id="fn9"><p>As someone who knows nothing about statistical physics, I’ll very nervously try to sketch its connection to information theory as I understand it.</p>
+<a href="#fnref8">↩</a></li>
+<li id="fn9"><p>There’s an entire field of quantum information theory. I know precisely nothing about the subject, but I’d bet with extremely high confidence, based on Michael’s other work, that Michael Nielsen and Issac Chuang’s <em>Quantum Computation and Quantum Information</em> is an excellent introduction.<a href="#fnref9">↩</a></p></li>
+<li id="fn10"><p>As someone who knows nothing about statistical physics, I’ll very nervously try to sketch its connection to information theory as I understand it.</p>
 <p>After Shannon discovered information theory, many noted suspicious similarities between equations in thermodynamics and equations in information theory. E.T. Jaynes found a very deep and principled connection. Suppose you have some system, and take some measurements like the pressure and temperature. How probable should you think a particular state of the system is? Jaynes suggested we should assume the probability distribution which, subject to the constraints of our measurement, maximizes the entropy. (Note that this “principle of maximum entropy” is much more general than physics!) That is, we should assume the possibility with the most unknown information. Many results can be derived from this perspective.</p>
 <p>(Reading the first few sections of Jaynes’ papers (<a href="http://bayes.wustl.edu/etj/articles/theory.1.pdf">part 1</a>, <a href="http://bayes.wustl.edu/etj/articles/theory.2.pdf">part 2</a>) I was impressed by how accessible they seem.)</p>
-<p>If you’re interested in this connection but don’t want to work through the original papers, there’s a section in Cover &amp; Thomas which derives a statistical version of the Second Law of Thermodynamics from Markov Chains!<a href="#fnref9">↩</a></p></li>
-<li id="fn10"><p>The connection between information theory and gambling was originally laid out by John Kelly in his paper ‘<a href="http://www.princeton.edu/~wbialek/rome/refs/kelly_56.pdf">A New Interpretation of Information Rate</a>.’ It’s a remarkably accessible paper, although it requires a few ideas we didn’t develop in this essay.</p>
+<p>If you’re interested in this connection but don’t want to work through the original papers, there’s a section in Cover &amp; Thomas which derives a statistical version of the Second Law of Thermodynamics from Markov Chains!<a href="#fnref10">↩</a></p></li>
+<li id="fn11"><p>The connection between information theory and gambling was originally laid out by John Kelly in his paper ‘<a href="http://www.princeton.edu/~wbialek/rome/refs/kelly_56.pdf">A New Interpretation of Information Rate</a>.’ It’s a remarkably accessible paper, although it requires a few ideas we didn’t develop in this essay.</p>
 <p>Kelly had an interesting motivation for his work. He noticed that entropy as being used in many cost functions which had no connection to encoding information and wanted some principled reason for it. In writing this essay, I’ve been troubled by the same thing, and have really appreciated Kelly’s work as an additional perspective. That said, I don’t find it completely convincing: Kelly only winds up with entropy because he considers iterated betting where one reinvests all their capital each bet. Different setups do not lead to the entropy.</p>
-<p>A nice discussion of Kelly’s connection between betting and information theory can be found in the standard reference on information theory, Cover &amp; Thomas’ ‘Elements of Information Theory.’<a href="#fnref10">↩</a></p></li>
-<li id="fn11"><p>It doesn’t resolve the issue, but I can’t resist offering a small further defense of KL divergence.</p>
+<p>A nice discussion of Kelly’s connection between betting and information theory can be found in the standard reference on information theory, Cover &amp; Thomas’ ‘Elements of Information Theory.’<a href="#fnref11">↩</a></p></li>
+<li id="fn12"><p>It doesn’t resolve the issue, but I can’t resist offering a small further defense of KL divergence.</p>
 <p>There’s a result which Cover &amp; Thomas call Stein’s Lemma, although it seems unrelated to the result generally called Stein’s Lemma. At a high level, it goes like this:</p>
 <p>Suppose you have some data which you know comes from one of two probability distributions. How confidently can you determine which of the two distributions it came from? In general, as you get more data points, your confidence should increase exponentially. For example, on average you might become 1.5 times as confident about which distribution is the truth for every data point you see.</p>
 <p>How much your confidence gets multiplied depends on how different the distributions are. If they are very different, you might very quickly become confident. But if they’re only very slightly different, you might need to see lots of data before you have even a mildly confident answer.</p>
-<p>Stein’s Lemma says, roughly, that the amount you multiply by is controlled by the KL divergence. (There’s some subtlety about the trade off between false-positives and false-negatives.) This seems like a really good reason to care about KL divergence!<a href="#fnref11">↩</a></p></li>
+<p>Stein’s Lemma says, roughly, that the amount you multiply by is controlled by the KL divergence. (There’s some subtlety about the trade off between false-positives and false-negatives.) This seems like a really good reason to care about KL divergence!<a href="#fnref12">↩</a></p></li>
 </ol>
 </section>
 
