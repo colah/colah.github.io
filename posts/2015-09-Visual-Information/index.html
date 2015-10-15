@@ -126,7 +126,7 @@
 <p><span class="math">\[p(x,y) = p(x)\cdot p(y|x)\]</span></p>
 <p>We’re <em>factoring</em> the distribution, breaking it down into the product of two pieces. First we look at the probability that one variable, like the weather, will take on a certain value. Then we look at the probability that another variable, like my clothing, will take on a certain value conditioned on the first variable.</p>
 <p>The choice of which variable to start with is arbitrary. We could just as easily start by focusing on my clothing and then look at the weather conditioned on it. This might feel a bit less intuitive, because we understand that there’s a causal relationship of the weather influencing what I wear and not the other way around… but it still works!</p>
-<p>Let’s go through an example. If we pick a random day, there’s a 38% chance than I’d be wearing a coat. If we know that I’m wearing a coat, how likely is it that it’s raining? Well, I’m more likely to wear a coat in the rain than in the sun, but rain is kind of rare in California, and so it works out that there’s a 50% chance that it’s raining. And so, the probability that it’s raining and I’m wearing a coat is the probability that I’m wearing a coat (38%), times the probability that it would be raining if I was wearing a coat (50%) which is approximately 19%.</p>
+<p>Let’s go through an example. If we pick a random day, there’s a 38% chance that I’d be wearing a coat. If we know that I’m wearing a coat, how likely is it that it’s raining? Well, I’m more likely to wear a coat in the rain than in the sun, but rain is kind of rare in California, and so it works out that there’s a 50% chance that it’s raining. And so, the probability that it’s raining and I’m wearing a coat is the probability that I’m wearing a coat (38%), times the probability that it would be raining if I was wearing a coat (50%) which is approximately 19%.</p>
 <p><span class="math">\[p(\text{rain}, \text{coat}) = p(\text{coat}) \cdot p(\text{rain} ~|~ \text{coat})\]</span></p>
 <p>This gives us a second way to visualize the exact same probability distribution.</p>
 <div style="width:48%; margin-left:23%; margin-bottom:5px; margin-top:20px;">
@@ -285,7 +285,7 @@
 <div style="width:60%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/CrossEntropyDef.png" alt>
 </div>
-<p>To keep the cost of our communications down, I asked Alice to user her own code. To my relief, this pushed down her average message length. But it introduced a new problem: sometimes Bob would accidentally use Alice’s code. Surprisingly, it’s worse for Bob to accidentally use Alice code than for Alice to use his!</p>
+<p>To keep the cost of our communications down, I asked Alice to use her own code. To my relief, this pushed down her average message length. But it introduced a new problem: sometimes Bob would accidentally use Alice’s code. Surprisingly, it’s worse for Bob to accidentally use Alice's code than for Alice to use his!</p>
 <p>So, now we have four possibilities:</p>
 <ul>
 <li>Bob using his own code <span class="math">\((H(p) = 1.75 ~\text{bits})\)</span></li>
@@ -335,7 +335,7 @@
 <img src="img/Hxy-3D.png" alt>
 </div>
 <p>But suppose my mom already knows the weather. She can check it on the news. Now how much information do I need to provide?</p>
-<p>It seems like I need to send how ever much information I need to communicate the clothes I’m wearing. But I actually need to send less, because the weather strongly implies what clothing I’ll wear! Let’s consider the case where it’s raining and where it’s sunny separately.</p>
+<p>It seems like I need to send however much information I need to communicate the clothes I’m wearing. But I actually need to send less, because the weather strongly implies what clothing I’ll wear! Let’s consider the case where it’s raining and where it’s sunny separately.</p>
 <div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/HxCy-sep.png" alt>
 </div>
@@ -356,7 +356,7 @@
 <div style="width:80%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/Hxy-overview.png" alt>
 </div>
-<p>That sounds a bit complicated, but it’s very simple when we think about it from the bar perspective. <span class="math">\(H(X|Y)\)</span> is the information we need to send to communicate <span class="math">\(X\)</span> to someone who already knows <span class="math">\(Y\)</span>, the information in <span class="math">\(X\)</span> which isn’t also in <span class="math">\(Y\)</span>. Visually, that means <span class="math">\(H(X|Y)\)</span> is the part part of <span class="math">\(H(X)\)</span> bar which doesn’t overlap with <span class="math">\(H(Y)\)</span>.</p>
+<p>That sounds a bit complicated, but it’s very simple when we think about it from the bar perspective. <span class="math">\(H(X|Y)\)</span> is the information we need to send to communicate <span class="math">\(X\)</span> to someone who already knows <span class="math">\(Y\)</span>, the information in <span class="math">\(X\)</span> which isn’t also in <span class="math">\(Y\)</span>. Visually, that means <span class="math">\(H(X|Y)\)</span> is the part of <span class="math">\(H(X)\)</span> bar which doesn’t overlap with <span class="math">\(H(Y)\)</span>.</p>
 <p>You can now read the inequality <span class="math">\(H(X,Y) \geq H(X) \geq H(X|Y)\)</span> right off the following diagram.</p>
 <div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
 <img src="img/Hxy-info-4.png" alt>
@@ -367,7 +367,7 @@
 </div>
 <p>Again, it’s difficult to see in the equations, but easy to see if you’re thinking in terms of these overlapping bars of information.</p>
 <p>At this point, we’ve broken the information in <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> up in several ways. We have the information in each variable, <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span>. We have the the union of the information in both, <span class="math">\(H(X,Y)\)</span>. We have the information which is in one but not the other, <span class="math">\(H(X|Y)\)</span> and <span class="math">\(H(Y|X)\)</span>. A lot of this seems to revolve around the information shared between the variables, the intersection of their information. We call this “mutual information,” <span class="math">\(I(X,Y)\)</span>, defined as:<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a> <span class="math">\[I(X,Y) = H(X) + H(Y) - H(X,Y)\]</span> This definition works because <span class="math">\(H(X) + H(Y)\)</span> has two copies of the mutual information, since it’s in both <span class="math">\(X\)</span> and <span class="math">\(Y\)</span>, while <span class="math">\(H(X,Y)\)</span> only has one. (Consider the previous bar diagram.)</p>
-<p>Closely related to the mutual information is the mutual information is the variation of information. The variation of information is the information which isn’t shared between the variables. We can define it like so: <span class="math">\[V(X,Y) = H(X,Y) - I(X,Y)\]</span> Variation of information is interesting because it gives us a metric, a notion of distance, between different variables. The variation of information between two variables is zero if knowing the value of one tells you the value of the other and increases as they become more independent.</p>
+<p>Closely related to the mutual information is the variation of information. The variation of information is the information which isn’t shared between the variables. We can define it like so: <span class="math">\[V(X,Y) = H(X,Y) - I(X,Y)\]</span> Variation of information is interesting because it gives us a metric, a notion of distance, between different variables. The variation of information between two variables is zero if knowing the value of one tells you the value of the other and increases as they become more independent.</p>
 <p>How does this relate to KL divergence, which also gave us a notion of distance? Well, KL divergence gives us a distance between two distributions over the same variable or set of variables. In contrast, variation of information gives us distance between two jointly distributed variables. KL divergence is between distributions, variation of information within a distribution.</p>
 <p>We can bring this all together into a single diagram relating all these different kinds of information:</p>
 <div style="width:50%; margin-left:auto; margin-right:auto; margin-bottom:20px; margin-top:20px;">
