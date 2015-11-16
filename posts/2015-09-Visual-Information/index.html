@@ -344,7 +344,7 @@
 <img src="img/HxCy.png" alt>
 </div>
 <p>We call this the conditional entropy. If you formalize it into an equation, you get:</p>
-<p><span class="math">\[H(X|Y) = \sum_y p(y) \sum_x p(x) \log_2\left(\frac{1}{p(x|y)}\right)\]</span> <span class="math">\[~~~~ = \sum_{x,y} p(x,y) \log_2\left(\frac{1}{p(x|y)}\right)\]</span></p>
+<p><span class="math">\[H(X|Y) = \sum_y p(y) \sum_x p(x|y) \log_2\left(\frac{1}{p(x|y)}\right)\]</span> <span class="math">\[~~~~ = \sum_{x,y} p(x,y) \log_2\left(\frac{1}{p(x|y)}\right)\]</span></p>
 <h2 id="mutual-information">Mutual Information</h2>
 <p>In the previous section, we observed that knowing one variable can mean that communicating another variable requires less information.</p>
 <p>One nice way to think about this is to imagine amounts of information as bars. These bars overlap if there’s shared information between them. For example, some of the information in <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> is shared between them, so <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span> are overlapping bars. And since <span class="math">\(H(X,Y)\)</span> is the information in both, it’s the union of the bars <span class="math">\(H(X)\)</span> and <span class="math">\(H(Y)\)</span>.<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a></p>
