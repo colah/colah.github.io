@@ -479,7 +479,7 @@ Deep Learning and Human Beings
 <li id="fn8"><p>If you expand the definition of mutual information out, you get:</p>
 <p><span class="math">\[I(X,Y) = \sum_{x,y} p(x,y) \log_2\left(\frac{p(x,y)}{p(x)p(y)} \right)\]</span></p>
 <p>That looks suspiciously like KL divergence!</p>
-<p>What’s going on? Well, it is KL divergence. It’s the KL divergence of P(X,Y) and it’s naive approximation P(X)P(Y). That is, it’s the number of bits you save representing <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> if you understand the relationship between them instead of assuming they’re independent.</p>
+<p>What’s going on? Well, it is KL divergence. It’s the KL divergence of P(X,Y) and its naive approximation P(X)P(Y). That is, it’s the number of bits you save representing <span class="math">\(X\)</span> and <span class="math">\(Y\)</span> if you understand the relationship between them instead of assuming they’re independent.</p>
 <p>One cute way to visualize this is to literally picture the ratio between a distribution and its naive approximation:</p>
 <div style="width:200px; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:5px;">
 <img src="img/mutual-visual-eq.png" alt>
