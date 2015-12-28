@@ -42,7 +42,7 @@ The simplest way to try and classify them with a neural network is to just conne
 </div>
 <div class="spaceafterimg"></div>
 
-A more sophisticated approach notices a kind of *symmetry* in the properties it's useful to look for in the data. We care a lot about local properties of the data: What frequency of sounds are there around a given time? Are they increasing or decreasing? And so on.
+A more sophisticated approach notices a kind of *symmetry* in the useful properties to look for in the data. We care a lot about local properties of the data: What frequency of sounds are there around a given time? Are they increasing or decreasing? And so on.
 
 We care about the same properties at all points in time. It's useful to know the frequencies at the beginning, and also useful to know the frequencies at the end. And again, these are local properties, in that we only need to look at a small window of the audio sample in order to determine them.
 
