@@ -102,7 +102,7 @@
 <div class="caption" style="margin-bottom:20px;">
 <strong>Recurrent Neural Networks have loops.</strong>
 </div>
-<p>In the above diagram, a chunk of neural network, <span class="math">\(A\)</span>, looks at some input <span class="math">\(x_i\)</span> and outputs a value <span class="math">\(h_i\)</span>. A loop allows information to be passed from one step of the network to the next.</p>
+<p>In the above diagram, a chunk of neural network, <span class="math">\(A\)</span>, looks at some input <span class="math">\(x_t\)</span> and outputs a value <span class="math">\(h_t\)</span>. A loop allows information to be passed from one step of the network to the next.</p>
 <p>These loops make recurrent neural networks seem kind of mysterious. However, if you think a bit more, it turns out that they aren’t all that different than a normal neural network. A recurrent neural network can be thought of as multiple copies of the same network, each passing a message to a successor. Consider what happens if we unroll the loop:</p>
 <div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:5px; margin-top:17px;">
 <img src="img/RNN-unrolled.png" alt="An unrolled recurrent neural network.">
