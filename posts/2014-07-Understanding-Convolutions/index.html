@@ -264,7 +264,7 @@ Derived from the <a href="http://docs.gimp.org/en/plug-in-convmatrix.html">Gimp 
 <p><span class="math">\[\sigma(w_0x_0 + w_1x_1 + w_2x_2 ~...~ + b)\]</span></p>
 <p>Where <span class="math">\(x_0\)</span>, <span class="math">\(x_1\)</span>… are the inputs. The weights, <span class="math">\(w_0\)</span>, <span class="math">\(w_1\)</span>, … describe how the neuron connects to its inputs. A negative weight means that an input inhibits the neuron from firing, while a positive weight encourages it to. The weights are the heart of the neuron, controlling its behavior.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> Saying that multiple neurons are identical is the same thing as saying that the weights are the same.</p>
 <p>It’s this wiring of neurons, describing all the weights and which ones are identical, that convolution will handle for us.</p>
-<p>Typically, we describe all the neurons in a layers at once, rather than individually. The trick is to have a weight matrix, <span class="math">\(W\)</span>:</p>
+<p>Typically, we describe all the neurons in a layer at once, rather than individually. The trick is to have a weight matrix, <span class="math">\(W\)</span>:</p>
 <p><span class="math">\[y = \sigma(Wx + b)\]</span></p>
 <p>For example, we get:</p>
 <p><span class="math">\[y_0 = \sigma(W_{0,0}x_0 + W_{0,1}x_1 + W_{0,2}x_2 ...)\]</span></p>
