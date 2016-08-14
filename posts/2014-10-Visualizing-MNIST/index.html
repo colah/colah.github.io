@@ -512,7 +512,7 @@ This is what isomap does. For every two points, we consider the shortest path be
 
 <h3 id="t-distributed-stochastic-neighbor-embedding">t-Distributed Stochastic Neighbor Embedding</h3>
 <p>The final technique I wish to introduce is the <a href="http://jmlr.csail.mit.edu/papers/volume9/vandermaaten08a/vandermaaten08a.pdf">t-Distributed Stochastic Neighbor Embedding</a> (t-SNE). This technique is extremely popular in the deep learning community. Unfortunately, t-SNE’s cost function involves some non-trivial mathematical machinery and requires some significant effort to understand.</p>
-<p>But, roughly, what t-SNE tries to optimize for is preserving the <em>topology</em> of the data. For every point, it constructs a notion of which other points are it’s ‘neighbors,’ trying to make all points have the same number of neighbors. Then it tries to embed them so that those points all have the same number of neighbors.</p>
+<p>But, roughly, what t-SNE tries to optimize for is preserving the <em>topology</em> of the data. For every point, it constructs a notion of which other points are its ‘neighbors,’ trying to make all points have the same number of neighbors. Then it tries to embed them so that those points all have the same number of neighbors.</p>
 <p>In some ways, t-SNE is a lot like the graph based visualization. But instead of just having points be neighbors (if there’s an edge) or not neighbors (if there isn’t an edge), t-SNE has a continuous spectrum of having points be neighbors to different extents.</p>
 <p>t-SNE is often very successful at revealing clusters and subclusters in data.</p>
 <br>
