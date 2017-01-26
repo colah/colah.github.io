@@ -202,7 +202,7 @@ People have lots of theories about what sort of lower dimensional structure MNIS
 One popular theory among machine learning researchers is the *manifold hypothesis*: MNIST is a low dimensional manifold, sweeping and curving through its high-dimensional embedding space.
 Another hypothesis, more associated with topological data analysis, is that data like MNIST consists of blobs with tentacle-like protrusions sticking out into the surrounding space.
 
-But no one really knows, so lets explore!
+But no one really knows, so let's explore!
 
 The MNIST Cube
 ===============
