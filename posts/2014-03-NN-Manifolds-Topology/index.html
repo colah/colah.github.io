@@ -185,7 +185,7 @@ The hidden layer learns a representation so that the data is linearly separable
 <ol type="1">
 <li>Let’s assume <span class="math">\(W\)</span> has a non-zero determinant. Then it is a bijective linear function with a linear inverse. Linear functions are continuous. So, multiplying by <span class="math">\(W\)</span> is a homeomorphism.</li>
 <li>Translations are homeomorphisms</li>
-<li>tanh (and sigmoid and softplus but not ReLU) are continuous functions with continuous inverses. They are bijections if we are careful about the domain and range we consider. Applying them pointwise is a homemorphism</li>
+<li>tanh (and sigmoid and softplus but not ReLU) are continuous functions with continuous inverses. They are bijections if we are careful about the domain and range we consider. Applying them pointwise is a homeomorphism</li>
 </ol>
 <p>Thus, if <span class="math">\(W\)</span> has a non-zero determinant, our layer is a homeomorphism. ∎</p>
 <p>This result continues to hold if we compose arbitrarily many of these layers together.</p>
