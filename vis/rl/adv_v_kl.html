@@ -1,0 +1,188 @@
+<!doctype html>
+<head>
+<meta charset="utf-8">
+<script src="js/d3.min.js" charset="utf-8"></script>
+<script src="js/underscore.js" charset="utf-8"></script>
+<script src="util.js" charset="utf-8"></script>
+<style>
+.display-on-hover {
+  opacity: 0;
+}
+.display-on-hover:hover {
+  opacity: 0.2;
+}
+</style>
+</head>
+<body>
+<script>
+
+var N = 5;
+
+var init_ps = to_probs(_.range(N).map(n =>
+  1//Math.pow(3, N-n)
+));
+
+var targ_ps = to_probs(_.range(N).map(n =>
+  Math.pow(10, n)
+));
+
+var min_adv = -Math.log(0.5);
+var min_kl = -reduce_sum(targ_ps.map(p => p*Math.log(p)));
+
+function SGD_Opt_Var(x, L, constraint){
+  x = x.slice(0);
+  x.update_to = function(y) {
+    for (var i = 0; i < x.length; i++) {
+      x[i] = x[i] + L*(y[i]-x[i]);
+    }
+    if(constraint != undefined){
+      var x_ = constraint(x);
+      for (var i = 0; i < x.length; i++) {
+        x[i] = x_[i];
+      }
+    }
+  }
+  x.update_grad = function(dx) {
+    for (var i = 0; i < x.length; i++) {
+      x[i] = x[i] + L*dx[i];
+    }
+    if(constraint != undefined){
+      var x_ = constraint(x);
+      for (var i = 0; i < x.length; i++) {
+        x[i] = x_[i];
+      }
+    }
+  }
+
+  return x;
+}
+
+function Run(init_ps, targs, to_opt){
+  var ps = SGD_Opt_Var(init_ps, 0.02, to_probs2);
+  var ret = {};
+  ret.trace = [];
+  ret.step = function step() {
+    var old_ps = ps.slice(0);
+    var disc = _.range(N).map( n => targs[n]/(ps[n]+targs[n]) );
+    var adv_cost = -reduce_sum(_.range(N).map(n =>
+      ps[n]*Math.log(disc[n])
+    ));
+    var kl_cost = -reduce_sum(_.range(N).map(n =>
+      targs[n]*Math.log(ps[n])
+    ));
+    if (to_opt == "adv") {
+      var grad = _.range(N).map( n => Math.log(disc[n]) );
+    } else if (to_opt == "kl") {
+      var grad = _.range(N).map( n => targs[n]/ps[n] );
+    }
+    var grad_norm = Math.sqrt(reduce_sum(grad.map(x => x*x)));
+    //console.log(grad);
+    ps.update_grad(grad.map(x => x/(grad_norm+0.0001)));
+    ret.trace.push({disc: disc, adv_cost: adv_cost, kl_cost: kl_cost, ps: old_ps, grad: grad});
+  }
+  return ret;
+}
+
+var adv_run = Run(init_ps, targ_ps, "adv");
+_.range(500).forEach(n => {adv_run.step();});
+var kl_run = Run(init_ps, targ_ps, "kl");
+_.range(500).forEach(n => {kl_run.step();});
+
+var svg = d3.select("body").append("svg");
+svg.style({width: '520px', height: '520px'})
+var svg2 = d3.select("body").append("svg");
+svg2.style({width: '500px', height: '500px'})
+
+
+targ_rects = svg2.append('g').selectAll('rect').data(targ_ps);
+targ_rects.enter().append('rect').style('fill', 'black');
+ps_rects = svg2.append('g').selectAll('rect').data(init_ps);
+ps_rects.enter().append('rect').style('fill', 'gray');
+disc_rects = svg2.append('g').selectAll('rect').data(_.range(N).map( n => 0.5));
+disc_rects.enter().append('rect').style('fill', 'blue');
+
+function set_rects(rects, ps, offset){
+  rects.data(ps)
+    .attr('width', d => 15)
+    .attr('height', d => 200*Math.abs(d))
+    .attr('x', (d, i) => 100+60*i + offset)
+    .attr('y', (d, i) => 350-200*Math.max(0,d));
+}
+set_rects(targ_rects, targ_ps, 0);
+set_rects(ps_rects, init_ps, 15);
+//set_rects(disc_rects, init_ps, 30);
+
+var max_kl  = adv_run.trace[0].kl_cost;
+var max_adv = adv_run.trace[0].adv_cost;
+
+var X = d3.scale.linear()
+    .domain([min_adv, max_adv])
+    .range([500, 0]);
+var Y = d3.scale.linear()
+    .domain([min_kl, max_kl])
+    .range([0, 500]);
+
+var Xd = d => 0.5*X(d.adv_cost) + 0.5*Y(d.kl_cost);
+var Yd = d => 0.5*X(d.adv_cost) +250 - 0.5*Y(d.kl_cost);
+
+var line = d3.svg.line().x(Xd).y(Yd);
+
+function show_run(trace, name, color){
+  var g = svg.append('g');
+  g.attr('class', name);
+  g.append("path")
+    .attr('d', line(trace))
+    .style({fill: 'none',
+            stroke: color})
+    .style('stroke-width', 4)
+  var circles = g.selectAll('circle').data(trace);
+  circles.enter()
+    .append('circle')
+    .attr('class', 'display-on-hover');
+  circles
+    .attr('cx', Xd)
+    .attr('cy', Yd)
+    .attr('r', 8)
+    .style('fill', color);
+  circles.on('mouseover', d => {
+    set_rects(ps_rects, d.ps, 15);
+    //set_rects(disc_rects, d.grad.map(x => x), 30)
+  });
+}
+
+show_run(adv_run.trace, "adv", "red")
+show_run(kl_run.trace, "kl", "blue")
+
+
+svg.append('path')
+  .attr('d', d3.svg.line().x(d => 500*d.x).y(d => 500-500*d.y)(
+    [{x: 0, y: 0.5-0.01}, {x: 0.5, y: -0.01}, {x: 1, y: 0.5-0.01}]) )
+  .style('fill', 'none')
+  .style('stroke', 'black')
+  .style('stroke-width', 5);
+
+svg.append('text')
+  .attr({x: 500*0.05, y: 500*0.9})
+  .attr('font-size', '24')
+  .text('Adv Cost');
+
+svg.append('text')
+  .attr({x: 500*0.8, y: 500*0.9})
+  .attr('font-size', '24')
+  .text('KL Cost');
+
+svg.append('text')
+  .attr({x: 500*0.15, y: 500*0.2})
+  .attr('font-size', '18')
+  .style('fill', 'blue')
+  .text('KL Train');
+
+svg.append('text')
+  .attr({x: 500*0.65, y: 500*0.2})
+  .attr('font-size', '18')
+  .style('fill', 'red')
+  .text('Adv Train');
+
+</script>
+</body>
+</html>

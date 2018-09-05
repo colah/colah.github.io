@@ -1,0 +1,105 @@
+<!doctype html>
+<head>
+<meta charset="utf-8">
+<script src="js/d3.min.js" charset="utf-8"></script>
+<script src="js/underscore.js" charset="utf-8"></script>
+<script src="js/rounding.js" charset="utf-8"></script>
+<script src="js/math.min.js" charset="utf-8"></script>
+<script src="util.js" charset="utf-8"></script>
+<script src="GridWorld.js" charset="utf-8"></script>
+<script src="LearnQV.js" charset="utf-8"></script>
+<script src="Policy.js" charset="utf-8"></script>
+<script src="Aprox.js" charset="utf-8"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<style>
+*{
+  font-family: Arial;
+  color: #555;
+}
+.cell rect {
+  fill: #e7eae7;
+}
+</style>
+</head>
+<body>
+<script>
+
+var grid_size = 6;
+var cliff = _.range(grid_size).map(n => ({y: n, x: grid_size-1, reward: -1}) )
+var env = new GridWorld.Env({grid_size: grid_size, goals: cliff.concat([{x: grid_size-2, y: 0, reward: 1}])});
+
+d3.select("body")
+  .append("h1")
+  .text("Policy-Value Iteration: Cliff Walking")
+  .style("margin-left", "20px");
+var svg = d3.select("body")
+  .append("svg")
+  .attr("width", 1200)
+  .attr("height", 500);
+
+var steps = 1;
+
+var S = [];
+var labels = [];
+var sliders = [];
+_.range(2*steps).map(n => {
+  var size = 500;
+  var is_V = n % 2;
+  var n_ = Math.floor(n/2)
+  var margin = {x: 60, y: 90};
+  var pos = {x: 20 + (margin.x/2+size/2)*n, y: 10 + (margin.y+size)*is_V };
+  S.push(
+    svg.append("g")
+    .attr("width", size)
+    .attr("height", size)
+    .attr("transform", "translate("+pos.x+","+pos.y+")")
+  );
+
+});
+
+
+/*setTimeout(() => {
+    make_label(0, "Monte-Carlo", "V(s_t) ~⇜~ \\sum_n \\gamma^n r_{t+n}");
+    make_label(1, "Temporal Difference", "V(s_t) ~⇜~ r_t + \\gamma V(s_{t+1})");
+    make_label(2, "Q-Learning", "Q(s_t, a_t) ~⇜~ r_t + \\gamma V(s_{t+1})\\\\ V(s) = \\max_a Q(s,a)");
+  }, 200);*/
+
+var V = S.map(s => new env.View(s));
+
+
+var histories=[];
+
+
+function update(histories){
+  discount = 0.83;
+  learn_TD(histories, {name: "MC", steps: 100});
+  V[0].show_info("V", "MC");
+}
+
+(function visualize(){
+
+  var histories = [];
+ whileP(() => true, () => {
+  var agent = new env.Agent({start: {x: 4, y: 4}});
+  return whileP(() => !agent.done, () => {
+    var a = randSelect(agent.state.actions);
+    var stepP = agent.step(a, 100);
+    histories.push(agent.history);
+    update(histories);
+    return stepP;
+  });
+  })
+})()
+
+
+
+
+
+</script>
+</body>
+</html>
