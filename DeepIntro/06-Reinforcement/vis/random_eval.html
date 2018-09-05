@@ -1,0 +1,147 @@
+<!doctype html>
+<head>
+<meta charset="utf-8">
+<script src="js/d3.min.js" charset="utf-8"></script>
+<script src="js/underscore.js" charset="utf-8"></script>
+<script src="js/rounding.js" charset="utf-8"></script>
+<script src="js/math.min.js" charset="utf-8"></script>
+<script src="util.js" charset="utf-8"></script>
+<script src="GridWorld.js" charset="utf-8"></script>
+<script src="LearnQV.js" charset="utf-8"></script>
+<script src="Policy.js" charset="utf-8"></script>
+<script src="Aprox.js" charset="utf-8"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<style>
+*{
+  font-family: Arial;
+  color: #555;
+}
+.cell rect {
+  fill: #e7eae7;
+}
+</style>
+</head>
+<body>
+<script>
+
+var gap_size = 5+1;
+var num_gaps = 5;
+var grid_size = gap_size*(num_gaps-1)+1;
+var goals = [];
+_.range(num_gaps*num_gaps).forEach( n => {
+  var x = gap_size*(n%num_gaps);//randInt(grid_size);
+  var y = gap_size*(Math.floor(n/num_gaps)%num_gaps);//randInt(grid_size);
+  var r = randSelect([-1, 1]);
+  if (! _.findWhere(goals, {x: x, y: y })){
+    goals.push({x: x, y: y, reward: r});
+  }
+});
+
+var env = new GridWorld.Env({grid_size: grid_size, goals: goals});
+var svg = d3.select("body").append("svg").attr("width", 900).attr("height", 400);
+var S = _.range(2).map(n =>
+  svg.append("g").attr("width", 250).attr("height", 250)
+    .attr("transform", "translate("+(20+300*n)+",20)"));
+
+function make_label(pos_x, name, latex) {
+  var label1 = d3.select("body").append("div")
+    .style("position", "absolute")
+    .style("top", "300px")
+    .style("left", (30+300*pos_x) + "px")
+    .style("width", "300px");
+  label1.append("div")
+    .text(name)
+    .style("font-weight", "bold")
+    .style("margin-bottom", "10px");
+  //label1.append("br");
+  new Equation(label1.append("div")).latex(latex);
+}
+
+var V = S.map(s => new env.View(s));
+
+discount = 0.999;
+create_random_policy(env, "p0")
+infer_DP(env, "p0", "DP", {steps:500});
+
+function update(histories){
+  discount = 0.999;
+  learn_MC(histories, {name: "MC", steps: Math.ceil(100/histories.length)});
+  learn_TD(histories, {name: "TD", steps: Math.ceil(500/histories.length)});
+  learn_Q(histories, {name: "Q", steps: Math.ceil(500/histories.length)});
+  value_error("MC", "DP");
+  value_error("TD", "DP");
+  //value_error("DP", "DP");
+  V[0].show_info("V", "MC-error");
+  V[1].show_info("V", "TD-error");
+  //V[2].show_info("V", "DP-error");
+}
+
+
+var error_hists = {"MC": [], "TD": [], "DP": []}
+var svg2 = d3.select("body").append("svg");
+svg2.style({width: 1500, height: 300});
+var step_n = {"MC": 0, "TD":  0, "DP": 0};
+var line = d3.svg.line().x(d => 0.05*d.x).y(d => 300*0.9/0.3*(0.3-d.y));
+var c10 = d3.scale.category10();
+var c10k = {MC: c10(0), TD: c10(1), DP: c10(2)};
+function value_error(name, baseline){
+  var error = 0;
+  env.states.forEach(s => {
+    if (s.V[name] !== undefined){
+      s.V[name + "-error"] = (s.V[name] - s.V[baseline])/2;
+      error += s.V[name + "-error"]*s.V[name + "-error"];
+    } else {
+      error += s.V[baseline]*s.V[baseline];
+    }
+  });
+  error = error/env.states.length;
+  step_n[name] += 1;
+  var hist = error_hists[name];
+  error_hists[name].push({x: step_n[name], y: error});
+  var graph = svg2.selectAll("."+name).data([error_hists[name]]);
+  graph.enter()
+    .append("path").attr("class", name)
+    .style({fill: "none", stroke: c10k[name], "stroke-width": 2});
+  graph
+    .attr("d", d => line(d));
+}
+
+var histories = [];
+
+function random_episode(){
+  var agent = new env.Agent();
+  return whileP(() => !agent.done, () => {
+    var a = randSelect(agent.state.actions);
+    var P = agent.step(a, 20);
+    update(histories.concat([agent.history]));
+    return P;
+  }).then(() => histories.push(agent.history));
+}
+
+
+mapP(_.range(500), () => random_episode())
+
+
+
+
+/*function run_episode(env, T) {
+  var T = T || 100;
+  var agent = new env.Agent();
+  return whileP(() => !agent.done, () => {
+    var a = randSelect(agent.state.actions);
+    var stepP = agent.step(a, T);
+    var new_history = histories.concat([agent.history]);
+    learn_TD(new_history, {name: "TD", steps: 100});
+    view2.show_info("V", "TD");
+    return stepP;
+  }).then(() => agent.history);
+}*/
+
+</script>
+</body>
+</html>

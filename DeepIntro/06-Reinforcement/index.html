@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <title>Reinforcement Learning</title>
+
+    <meta name="description" content="This talk tries to get at the deep questions of deep learning: What is the problem we are really trying to solve? What is interesting about deep models?">
+    <meta name="author" content="Chris Olah">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+    <script src="vis/js/d3.min.js" charset="utf-8"></script>
+    <script src="vis/js/underscore.js" charset="utf-8"></script>
+    <script src="vis/js/rounding.js" charset="utf-8"></script>
+    <script src="vis/util.js" charset="utf-8"></script>
+    <script src="vis/GridWorld.js" charset="utf-8"></script>
+    <script src="vis/LearnQV.js" charset="utf-8"></script>
+    <script src="vis/Policy.js" charset="utf-8"></script>
+    <script src="vis/Aprox.js" charset="utf-8"></script>
+
+    <script src="vis/cliff.js" charset="utf-8"></script>
+    <script src="vis/compare.js" charset="utf-8"></script>
+    <script src="vis/tug.js" charset="utf-8"></script>
+    <script src="vis/tug_baseline.js" charset="utf-8"></script>
+    <script src="vis/reinforce.js" charset="utf-8"></script>
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+      if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+      }
+    </script>
+    <style>
+      #cliff_iter .cell rect {
+        fill: #e7eae7;
+      }
+      .cell rect {
+        fill: #e7eae7;
+      }
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h2>Reinforcement Learning</h2>
+          <br>
+          <h3>DeepIntro</h3>
+        </section>
+
+        <section>
+          <h2>Overview</h2>
+          <br>
+          <ul>
+            <li>Introduction</li>
+            <li>Policy Value Methods</li>
+            <li>Policy Gradient Methods</li>
+          </ul>
+        </section>
+
+
+
+        <section>
+          <h1>What is RL?</h1>
+        </section>
+        <section>
+          <h2>What is RL?</h2>
+          <br>
+          <ul>
+            <li>Learning by Exploration</li>
+            <li>Evaluative Feedback</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Agent-Environment Interface</h2>
+          <p><img src="imgs/RL_interface.png"></p>
+          <p>(Sutton & Barto, 1998)
+        </section>
+                <!-- example -->
+
+
+
+
+        <section>
+          <h1>Function Approximators</h1>
+        </section>
+        <section>
+          <h2>Function Approximator Abstraction</h2>
+          <br>
+          <ul>
+            <li>Evaluate: \(~~~f(x)\)</li>
+            <li>Update: \(~~~~~f(x) ~⇜~ y\)</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Tabular Environments/Approximators</h2>
+        </section>
+
+
+
+
+
+        <section>
+          <h1>Policy Value Methods</h1>
+        </section>
+        <section>
+          <h2>What is value?</h2>
+          <br>
+          <h3>Long-Term</h3>
+        </section>
+        <section>
+          <h2>What is value?</h2>
+          <br>
+          <h3>Time Discounted Reward</h3>
+          <br>
+          <p>$$R = \sum_t \gamma^t r_t$$ </p>
+        </section>
+        <section>
+          <h2>Policy Value Iteration</h2>
+        </section>
+        <section>
+          <h2>Policy Value Iteration : Cliff Walking</h2>
+          <br>
+          <div id="cliff_iter" style="width:600px; height:500px; position:relative;"> </div>
+          <script> cliff_vis(d3.select("#cliff_iter")); </script>
+        </section>
+        <section>
+          <h2>Value \(\to\) Policy</h2>
+          <br>
+          <ul>
+            <li>Exploration</li>
+            <li>Epsilon-Greedy Policies</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Learning Value from Experience</h2>
+        </section>
+
+          <section>
+            <h2>Monte-Carlo Learning</h2>
+            <br>
+            <p>Value of state is average return.</p>
+          </section>
+
+          <section>
+            <h2>Monte-Carlo Learning</h2>
+            <br>
+            <p>$$V(s_t) ~⇜~ R_t~~~~~~~~~~~~$$</p>
+            <br>
+            <p>$$V(s_t) ~⇜~ \sum_i \gamma^i r_{t+i}$$</p>
+          </section>
+
+          <section>
+            <div id="compare1" style="width:300px; height:500px; margin:auto; position:relative;"> </div>
+            <script> compare_vis(d3.select("#compare1"), {algs: ["MC"] }); </script>
+          </section>
+
+          <section>
+            <h2>Temporal Difference Learning</h2>
+            <br>
+            <p>Merge paths for greater statistical efficiency.</p>
+          </section>
+
+          <section>
+            <h2>Temporal Difference Learning</h2>
+            <br>
+            <p>$$V(s_t) ~⇜~ r_t + \gamma V(s_{t+1})$$</p>
+          </section>
+
+          <section>
+            <div id="compare2" style="width:650px; height:500px; margin:auto; position:relative;"> </div>
+            <script> compare_vis(d3.select("#compare2"), {algs: ["MC", "TD"] }); </script>
+          </section>
+
+
+        <section>
+          <h2>Q functions</h2>
+          <br>
+          <p>State-Action Values</p>
+          <p>Easier to make policies</p>
+        </section>
+
+        <section>
+          <h2>MC and TD still work.</h2>
+        </section>
+
+        <section>
+          <h2>Monte-Carlo Learning for \(Q(s,a)\)</h2>
+          <br>
+          <p>$$Q(s_t, a_t) ~⇜~ R_t$$</p>
+        </section>
+
+        <section>
+          <h2>TD Learning for \(Q(s,a)\) (SARSA)</h2>
+          <br>
+          <p>$$Q(s_t, a_t) ~⇜~ r_t + \gamma*Q(s_{t+1}, a_{t+1})$$</p>
+        </section>
+
+        <section>
+          <h2>On-Policy vs Off-Policy</h2>
+        </section>
+
+        <section>
+          <h3>TD can be rewritten as:</h3>
+          <br>
+          <p>$$Q(s_t, a_t) ~⇜~ r_t + \gamma V(s_{t+1})$$</p>
+          <br>
+          <p>$$V(s) = Q(s,a) ~~ \text{where} ~~ a \sim \pi(a|s) $$</p>
+        </section>
+
+        <section>
+          <h3>TD can be rewritten as:</h3>
+          <br>
+          <p>$$Q(s_t, a_t) ~⇜~ r_t + \gamma V(s_{t+1})$$</p>
+          <br>
+          <p>$$V(s) = \sum_a \pi(s,a) Q(s,a)$$</p>
+        </section>
+
+        <section>
+          <h2>Estimating the value under present policy</h2>
+        </section>
+
+        <section>
+          <h3>Could also use a different policy \(\pi'\)</h3>
+          <br>
+          <p>$$Q(s_t, a_t) ~⇜~ r_t + \gamma V(s_{t+1})$$</p>
+          <br>
+          <p>$$V(s) = \sum_a \pi'(s,a) Q(s,a)$$</p>
+        </section>
+
+        <section>
+          <h3>Q-learning: off-policy optimal</h3>
+          <br>
+          <p>$$Q(s_t, a_t) ~⇜~ r_t + \gamma V(s_{t+1})$$</p>
+          <br>
+          <p>$$V(s) = \max_a Q(s,a)$$</p>
+        </section>
+
+        <section>
+          <div id="compare3" style="width:1000px; height:500px; margin:auto; position:relative;"> </div>
+          <script> compare_vis(d3.select("#compare3"), {algs: ["MC", "TD", "Q"] }); </script>
+        </section>
+        <section>
+          <h2>Problem: Overconfidence of Q-learning</h2>
+          <br>
+          <p>Solution: double Q-learning</p>
+        </section>
+        <section>
+          <h2>Problem: TD and function approximators</h2>
+          <br>
+          <p>Solution: traces?</p>
+        </section>
+        <section>
+          <h2><a href="/vis/rl/old/index.html">See the Interactive RL Vis</a></h2>
+        </section>
+
+
+
+
+        <section>
+          <h1>Policy Gradient Methods</h1>
+        </section>
+
+        <section>
+          <h2>REINFORCE</h2>
+          <br>
+          <p>Backprop through sampling</p>
+        </section>
+        <section>
+          <p>(avoid where possible!)</p>
+        </section>
+        <section>
+          <p><img src="imgs/reinforce1.png" style="width:30%;"></p>
+        </section>
+        <section>
+          <p><img src="imgs/reinforce2.png" style="width:50%;"></p>
+        </section>
+        <section>
+          <p><img src="imgs/reinforce3.png" style="width:50%;"></p>
+        </section>
+        <section>
+          <h2>REINFORCE = A Tug of War</h2>
+          <br>
+          <p>Got to make it fair; divide by prob.</p>
+        </section>
+        <section>
+          <h2>REINFOCE</h2>
+          <div id="tug" style="width:600px; height:500px; margin: auto;"> </div>
+          <script> tug_vis(d3.select("#tug")); </script>
+        </section>
+
+        <section>
+          <h2>REINFOCE on GridWorld</h2>
+          <br>
+          <div id="reinforce" style="width:300px; height:300px; margin:auto; position:relative;"> </div>
+          <script> reinforce_vis(d3.select("#reinforce")); </script>
+        </section>
+
+        <section>
+          <h2>REINFOCE with Baseline</h2>
+          <div id="tug_baseline" style="width:600px; height:500px; margin: auto;"> </div>
+          <script> tug_baseline_vis(d3.select("#tug_baseline")); </script>
+        </section>
+
+        <section>
+          <h2>Actor Critic Models</h2>
+          <br>
+          <h3>Policy Gradients + Value Functions</h3>
+        </section>
+
+        <section>
+          <h2>Using Value Functions</h2>
+          <br>
+          <ul>
+            <li>Get rid of noise from future actions</li>
+            <li>Baseline</li>
+            <li>Gradient (continuous action spaces)</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Advantage actor critic</h2>
+          <br>
+          <p>Advantage: \(~~~~Q(s,a) - V(s)\)</p>
+        </section>
+
+        <section>
+          <h2>Continuous Action Spaces</h2>
+        </section>
+
+
+
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: 'none', //Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>

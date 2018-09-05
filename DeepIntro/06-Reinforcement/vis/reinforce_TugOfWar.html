@@ -1,0 +1,60 @@
+<!doctype html>
+<head>
+<meta charset="utf-8">
+<script src="js/d3.min.js" charset="utf-8"></script>
+<script src="js/underscore.js" charset="utf-8"></script>
+<script src="js/rounding.js" charset="utf-8"></script>
+<script src="js/math.min.js" charset="utf-8"></script>
+<script src="util.js" charset="utf-8"></script>
+</head>
+<body>
+<script>
+var data = [{prob: 0.2, val: 0.2}, {prob: 0.6, val: 0.5}, {prob: 0.2, val: 0.8}]
+
+var svg = d3.select("body").append("svg");
+svg.style('height', '400px')
+var c10 = d3.scale.category10();
+
+var rects = svg.selectAll('rect').data(data);
+rects.enter().append("rect")
+  .attr('width', d => 200*d.prob)
+  .attr('height', d => 200*d.val)
+  .attr('x', (d, i) => 200*reduce_sum(data.slice(0, i).map(x => x.prob)))
+  .style('fill', (d,i) => c10(i) );
+
+function update(){
+  rects
+    .attr('width', d => 200*d.prob)
+    .attr('height', d => 200*d.val)
+    .attr('x', (d, i) => 200*reduce_sum(data.slice(0, i).map(x => x.prob)))
+    .style('fill', (d,i) => c10(i) )
+}
+
+var actions = [];
+function reinforce_step(){
+  var prob_list = data.map((d,i) => [d.prob, i]);
+  var sample_i = weightedRandSelect(data.map((d,i) => [d.prob, i]));
+  //var sample_i = randSelect(data.map((d,i) => i));
+  actions.push(sample_i)
+  rects
+    .filter((d,i) => i == sample_i)
+    .style('fill', (d,i) => d3.rgb(c10(i)).darker().toString() );
+  var d = data[sample_i];
+  var Dp = 0.02*d.val/d.prob;
+  d.prob += Dp;
+  data.forEach((d2,i) => {
+    if (i == sample_i) return;
+    d2.prob -= Dp * d2.prob / Math.max(1-d.prob, Dp);
+  })
+  var total_prob = reduce_sum(data.map((d,i) => d.prob));
+  data.forEach(d2 => {
+    d2.prob /= total_prob;
+  })
+  update();
+  return sample_i;
+}
+
+setInterval(reinforce_step, 200);
+</script>
+</body>
+</html>

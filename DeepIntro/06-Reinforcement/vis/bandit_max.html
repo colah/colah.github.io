@@ -1,0 +1,130 @@
+<!doctype html>
+<head>
+<meta charset="utf-8">
+<script src="js/d3.min.js" charset="utf-8"></script>
+<script src="js/underscore.js" charset="utf-8"></script>
+<script src="js/rounding.js" charset="utf-8"></script>
+<script src="js/math.min.js" charset="utf-8"></script>
+<script src="util.js" charset="utf-8"></script>
+<!--<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>-->
+
+</style>
+</head>
+<body>
+<script>
+
+function make_test(){
+  var gaussians = _.range(10).map(() => ({
+    m: 10*Math.random() - 5,
+    s: 0.1 + 2*Math.random()
+  }));
+  var samples = gaussians.map(G =>
+    _.range(5).map(() =>
+      G.m + G.s*(2*Math.random()-1)
+    ));
+ var max_E = reduce_max(gaussians.map(G => G.m));
+ return {samples: samples, max_E: max_E}
+}
+
+
+
+function naive_approach(xs){
+  var means = xs.map(reduce_mean);
+  return reduce_max(means);
+}
+
+function split_approach(xs){
+  var M = xs[0].length;
+  var pivot = Math.floor(M/2);
+  var means1 = xs.map(samples =>
+    reduce_mean(samples.slice(0, pivot)));
+  var means2 = xs.map(samples =>
+    reduce_mean(samples.slice(pivot, -1)));
+  var maxI = reduce_argmax(means1);
+  return means2[maxI];
+}
+
+function double_split_approach(xs){
+  var M = xs[0].length;
+  var pivot = Math.floor(M/2);
+  var means1 = xs.map(samples =>
+    reduce_mean(samples.slice(0, pivot)));
+  var means2 = xs.map(samples =>
+    reduce_mean(samples.slice(pivot, -1)));
+  var maxI1 = reduce_argmax(means1);
+  var maxI2 = reduce_argmax(means2);
+  return (means1[maxI2] + means2[maxI1])/2;
+}
+
+function multi_split_approach(xs){
+  var M = xs[0].length;
+  var pivot = Math.floor(M/2);
+  var estimates = [];
+  for (var i = 0; i < 50; i++) {
+    var means1 = [], means2 = [];
+    for (var j = 0; j < xs.length; j++){
+      var samples = shuffle(xs[j]);
+      var mean1 = reduce_mean(samples.slice(0, pivot));
+      var mean2 = reduce_mean(samples.slice(pivot, -1));
+      means1.push(mean1);
+      means2.push(mean2);
+    }
+    var maxI = reduce_argmax(means1);
+    estimates.push(means2[maxI]);
+  }
+  return reduce_mean(estimates);
+}
+
+
+var algs = {
+      naive_approach: naive_approach,
+      split_approach: split_approach,
+      double_split_approach: double_split_approach,
+      //multi_split_approach: multi_split_approach,
+    }
+var errors = {};
+for (var k in algs){
+  errors[k] = [];
+}
+_.range(50000).forEach(() => {
+  var test = make_test();
+  for (var k in algs){
+    var alg = algs[k];
+    var error = alg(test.samples) - test.max_E;
+    errors[k].push(error);
+  }
+})
+
+function make_dist(xs){
+  return y => {
+    var S = 0;
+    var d = 0.04;
+    xs.forEach(x =>{
+      S += Math.max(0, d - Math.abs(x-y));
+    });
+    return 6*S / xs.length;
+  }
+}
+
+var body = d3.select('body');
+var line = d3.svg.line().x(d => 150+100*d.x).y(d => 100-3000*d.y);
+var svg = body.append('svg');
+for (var k in errors){
+  var dist = make_dist(errors[k]);
+  var points = _.range(1000)
+      .map(n => n/500-1)
+      .map(x => ({x: x, y: dist(x)}));
+  body.append('p').text(k);
+  svg.append('path')
+    .attr("d", line(points))
+    .style({fill: 'none', stroke: 'black', 'stroke-width': 2});
+}
+
+</script>
+</body>
+</html>
