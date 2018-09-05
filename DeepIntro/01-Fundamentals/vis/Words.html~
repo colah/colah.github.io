@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+
+<script src="js/data/MNIST.js" type="text/javascript"></script>
+<script src="js/data/MNIST-SNE-good.js"></script>
+<script src="js/data/MNIST-reps.js"></script>
+
+<script src="js/foreign/d3.v3.min.js" charset="utf-8"></script>
+<script src="js/foreign/jquery-1.7.0.min.js" charset="utf-8"></script>
+<script src="js/foreign/jquery-ui.min.js" charset="utf-8"></script>
+<script src="http://threejs.org/build/three.min.js"></script>
+<script src="js/foreign/TrackballControls.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css">
+<script src="js/BasicVis.js" type="text/javascript"></script>
+<script src="js/MnistVis.js" type="text/javascript"></script>
+<script src="js/NetVis.js" type="text/javascript"></script>
+
+<script src="js/data/WikiEmbed-sub5.js"></script>
+<script src="js/data/WordEmbed-10000.js"></script>
+<script src="js/data/TranslationEnglishEmbed-N1.js"></script>
+
+<style>
+
+  .hover_show {
+    opacity: 0.0;
+  }
+  .hover_show:hover {
+    opacity: 0.4;
+  }
+
+  .highlight {
+    opacity: 0.8;
+  }
+  .highlight:hover {
+    opacity: 1.0;
+  }
+
+  .figure {
+    width: 80%;
+    left: 10%;
+  }
+
+</style>
+<br>
+<div id="word_embed" style="width: 100%; position: relative">
+<div class="sne" style="width: 65%; margin-left:5%; margin-right:5%;"> </div>
+<div class="legend" style="position:absolute; left:75%; top:0; width: 25%; background-color: rgb(220,220,220); border-radius: 10px; padding: 10px 10px; border: 2px solid black; font-size: 75%;">
+Color words by <a href="http://wordnet.princeton.edu/">WordNet</a> synset (eg. *region.n.03*):<br><br>
+</div>
+</div>
+
+
+<script type="text/javascript">
+(function () {
+  var embed_vis = new display_embed(word_embedding_data, "#word_embed");
+})()
+</script>
+
+
+</body>
+</html>

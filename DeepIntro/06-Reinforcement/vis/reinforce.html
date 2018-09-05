@@ -1,0 +1,64 @@
+<!doctype html>
+<head>
+<meta charset="utf-8">
+<script src="js/d3.min.js" charset="utf-8"></script>
+<script src="js/underscore.js" charset="utf-8"></script>
+<script src="js/rounding.js" charset="utf-8"></script>
+<script src="util.js" charset="utf-8"></script>
+<script src="GridWorld.js" charset="utf-8"></script>
+<script src="LearnQV.js" charset="utf-8"></script>
+<script src="Policy.js" charset="utf-8"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<style>
+*{
+  font-family: Arial;
+  color: #555;
+}
+.cell rect {
+  fill: #e7eae7;
+}
+</style>
+</head>
+<body>
+<script>
+
+var grid_size = 5;
+var env = new GridWorld.Env({grid_size: grid_size, goals: [{x: 4, y: 2, reward: 1}]});
+var svg = d3.select("body").append("svg").attr("width", 300).attr("height", 300);
+var S = _.range(1).map(n =>
+  svg.append("g").attr("width", 300).attr("height", 300);
+
+var V = S.map(s => new env.View(s));
+
+create_random_policy(env, "reinforce");
+
+discount = 0.5;
+function run_episode() {
+  var T = T || 100;
+  var agent = new env.Agent();
+  return whileP(() => !agent.done, () => {
+    var a = sample_policy(agent.state, "reinforce");
+    //randSelect(agent.state.actions);
+    var stepP = agent.step(a, T);
+    return stepP;
+  }).then(() => agent.history);
+}
+
+V[0].show_info("P", "reinforce");
+var n = 0;
+whileP(() => true, () =>
+  run_episode().then(H => {
+    n += 1;
+    learn_reinforce([H], {name: "reinforce", K : 0.1*Math.pow(0.98, n)});
+    V[0].show_info("P", "reinforce");
+  })
+);
+
+</script>
+</body>
+</html>

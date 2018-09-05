@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <title>Neural Networks Fundamentals</title>
+
+    <meta name="description" content="This talk tries to get at the deep questions of deep learning: What is the problem we are really trying to solve? What is interesting about deep models?">
+    <meta name="author" content="Chris Olah">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+      if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+      }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h2>Neural Network Fundamentals</h2>
+          <br>
+          <h3>DeepIntro</h3>
+        </section>
+
+
+
+
+
+        <section>
+          <h2>Part 1: The Computational Perspective</h2>
+        </section>
+
+        <section>
+          <h2>Cartoon Neurons</h2>
+          <br>
+          <p><img src="imgs/neuron-noweights.png"></p>
+          <br>
+          <p></p>
+        </section>
+
+        <section>
+          <h2>Cartoon Neurons</h2>
+          <br>
+          <p><img src="imgs/neuron.png"></p>
+          <br>
+          <p></p>
+        </section>
+
+
+        <section>
+          <h2>Binary Threshold Neurons</h2>
+          <br>
+          <p><img src="imgs/nn-diagram-binary.png"></p>
+          <br>
+          <p></p>
+        </section>
+
+
+        <section>
+          <h2>NAND</h2>
+          <br>
+          <p><img src="imgs/nn-diagram-NAND.png"></p>
+          <br>
+          <p>Universality</p>
+        </section>
+
+        <section>
+          <h2>Neural Networks are Universal</h2>
+          <br>
+          <p><img src="imgs/network.png"></p>
+        </section>
+
+        <section>
+          <p>(True more broadly; see Michael's visual proof.)</p>
+        </section>
+
+        <section>
+          <h2>But how can we train them?</h2>
+          <br>
+          <p>We want a differentiable model.</p>
+        </section>
+
+        <section>
+          <h2>Aside: Sigmoid</h2>
+          <br>
+          <p><img src="imgs/sigmoid-intro.png"></p>
+          <br>
+          <p></p>
+        </section>
+
+
+        <section>
+          <h2>Sigmoid neurons</h2>
+          <br>
+          <p><img src="imgs/nn-diagram-sigmoid.png"></p>
+          <br>
+          <p></p>
+        </section>
+
+
+        <section>
+          <h2>A Sigmoid Layer</h2>
+          <br>
+          <p><img src="imgs/nn-diagram-vec-1.png"></p>
+          <br>
+          <p></p>
+        </section>
+
+
+        <section>
+          <h2>A Sigmoid Layer</h2>
+          <br>
+          <p><img src="imgs/nn-diagram-vec-2.png"></p>
+          <br>
+          <p></p>
+        </section>
+
+
+        <section>
+          <h2>A Sigmoid Layer</h2>
+          <br>
+          <p><img src="imgs/nn-diagram-vec-3.png"></p>
+          <br>
+          <p></p>
+        </section>
+
+
+        <section>
+          <h2>A Sigmoid Layer</h2>
+          <br>
+          <p><img src="imgs/nn-diagram-vec-4.png"></p>
+          <br>
+          <p></p>
+        </section>
+
+
+        <section>
+          <h2></h2>
+          <br>
+          <p><img src="imgs/nn-diagram-vec-5.png"></p>
+          <br>
+          <p></p>
+        </section>
+
+
+
+
+
+        <section>
+          <h2>Part 1: The Geometric Perspective</h2>
+        </section>
+
+
+                <section>
+                  <h2>One Layer</h2>
+                  <br>
+                  <p><img src="imgs/1layer.gif"></p>
+                  <br>
+                  <p></p>
+                </section>
+
+
+                <section>
+                  <h2>A Simple Example</h2>
+                </section>
+
+                <section>
+                  <h2>Problem</h2>
+                  <br>
+                  <p><img src="vis/img/simple2_data.png"></p>
+                  <br>
+                  <p>Low-dimensional subspace</p>
+                </section>
+
+                <section>
+                  <h2>Linear Model</h2>
+                  <br>
+                  <p><img src="vis/img/simple2_linear.png"></p>
+                  <br>
+                  <p></p>
+                </section>
+
+                <section>
+                  <h2>Neural Net</h2>
+                  <br>
+                  <p><img src="vis/img/simple2_0.png"></p>
+                  <br>
+                  <p></p>
+                </section>
+
+                <section>
+                  <h2>Neural Net, Hidden Representation</h2>
+                  <br>
+                  <p><img src="vis/img/simple2_1.png"></p>
+                  <br>
+                  <p></p>
+                </section>
+
+                <section>
+                  <h2>Neural Net, Bending Data</h2>
+                  <br>
+                  <p><img src="imgs/NetDiagram-Simple.png"></p>
+                  <br>
+                  <p></p>
+                </section>
+
+
+                <section>
+                  <h2>The Spiral Problem</h2>
+                </section>
+
+                <section>
+                  <h2>Separating a Spiral</h2>
+                  <br>
+                  <p><img src="imgs/spiral.1-2.2-2-2-2-2-2.gif"></p>
+                  <br>
+                  <p></p>
+                </section>
+
+
+                <section>
+                  <h2>A Real Problem</h2>
+                </section>
+
+                <section>
+                  <h3>We'll explore MNIST.</h3>
+                  <br>
+                  <p><img src="imgs/MNIST.png"></img></p>
+                  <br>
+                  <h4>(MNIST is practically famous!)</h4>
+                </section>
+
+                <section>
+                  <h4>These might seem simple because your brain is really good at this.</h4>
+
+                  <br>
+                  <p><img src="imgs/MNIST.png"></img></p>
+                  <br>
+
+                  <h4>But it's actually complicated.</h4>
+                </section>
+
+
+                <section>
+                  <h2>We can think of these images as matrices.</h2>
+                  <br>
+                  <p><img src="imgs/MNIST-Matrix.png"></p>
+                  <br>
+                  <h3>Or flatten them into vectors.</h3>
+                </section>
+
+                <section>
+                  <h2>Images are high-dimensional vectors.</h2>
+                  <br>
+                  <h3>A 28x28 grayscale image is a 784-dimensional vector!</h3>
+                </section>
+
+                <section>
+                  <h2>How can we picture that?</h2>
+                </section>
+
+                <section>
+                    <iframe src="vis/Graph3.html" width="800" height="800" seamless="seamless"></iframe>
+                </section>
+
+                <section>
+                  <h2>Neural Nets also bend MNIST</h2>
+                  <br>
+                  <p><img src="imgs/NetDiagram-MNIST.png"></p>
+                  <br>
+                  <p></p>
+                </section>
+
+
+        <section>
+          <h2>[Break?]</h2>
+        </section>
+
+
+        <section>
+          <h2>Part 3: Training Neural Networks</h2>
+        </section>
+
+        <section>
+          <h2>Cost functions</h2>
+          <br>
+          <p>How bad is our model?</p>
+        </section>
+
+        <section>
+          <p>Usually in relation to some training data</p>
+          <br>
+          <p>\[\{(x_0, y_0),~ (x_1, y_1)...~~ (x_i, y_i)\}\]</p>
+        </section>
+
+        <section>
+          <p>A function of parameters:</p>
+          <br>
+          <p>$$C(\theta) = \sum_{(x_i, y_i)} \left[y_i - f(x_i)\right]^2$$</p>
+        </section>
+
+        <section>
+          <p>Optimize to find good parameters.</p>
+          <br>
+          <p>Hard because of high-dimensional space.</p>
+        </section>
+
+        <section>
+          <p>\(C\) is differentiable, so we can use gradient descent.</p>
+        </section>
+
+        <section>
+          <h2>Problems</h2>
+          <p>Lots of data points (solution: batches).</p>
+          <p>Lots of derivatives (solution: backprop).</p>
+        </section>
+
+        <section>
+          <h2>Part 4: Backpropagation</h2>
+        </section>
+
+        <section>
+          <h3>A Long History Of Reinvention</h3>
+        </section>
+
+        <section>
+          <h3>Why learn backprop? (Why learn compilers?)</h3>
+          <p>Conceptual understanding.</p>
+          <p>Genearlizations.</p>
+        </section>
+
+        <section>
+          <h2>$$e=(a+b)∗(b+1)$$</h2>
+        </section>
+
+        <section>
+          <h2>$$c=a+b$$</h2>
+          <h2>$$d=b+1$$</h2>
+          <h2>$$e=c∗d$$</h2>
+        </section>
+
+        <section>
+          <h3>Computational Graphs</h3>
+          <p><img src="imgs/tree-def.png"></p>
+        </section>
+
+        <section>
+          <h3>Evaluation</h3>
+          <p><img src="imgs/tree-eval.png"></p>
+        </section>
+
+        <section>
+          <h3>Derivatives on edges</h3>
+          <p><img src="imgs/tree-eval-derivs.png"></p>
+        </section>
+
+        <section>
+          <h3>Sum Over Paths</h3>
+          <p><img src="imgs/tree-eval-derivs.png"></p>
+        </section>
+
+        <section>
+          <h2>Combinatorial Explosion</h2>
+        </section>
+
+        <section>
+          <p><img src="imgs/chain-def-greek.png"></p>
+          <br>
+          <p>$$\frac{\partial Z}{\partial X} = \alpha\delta + \alpha\epsilon + \alpha\zeta + \beta\delta + \beta\epsilon + \beta\zeta + \gamma\delta + \gamma\epsilon + \gamma\zeta$$</p>
+        </section>
+
+        <section>
+          <p><img src="imgs/chain-def-greek.png"></p>
+          <br>
+          <p>$$\frac{\partial Z}{\partial X} = (\alpha + \beta + \gamma)(\delta + \epsilon + \zeta)$$</p>
+        </section>
+
+        <section>
+          <h2>Merge Paths</h2>
+        </section>
+
+        <section>
+          <p><img src="imgs/chain-forward-greek.png"></p>
+        </section>
+
+        <section>
+          <p><img src="imgs/chain-backward-greek.png"></p>
+        </section>
+
+        <section>
+          <h2>Why Backwards?</h2>
+        </section>
+
+        <section>
+          <h3>Recall...</h3>
+          <p><img src="imgs/tree-eval-derivs.png"></p>
+        </section>
+
+        <section>
+          <h3>Forward from \(b\)</h3>
+          <p><img src="imgs/tree-forwradmode.png"></p>
+        </section>
+
+        <section>
+          <h3>Backpropagation</h3>
+          <p><img src="imgs/tree-backprop.png"></p>
+        </section>
+
+        <section>
+          <h3>Computational Victories</h3>
+          <p>Many orders of magnitude</p>
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: 'none', //Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
