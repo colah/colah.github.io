@@ -6,8 +6,19 @@
         <description><![CDATA[]]></description>
         <atom:link href="http://colah.github.io/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Thurs, 3 Sep 2015 00:00:00 UTC</lastBuildDate>
+        <lastBuildDate>Thurs, 30 May 2019 00:00:00 UTC</lastBuildDate>
 
+
+
+<item>
+    <title>Collaboration and Credit Principles</title>
+    <link>http://colah.github.io/posts/2019-05-Collaboration/index.html</link>
+    <description><![CDATA[
+<p>A lot of the best research in machine learning comes from collaborations. In fact, many of the most significant papers in the last few years (TensorFlow, AlphaGo, etc) come from collaborations of 20+ people. These collaborations are made possible by goodwill and trust between researchers.</p>
+]]></description>
+    <pubDate>Thurs, 30 May 2019 00:00:00 UTC</pubDate>
+    <guid>http://colah.github.io/posts/2019-05-Collaboration/index.html</guid>
+</item>
 
 <item>
     <title>Visual Information Theory</title>
@@ -81,6 +92,6 @@
     <pubDate>Fri, 16 Jan 2015 00:00:00 UTC</pubDate>
     <guid>http://colah.github.io/posts/2015-01-Visualizing-Representations/</guid>
 </item>
- 
-    </channel> 
+
+    </channel>
 </rss>
