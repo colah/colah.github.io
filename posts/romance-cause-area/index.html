@@ -1,1062 +1,1344 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Romance as a Cause Area -- colah's blog</title>
-
-        <link rel="stylesheet" href="../../fonts/Serif/cmun-serif.css" />
-        <link rel="stylesheet" href="../../fonts/Serif-Slanted/cmun-serif-slanted.css" />
-
-        <!--BOOTSTRAP-->
-        <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <!--mobile first-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <!--removed html from url but still is html-->
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-        <!--font awesome-->
-        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
-        <!--fonts: allan & cardo-->
-        <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css">
-        <link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
-
-        <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
-
-        <link href="../../css/default.css" rel="stylesheet">
-
-        <link href="../../comments/inlineDisqussions.css" rel="stylesheet">
-
-        <!--Highlight-->
-        <link href="../../highlight/styles/github.css" rel="stylesheet">
-
-        <link href="../../favicon.ico" rel="shortcut icon" />
-
-        <!--<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-        <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-        <style>
-        .post{width:170px;min-height:175px;padding-left:5px;padding-right:5px;float:left;border-left:1px solid #CCC;background-color:white;}
-        div a:first-of-type .post { border-left: none; }
-        .post:hover {filter: brightness(90%);}
-        .post h3{margin:5px;font-size:75%;text-align:center}
-        .post h4{margin:0px;font-size:50%;text-align:center}
-        .post img{margin:0px;padding:2px;margin-bottom:10px;width:100%;height:155px}
-        </style>
-
-        <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-          ga('create', 'UA-49811703-1', 'colah.github.io');
-          ga('require', 'linkid', 'linkid.js');
-          ga('require', 'displayfeatures');
-          ga('send', 'pageview');
-
-        </script>
-
-    </head>
-
-    <body>
-        <div id="wrap">
-            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-                <div class="container">
-                    <!--Toggle header for mobile-->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand active" href="../../" style="font-size:20px;">colah's blog</a>
-                    </div>
-                    <!--normal header-->
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="../../"><span class="glyphicon glyphicon-pencil"></span>  Blog</a></li>
-                            <li><a href="../../about.html"><span class="glyphicon glyphicon-user"></span>  About</a></li>
-                            <li><a href="../../contact.html"><span class="glyphicon glyphicon-envelope"></span>  Contact</a></li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
-            </nav>
-
-
-            <div id="content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h1>Romance as a Cause Area</h1>
-                            <div class="info">
-                              <p style="font-family:CMSS; font-size:120%">Posted on ???</p>
-                            </div>
-
-
-</br>
-
-  <div style="width: 100%; background: hsl(50, 80%, 80%); padding: 6px; border-radius: 4px; font-size: 150%;">Draft - Please don't share widely!</div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1024">
+  <script src="https://distill.pub/template.v2.js"></script>
+  <link rel="stylesheet" href="index.css">
+  <title>Romantic Suboptimality</title>
+</head>
+<body>
+  <nav class="navbar">
+    <div style="padding-left: 30px;"> <a href="/">colah's blog</a> </div>
+    <div style="flex-grow: 1;"></div>
+    <div> <a href="/">Blog</a> </div>
+    <div> <a href="/about.html">About</a> </div>
+    <div style="padding-right: 30px;"> <a href="/contact.html">Contact</a> </div>
+  </nav>
   <br>
 
 
+  <d-front-matter>
+    <script type="text/json">{
+    "title": "Romantic Suboptimality",
+    "description": "How much does romance affect typical quality of life? Can society help people end up in satisfying relationships and avoid unhealthy ones?",
+    "authors": [
+      {
+        "author": "Chris Olah",
+        "authorURL": "https://colah.github.io/",
+        "affiliation": "",
+        "affiliationURL": ""
+      }
+    ]
+    }</script>
+  </d-front-matter>
+
+<br>
+  <div style="width: 600px; margin-left: calc( calc(100% - 700px) / 2);" class="warn-box">Draft - Please don't share widely!</div>
   <br>
 
-  <p><i>
-    Imagine a new disease that essentially all adults spend years suffering from.
-    It strikes everyone -- men and women, the rich and poor, people of every race -- intermittently beginning as a teenager and continuing into adulthood.
-  </i></p>
 
-  <p><i>
-    Most afflicted report that, at its worst, that it’s one of the most painful things they’ve experienced.
-    About half of them report they’d rather accept a 50% chance of death, complete loss of hearing, or the loss of a limb, to living the rest of their life with the disease.
-    About half of people who commit suicide report in suicide notes being motivated by the disease.
-  </i></p>
-
-  <p><i>But this new disease is neither new nor a disease: it’s romantic suffering.</i></p>
-
+  <div style="width: 600px; margin-left: calc( calc(100% - 700px) / 2); " class="feedback-box">
+    <b>Notes on feedback:</b><br>
+    <ul>
+      <li>My biggest fears is this being interpreted as similar to the incel community.</li>
+    </ul>
+  </div>
   <br>
-  <br>
+
+  <d-title>
+
+    <h1>Romantic Suboptimality</h1>
+
+    <p style="font-size: 1.2rem; margin-top: 16px; margin-bottom: 40px; " class="feedback-box">
+      Working Notes - Expect lots of errors and gradual improvement.
+    </p>
+
+    <!--<p style="font-size: 1.8rem; margin-bottom: 40px;">
+      Working Notes
+    </p>-->
+      <!--
+      <p style="font-size: 1.4rem; margin-bottom: 40px;">How much does romance affect typical quality of life? <br>
+      Can society help people end up in satisfying relationships <br> and avoid unhealthy ones?</p>-->
+
+  </d-title>
+
+
+
+<d-byline  style="display: none;"></d-byline>
+
+<d-article>
+
 
   <p>
-    The above is dramatic and pretty epistemically questionable.
-    It’s the most extreme plausible reading of the evidence, as I understand it, including surveys I ran that are probably poorly designed.
-    But I think some drama may be warranted here.
+    I worry there's a lack of moral seriousness around romantic suffering.<br>
   </p>
 
+  <!--<p>
+    I find it really troubling.
+  </p>-->
+
   <p>
-    It seems to me that we may not be taking romantic suffering seriously enough.
     When someone suffers due to a disease, we rightly go to great lengths to help them.
     But when someone experiences romantic suffering, we give them ice cream and a dating app.
-    If they continue to express pain, we begin to think less of them.
+    It's a part of life, after all, and if someone stays wound up over it for too long, perhaps they're being a bit juvenile.
   </p>
 
   <p>
-    This essay aims to make a plausibility argument that romance may be a promising cause for altruistic intervention,
-    synthesizing some academic literature and small experiments I ran myself.
-    It's only intended a preliminary argument suggesting further research --
-    I certainly wouldn't place high-confidence bets on any of this evidence!
+    Well, I think the suffering of the men and women going through romantic hardship is real and significant.
+    Everyone enduring quiet loneliness,
+    those suffering through painful breakups,
+    and the people trapped in unhealthy relationships
+    — I think it adds up to something really substantial.
+    In fact, my best estimate is that, within the United States,
+    it's a problem of comparable size to major public health issues:
   </p>
 
-  <p>
-    I've broadly structured it in the form the <a>Importance, Tractability and Neglectedness</a> framework:
-  </p>
-
-
-
-<style>
-.toc-container {
-  width: 100%;
-  background-color: #335;
-  margin-top: 40px;
-  padding-top: 60px;
-  margin-bottom: 60px;
-  padding-bottom: 40px;
-}
-.toc-container, .toc-container a {
-  color: #FFF;
-}
-.main-toc {
-  text-align: left;
-  display: grid;
-  grid-template-columns: repeat(3, 280px);
-  width: 100%;
-  padding-left: calc(0.2 * calc(100% - 840px));
-  column-gap: calc(0.2 * calc(100% - 840px));;
-  font-size: 90%;
-}
-.main-toc .section {
-  font-weight: bold;
-  font-size: 120%;
-  margin-top: 0px;
-  margin-bottom: 12px;
-  padding-bottom: 4px;
-  border-bottom: solid 1px #CCC;
-}
-.main-toc .description {
-  margin-bottom: 24px;
-}
-.main-toc .description, .main-toc ul .sub {
-    opacity: 0.8;
-}
-.main-toc li {
-  padding-top: 12px;
-}
-.main-toc ul {
-  padding-left: 0px;
-}
-.main-toc ul li {
-  padding-left: 0px;
-  list-style-type: none;
-}
-.main-toc ul .sub {
-  padding-top: 2px;
-  padding-left: 12px;
-  --border-left: solid 1px #CCC;
-}
-.main-toc ul .sub a {
-  color: #EEE;
-}
-.main-toc ul .daly {
-  float: right;
-  font-size: 80%;
-}
-
-
-p {
-  text-align: left;
-}
-
-</style>
-
-
-
-<br>
-
-</div>
-</div>
-</div>
-
-
-<div class="toc-container">
-<div class="main-toc">
-  <div class="sub-toc">
-    <h3 class="section"><a>Importance</a></h3>
-    <div class="description">
-       How much harm does romanctic suffering cause?
-       Several dubious models give wildly varying estimates.
-    </div>
-    <ul>
-      <li><a>First Order Effect Estimates</a></li>
-      <li class="sub"><a>Disability Comparison<span class="daly">(2.94 DALY PC)</span></a> </li>
-      <li class="sub"><a>Time Tradeoff<span class="daly">(6.66 DALY PC)</span></a> </li>
-      <li class="sub"><a>Risk of Death<span class="daly">(3.70 DALY PC)</span></a> </li>
-      <li class="sub"><a>GSOEP Data <span class="daly">(1.60 DALY PC)</span></a></li>
-      <li class="sub"><a>Suicide Data <span class="daly">(0.05 DALY PC)</span></a></li>
-
-      <li><a>Second Order Effects</a></li>
-      <li class="sub"><a>Increased Productivity</a></li>
-      <li class="sub"><a>Healthier social dynamics</a></li>
-      <li class="sub"><a>Romantic collaborators</a></li>
-      <li class="sub"><a>Population effects</a></li>
-      <li class="sub"><a>Saved life years</a></li>
-
-      <li><a>Reasons for Past Underestimation</a></li>
-
-    </ul>
-  </div>
-
-  <div class="sub-toc">
-    <h3 class="section"><a>Tractability</a></h3>
-    <div class="description">
-      Are there ways we might reduce romantic suffering at scale?
-      How effective do we think they'd be?
-    </div>
-
-
-  <ul>
-    <li ><a>Theories of Change</a></li>
-    <li class="sub"><a>Navigating the space of people</a></li>
-    <li class="sub"><a>"Market" Design</a></li>
-    <li class="sub"><a>Guidance & counseling</a></li>
-    <li class="sub"><a>Matchmaking</a></li>
-    <li class="sub"><a>Event design</a></li>
-    <li class="sub"><a>Social Augmentation</a></li>
-    <li ><a>Structural Improvements</a></li>
-    <li class="sub"><a>Incentive Design</a></li>
-    <li class="sub"><a>Open Platforms</a></li>
-    <li class="sub"><a>Avoiding Bad Actors</a></li>
-    <li ><a>Personal-Scale Interventions</a></li>
-  </ul>
-
-<br>
-<br>
-
-
-
-  </div>
-
-  <div class="sub-toc">
-    <h3 class="section"><a>Neglectedness</a></h3>
-    <div class="description">
-      A number of other actors already work on romance.
-      I think it’s still neglected due to their focus, alignment, and scale.
-    </div>
-    <ul>
-      <li><a>Relevant Baseline</a></li>
-
-      <li><a>New Opportunities</a></li>
-      <li class="sub"><a>Machine Learning</a></li>
-
-      <li><a>Dating Sites</a></li>
-      <li class="sub"><a>Network Effect Oligopolies</a></li>
-      <li class="sub"><a>Model Lock-In</a></li>
-      <li class="sub"><a>Hookup Attractor</a></li>
-      <li class="sub"><a>Unsophisticated</a></li>
-      <li class="sub"><a>Perverse Incentives</a></li>
-
-      <li><a>Other Actors</a></li>
-      <li class="sub"><a>Academics</a></li>
-      <li class="sub"><a>Mathchmakers</a></li>
-      <li class="sub"><a>Others</a></li>
-    </ul>
-  </div>
-
-
-</div>
-</div>
-
-<div class="container">
-<div class="row">
-<div class="col-md-8">
-
-  <p>
-    Before going on, I wish to make one thing crystal clear: in arguing that romantic suffering may be a problem that society should take seriously,
-    I am absolutely not saying that anyone is entitled to a relationship from anyone else.
-    Instead, I think that we as a society should be helping everyone find relationships they enthusiastically wish to be in, including potentially helping people grow.
-  </p>
-
-  <br>
-  <hr>
-  <br>
-
-  <h1>Importance</h1>
-
-  <p>
-    The goal of this section is to give a rough conservative estimate how much value is lost due to people not being in good romantic situations.
-    This could include people not being has happy as they would otherwise be while single, people suffering in bad relationships, people suffering during breakups, among others.
-  </p>
-
-
-  <p>
-    If you haven't spent much time thinking about this kind of problem, it may be surprising that we could event hope to quantify and estimate that!
-    Thankfully, there's a very useful unit from  health econometrics -- the <a href="https://en.wikipedia.org/wiki/Disability-adjusted_life_year">Disability Adjusted Life Year</a> or DALY --
-    that can be used as a common unit for thinking about human welfare.
-    As the name suggests, DALYs are estimated by multiplying number of years lived by a factor adjusting for quality of life.
-    Although they originate in health, DALYs and similar units are also used in philanthropy and public policy.
-  </p>
-
-  <p>
-    I will be expressing harms in this essay as "DALY per capita".
-    Roughly, you can think of these estimates as the amount romantic suffering removes from our "adjusted life expectancy."
-    This seems like a more human-scale unit than the total sum of DALYs lost over the human population.
-  </p>
-
-
-  <h2>First Order Effects</h2>
-
-  <p>
-    Our first order effect estimate aims to capture the direct harm to people suffering due to romantic issues.
-    We have five different estimates.
-    The first four estimate a "disability weight",
-    expressing how much worse a year of life being single is relative to being in a good relationship,
-    and use that to estimate the harm.
-    Three of those four are based on new surveys I ran for this essay.
-    The final estimate is an independent factor which we estimate directly.
-  </p>
-
-  <p>
-    Each one of these estimates has a dedicated section below.
-  </p>
-
-
-  <style>
-    #importance-estimate-table .units {
-      color: #999;
-      font-size: 75%;
-      font-weight: normal;
-      line-height: 100%;
-    }
-    .padded-figure {
-      margin-left: 50px;
-      padding:10px;
-      padding-bottom: 30px;
-    }
-  </style>
-
-<div class="padded-figure">
-  <table id="importance-estimate-table">
-    <tr class="pad-below" style="border-bottom: solid 1px #EEE;">
-      <th>Estimate Method</th>  <th>Weight<br><span class="units">DALY / LY</span></th>    <th>Loss<br><span class="units">DALY per capita</span></th>
-    </tr>
-
-    <tr class="pad-above">
-      <td>Disability Comparison</td> <td>0.199</td> <td>2.94</td>
-    </tr>
-
-    <tr class="pad-above">
-      <td>Time Tradeoff</td> <td>0.45</td> <td>6.66</td>
-    </tr>
-
-    <tr class="pad-above">
-      <td>Risk of Death</td> <td>0.25</td> <td>3.7</td>
-    </tr>
-
-    <tr class="pad-above" style="border-bottom: solid 1px #EEE;">
-      <td style="padding-bottom: 8px;">GSOEP Data</td> <td style="padding-bottom: 8px;">0.108</td>   <td style="padding-bottom: 8px;">1.60 </td>
-    </tr>
-
-    <tr class="pad-above">
-      <td>Suicide</td>
-      <td><span class="units">N/A</span></td>
-      <td>+0.05</td>
-    </tr>
-
-  </table>
-</div>
-
-  <p>
-    Of the above, I trust the "disability comparison" methodology the most.
-    (I think people have a much more visceral reaction to the hypothetical of, say, being blind than losing half their future life expectancy.)
-    To get an over all estimate, we should also add in the suicide harm estimate, which is an independent, much smaller factor.
-    This would give us an overall estimate of <b>2.99</b> DALY per capita.
-  </p>
-
-  <p>
-    For context, a plausible estimate of the harm of cancer seems to be it destroying about 2.3 DALY per capita.
-    (I derived this estimate by taking <a href="https://jamanetwork.com/journals/jamaoncology/fullarticle/2683251">Global Burden of Disease Cancer Collaboration</a>'s estimate of the global annual burden of cancer, dividing by population and multiplying by life expectancy.)
-    If you take these numbers seriously, this suggests the harm of romantic suffering seems to be in the same ballpark as cancer.
-    The more aggressive estimates would put it at 3x worse.
-  </p>
-
-  <h3>Disability Comparison Survey</h3>
-
-  <p>
-    The hard part of DALY estimation tends to be figuring out "disability weights"
-    -- the amount that living in a condition is worse than baseline.
-    A lot of effort has gone into estimating disability weights for various medical conditions.
-  </p>
-
-  <p>
-    In this section, we aim to leverage these existing disability weight estimates
-    into an estimate of the "disability" weight of being single.
-    We do this by asking survey respondents whether, for various medical conditions, they would rather be single or have the condition but be in a good relationship.
-    If they'd prefer being single, we get an approximate upper bound on their personal disability weight for being single.
-    Conversely, if they'd take the condition for a good relationship, we get an estimated lower bound.
-  </p>
-
-  <p>
-    The following table gives an overview of the conditions I surveyed on and candidate responses.
-    I selected which conditions to use in the survey on several criteria:
-    <b>(1)</b> Being common enough that subjects will roughly understand what they entail.
-    <b>(2)</b> Not stigmatized (eg. not STDs).
-    <b>(3)</b> Permenant (eg. not broken arm).
-    <b>(4)</b> Spanning a variety of disability weights.
-    <b>(5)</b> I preferred conditions the World Health Organization gives a weight for.
-  </p>
-
-
-<div class="padded-figure">
-<table>
-<tr style="border-bottom: 1px solid #DDD;">   <th style="padding-bottom: 4px;"><br>Disability</th>             <th style="padding-bottom: 4px;">Disability<br>Weight</th>   <th style="padding-bottom: 4px;">2017 Fraction<br>Preferring</th>    <th style="padding-bottom: 4px;">2019 Fraction<br>Preferring</th>  </tr>
-<tr style="width: 100%; height:12px;"></tr>
-<tr>   <td>asthma</td>                 <td>0.043</td>    <td> - </td>   <td>66%</td>    </tr>
-<tr>   <td>lose a finger</td>          <td>0.102</td>    <td> - </td>   <td>60%</td>    </tr>
-<tr>   <td>moderate hearing loss</td>  <td>0.040</td>    <td> - </td>   <td>55%</td>    </tr>
-<tr>   <td>chronic back pain</td>      <td>0.121</td>    <td> - </td>   <td>55%</td>    </tr>
-<tr>   <td>lose a thumb</td>           <td>0.165</td>    <td> - </td>   <td>48%</td>    </tr>
-<tr>   <td>low vision (cataracts)</td> <td>0.170</td>    <td> - </td>   <td>41%</td>    </tr>
-<tr>   <td>lose an arm</td>            <td>0.257</td>    <td>58%</td>   <td>33%</td>    </tr>
-<tr>   <td>lose a leg</td>             <td>0.300</td>    <td> - </td>   <td>28%</td>    </tr>
-<tr>   <td>complete hearing loss</td>  <td>0.215</td>    <td>48%</td>   <td>27%</td>    </tr>
-<tr>   <td>complete vision loss</td>   <td>0.600</td>    <td> - </td>   <td>21%</td>    </tr>
-
-</table>
-</div>
-
-<p>
-  For the 2019 version, I paid 100 respondents $0.5 each to fill out the survey, with the median respondent taking 1.8 minutes to fill it out.
-  Respondents were <a href="https://www.mturk.com/">Amazon Mechanical Turk</a> workers recruited using <a href="https://www.positly.com/">positly</a>.
-  The pool was restricted to the US, but no other filters were applied (eg. on gender or age).
-  Our response pool was male leaning (38% female)
-  and age was widely distributed (median: 30-40).
-  Most respondents were presently in a relationship (75%),
-  and the majority had been in 2-4 serious relationships.
-</p>
-
-<p>
-  (I had perviously run a survey covering a more diverse range romance-related questions in 2017. As discussed later, it's concerning that the gap in responses is so large!)
-</p>
-
-<p>
-  We'd like to turn each respondents answers into an estimate of their disability weight for being single.
-  A natural way to get a conservative estimate is to use the maximum disability weight of a condition they accepted in place of being single.
-  This can be seen as an expressed lower bound.
-</p>
-
-<p>
-  Unfortunately, there are two issues with this approach.
-
-  The first is that some respondents gave seemingly inconsistent responses;
-  for example, one candidate might be willing to give up a finger for a relationship (0.102) but not have asthma (0.043).
-  For these examples, we model responses as being effected by gaussian noise and then pick the maximum likelihood "true" single disability weight between the conflicting bounds.
-  (See Appendix for details.)
-
-  The other concern is that, even if the responses are consistent, taking the highest lower bound is taking a maximum over noisy estimates which is no longer an unbiased estimator.
-  I didn't see a good way to get around this, but it doesn't seem to bad.
-  It's an over-optimistic estimator, but it's an over-optimistic estimator of a lower bound, and still lower (for consistent reponses, where we're using) than the upper bound or maximum likelihood value.
-
-
-</p>
-
-<div class="bigcenterimgcontainer">
-  <img src="img/DisabilityComparisonEstimates.png" >
-</div>
-
-<p>
-  This gives an average disability weight of <b>0.199</b> DALY/LY.
-  From here, we can use the estimate that the average American spends 14.8 years of their adult life single (see appendix)
-  to get <b>2.94</b> DALY per capita.
-</p>
-
-<p>
-  I have several significant concerns about data quality.
-
-  (1) I ran a similar survey in 2017, on the same platform.
-  I had an identically worded question about losing an arm versus being single,
-  and at that point 58% of respondents said they would prefer to lose the arm, compared to 33% now.
-  This suggests that either priming by the rest of the survey or shift in respondent distribution has significantly changed answers.
-
-  (2) A number of respondents finished the survey in less than one minute, answering "prefer single" (top, constant answer) to each question;
-  I'm concerned they may not have been actually engaging and just trying to rush through and collect the payment.
-
-  (3) I'm worried that it may be hard for people to give honest answers, because romance is often so close to people's identity.
-</p>
-
-<p>
-  Despite these concerns, of all the methods I've explored for estimating disability weight, this is the one that feels most credible.
-</p>
-
-
-  <h3>Time-Trade Off Survey</h3>
-
-  <p>
-    One reason this estimate may come out higher than others is time discounting.
-  </p>
-
-  <h3>Risk of Death Survey</h3>
-
-  <h3>GSOEP</h3>
-
-
-  <h3>Suicide</h3>
-
-  <p>
-    So far, we've considered the effect of romance on typical quality of life,
-    and tried to extrapolate that into an estimate of the total burden of romantic suffering.
-    An alternative approach is to look to look at the extreme negative tail.
-    We know the stereotype of people committing suicide due to romantic suffering
-    -- is that actually a major phenomenon, which could significantly contribute to our estimate?
-  </p>
-
-  <p>
-    The answer seems to be that, yes, many people who commit suicide <i>perceive</i> themselves to be motivated by romance and relationships...
-    but it's unclear to what extent it's actually causal.
-  </p>
-
-  <p>
-    If we're interested in understanding the motivations of people who commit suicide,
-    there's a small body of research around the analysis of suicide notes.
-    They collect a corpus of suicide notes, and then analyze them to try to better understand the motivations of the decedents.
-    Unfortunately many of these papers, including those explicitly studying the effect of romance on suicide,
-    are unclear about metrics and don't report the most relevant statistics, so we'll have to do some guess work and estimation.
-    They also only have sample sizes in the hundreds, and there could be a systematic bias in which decedents leave notes.
-    Despite this, it's the best tool we have.
-  </p>
-
-  <p>
-    Depending on which studies you look at and how you interpret them,
-    I think a conservative estimate is that ~20% of suicides are primarily motivated by romance,
-    and a liberal reading could easily have it be a major factor in >50%.
-  </p>
-
-  <ul>
-    <li>
-      Delgado (2013), found that 22% of suicides for which they had notes were "motivated exclusively" by problems in a romantic relationship.
-      I derived this number from 26% of decedents were "motivated exclusively by relationship problems" and 85% of those being "intimate relationships."
-      Presumably, there are more suicides for which it was a major but non-exclusive factor, or where romantic loneliness was a factor but not a specific relationship.
-    </li>
-
-    <li>
-      Canetto & Lester (2010) rated suicide notes from on an 11 point scale for how motivated they were by romance.
-      They found a mean rating of 5.27 (SD = 3.74).
-      Since no further information on the distribution is provided, we'll model it as a Gaussian.
-      This would mean that, in their sample, 16% of decedents left notes that scored at least 9 out of 11 for romantic motivation.
-      They don't define the scale, but even being very conservative 9 seems like it would be in the "primarily motivated by" regime.
-      (For contrast, the mean rating for work-related motivations was only 2.38.)
-      If you wanted to be less conservative, you could just say that 5.27/11 seems like a significant cause and estimate that 50% of decedents were significantly motivated by romance.
-    </li>
-
-    <li>
-      Lester, et al. (2004) report on the correlation between age and suicide being motivated by romance.
-      but don't include any information besides the correlation, which is frustrating because they clearly had data on the prevelence of romance as a motivation!
-    </li>
-
-    <li>
-      Several older studies I couldn't easily access are cited by Canetto & Lester (2010) as reporting that the "majority" or "typical" motivation for suicide in men is romance.
-      (They are arguing that romance is an equal motivation for men and women, contrary to stereotype, so only citing evidence for men should not be read as it being especially common or men.)
-    </li>
-  </ul>
-
-<p>
-  A major complication with all this evidence is that what people feel and say they are motivated by does not necessarily align with the cause external observers attribute.
-  An example of evidence pushing in this direction is Fishman and Weimann (1996) who observe that, in Israel, while media portrayals present suicide as being motivated by romance 16% of the time,
-  official investigations by the Ministry of Health only find it to be the cause 1.2% of the time, generally finding suicide to be caused by mental illness.
-</p>
-
-<p>
-  So it seems that many people who commit suicide feel they are doing it because of romance, but that professionals,
-  from an outside perspective, often perceive the underlying cause to be depression or other mental health issues.
-  I'm not sure how to interpret that.
-  On the one hand, it could be that these people were depressed and their brain gave the explanation that the cause was romantic hardship.
-  On the other hand, it could be that some were horribly hurt by romance, causing them to fall into depression and eventually commit suicide.
-  (Or perhaps they are independent, compounding factors -- many researchers reject single cause interpretations of suicide.)
-</p>
-
-<p>
-  The most satisfying resolution I've come up with is to do a naive estimate taking stated motivations on face value,
-  and then multiply by an adjustment factor accounting for comorbidity with mental health issues.
-  From calculations in the appendix, we estimate the life year per capita cost of suicide to be 0.38.
-  If we take 20% of suicides to be "motivated by" romance, we get 0.076 life years per capita.
-  Now, for our adjustment factor we want to account for both increased risk of future suicide on different motivations,
-  and also decreased quality of life due to increased risk of mental health issues.
-  But it should also account for the possibility that many people may have had depression caused by external factors which this resolves.
-  In the end, I decided to go with a factor of 0.7 which I have no real justification for.
-  This gives 0.05 life years lost per capita due to romance through effect on suicide.
-</p>
-
-
-
-
-
-
-  <!--- ====== SECOND ORDER EFFECTS   ====================================
-        ================================================================== -->
-
-  <h2>Second Order Effects</h2>
-
-  <p>
-    While the most obvious impact of improving the romance problem is the direct effect of improving people’s lives,
-    there may also be significant <a href="https://blog.givewell.org/2013/05/15/flow-through-effects/">"flow through" effects</a>,
-    where the people who's lives are improved go on to improve the world in other ways.
-    This is basically all speculation and I haven't attempted quantitative estimates.
-  </p>
-
-  <p>
-    <b>Increased Productivity:</b>
-    People in better romantic situations may be more productive.
-    One reason you might expect this is improved emotional wellbeing.
-    If someone isn’t sad and anxious about their romantic situation,
-    they may be more able to excel in other parts of their life.
-    Another reason is that they aren’t wasting energy unproductively looking for a partner,
-    such as spending hours on dating websites.
-  </p>
-
-  <p>
-    On the flip side, you could also imagine people with partners, and especially those with children, being less productive due to investing energy into their family.
-    It seems to me that the net effect we should expect is unclear both in magnitude and direction.
-    A compelling analysis would need to take into account not just the size of these effects,
-    but estimates of counterfactuals, and how productivity changes over age.
-  </p>
-
-  <p>
-    <b>Saved Life years:</b>
-    If you buy the <a>suicide effect</a> from the first order effects section
-    -- that some significant fraction of suicides are due to bad romantic situations --
-    you should probably expect very significant flow through effects if the problem is resolved.
-    The population of people committing suicide is disproportionately people who society has invested a lot in raising and educating, and now have high expected economic output.
-    The counterargument is that people who were vulnerable to committing suicide may be suffering mental health conditions, which may reduce expected future contributions.
-  </p>
-
-  <!--TODO: estimates-->
-
-  <p>
-    <b>Romantic Collaborators:</b>
-    There’s a small body of literature on collaboration (eg. in science) between romantic partners
-    (<a href="https://www.researchgate.net/profile/Elizabeth_Creamer/publication/319027938_Knowledge_Production_Publication_Productivity_and_Intimate_Academic_Partnerships/links/599af63245851574f4ac5767/Knowledge-Production-Publication-Productivity-and-Intimate-Academic-Partnerships.pdf">Greamer, 1999</a>;
-    Blaser, 2008).
-    My present guess is that these collaborations can be extremely meaningful to the people involved, but probably don’t have a very large effect on productivity.
-</p>
-
-<p>
-    I think the most likely ways it might be a large effect and we’re not seeing it are:
-    (1) Social pressure causes people to not collaborate with partners.
-    (2) Social pressure causes people not to be transparent about such collaborations.
-    (3) The upside of these collaborations is dominated by a small number of "big wins" that aren't visible in small studies.
-  </p>
-
-  <p>
-    <b>Population Effects:</b>
-    It’s possible that helping people find good relationships would affect fertility.
-    I’m inclined to not weight this too highly because we have lots of independent interventions that affect population if we want to, including state support for families and immigration policy.
-    On the other hand, it’s possible that improving relationships would increase the number of children growing up with parents who are in a good relationship, which seems exciting.
-  </p>
-
-  <h3>Reasons for Past Underestimation</h3>
-
-  <p>
-    If romance is so important for quality of life, why has it not been taken more seriously?
-    Of course, in some ways it has been -- there’s a thriving industry of giving love advice,
-    self help books, dating websites, marketing items as romantic gifts, and much more.
-    But this doesn’t really look more like people going after a market opportunity than taking a problem seriously.
-  </p>
-
-  <!--TODO: Should some of the above go in the intro? -->
-
-  <p>
-    I think there’s a number of good reasons we might systematically underestimate the significance of romantic suffering.
-    Most of the time, people experiencing romantic hardship have an incentive to downplay it,
-    because expressing suffering would just make their situation worse by making them less attractive.
-    A smaller fraction of the time, they may be tempted to exaggerate it (eg. to make a partner hesitate to leave),
-    reducing the credibility of people who express suffering.
-  </p>
-
-
-  <br>
-  <hr>
-  <br>
-
-  <h1>Tractability</h1>
-
-  <br>
-  <hr>
-  <br>
-
-  <h1>Neglectedness</h1>
-
-
-
-  <p>
-    If a bunch of people are already working hard on solving a problem
-    -- or worse, <i>have</i> tried to solve it and failed --
-    you should probably hesitate to think you'll make a lot of progress,
-    unless you have a good argument for why your contribution will be different.
-
-    Conversely, if there aren't many people working on a problem,
-    or there aren't many people working on a particular approach,
-    you might expect to contribute more.
-  </p>
-
-  <p>
-    At first glance, it seems like there's a lot of people working on the romance problem!
-    This includes dating websites, matchmakers and academic researchers.
-    In particular, many dating websites have significant resources and staff dedicated to thinking about this general space.
-    Does it really make sense for more people to try things?
-  </p>
-
-  <p>
-    I think the answer is very much so.
-  </p>
-
-
-  <h2>New Opportunities</h2>
-
-  <p>
-    In 1969, a wealthy donor offered to fund a number of leading psycholigists in creating a non-profit, computer-based dating service called "Project Cupid".
-    The psychologists met twice before concluding they wouldn't be able to meaningfully help people (Finkel et al, 2012).
-    It seems to me that, in 1969, they were probably right.
-    (They also demontstrated notable integrity!)
-  </p>
-  <p>
-    If we think it might be possible to succeed now, it begs the question: what's changed since 1969 that makes that the case?
-  </p>
-
-  <ul>
-    <li><b>The Internet:</b>
-      The modern Internet (and acceptance of online dating) gives dating websites access to an unprecedentedly large and responsive client pool.
-      Presumably, the more people you have to match, the better you can match people.
-    </li>
-    <li><b>Machine Learning:</b>
-      Modern machine learning has made stunning progress in the last couple of years.
-      Using ML to predict matches seems impractical in the short term (long-term relationship outcome data seems hard!).
-      But using it to infill unanswered questions, filter spam, judge message quality, or predict someone's aesthetic reaction to a photo all seem very tractable.
-    </li>
-    <li><b>Design:</b>
-      Data visualization, humane design, and mechanism design all seem like the have significant roles to play in dating websites,
-      and have either advanced signficantly or have more of a tradition of being used in online contexts.
-    </li>
-  </ul>
-
-  <p>
-    All of these are discussed in more detail in the tractability section when relevant.
-  </p>
-
-  <h2>Dating Sites</h2>
-  <h3>Network Effect Oligopolies</h3>
-
-  <p>
-    Dating websites are a very strong example of <a href="https://en.wikipedia.org/wiki/Network_effect">network effects</a>.
-    The more users a dating website has, the more people it can match you with, making it more effective.
-    While a user might maintain profiles on a few websites (because finding a partner is very important to them),
-    the costs (especially the entry cost of creating a good profile) means it's natural for the market to consolidate and only have a small flux of new actors.
-    As a result, the space natural becomes an oligopoly.
-  </p>
-
-  <p>
-    One consequence of this is that only a small number of actors can really experiment in the dating website space at a given time.
-    As a result, one might expect many things to not have been tried.
-    Moreover, once established, the oligopolists who could experiment tend to not be very innovative.
-    Since they're stitting on a large revenue stream protected from competition, they have relatively small incentive to innovate, and every incentive to be risk-averse.
-    (It's worth noting that there are major risks to change for a dating website.
-    Their biggest asset is their user base and data about their users.
-    Major changes would likely make old data less relevant and require users to enter new data, jepordizing this moat.)
-  </p>
-
-
-  <p>
-    (See discussion of open platform approaches earlier for strategies on undermining the oligopoly phenomenon.)
-  </p>
-
-  <h3>Perverse Incentives</h3>
-
-  <p>
-    Before OkCupid was acquired by match, they had a wonderful essay titled
-    "Why You Should Never Pay For Online Dating" (<a href="https://static.izs.me/why-you-should-never-pay-for-online-dating.html">mirror</a>).
-    They've since taken it down (and now encourage you to pay for extra prominence on their site),
-    but it's an excellent articulation of why the common business models of dating websites (especially "pay to message" models) have perverse incentives and are bad for users.
-  </p>
-
-  <p>
-    Unfortunately, I think the issue is broader than their essay suggests.
-    It's acutally really hard to design a business model for dating websites that actually aligns incentives with the user.
-    Even something like ad revenue incentives websites to maximize user engagement and life span.
-  </p>
-
-  <p>
-    None of this is to say that anyone involved in online dating is conciously doing anything insidious or contrary to their users interests.
-    But markets tend to be effective when the profit maximizing thing to do is the outcome we want, and ineffective when it isn't.
-  </p>
-
-  <p>
-    There's also a distortive effect on the consumer side.
-    If you are single it might actually be rational to spend a signficant fraction of your income on finding a partner, if it could really help.
-    But if it got out that you were spending money that way, it might actually really <i>hurt</i> your prospects, because it looks like you are someone who needs to spend money to find a partner.
-    As a result, consumers may have a signficant incentive to not spend money (or not spend money in ways that don't have plausible deniability) even if they in some sense should.
-  </p>
-
-
-
-  <h3>Unsophisticated</h3>
-
-  <p>
-    A major part of OkCupid's historical branding was that they were doing math and statistics.
-    They had a lovely blog called OkTrends (most of the posts live on in their present blog) with interesting analysis of user data.
-    But in the schemes of things, everything they were doing was quite simple.
-    I don't see any evidence that other websites (who don't present this as their core strenght) are usingophisticated statistical machinery or modern machine learning.
-  </p>
-
-  <p>
-    Another piece of evidence is that, in 2014, I made some attempts at outreach to dating websites, offering to help them use deep learning.
-    I got very little interest, and didn't get the sense that anyone at organizations I spoke to was very aware of ML research.
-    Of course, it could be that they've pivoted since then, or that I just wasn't talking to the right people.
-    But applying modern ML successfully generally requires major institutional investment and domain expertise, especially since this isn't a cookie cutter standard deep learning problem.
-    Since only these dating websites have access to the data to do anything interesting
-    (and their terms of service prohibit you scraping them for data -- I've checked),
-    it seems very easy to imagine that there's been no large effort to bring these tools to bare.
-  </p>
-
-  <p>
-    As a result, to the extent your theory of impact rests on this machinery being able to provide a mcuh better product,
-    it seems reasonable to regard the direction as plausibly neglected.
-  </p>
-
-
-
-  <h3>Hookup Attractor</h3>
-
-  <p>
-    It seems like most dating websites have been drifting towards facilitating casual relatioships and hookups.
-    I'd guess this pattern is driven by a combination of latent demand and facilitating hookups being an easier problem than the long-term romance problem.
-    Now, I'm sure that there's lots of people for whom that increases quality of life,
-    but dating websites focusing on that are less useful for the long-term relationship problem.
-    And there's no shortage of writing by sad users who feel pulled into participating in hookups as a path finding long-term partners by this shift.
-  </p>
-
-  <h3>"Really Trying"</h3>
-
-  <p>
-    This critique of dating websites seems like the most subjective and least fair,
-    but I wanted to mention it because it actually drives a lot of intuition for me.
-  </p>
-
-  <p>
-    There's a way people working on medical problems talk about their work.
-    There's also a way people talking about social networks talk about their work.
-    The discourse around online dating seems much much closer to the social networks discourse than the medical problem discourse.
-    I suspect that reflects a pretty deep difference in mindset and goals,
-    to the extent that I'm not sure that they're really trying to solve the problem I care about.
-  </p>
-
-
-  <h2>Other Actors</h2>
-  <h3>Academics</h3>
-  <h3>Mathchmakers</h3>
-  <p>
-    <b>Matchmakers:</b>
-    I don't have much of a sense for the efficacy of professional matchmakers, but it seems like they can only help a relatively small number of people.
-    It's possible that we should be trying to scale up matchmaking as a profession
-  </p>
-  <h2>Relevant Baseline</h2>
-
-  <p>
-    Setting everything else aside, even if we take the number of actors in the romance space on face value, I think romance may still be neglected <i>relative to its importance</i>.
-  </p>
-  <p>
-    For example, it seems clear that order of magnitudes more effort and resources go into medical research on diseases that seem comparably important.
-    Part of this may be society overinvesting in funding health causes, but I think we're mostly underinvesting in romance.
-  </p>
-
-
-  <br>
-  <hr>
-  <br>
-
-  <h1>Appendix: Annoying Calculations</h1>
-
-
-  <h2>Average Number of Years Single</h2>
-
-  <p>
-    Based on FiveThirtyEight’s <a href="https://fivethirtyeight.com/features/when-will-everyone-i-know-be-married/">“When Will Everyone I Know Be Married” article</a>,
-    I estimated that the American spends 27 years of their adult life unmarried before the age of 75.
-  </p>
-  <p>
-    I ran a small survey on Mechanical Turk in which I asked
-    "Excluding any present long-term relationship, what fraction of your adult life have you spent single?"
-    The average response was 55%.
-    Combining these together, we get a crude estimate that the average American to spend 14.8 years single.
-  </p>
-
-
-
-  <h2>Suicide life-year cost per capita</h2>
-
-  <p>
-    To estimate the number of life years lost to suicide per capita,
-    I combine the CDC
-    <a href="https://www.cdc.gov/nchs/data/dvs/LCWK1_2015.pdf">2015 leading causes of death by age group</a>
-    data with <a href="https://www.ssa.gov/oact/STATS/table4c6.html">2015 life expectancy data</a>.
-    For each age group, I multiply the suicide rate by the number of years in the age group and by life expectancy of the median age.
-    This gives me estimates of how many life years are lost per capita per age group, which I sum for a full estimate.
-    This is only a first-order estimate, and doesn't account for how suicide influences life expectancy.
-    It does not attempt to account for comorbidity of suicide with mental health conditions.
-  </p>
-
-  <p>
-    This leads to an estimate of <b>0.38 life years per capita</b>.
-    You can think of this as meaning that, if suicide didn't exist, average life expectancy would increase by 0.38.
-    (One interesting observation is that, while suicide rate peaks in the 50-54 age group,
-    the life year cost peaks in the 15-19 age group.)
-  </p>
-
-
-  <br>
-
-  <style>
-    th, td {
-      padding-right: 32px;
-    }
-    .pad-above td, .pad-above th {
-      padding-top: 6px;
-    }
-    .pad-below td, .pad-below th {
-      padding-bottom: 6px;
-    }
-  </style>
-
-  <div class="padded-figure">
-  <table>
-    <tr>
-      <th>Age Group</th>
-      <th>Suicide Rate</th>
-      <th>Duration</th>
-      <th style="font-size: 80%; line-height: 100%;">Life<br> Expectancy</th>
-      <th>Loss</th>
-    </tr>
-
-    <tr class="pad-below" style="color: #AAA;  border-bottom: solid 1px #EEE; font-size: 70%;">
-      <td></td>
-      <td>1 / y / 100K</td>
-      <td>y</td>
-      <td>LY</td>
-      <td>LY</td>
-    </tr>
-
-    <tr class="pad-above">
-      <th style="padding-top: 4px;">10 - 14</th>
-      <td style="padding-left: 4px;">2.0</td>
-      <td>5</td>
-      <td>69.6</td>
-      <td>0.007</td>
-    </tr>
-
-    <tr>  <th>15 - 19</th>  <td style="padding-left: 4px;">9.8</td>  <td>5</td>  <td>64.6</td>  <td>0.032</td>  </tr>
-    <tr>  <th>20 - 24</th>  <td>15.1</td>  <td>5</td>  <td>59.7</td>  <td>0.045</td>  </tr>
-    <tr>  <th>25 - 29</th>  <td>15.3</td>  <td>5</td>  <td>54.9</td>  <td>0.042</td>  </tr>
-    <tr>  <th>30 - 34</th>  <td>16.2</td>  <td>5</td>  <td>50.1</td>  <td>0.041</td>  </tr>
-    <tr>  <th>35 - 39</th>  <td>16.4</td>  <td>5</td>  <td>45.3</td>  <td>0.037</td>  </tr>
-    <tr>  <th>40 - 44</th>  <td>17.8</td>  <td>5</td>  <td>40.6</td>  <td>0.036</td>  </tr>
-    <tr>  <th>45 - 49</th>  <td>19.2</td>  <td>5</td>  <td>36.0</td>  <td>0.035</td>  </tr>
-    <tr>  <th>50 - 54</th>  <td>21.2</td>  <td>5</td>  <td>31.5</td>  <td>0.033</td>  </tr>
-    <tr>  <th>55 - 59</th>  <td>20.4</td>  <td>5</td>  <td>27.1</td>  <td>0.028</td>  </tr>
-    <tr>  <th>60 - 64</th>  <td>17.2</td>  <td>5</td>  <td>22.3</td>  <td>0.019</td>  </tr>
-    <tr>  <th>65 - 69</th>  <td>15.2</td>  <td>5</td>  <td>18.9</td>  <td>0.014</td>  </tr>
-    <tr class="pad-below">
-      <th>70 - 74</th>
-      <td>15.3</td>
-      <td>5</td>
-      <td>15.1</td>
-      <td>0.011</td>
-    </tr>
-
-    <tr class="pad-above" style="border-top: solid 1px #EEE; ">
-      <th>Total</th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <th>0.38</th>
-    </tr>
-  </table>
-</div>
-
-<!--<div id="disqus_thread"></div>
-
-<script src="../../comments/inlineDisqussions.js"></script>
-<script src="../../js/disqus.js"></script>
+  <d-figure style="grid-column: middle; padding-top: 30px; padding-bottom: 40px;">
+    <img src="img/ImportanceOverview.png" style="width: 100%"></img>
+  </d-figure>
+
+<!--
+
+    <p><i>
+      Imagine a new disease that essentially all adults spend years suffering from.
+      It strikes everyone — men and women, the rich and poor, people of every race — intermittently beginning as a teenager and continuing into adulthood.
+    </i></p>
+
+    <p><i>
+      Most afflicted report that, at its worst, that it’s one of the most painful things they’ve experienced.
+      About half of them report they’d rather accept a 50% chance of death, complete loss of hearing, or the loss of a limb, to living the rest of their life with the disease.
+      About half of people who commit suicide report in suicide notes being motivated by the disease.
+    </i></p>
+
+    <p><i>But this new disease is neither new nor a disease: it’s romantic suffering.</i></p>
 -->
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+
+    <p>
+      Before going on, I wish to make one thing crystal clear:
+      in suggesting that romantic suffering may be a problem that society should take seriously,
+      I am absolutely not saying that anyone is entitled to a relationship from anyone else.
+      I think that anyone being in a relationship they do not wish to be in is abhorrent.
+      What I <i>would</i> like if this turns out to really be important, is for us as a society to find better ways to help people find excellent relationships they enthusiastically wish to be in
+      — and when the sad necessity arises, to help them leave relationships that are no longer healthy for them.
+    </p>
+
+    <p>
+      The goal of this essay is simply to make a plausibility argument for the importance and promisingness of romantic suboptimality as a cause.
+      It's based both on synthesizing some of the existing academic literature and on small experiments I ran myself.
+      I do not think anything in here is definitive -- it's only intended a preliminary argument suggesting further research.
+      That said, my personal suspicion is that, weighted by the number of people working on it, this may be one of the most important problems in the developed world.
+    </p>
+
+    <p>
+      I've broadly structured this essay in the form of the <a>Importance, Tractability and Neglectedness</a> framework:
+    </p>
 
 
 
-                        </div>
-                        <div class="col-md-4"></div>
-                    </div>
-                </div>
-            </div>
 
+  <d-figure style="grid-column: screen;" class="toc-container">
+    <div class="main-toc">
+
+      <div class="sub-toc">
+        <h3 class="section"><a href="#importance">Importance</a></h3>
+        <div class="description">
+           How much harm does romantic suboptimality cause?
+           Several dubious models give wildly varying estimates.
         </div>
+        <ul>
+          <li><a href="#importance-good">Absence of Good Relationships</a></li>
+          <li class="sub"><a href="#importance-good-treadmill">Hedonic Treadmill Concerns</a> </li>
+          <li class="sub"><a href="#importance-good-gsoep">GSOEP Data</a> </li>
+          <li class="sub"><a href="#importance-good-mturk">Mechanical Turk Surveys</a> </li>
+          <li><a href="#importance-bad">Bad Relationships</a></li>
+          <li><a href="#importance-breakups">Breakups</a></li>
+          <li><a href="#importance-suicide">Romance-motivated Suicide</a></li>
+          <li><a href="#importance-flow-through">Flow-through Effects</a></li>
+          <li><a href="#importance-underestimation">Reasons for Possible Past Underestimation</a></li>
+        </ul>
+      </div>
 
-    <!-- jQuery-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+      <div class="sub-toc">
+        <h3 class="section"><a href="#tractability">Tractability</a></h3>
+        <div class="description">
+          Are there ways we might reduce romantic suffering at scale?
+          How effective do we think they'd be?
+        </div>
+        <ul>
+          <li ><a href="#tractability-change">Theories of Change</a></li>
+          <li class="sub"><a href="#tractability-change-navigating">Navigating the space of people</a></li>
+          <li class="sub"><a href="#tractability-change-market">"Market" Design</a></li>
+          <li class="sub"><a href="#tractability-change-counseling">Guidance & counseling</a></li>
+          <li class="sub"><a href="#tractability-change-match">Matchmaking</a></li>
+          <li class="sub"><a href="#tractability-change-event">Event design</a></li>
+          <li class="sub"><a href="#tractability-change-augment">Social Augmentation</a></li>
+          <li ><a href="#tractability-structure">Structural Improvements</a></li>
+          <li class="sub"><a href="#tractability-structure-incentives">Incentive Design</a></li>
+          <li class="sub"><a href="#tractability-structure-open">Open Platforms</a></li>
+          <li class="sub"><a href="#tractability-structure-bad">Avoiding Bad Actors</a></li>
+          <li ><a href="#tractability-policy">Public Policy Interventions</a></li>
+          <li ><a href="#tractability-personal">Personal-Scale Interventions</a></li>
+        </ul>
+      </div>
 
-    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+      <div class="sub-toc">
+        <h3 class="section"><a href="#neglectedness">Neglectedness</a></h3>
+        <div class="description">
+          A number of other actors already work on romance.
+          I think it’s still neglected due to their focus, alignment, and scale.
+        </div>
+        <ul>
+          <li><a href="#neglectedness-baseline">Relevant Baseline</a></li>
+          <li><a href="#neglectedness-new-opportunities">New Opportunities</a></li>
+          <li><a href="#neglectedness-market-failure">Reasons for Market Failure</a></li>
+          <li class="sub"><a href="">Stigmatization</a></li>
+          <li class="sub"><a href="">Oligopolies</a></li>
+          <li class="sub"><a href="">Perverse Incentives</a></li>
+          <li><a href="#neglectedness-dating-sites">Dating Sites</a></li>
+          <li class="sub"><a href="">Hookup Attractor</a></li>
+          <li class="sub"><a href="">Unsophisticated</a></li>
+          <li class="sub"><a href="">"Really Trying"</a></li>
+          <li><a href="">Other Actors</a></li>
+        </ul>
+      </div>
 
-    <script src="../../highlight/highlight.pack.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    </div>
+  </d-figure>
 
-    <script src="../../js/footnotes.js"></script>
 
-    <script src="../../comments/inlineDisqussions.js"></script>
 
-    <noscript>Enable JavaScript for footnotes, Disqus comments, and other cool stuff.</noscript>
 
-    </body>
 
-</html>
+
+
+    <h3>Epistemic Transparency</h3>
+
+    <p>
+      I wrote this essay because I suspect romantic suboptimality is a very important and neglected cause.
+      A lot of this intuition comes from my own quality of life being massively increased while in relationships with the people I've been lucky enough to date.
+      I suspect I'm an outlier in just how much it effects me and consider myself biased.
+      At the same time, a major concern for me in writing this essay has been being effect by that bias, and I've tried very hard to err on the side of conservative estimates.
+      It's possible that I've overcompensated.
+    </p>
+
+    <p>
+      I really don't have relevant expertise in this kind of work, and expect I'm making all sorts of mistakes.
+      I'm also trying to cover a lot of ground in a small side project, so in a lot of cases I had to make really cursory estimates and move on.
+      Despite all this, I felt like it was still worth writing my thoughts up, since it could help start a conversation and might trigger more analysis.
+    </p>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+  <d-figure id="importance" style="grid-column: screen;" class="title-container base-grid container">
+  <div style="grid-column: text;" >
+    <h1>Part 1: Importance</h1>
+  </div></d-figure>
+
+
+
+
+    <p>
+      This section aims to provide a very rough answer to the question "how important is romance for aggregate quality of life?"
+      More formally, we try to estimate of how much value is lost due to people not being in good romantic situations,
+      relative to a hypothetical world where everyone miraculously ends up in a satisfying life-long relationship at the age of 18.
+      You can think of this as a "burden of romantic suboptimality" in the United States estimate,
+      analogous to traditional <a href="http://www.healthdata.org/gbd">burden of disease</a> or burden of injury estimates.<d-footnote>
+        Ideally, we'd do a global estimate, but I don't have the background or resources to do a credible estimate in the developing world.
+        I suspect this picture is pretty representative of western, developed countries, and some of the data I use comes from other such countries.
+      </d-footnote>
+    </p>
+
+    <p>
+      Our estimate consists of a few parts:
+    </p>
+
+    <ul >
+      <li><a class="importance-overview-link" href="#importance-good">Absence of Good Relationships</a> (3.95 DALY per capita)
+        <div><i>Missed value from people not being in good relationships.</i></div> </li>
+      <li><a class="importance-overview-link" href="#importance-bad">Bad Relationships</a> (0.72 DALY PC)
+        <div><i> Harm of people being in unhealthy relationships, relative to them being single.</i></div></li>
+      <li><a class="importance-overview-link" href="#importance-breakups">Breakups</a> (0.17 DALY PC)
+        <div><i> Suffering following breakups, relative to being single at equilibrium.</i></div></li>
+      <li><a class="importance-overview-link" href="#importance-suicide">Romance-motivated Suicide</a> (0.05 DALY PC)
+        <div><i> Harm of suicides motivated by romance.</i></div></li>
+      <li><a class="importance-overview-link" href="#importance-flow-through">Flow-through Effects</a> (no quantitative estimate)
+        <div><i>Downstream consequences of improving romantic suboptimality.</i></div></li>
+    </ul>
+
+    <p>
+      For context, the burden of cancer in the United States is about 3.5 DALY per capita.
+      If you take these numbers seriously, this suggests the harm of romantic suffering seems to be in the same ballpark as cancer.
+    </p>
+
+    <p>
+      Making these estimates required a lot of judgement calls in interpreting and weighting evidence.
+      I think you could pretty easily make alternative judgements that would effect the numbers either direction by a factor of 2.
+      The estimates could be much further off due to deeper methodological issues.
+    </p>
+
+    <div style="width: 100%; margin: 4px;" class="feedback-box">
+        <b>Note:</b> This kind of estimation is far outside my expertise.
+        This is a good faith attempt at estimating importance, but is really just a rough starting point.
+    </div>
+    <br>
+
+
+
+
+    <h3>Aside: Units</h3>
+
+    <p>
+      If you haven't spent much time thinking about this kind of problem, it may be surprising that we could event hope to quantify and estimate that!
+      Thankfully, there's a very useful unit from  health econometrics — the <a href="https://en.wikipedia.org/wiki/Disability-adjusted_life_year">Disability Adjusted Life Year</a> or DALY --
+      that can be used as a common unit for thinking about human welfare.
+      As the name suggests, DALYs are estimated by multiplying number of years lived by a factor adjusting for quality of life.
+      Although they originate in health, DALYs and similar units are also used in philanthropy and public policy.
+    </p>
+
+    <p>
+      I will be expressing harm in this essay as "DALY per capita".
+      Roughly, you can think of these estimates as the amount romantic suffering removes from our "adjusted life expectancy."
+      This seems like a more human-scale unit than the total sum of DALYs lost over the human population.
+    </p>
+
+
+
+
+
+
+    <h2 id="importance-good">Absence of Good Relationships <span style="float: right; font-size: 70%; color:#888; margin-top: 4px;">3.95 DALY PC</span></h2>
+
+    <p>
+      This section provides four different estimates of value lost to the absence of good relationships.
+      Each one first estimates a "disability weight",
+      expressing how much worse a year of life being single is relative to being in a good relationship.
+      Each one of these estimates has a dedicated section below.
+    </p>
+
+    <style>
+      #importance-estimate-table .units {
+        color: #999;
+        font-size: 75%;
+        font-weight: normal;
+        line-height: 100%;
+      }
+      .padded-figure {
+        margin-left: 50px;
+        padding:10px;
+        padding-bottom: 30px;
+      }
+    </style>
+
+  <div class="padded-figure">
+    <table id="importance-estimate-table" style="margin-bottom: 8px;">
+      <tr class="pad-below" style="border-bottom: solid 1px #EEE;">
+        <th>Estimate Method</th>  <th>Weight<br><span class="units">DALY / LY</span></th>   <th>Credence</th>
+      </tr>
+
+      <tr class="pad-above" >
+        <td>German Socio-Economic Panel Study</td> <td>0.11</td>   <td>40%</td>
+      </tr>
+
+      <tr class="pad-above">
+        <td>Mechanical Turk: Disability Comparison</td> <td>0.2</td> <td>25%</td>
+      </tr>
+
+      <tr class="pad-above">
+        <td>Mechanical Turk: Time Tradeoff</td> <td>0.31</td> <td>10%</td>
+      </tr>
+
+      <tr class="pad-above">
+        <td>Mechanical Turk: Risk of Death</td> <td>0.25</td><td>25%</td>
+      </tr>
+
+      <tr class="pad-above" >
+        <td><b>Combined Estimate</b></td>  <td><b>0.18</b></td>   <td></td>
+      </tr>
+
+      </tr>
+
+    </table>
+  </div>
+
+
+    <p>
+      (In deciding how much credence to give to each estimate, I was primarily motivated by two things.
+      Firstly, the GSOEP data estimate is very different from the Mechanical Turk surveys and should have less correlated error, so I wanted to give it more weight.
+      Secondly, the results of the Time-Tradeoff experiments are strongly effected by how you model people as discounting time, which seems to make them especially unreliable.)
+    </p>
+
+
+    <p>
+      In <a href="">Appendix B</a>, we estimate that the average adult spends 21 years outside good relationships
+      (15 <a href="">years single</a> + 6 <a href="">years in bad relationships</a>).
+      This suggests the the total
+      the shortfall relative to them spending the entirety of their life in a fulfilling relationship
+      is about <b>3.95</b> DALY per capita.
+    </p>
+
+
+    <h3 id="importance-good-treadmill">Hedonic Treadmill Concerns</h3>
+
+    <p>
+      Before we go on, I want to address the set-point model of happiness ("hedonic treadmill").
+      This model suggests that, while people can be made temporarily happier or sadder, they always return to a certain baseline happiness.
+      <i>If you believe this hypothesis, the absence of presence of good relationships should be a limited concern.</i>
+      There might be short-term effects on happiness when people go through a relationship status transition,
+      but they wouldn't have lasting impact.
+    </p>
+
+    <p>
+      The set point model is well known for early research
+      finding that both lottery winners and new paraplegics quickly returned to baseline happiness <d-cite key="brickman1978lottery"></d-cite>.
+      However, the strong version of these claims — that happiness always returns to a certain baseline — did not hold up to more rigorous investigation.
+      While new paraplegics return to being happy in the months following their injury, they are less happy than the population at large <d-cite key="diener2009beyond"></d-cite>.
+      <d-footnote>I have not seen the lottery results disputed and it seems likely they have been replicated, given the scrutiny that seems to have been brought to bear by the psychological community more recently.</d-footnote>
+      It's hard to evaluate as an outsider, but seems like the literature has shifted towards a view that while returning to baseline happiness is a very strong phenomenon, baseline happiness can sometimes change.
+      <d-footnote>For a much more complete analysis and criticism of the hedonic treadmill idea and discussion of modifications that need to be made to the model, see Diener, et al. <d-cite key="diener2009beyond"></d-cite>'s discussion. I will be focusing from here on some key experiments from the field, rather than it as a whole.</d-footnote>
+    </p>
+
+    <p>
+      Moreover, as we'll discuss in more depth in the GSOEP data section,
+      some long-term longitudinal data suggests that relationships suggests that romantic relationships do have a lasting impact on baseline happiness, both positive and negative.
+    </p>
+
+
+
+    <h3 id="importance-good-gsoep">German Socio-Economic Panel Study</h3>
+
+    <p>
+      Ideally, we'd like to see how romantic relationships affect quality of life in a large sample of people, over decades.
+      Unfortunately, such data is challenging to collect.
+      When we run our own surveys in the next section, we'll need to rely on hundreds of people answering our questions at a single point in time.
+      Thankfully, there's already a dataset, the German Socio-Economic Panel Study (GSOEP), which gives us very nearly what we want.
+    </p>
+
+    <p>
+      GSOEP tracked annual life satisfaction for 17 years in more than twenty thousand people.
+      The life satisfactions data comes from having people answer "'How happy are you at present with your life as a whole?' on a 0 (totally unhappy) to 10 (totally happy) scale each year from 1984 to 2000" <d-cite key="fujita2005life"></d-cite>.
+      It also included information about when important life events occurred such as marriage, divorce, death of a spouse and loss of a job.
+      Unfortunately, access to the GSOEP data is restricted to people at certain EU research organizations, so we'll need to rely on existing analyses.
+    </p>
+
+    <!--
+    <p>
+      GSOEP reveals a limited, but existing capacity for baseline happiness to change.
+      Fujita and Diener <d-cite key="fujita2005life"></d-cite> found that over 17 years, 24% of people had a statistically significant change in baseline happiness and 9% had a change of 3 points or more.
+      To me, that seems like a pretty grim picture -- 76% of people's baseline happiness didn't change! -- but to psychologists steeped in the hedonic treadmill perspective, this seems like a surprisingly positive result, refuting the original version of the model.
+      The authors do compare life satisfaction to many other traits and find that it was less stable than some properties like height, weight, BMI and blood pressure (in adults).
+    </p>-->
+
+    <p>
+      Several papers have tried to analyze the impact of life events, including marriage, on baseline happiness using GSOEP (eg.  <d-cite key="lucas2003reexamining,lucas2004????,diener2009beyond"></d-cite>).
+      Initially researchers analyzed the average change in reported happiness around marriage.
+      These average curves appeared to show that marriage had a short-term effect where it made people
+      mildly happier around the year they got married, but no long term impact on baseline happiness <d-cite key="diener2009beyond"></d-cite>.
+    </p>
+    <p>
+      However, it seems like there's actually something subtler going on, which was masked by the averaging.
+      Let's consider the following figure from Lucas, et al. <d-cite key="lucas2003reexamining"></d-cite>, which tries to model variations in baseline happiness change before and after marriage:
+    </p>
+
+
+​      <d-figure style="margin-bottom: 40px; margin-top: 20px;" >
+        <img style="width: 70%;  margin-left: 15%; margin-bottom:10px;"  src="img/GSOEP_2.png" >
+        <div class="figcaption" style="width: 70%; margin-left: 40%;">From Lucas, et al. <d-cite key="lucas2003reexamining"></d-cite> </div>
+      </d-figure>
+
+​
+    <p>
+      It seems like many people's baseline happiness seems to change after marriage, even significantly.
+      It's just that the positive and negative changes more or less cancel out.
+    </p>
+
+    <p>
+       If we assume a Gaussian distribution, about 16% of people who get married have an increase of one life satisfaction point (10% of total possible happiness, 25% of the average person's room to increase!), and just as many had a correspondingly negative drop.
+      But we don't know if this is actually what happened. It could just as easily be that almost everyone becomes a bit happier long-term, and a small fraction are horribly unhappy. Or something else.
+      This corresponds to a disability weight of about <b>0.11</b> DALY / LY.
+    </p>
+
+    <!--
+    <p>
+      I'll start discussing them with a figure from Diener, et al. <d-cite key="diener2009beyond"></d-cite>:
+    </p>
+
+
+    <d-figure  style="margin-top: 40px; margin-bottom: 40px; ">
+        <img style="width: 70%; margin-left: 15%;  margin-bottom:10px;" src="img/GSOEP_1.png" >
+        <div class="figcaption" style="width: 70%; margin-left: 40%;">From Diener, et al. <d-cite key="diener2009beyond"></d-cite></div>
+    </d-figure>
+
+
+    <p>
+      In the above figure, we see average life satisfaction for people a certain number of years from a life event, which occurs at year 0.
+      Each line corresponds to a different life event (widowhood, divorce, unemployment, marriage).
+      Only individuals with a single life event are included in the averaging, so marriage is only people who stayed married, divorce is people who don't remarry, and so on.
+    </p>
+  -->
+    <!--<p>
+      For example, let's look at two individual lines, we see:
+    </p>
+
+    <p>
+      Widowhood: Widowers start out, on average, happier than average, likely because people who marry and stay married tend to be slightly happier than average.
+      They becomes more sad in the years leading up to the death of their spouse, presumably because the spouse is often declining in health rather than suddenly dieing.
+      They are very sad that year, and then slowly become happier over the following years, but do not return to their original happiness (at least within 5 years).
+    </p>
+
+    <p>
+      Marriage: People who get married tend to be a bit happier than average.
+      They become happier towards marriage, have a jump when they get married, and then slowly drift down to where they were before.
+    </p>
+    -->
+
+
+<!--
+    <p>
+      Let's focus on marriage.
+      People who get married tend to be a bit happier than average at the start.
+      They become happier towards marriage, have a jump when they get married, and then slowly drift down to where they were before.
+      This is kind of surprising.
+      Of course, a temporary jump early in relationships is expected: giddiness is one of the characteristic traits of early romantic attraction, observed across cultures <d-cite key="fisher1998lust"></d-cite>.
+      <d-footnote>Presumably, if we could properly align the beginnings of relationships, we'd see an even bigger jump. </d-footnote>
+      But the fact that the average returns to what it started as is pretty surprising.
+    </p>
+
+    <p>
+      Naively, it seems to show that marriage (and entering into a long-term relationship) makes people happier temporarily but has no lasting impact.
+      What's actually going on is subtler.
+      The following figure from Lucas, et al. <d-cite key="lucas2003reexamining"></d-cite>  is quite revealing:
+    </p>
+
+​      <d-figure style="margin-bottom: 40px; margin-top: 20px;" >
+        <img style="width: 70%;  margin-left: 15%; margin-bottom:10px;"  src="img/GSOEP_2.png" >
+        <div class="figcaption" style="width: 70%; margin-left: 40%;">From Lucas, et al. <d-cite key="lucas2003reexamining"></d-cite> </div>
+      </d-figure>
+
+​
+    <p>
+      In fact, many people's baseline happiness seems to change after marriage, even significantly.
+      It's just that the positive and negative changes more or less cancel out. If we assume a Gaussian distribution, about 16% of people who get married have an increase of one life satisfaction point (10% of total possible happiness, 25% of the average person's room to increase!), and just as many had a correspondingly negative drop.
+      But we don't know if this is actually what happened. It could just as easily be that almost everyone becomes a bit happier long-term, and a small fraction are horribly unhappy. Or something else.
+    </p>
+
+    <p>
+      This corresponds to a disability weight of about 0.11 DALY / LY.
+    </p>
+
+-->
+<!--
+    <p>
+      I'm not aware of any evidence supporting things, but it seems almost certain to me that this variance in the impact of marriage on happiness (and presumably, of relationships more generally) correlates with properties of the people involved. In particular, it seems intuitive that some notion of the compatibility of partners is important here.
+    </p>
+
+    <p>
+      If that is true, this is a prime candidate for machine learning for social good.
+      A particular decision seems to have a huge impact on baseline happiness.
+      If we can predict that, we can facilitate opportunities for people to have happier lives, by introducing good matches.
+    </p>-->
+
+
+    <h3 id="importance-good-mturk">Mechanical Turk Surveys</h3>
+
+    <p>
+      The hard part of estimating the DALYs lost to the absence of good relationships is figuring out "disability weights"
+      -- the amount that being single for a year is worse than being in a good relationship.
+      While we can try to extrapolate this from existing work like GSOEP, I couldn't find any prior research trying to directly estimate it.
+      As a result, I tried to implement my own surveys.
+      They have a completely different set of failure modes:
+      they have a small non-representative sample, can't do longitudinal experiments to track people over long periods of time,
+      and I don't really know what I'm doing.
+      Nevertheless, I think it's useful to make an attempt at directly estimating the thing we care about.
+    </p>
+
+
+    <p>
+      I ran three different surveys, all trying to estimate this same value with different survey designs.
+      For each survey, I paid recruited respondents 100 <a href="https://www.mturk.com/">Amazon Mechanical Turk</a> workers
+      to fill out the survey using <a href="https://www.positly.com/">Positly</a>.
+      Each respondent was paid $0.5-$1.5, depending on the length of the given survey.
+      Respondents from one survey were excluded from others.
+    </p>
+
+    <p>
+      The three methodologies were:
+    </p>
+
+    <ul style="">
+      <li><b style="margin-right: 32px;">Disability Comparison</b> Estimated weight: 0.2 DALY/LY <a style="margin-left:32px;" href="mechanical-turk.html">Details & Analysis</a>
+        <div style="color: #666;">Ask respondents to chose between being single and being in a good relationship but having a condition (for which there is a calibrated disability weight).
+          For example, <i>"Would you rather spend the rest of your life single, or lose a finger but be in a good relationship?"</i></div> </li>
+      <li><b style="margin-right: 94px;">Time Tradeoff</b> Estimated weight: 0.31 DALY/LY <a style="margin-left:32px;" href="mechanical-turk.html">Details & Analysis</a>
+        <div style="color: #666;">Ask respondants to chose between living a certain number of years single, or a shorter number in a good relationship.
+         For example, <i>"Would you rather the rest of your life be: (1) 50 years single (then die); or (2) 40 years in a good relationship (then die)."</i>
+         This experiment is tricky to interpret because of time discounting.</div></li>
+      <li><b style="margin-right: 98px;">Risk of Death</b> Estimated weight: 0.25 DALY/LY <a style="margin-left:32px;" href="mechanical-turk.html">Details & Analysis</a>
+        <div style="color: #666;"> Ask respondents what risk of death they'd take to be in a good relationship instead of single. For example,
+        <i>"Would you rather: (1) Spent the rest of your life single; or (2) Have a 10% chance of dying but spend the rest of your life in a good relationship if you life."</i></div></li>
+    </ul>
+
+    <p>
+      There's a lot of details, both about the survey results and analysis that I've left for <a href="mechanical-turk.html">Appendix A</a>.
+      But one thing that does seem important to highlight is that there's a huge variance in how strong a preference people express.
+      For example, if we look at the disability comparison results, about 30% of people express no willingness to sacrifice at all, while the other tail will take blindness:
+    </p>
+
+    <d-figure class="img-figure">
+      <img style="width: 90%;" src="img/DisabilityComparisonEstimates.png" >
+    </d-figure>
+
+    <p>
+      At first glance, this variance doesn't seem particularly linked to obvious variables like gender or age, although I haven't investigated closely.
+    </p>
+
+    <h2 id="importance-bad">Bad Relationships <span style="float: right; font-size: 70%; color:#888; margin-top: 4px;">0.72 DALY PC</span></h2>
+
+    <p>
+      We can also use the GSOEP data to extrapolate a very crude estimate of the harm of bad relationships.
+      Lucas et al <d-cite key="lucas2003reexamining"></d-cite> find that when people get married,
+      there's both a +1 SD group who's happiness seems to permanently increase to a new baseline happiness, and a -1 SD group for whom it decreases.
+    </p>
+
+    <p>
+      Presumably, this -1 SD response is our bad relationships.
+      This means average baseline happiness decreases from its pre-marriage value of ~7.3/10,
+      by ~0.9/10 point.
+      If we assume life quality is linear in the self-reported happiness scale used for this study, this gives us a "disability weight" of 0.12.
+    </p>
+
+    <p>
+      If we combine this with a conservative estimate that people spend 6 years on average in bad relationships (see <a href="calculations.html">Appendix B</a>),
+      we get an estimate of <b>0.72 DALY per capita</b>.
+      (This is a conservative estimate, and more aggressive ones could go as high as 1.86.)
+      Note that this only accounts for the harm of bad relationships relative to being single.
+      The additional value of replacing these bad relationships with good ones is another 0.7-2.6 DALY per capita,
+      but are accounted to "absence of good relationship."
+    </p>
+
+
+    <h2 id="importance-breakups">Breakups <span style="float: right; font-size: 70%; color:#888; margin-top: 4px;">0.17 DALY PC</span></h2>
+
+    <p>
+      My estimate of the harm of breakups is one of the weakest ones I did, based on a single Mechanical Turk survey.
+      The survey consisted of three parts:
+      <b>(1)</b> Estimating how bad the first month after a serious breakup is by disability comparison.
+      <b>(2)</b> Asking how many additional months are at least half as bad as the first.
+      <b>(3)</b> Asking how many breakups someone has gone through.
+    </p>
+
+    <p>
+      Interpreting the survey data requires a number of decisions,
+      which can lead to estimates of breakups destroying 0.05-0.29 DALY per capita.
+      That's almost an order of magnitude!
+      The main decisions are how to extrapolate from "months at least half as bad as first" to "first month equivalents" (an exponential curve model suggest this is 4x)
+      and how to estimate the average number of breakups people will go through from the number they have so far.
+      I think a reasonable, slightly conservative estimate is 0.17 DALY per capita.
+    </p>
+
+    <p>
+      It's worth noting that this is significantly driven by a correlation between people suffering a lot in the first month and the length of time they suffer for.
+      This causes the top 10-20% of respondents to push up the average a lot, but because we had more transparency into why this was, I chose not to exclude them.
+    </p>
+
+    <h2 id="importance-suicide">Romance-motivated Suicide <span style="float: right; font-size: 70%; color:#888; margin-top: 4px;">0.05 DALY PC</span></h2>
+
+    <p>
+      So far, we've considered the effect of romance on typical quality of life,
+      and tried to extrapolate that into an estimate of the total burden of romantic suffering.
+      An alternative approach is to look to look at the extreme negative tail.
+      We know the stereotype of people committing suicide due to romantic suffering
+      — is that actually a major phenomenon, which could significantly contribute to our estimate?
+    </p>
+
+    <p>
+      The answer seems to be that, yes, many people who commit suicide <i>perceive</i> themselves to be motivated by romance and relationships...
+      but it's unclear to what extent it's actually causal.
+    </p>
+
+    <p>
+      If we're interested in understanding the motivations of people who commit suicide,
+      there's a small body of research around the analysis of suicide notes.
+      They collect a corpus of suicide notes, and then analyze them to try to better understand the motivations of the decedents.
+      Unfortunately many of these papers, including those explicitly studying the effect of romance on suicide,
+      are unclear about metrics and don't report the most relevant statistics, so we'll have to do some guess work and estimation.
+      They also only have sample sizes in the hundreds, and there could be a systematic bias in which decedents leave notes.
+      Despite this, it's the best tool we have.
+    </p>
+
+    <p>
+      Depending on which studies you look at and how you interpret them,
+      I think a conservative estimate is that ~20% of suicides are primarily motivated by romance,
+      and a liberal reading could easily have it be a major factor in >50%.
+    </p>
+
+    <ul>
+      <li>
+        Delgado <d-cite key="delgado2012role"></d-cite>, found that 22% of suicides for which they had notes were "motivated exclusively" by problems in a romantic relationship.
+        I derived this number from 26% of decedents were "motivated exclusively by relationship problems" and 85% of those being "intimate relationships."
+        Presumably, there are more suicides for which it was a major but non-exclusive factor, or where romantic loneliness was a factor but not a specific relationship.
+      </li>
+
+      <li>
+        Canetto & Lester <d-cite key="canetto2002love"></d-cite> rated suicide notes from on an 11 point scale for how motivated they were by romance.
+        They found a mean rating of 5.27 (SD = 3.74).
+        Since no further information on the distribution is provided, we'll model it as a Gaussian.
+        This would mean that, in their sample, 16% of decedents left notes that scored at least 9 out of 11 for romantic motivation.
+        They don't define the scale, but even being very conservative 9 seems like it would be in the "primarily motivated by" regime.
+        (For contrast, the mean rating for work-related motivations was only 2.38.)
+        If you wanted to be less conservative, you could just say that 5.27/11 seems like a significant cause and estimate that 50% of decedents were significantly motivated by romance.
+      </li>
+
+      <li>
+        Lester, et al. <d-cite key="lester2004motives"></d-cite> report on the correlation between age and suicide being motivated by romance.
+        but don't include any information besides the correlation, which is frustrating because they clearly had data on the prevelence of romance as a motivation!
+      </li>
+
+      <li>
+        Several older studies I couldn't easily access are cited by Canetto & Lester <d-cite key="canetto2002love"></d-cite> as reporting that the "majority" or "typical" motivation for suicide in men is romance.
+        (They are arguing that romance is an equal motivation for men and women, contrary to stereotype, so only citing evidence for men should not be read as it being especially common or men.)
+      </li>
+    </ul>
+
+  <p>
+    A major complication with all this evidence is that what people feel and say they are motivated by does not necessarily align with the cause external observers attribute.
+    An example of evidence pushing in this direction is Fishman & Weimann <d-cite key="fishman1997motives"></d-cite> who observe that, in Israel, while media portrayals present suicide as being motivated by romance 16% of the time,
+    official investigations by the Ministry of Health only find it to be the cause 1.2% of the time, generally finding suicide to be caused by mental illness.
+  </p>
+
+  <p>
+    So it seems that many people who commit suicide feel they are doing it because of romance, but that professionals,
+    from an outside perspective, often perceive the underlying cause to be depression or other mental health issues.
+    I'm not sure how to interpret that.
+    On the one hand, it could be that these people were depressed and their brain gave the explanation that the cause was romantic hardship.
+    On the other hand, it could be that some were horribly hurt by romance, causing them to fall into depression and eventually commit suicide.
+    (Or perhaps they are independent, compounding factors — many researchers reject single cause interpretations of suicide.)
+  </p>
+
+  <p>
+    The most satisfying resolution I've come up with is to do a naive estimate taking stated motivations on face value,
+    and then multiply by an adjustment factor accounting for comorbidity with mental health issues.
+    From calculations in <a href="calculations.html">Appendix B</a>, we estimate the life year per capita cost of suicide to be 0.38.
+    If we take 20% of suicides to be "motivated by" romance, we get 0.076 life years per capita.
+    Now, for our adjustment factor we want to account for both increased risk of future suicide on different motivations,
+    and also decreased quality of life due to increased risk of mental health issues.
+    But it should also account for the possibility that many people may have had depression caused by external factors which this resolves.
+    In the end, I decided to go with a factor of 0.7 which I have no real justification for.
+    This gives 0.05 life years lost per capita due to romance through effect on suicide.
+  </p>
+
+    <h2 id="importance-flow-through">Flow-through Effects</h2>
+
+    <p>
+      While the most obvious impact of improving the romance problem is the direct effect of improving people’s lives,
+      there may also be significant <a href="https://blog.givewell.org/2013/05/15/flow-through-effects/">"flow through" effects</a>,
+      where the people who's lives are improved go on to improve the world in other ways.
+      This is basically all speculation and I haven't attempted quantitative estimates.
+    </p>
+
+    <p>
+      <b>Life Expectancy:</b>
+      Marriage is correlated with increased life expectancy for both men and women (eg. <d-cite key="kaplan2006marital"></d-cite>).
+      This appears to be a very robust phenomenon, but it's unclear what to make of the correlation.
+      One common explanation is that it's selectional:
+      the sort of person who lives longer is more likely to marry.
+      More recent experiments suggest that when one tries to control for other variables, such as education and wealth,
+      reduces the phenomenon and even causes it to reverse for women in age-disparate relationships <d-cite key="drefahl2010does"></d-cite>.
+      Either way, I'm hesitant to include these effects because we don't have much reason to believe they are causal rather than selectional efects.
+    </p>
+
+    <p>
+      <b>Increased Productivity:</b>
+      People in better romantic situations may be more productive.
+      One reason you might expect this is improved emotional wellbeing.
+      If someone isn’t sad and anxious about their romantic situation,
+      they may be more able to excel in other parts of their life.
+      Another reason is that they aren’t wasting energy unproductively looking for a partner,
+      such as spending hours on dating websites.
+    </p>
+
+    <p>
+      On the flip side, you could also imagine people with partners, and especially those with children, being less productive due to investing energy into their family.
+      It seems to me that the net effect we should expect is unclear both in magnitude and direction.
+      A compelling analysis would need to take into account not just the size of these effects,
+      but estimates of counterfactuals, and how productivity changes over age.
+    </p>
+
+    <p>
+      <b>Saved Life years:</b>
+      If you buy the <a>suicide effect</a> from the first order effects section
+      — that some significant fraction of suicides are due to bad romantic situations --
+      you should probably expect very significant flow through effects if the problem is resolved.
+      The population of people committing suicide is disproportionately people who society has invested a lot in raising and educating, and now have high expected economic output.
+      The counterargument is that people who were vulnerable to committing suicide may be suffering mental health conditions, which may reduce expected future contributions.
+    </p>
+
+    <!--TODO: estimates-->
+
+    <p>
+      <b>Romantic Collaborators:</b>
+      There’s a small body of literature on collaboration (eg. in science) between romantic partners
+      <d-cite key=""></d-cite>
+      (<a href="https://www.researchgate.net/profile/Elizabeth_Creamer/publication/319027938_Knowledge_Production_Publication_Productivity_and_Intimate_Academic_Partnerships/links/599af63245851574f4ac5767/Knowledge-Production-Publication-Productivity-and-Intimate-Academic-Partnerships.pdf">Greamer, 1999</a>;
+      Blaser, 2008).
+      My present guess is that these collaborations can be extremely meaningful to the people involved, but probably don’t have a very large effect on productivity.
+    </p>
+
+    <p>
+      I think the most likely ways it might be a large effect and we’re not seeing it are:
+      (1) Social pressure causes people to not collaborate with partners.
+      (2) Social pressure causes people not to be transparent about such collaborations.
+      (3) The upside of these collaborations is dominated by a small number of "big wins" that aren't visible in small studies.
+    </p>
+
+    <p>
+      <b>Population Effects:</b>
+      It’s possible that helping people find good relationships would affect fertility.
+      I’m inclined to not weight this too highly because we have lots of independent interventions that affect population if we want to, including state support for families and immigration policy.
+      On the other hand, it’s possible that improving relationships would increase the number of children growing up with parents who are in a good relationship, which seems exciting.
+    </p>
+
+    <h2 id="importance-underestimation">Reasons for Possible Past Underestimation</h2>
+
+    <p>
+      If romance is so important for quality of life, why has it not been taken more seriously?
+      Of course, in some ways it has been — there’s a thriving industry of giving love advice,
+      self help books, dating websites, marketing items as romantic gifts, and much more.
+      But this doesn’t really look more like people going after a market opportunity than taking a problem seriously.
+    </p>
+
+    <p>
+      Most of the time, people experiencing romantic hardship have an incentive to downplay it,
+      because expressing suffering would just make their situation worse by making them less attractive.
+      A smaller fraction of the time, they may be tempted to exaggerate it (eg. to make a partner hesitate to leave),
+      reducing the credibility of people who express suffering.
+      It seems plausible that effects like these could cause us to  underestimate the significance of romantic suffering.
+    </p>
+
+
+
+
+
+
+
+
+
+    <!--
+    ============================================================================
+    ============================================================================
+    ============================================================================
+    ============================================================================
+    -->
+    <d-figure id="tractability" style="grid-column: screen;" class="title-container base-grid container"><div style="grid-column: text;" >
+      <h1>Part 2: Tractability</h1>
+    </div></d-figure>
+
+    <p>
+      If we accept that this problem is important, are there effective ways to improve the situation?
+    </p>
+
+    <p>
+      I think this is really hard to assess, and deeply entangled with the question of neglectedness.
+      It's easy to generate lots of ideas that seem plausible -- which is what I'll focus on in this section -- but it's hard to evaluate whether they would actually work.
+      But then you have to ask why other people haven't solved the problem, if these approaches actually worked.
+      We'll discuss neglectedness in the <a href="#neglectedness">next section</a>, but I think the primary answers are
+      <a href="#neglectedness-market-failure">"there may be major market failures"</a> and <a href="#neglectedness-new-opportunities">"there are new opportunities that didn't exist until recently"</a> (eg. Machine learning).
+    </p>
+
+    <p>
+      While I'll review a variety of ideas to attack different parts of romantic suboptimality,
+      my intuition is that the lynchpin is helping people form good relationships.
+      This isn't just because it seems like the bigger effect, but also because
+      I suspect that a lot of people would find breakups and leaving bad relationships easier
+      if they felt confident they would find a good relationship in the future.
+    </p>
+
+    <p>
+      I think most interventions to help people form good relationships at scale will look vaguely like improved variations on dating websites.
+      We'll discuss a variety of <a href="#tractability-change">theories of change</a> you might have for dating website-like institutions
+      and cross-cutting <a href="#tractability-structure">structural improvements</a> you could make.
+    </p>
+    <p>
+      We'll also discuss more general <a href="#tractability-policy">public policy interventions</a>
+      and <a href="#tractability-personal">personal scale interventions</a> you can do to help people immediately around you.
+    </p>
+
+    <h2 id="tractability-change">Theories of Change</h2>
+
+    <p>
+      If you want to create good relationships at a large scale, it's probably something that looks vaguely like a dating website.
+      But I think there's a lot of very different theories you could be pursuing.
+      It's worth distinguishing between these, and what key enablers and blockers seem to be for each.
+    </p>
+
+    <h3 id="tractability-change-navigating">Navigating the Space of People</h3>
+
+    <p>
+      There's seven billion people on the planet.
+      I'd guess most people only meet, in a meaningful sense, a few thousand people in their lifetime.
+      The number of people one actually gets to know is probably in the low hundreds, or even less.
+      Social networks and selection effects make the people one meets very non-random -- but they're still only a tiny fraction of the world's population.
+    </p>
+
+    <p>
+      One theory for a dating website (or even just a more general relationship website)
+      could be to help people navigate this overwhelming space of people, to find whichever ones they want to.
+      The website doesn't need to have any theory of who ought to meet who, it just needs to empower them to find each other.
+      It seems like this was a lot of OkCupid's early strategy.
+    </p>
+
+    <p>
+      On the surface, doing this well probably looks like some combination of:
+      (1) Allowing people to search on a wide variety of things they might care about.
+      (2) Minimizing the amount of effort to be effectively searchable.
+      (3) Making more things automatically searchable.
+      (4) Improving accuracy.
+    </p>
+
+    <p>
+      (This seems like somewhere Machine Learning could help a great deal.
+      Firstly, ML could predict distributions over answers to unanswered questions,
+      so that people don't need to have answered questions for search and scores to work effectively.
+      I suspect this would help a lot in cutting down false negatives,
+      and in turn cut down on people spending huge amounts of times digging for people the missed with their searches.
+      It would also cut down on people overweighting factors by trying to specify the same preference in dozens of different ways.
+      Secondly, modern vision models can almost surely make filtering for appearance preferences possible, to the extent people care about that.
+      This seems especially helpful in matching sub-populations with different aesthetic preferences.)
+    </p>
+
+    <p>
+      But I think there's actually a deeper version of doing this well, which is making the interface humane.
+      One concern about dating websites is that they kind of lead to a window shopping mentality, because people are exposed to so many people.
+      Another issue is that people may end up with unrealistic intuitions about the space of people.
+      I think good data visualization and HCI thinking could contribute a lot here.
+    </p>
+
+
+    <h3 id="tractability-change-market">"Market" Design</h3>
+
+      <p>
+        It's the classic problem of initial romantic interactions, both online and offline.
+        One person gets far more attention than they want.
+        Another gets none.
+        A lot of the attention is spam, or worse.
+        Ideally, we'd like to design systems where attention is more balanced and less spammy.
+      </p>
+
+      <p>
+        In the last couple of year's there's been a major innovation on this:
+        double opt-in likes before messaging.
+        This prevents people -- especially women -- from being swamped with unwanted messages.
+        (A friend of mine who used to work on online dating thinks this is the biggest innovation in the space this decade.)
+        Many dating websites have ben moving towards this model.
+        Other solutions have been only letting people see or contact a limited number of people a day, or only allowing women to initiate interactions,
+        but those don't seem to have taken off as much.
+      </p>
+
+      <p>
+        All of these seem feel a little crude.
+        I feel like it would be pretty surprising if it turned out that the they were truly the best solutions.
+        This is especially true because we have a lot of tools that seem relevant but don't seem like they're being used.
+      </p>
+
+      <p>
+        For one thing, this looks a great deal like a <a href="https://en.wikipedia.org/wiki/Mechanism_design">mechanism design</a> problem,
+        a sub-field of economics that works on engineering systems and incentives to get people towards desired objectives.
+        In particular, it looks like a two-sided market, which I think is pretty well studied.
+        I strongly suspect that there are major lessons from mechanism design that could be brought to bare.
+        (The only real attempt in this direction I know of, MeetLuna, tried to create an attention economy based on blockchain tech,
+        which seemed a bit overcomplicated to me, although I'm glad they were experimenting!)
+      </p>
+
+      <p>
+        For another, we now have machine learning language models that
+        can probably do a much better job at filtering spam and de-prioritizing low-quality messages than was possible just a few years go.
+        This could include models that specialize to the preferences of the recipient.
+      </p>
+
+
+    <h3 id="tractability-change-match">Matchmaking</h3>
+
+    <p>
+      One goal for a dating website might be to predict who is compatible.
+    </p>
+    <p>
+      The automated version of this seems really hard because you don't actually have much information about relationship outcomes.
+      (Even if it is tractable, you'd have to wait several years to collect outcome data. On the flip side, it would be very impactful if it worked.)
+      Predicting short-term things like whether people will enjoy messaging each other, or whether people will go on a date,
+      seems a lot easier and could still be quite valuable.
+    </p>
+
+    <p>
+      I feel more optimistic about human matchmaking, but it seems trickier to scale.
+      Maybe the right model could encourage people's friends to matchmake for them?
+    </p>
+
+    <h3 id="tractability-change-counseling">Guidance & Counseling</h3>
+
+    <p>
+      Having healthy relationships is a skill.
+      So is early relationships.
+      Normally, people learn these skills by not doing them well for a while and gradually getting better.
+      Can we help them jump over that?
+    </p>
+
+    <p>
+      One crazy idea would be for a dating website to integrate spaced repetition
+      with relationship advice it predicts will be useful to you while you browse.
+      Every couple of matches you look at, you get a spaced repetition card.
+      I think that's probably not literally a good idea, but maybe there's something interesting in that direction.
+    </p>
+
+    <p>
+      Another possibility might be to integrate access to coaches and therapists into the system, somehow.
+    </p>
+
+    <h3 id="tractability-change-event">Event Design</h3>
+
+    <p>
+      Another approach could be to get compatible people in the same room by organizing events.
+      I haven't thought very much about this, and it seems tricker to scale.
+    </p>
+
+
+    <h3 id="tractability-change-augment">Social Augmentation</h3>
+
+    <p>
+      Alice likes Bob. Bob likes Alice.
+      Tragically, they're never brave enough to tell each other and live their lives alone.
+    </p>
+
+    <p>
+      Carrie and Dean are both very compatible, and interact a lot in semi-professional contexts,
+      but never discover their similarities and find a connection.
+    </p>
+
+    <p>
+      Even if you meet someone you are compatible with, and both parties would want a romantic relationship if they had full knowledge,
+      it can be hard for that to become common knowledge.
+      Often, it's genuinely risky to explore the possibility of a romantic connection (you might alienate the other person)
+      and it also creates negative externalities (you might make the other person uncomfortable).
+      Can we help people navigate this better?
+    </p>
+
+    <p>
+      One approach is tools that help people establish common knowledge.
+      For example, there's a small app some people in my social network use that lets people say they'd like to go on a date with someone, and it lets them know if they both do.
+      That's certainly not a unique idea, but I'm not sure that it's ever really taken off.
+      Another approach, targeted at the second problem,
+      might be something that alerts people when they are at an event with a really high match, in certain situations.
+      (For example, people could exclude work, and set thresholds on how good a match should be before alerting them).
+      There's probably lots more ideas in this space.
+    </p>
+
+    <h2 id="tractability-structure">Online Dating - Structural Improvements</h2>
+    <h3 id="tractability-structure-incentives">Incentive Design</h3>
+    <h3 id="tractability-structure-open">Open Platforms</h3>
+    <h3 id="tractability-structure-bad">Avoiding Bad Actors</h3>
+
+
+    <h2 id="tractability-policy">Public Policy Interventions</h2>
+
+    <p>
+      I think there's a few plausible public policy interventions:
+    </p>
+
+    <h2 id="tractability-personal">Personal Scale Interventions</h2>
+
+    <p>
+      Before going on, I wanted to note something unusual:
+      romantic suboptimality where you might be able to have a lot of impact by
+      putting a small amount of effort into helping people around you.
+      I strongly suspect that for most people it's the biggest positive impact they can have on their friends,
+      and it wouldn't surprise me if the first few hours you could put into it are competitive with donating to highly effective charities.
+    </p>
+
+    <p>
+      The main thing you can do is play matchmaker.
+      Personally, I try to set aside an hour every couple of months to go through everyone I know to be single and think about whether there's someone I could introduce.
+      If you think there's a 1% chance that you'll create a good long-term relationship / marriage (presumably the first time you try to do this is especially high leverage),
+      the expected value of that hour is plausibly something like 0.2 DALY per hour.
+    </p>
+
+    <p>
+      I think the other, sadder, thing is to encourage your friends to leave relationships that are unhealthy for them.
+      This is hopefully very rarely necessary, but when it is seems really high impact.
+    </p>
+
+
+
+
+
+
+
+
+
+    <!--
+    ============================================================================
+    ============================================================================
+    ============================================================================
+    ============================================================================
+    -->
+    <d-figure id="neglectedness" style="grid-column: screen;" class="title-container base-grid container"><div style="grid-column: text;" >
+      <h1>Part 3: Neglectedness</h1>
+    </div></d-figure>
+
+
+      <p>
+        If a bunch of people are already working hard on solving a problem
+        — or worse, <i>have</i> tried to solve it and failed --
+        you should probably hesitate to think you'll make a lot of progress,
+        unless you have a good argument for why your contribution will be different.
+
+        Conversely, if there aren't many people working on a problem,
+        or there aren't many people working on a particular approach,
+        you might expect to contribute more.
+      </p>
+
+      <p>
+        At first glance, it seems like there's a lot of people working on the romance problem!
+        This includes dating websites, matchmakers and academic researchers.
+        In particular, many dating websites have significant resources and staff dedicated to thinking about this general space.
+        Does it really make sense for more people to try things?
+      </p>
+
+      <p>
+        I think the answer is very much so.
+      </p>
+
+      <h2 id="neglectedness-baseline">Relevant Baseline</h2>
+
+      <p>
+        There's a lot of arguments to make about neglectedness — and we'll be going into great depth shortly — but in some sense they don't matter.
+        Even if we take the number of actors in the romance space on face value, I think romance is highly neglected <i>relative to its importance</i>.
+      </p>
+
+      <p>
+        Many of the largest dating websites (including Tinder, Match, OkCupid, and PlentyOfFish) are owned by the Match Group, a subiduary of IAC.
+        The Match Group spent about $120 million on research and development in 2018 (<a href="https://ycharts.com/companies/MTCH/r_and_d_expense">YCharts</a>).
+        VC funding of dating startups, was estimated to be 47 million in 2016 (<a href="https://techcrunch.com/2017/02/14/vcs-swipe-left-on-dating-apps/">TechCruch</a>);
+        to be safe let's say it doubled to 87 million since.
+        And in case we missed some other large dating sites, let's throw in an extra $100 million.
+        This suggests a total research and development budge of about $300 million a year.
+      </p>
+
+      <p>
+        What about research funding on cancer research?
+        Private industry spends (incredibly) about $50 billion a year on cancer research and
+        the US Federal government spends about $5 billion on publicly funded research (<a href="https://www.quora.com/How-much-money-is-spent-on-cancer-research-per-year/answer/Michael-W-Long">Quora</a>).
+        Many philanthropic organizations pitch in more,
+        and we're probably a significant factor for international funding, but for now let's stick to $55 billion.
+      </p>
+
+      <p>
+        This would suggest, conservatively, something like a <b>180x ratio</b> for "research analogous funding" in 2016.
+      </p>
+
+      <p>
+        Of course, this disparity is only meaningful if you believe that cancer and romantic suffering might be of comparable importance (see <a href="#importance">importance</a>).
+        (You might also believe that society over-invests in funding cancer and other health causes, rather than underinvesting in romance.)
+      </p>
+
+
+      <h2 id="neglectedness-market-failure">Reasons for Market Failure</h2>
+
+      <p>
+        Markets are a generally good way to allocate funding.
+        If something is actually important to people, they can spend money on it, and other people will try to solve it for them to get their money.
+        In the absence of a reason for market failure, this is often a pretty good argument against something being neglectedness.
+      </p>
+
+      <p>
+        I think there are a couple reasons the market might be failing us in the case of romance.
+      </p>
+
+
+      <h3>Stigmatization</h3>
+
+      <p>
+        If romance is as important to people as our importance results suggest, it seems like,
+        at first glance, one should be willing to spend a significant fraction of your income on finding a partner, if it could really help.
+      </p>
+
+      <p>
+        But on second glance, that might be a bad idea for you.
+        If it got out that you were spending money that way, it might actually <i>hurt</i> your prospects, because it looks like you are someone who needs to spend money to find a partner.
+        As a result, consumers may have a significant incentive to not spend money (or not spend money in ways that don't have plausible deniability) even if they in some sense should.
+      </p>
+
+      <p>
+        (A counterargument is that if stigmatization is really the core barrier,
+        it's just an aspect of the problem an the market
+        should be working really hard to find a way to subvert it.)
+      </p>
+
+      <p>
+        One exciting possibility is the rumor that Facebook might enter the online dating space.
+        It seems possible that integrating dating into an existing product might dodge stigmatization.
+      </p>
+
+
+      <h3>Oligopolies</h3>
+
+      <p>
+        Dating websites are a very strong example of <a href="https://en.wikipedia.org/wiki/Network_effect">network effects</a>.
+        The more users a dating website has, the more people it can match you with, making it more effective.
+        While a user might maintain profiles on a few websites (because finding a partner is very important to them),
+        the costs (especially the entry cost of creating a good profile) means it's natural for the market to consolidate and only have a small flux of new actors.
+        As a result, the space naturally becomes an oligopoly.
+      </p>
+
+      <p>
+        One consequence of this is that only a small number of actors can really experiment in the dating website space at a given time.
+        As a result, one might expect many things to not have been tried.
+        Moreover, once established, the oligopolists who could experiment tend to not be very innovative.
+        Since they're stitting on a large revenue stream protected from competition, they have relatively small incentive to innovate, and every incentive to be risk-averse.
+        (It's worth noting that there are major risks to change for a dating website.
+        Their biggest asset is their user base and data about their users.
+        Major changes would likely make old data less relevant and require users to enter new data, jeopardizing this moat.)
+      </p>
+
+
+      <p>
+        (See discussion of open platform approaches earlier for strategies on undermining the oligopoly phenomenon.)
+      </p>
+
+      <h3>Perverse Incentives</h3>
+
+      <p>
+        Before OkCupid was acquired by match, they had a wonderful essay titled
+        "Why You Should Never Pay For Online Dating" (<a href="https://static.izs.me/why-you-should-never-pay-for-online-dating.html">mirror</a>).
+        They've since taken it down (and now encourage you to pay for extra prominence on their site),
+        but it's an excellent articulation of why the common business models of dating websites (especially "pay to message" models) have perverse incentives and are bad for users.
+      </p>
+
+      <p>
+        Unfortunately, I think the issue is broader than their essay suggests.
+        It's actually really hard to design a business model for dating websites that actually aligns incentives with the user.
+        Even something like ad revenue incentives websites to maximize user engagement and life span.
+      </p>
+
+      <p>
+        None of this is to say that anyone involved in online dating is consciously doing anything insidious or contrary to their users interests.
+        But markets tend to be effective when the profit maximizing thing to do is the outcome we want, and ineffective when it isn't.
+      </p>
+
+
+      <h2 id="neglectedness-new-opportunities">New Opportunities</h2>
+
+      <p>
+        In 1969, a wealthy donor offered to fund a number of leading psychologists in creating a non-profit, computer-based dating service called "Project Cupid".
+        The psychologists met twice before concluding they wouldn't be able to meaningfully help people <d-cite key=""></d-cite>(Finkel et al, 2012).
+        It seems to me that, in 1969, they were probably right.
+        (They also demonstrated notable integrity!)
+      </p>
+      <p>
+        If we think it might be possible to succeed now, it begs the question: what's changed since 1969 that makes that the case?
+      </p>
+
+      <ul>
+        <li><b>The Internet:</b>
+          The modern Internet (and acceptance of online dating) gives dating websites access to an unprecedentedly large and responsive client pool.
+          Presumably, the more people you have to match, the better you can match people.
+        </li>
+        <li><b>Machine Learning:</b>
+          Modern machine learning has made stunning progress in the last couple of years.
+          Using ML to predict matches seems impractical in the short term (long-term relationship outcome data seems hard!).
+          But using it to infill unanswered questions, filter spam, judge message quality, or predict someone's aesthetic reaction to a photo all seem very tractable.
+        </li>
+        <li><b>Design:</b>
+          Data visualization, humane design, and mechanism design all seem like the have significant roles to play in dating websites,
+          and have either advanced significantly or have more of a tradition of being used in online contexts.
+        </li>
+      </ul>
+
+      <p>
+        All of these are discussed in more detail in the tractability section when relevant.
+      </p>
+
+      <h2 id="neglectedness-dating-sites">Dating Sites</h2>
+
+
+
+
+      <h3>Unsophisticated</h3>
+
+      <p>
+        A major part of OkCupid's historical branding was that they were doing math and statistics.
+        They had a lovely blog called OkTrends (most of the posts live on in their present blog) with interesting analysis of user data.
+        But in the schemes of things, everything they were doing was quite simple.
+        I don't see any evidence that other websites (who don't present this as their core strenght) are usingophisticated statistical machinery or modern machine learning.
+      </p>
+
+      <p>
+        Another piece of evidence is that, in 2014, I made some attempts at outreach to dating websites, offering to help them use deep learning.
+        I got very little interest, and didn't get the sense that anyone at organizations I spoke to was very aware of ML research.
+        Of course, it could be that they've pivoted since then, or that I just wasn't talking to the right people.
+        But applying modern ML successfully generally requires major institutional investment and domain expertise, especially since this isn't a cookie cutter standard deep learning problem.
+        Since only these dating websites have access to the data to do anything interesting
+        (and their terms of service prohibit you scraping them for data — I've checked),
+        it seems very easy to imagine that there's been no large effort to bring these tools to bare.
+      </p>
+
+      <p>
+        As a result, to the extent your theory of impact rests on this machinery being able to provide a mcuh better product,
+        it seems reasonable to regard the direction as plausibly neglected.
+      </p>
+
+
+
+      <h3>Hookup Attractor</h3>
+
+      <p>
+        It seems like most dating websites have been drifting towards facilitating casual relationships and hookups.
+        I'd guess this pattern is driven by a combination of latent demand and facilitating hookups being an easier problem than the long-term romance problem.
+        Now, I'm sure that there's lots of people for whom that increases quality of life,
+        but dating websites focusing on that are less useful for the long-term relationship problem.
+        And there's no shortage of writing by sad users who feel pulled into participating in hookups as a path finding long-term partners by this shift.
+      </p>
+
+      <h3>"Really Trying"</h3>
+
+      <p>
+        This critique of dating websites seems like the most subjective and least fair,
+        but I wanted to mention it because it actually drives a lot of intuition for me.
+      </p>
+
+      <p>
+        There's a way people working on medical problems talk about their work.
+        There's also a way people talking about social networks talk about their work.
+        The discourse around online dating seems much much closer
+        to the social networks discourse than
+         the medical problem discourse.
+        I suspect that reflects a pretty deep difference in mindset and goals,
+        to the extent that I'm not sure that they're really trying to solve the problem I care about.
+      </p>
+
+
+      <h2>Other Actors</h2>
+      <h3>Academics</h3>
+      <h3>Mathchmakers</h3>
+      <p>
+        <b>Matchmakers:</b>
+        I don't have much of a sense for the efficacy of professional matchmakers, but it seems like they can only help a relatively small number of people.
+        It's possible that we should be trying to scale up matchmaking as a profession
+      </p>
+
+
+      <br>
+      <hr>
+      <br>
+
+      <h1>Appendices</h1>
+      <p><a href="mechanical-turk.html">Appendix A: Mechanical Turk Surveys</a></p>
+      <p><a href="calculations.html">Appendix B: Annoying Calculations and Estimates</a></p>
+
+
+
+</d-article>
+
+<d-appendix></d-appendix>
+<d-bibliography src="bibliography.bib"></d-bibliography>

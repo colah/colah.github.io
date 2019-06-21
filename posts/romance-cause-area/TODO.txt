@@ -1,0 +1,60 @@
+
+
+Importance section Structure:
+* Intro
+* Total Burden
+* Singlehood
+** Baesline Happiness
+** GSOEP
+* Bad Relationships
+**
+* Breakups
+**
+* Romance-motivated Suicide
+* Flow-Through
+
+
+
+Standardize Terminology:
+* "Romantic Suboptimality"
+* Burden of Romantic Suboptimality
+* QALY
+
+
+Causes of Romantic Suboptimality:
+* Singlehood
+** GSOEP
+* Bad Relationships
+**
+* Breakups
+**
+* Romance-motivated Suicide
+** Literature Review
+
+
+Global Burden of Disease data:
+http://ghdx.healthdata.org/gbd-results-tool?params=gbd-api-2017-permalink/efbc17627bb1a4d70fbe4f447d54c91c
+
+
+
+
+Remaining surveys:
+* Bad Relationships
+* Breakups
+
+
+*question: Would you rather...
+	spend a week in typical emotional state fo week following a serious breakup
+	spend a week with a broken arm
+
+*question: Would you rather...
+	spend a week in typical emotional state fo week following a serious breakup
+	spend a week with a sprained ankle
+
+*question: Would you rather...
+	spend a week in typical emotional state fo week following a serious breakup
+	spend a week with a cold
+
+*question: Would you rather...
+	spend a week in typical emotional state fo week following a serious breakup
+	spend a week with a broken finger
