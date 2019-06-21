@@ -192,13 +192,13 @@
           <li><a href="#neglectedness-baseline">Relevant Baseline</a></li>
           <li><a href="#neglectedness-new-opportunities">New Opportunities</a></li>
           <li><a href="#neglectedness-market-failure">Reasons for Market Failure</a></li>
-          <li class="sub"><a href="">Stigmatization</a></li>
-          <li class="sub"><a href="">Oligopolies</a></li>
-          <li class="sub"><a href="">Perverse Incentives</a></li>
+          <li class="sub"><a href="#neglectedness-market-failure-stigma">Stigmatization</a></li>
+          <li class="sub"><a href="#neglectedness-market-failure-oligopoly">Oligopolies</a></li>
+          <li class="sub"><a href="#neglectedness-market-failure-incentives">Perverse Incentives</a></li>
           <li><a href="#neglectedness-dating-sites">Dating Sites</a></li>
-          <li class="sub"><a href="">Hookup Attractor</a></li>
-          <li class="sub"><a href="">Unsophisticated</a></li>
-          <li class="sub"><a href="">"Really Trying"</a></li>
+          <li class="sub"><a href="neglectedness-dating-sites-hookup">Hookup Attractor</a></li>
+          <li class="sub"><a href="neglectedness-dating-sites-unsophisticated">Unsophisticated</a></li>
+          <li class="sub"><a href="neglectedness-dating-sites-trying">"Really Trying"</a></li>
           <li><a href="">Other Actors</a></li>
         </ul>
       </div>
@@ -305,6 +305,13 @@
       This seems like a more human-scale unit than the total sum of DALYs lost over the human population.
     </p>
 
+    <p>
+      (To be really technical: strictly, my units are not DALYs, since DALYs are shortfall from an idealized healthy life,
+      and my units are shortfall from a romantically optimal life.
+      The more general "Quality Adjusted Life-Year Unit" (QALY) would probably make more sense.
+      But several of my experiments are calibrated against research that is quantified in DALYs.
+      Rather than adding extra confusion by switching units back and forth, I decided to stick with DALYs.)
+    </p>
 
 
 
@@ -617,6 +624,13 @@
       Note that this only accounts for the harm of bad relationships relative to being single.
       The additional value of replacing these bad relationships with good ones is another 0.7-2.6 DALY per capita,
       but are accounted to "absence of good relationship."
+    </p>
+
+    <p>
+      (I suspect that other methods of estimating this would come out with larger estimates.
+      All experiments I've done trying to elicit preferences for good relationships come out much expressing stronger preferences than GSOEP,
+      and I expect the same thing would be true for bad ones.
+      I ran out of time to explore this, but I think trying to understand the distribution of relationship quality would be really interesting.)
     </p>
 
 
@@ -1036,15 +1050,101 @@
 
     <h2 id="tractability-structure">Online Dating - Structural Improvements</h2>
     <h3 id="tractability-structure-incentives">Incentive Design</h3>
+
+    <p>
+      I worry many dating websites may operate on business models that leave them
+      <a href="#neglectedness-market-failure-incentives">unaligned with their users</a>.
+      This is a tricky problem, because the websites are effectively selling an
+      <i>increased chance</i> at people find a partner.
+      The consumer has little way to evaluate if they're really getting that.
+      (Many users are also in a slightly emotionally vulnerable state.)
+      Meanwhile, the dating website makes money if the user stays engaged with the platform.
+      Of course, the long-term enlightened interest of the website might be more aligned with the user due to reputational effects,
+      but companies often struggle to follow their really long-term interest when their short-term incentives pull them in another direction.
+    </p>
+
+    <p>
+      The obvious solution is to do a non-profit structure.
+      I think this would be a really interesting approach,
+      and there's a chance it might also help really distinguish a new platform from existing ones and gain market share.
+    </p>
+
+    <p>
+      I think you could also use more exotic business models that do align incentives.
+      For example, the user could place money in escrow, and then chose whether the platform or a charity gets it tens years later.
+      I also think an approach where people could put up a bounty for other people to matchmake them (paid out if they get married)
+      could be interesting if it could be framed in a way that didn't make people feel uncomfortable.
+      (It would pair well with the open platform approach, discussed next.)
+    </p>
+
+    <p>
+      One interesting approach that fuses the non-profit and exotic business models would be try
+      to make it popular for people on your platform to make joint donations when they get married instead of buying diamond rings.
+      (Personally, I'd find that way more emotionally impactful!)
+      If it was successful, it would create externalize the importance of matchmaking to any altruistic actor,
+      and would make a non-profit dating website justified purely on fund raising grounds.
+    </p>
+
     <h3 id="tractability-structure-open">Open Platforms</h3>
+
+    <p>
+      Another problem with dating websites may be <a href="#neglectedness-market-failure-oligopoly">oligopolies</a> arising due to network effects.
+      This is basically the expected outcome -- if a large dating website can make better matches than a small one, oligopolies will emerge.
+    </p>
+
+    <p>
+      Open Platforms allow many different parties can share an underlying resource, such as the Internet, that would have otherwise caused a natural monopoly.
+      It's possible that something similar could be done for dating websites, allowing more rapid competition and innovation.
+    </p>
+
+
+    <p>
+      An Open Platform approach could also help external researchers get access to dating website data.
+      This seems both important for allowing independent evaluation of whether users are actually being helped,<d-footnote>
+      Dating website self evaluations are sometimes kind of dubious, but it's hard for researchers to actually evaluate them <d-cite key=""></d-cite>(Finkel et al, 2012).
+    </d-footnote>
+      and also because it could be a really valuable data asset for social science research.
+    </p>
+
     <h3 id="tractability-structure-bad">Avoiding Bad Actors</h3>
 
+    <p>
+      It only takes a relatively small fraction of users acting spammy or abusive to damage a platform.
+      It seems likely modern machine learning can help a lot with this.
+    </p>
+    <p>
+      Honestly, I think there's some chance dating websites should get proof of identity to avoid duplicated accounts, if this is a major concern.
+      Some other platforms that facilitate interactions between people, such as AirBnB, do this.
+      Of course, there's major equities weighing against this -- for example, it would likely make the platform unusable LGBT people in unsafe regimes --
+      but for websites focused on countries that don't have these issues, the benefits may outweigh those costs.
+      People may be a lot more hesitant to act poorly if it can lead to actually losing access to the website.
+    </p>
 
     <h2 id="tractability-policy">Public Policy Interventions</h2>
 
     <p>
-      I think there's a few plausible public policy interventions:
+      Jumping out the dating website focus, I think there's a few plausible public policy interventions that could help with romantic suboptimality:
     </p>
+
+    <ul>
+
+      <li><b>No-fault Divorce</b>: It seems pretty likely that making it easier to divorce disproportionately ends bad relationships.
+        Some research (which I haven't looked at closely) suggests that female suicide rates significantly fall after states implement no-fault divorce <d-cite key="stevenson2006bargaining"></d-cite>
+      </li>
+
+      <li><b>Tracking Romantic Suboptimality</b>:
+        This is speculative, but I think it might be pretty impactful for states to track romantic suboptimality, just like we do burden of disease.
+        Tracking things brings attention to them, and helps us know if we're getting traction.
+        This might be an interesting lens for other problems, too: how much value is lost to bad work environments, mass incarceration, the Bay Area housing crisis, etc.
+        It would be really cool to live in a world where these could all be discussed in similar units.
+      </li>
+
+      <li><b>Education</b>: If we had highly actionable advice on how to deal with romantic situations,
+        and there was expert consensus, it might be pretty exciting to try and get it integrated into sex education curriculum.
+        The closest thing I'm aware of is negative reappraisal for coping with breakups <d-cite key="langeslag2017down"></d-cite>, which doesn't seem sufficiently vetted
+        (and I worry might undermine future friendship with your ex).
+      </li>
+    </ul>
 
     <h2 id="tractability-personal">Personal Scale Interventions</h2>
 
@@ -1067,12 +1167,6 @@
       I think the other, sadder, thing is to encourage your friends to leave relationships that are unhealthy for them.
       This is hopefully very rarely necessary, but when it is seems really high impact.
     </p>
-
-
-
-
-
-
 
 
 
@@ -1106,7 +1200,7 @@
       </p>
 
       <p>
-        I think the answer is very much so.
+        I think the answer is probably yes.
       </p>
 
       <h2 id="neglectedness-baseline">Relevant Baseline</h2>
@@ -1156,7 +1250,7 @@
       </p>
 
 
-      <h3>Stigmatization</h3>
+      <h3 id="neglectedness-market-failure-stigma">Stigmatization</h3>
 
       <p>
         If romance is as important to people as our importance results suggest, it seems like,
@@ -1181,7 +1275,7 @@
       </p>
 
 
-      <h3>Oligopolies</h3>
+      <h3 id="neglectedness-market-failure-oligopoly">Oligopolies</h3>
 
       <p>
         Dating websites are a very strong example of <a href="https://en.wikipedia.org/wiki/Network_effect">network effects</a>.
@@ -1206,7 +1300,7 @@
         (See discussion of open platform approaches earlier for strategies on undermining the oligopoly phenomenon.)
       </p>
 
-      <h3>Perverse Incentives</h3>
+      <h3 id="neglectedness-market-failure-incentives">Perverse Incentives</h3>
 
       <p>
         Before OkCupid was acquired by match, they had a wonderful essay titled
@@ -1264,7 +1358,7 @@
 
 
 
-      <h3>Unsophisticated</h3>
+      <h3 id="neglectedness-dating-sites-unsophisticated">Unsophisticated</h3>
 
       <p>
         A major part of OkCupid's historical branding was that they were doing math and statistics.
@@ -1290,7 +1384,7 @@
 
 
 
-      <h3>Hookup Attractor</h3>
+      <h3 id="neglectedness-dating-sites-hookup">Hookup Attractor</h3>
 
       <p>
         It seems like most dating websites have been drifting towards facilitating casual relationships and hookups.
@@ -1300,7 +1394,7 @@
         And there's no shortage of writing by sad users who feel pulled into participating in hookups as a path finding long-term partners by this shift.
       </p>
 
-      <h3>"Really Trying"</h3>
+      <h3 id="neglectedness-dating-sites-trying">"Really Trying"</h3>
 
       <p>
         This critique of dating websites seems like the most subjective and least fair,
@@ -1319,8 +1413,13 @@
 
 
       <h2>Other Actors</h2>
-      <h3>Academics</h3>
-      <h3>Mathchmakers</h3>
+
+      <p>
+        <b>Academics:</b>
+        I'm really grateful to academics working in this space, but I think they're trying to understand romance,
+        not to implement solutions to romantic suboptimality.
+      </p>
+
       <p>
         <b>Matchmakers:</b>
         I don't have much of a sense for the efficacy of professional matchmakers, but it seems like they can only help a relatively small number of people.
@@ -1332,11 +1431,23 @@
       <hr>
       <br>
 
+      <h1>Future Work</h1>
+
       <h1>Appendices</h1>
       <p><a href="mechanical-turk.html">Appendix A: Mechanical Turk Surveys</a></p>
       <p><a href="calculations.html">Appendix B: Annoying Calculations and Estimates</a></p>
 
 
+      <h1>Acknowledgments</h1>
+
+      <p>
+        I've spoken to way to many people about this over the years to have any hope of capturing everyone.
+        I'll make an attempt, but
+      </p>
+
+      <p>
+        Please know that I'm very grateful to everyone who's taken time to talk to me, even if I forgot to list you here, and just reach out if you'd like to be added.
+      </p>
 
 </d-article>
 
