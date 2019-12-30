@@ -23,7 +23,7 @@
   "dependencies": {
     "underscore": "~1.5.1",
     "express": "~2.5.9",
-    "mustache": "~0.7.2",
+    "mustache": "~3.2.1",
     "socket.io": "~0.9.13"
   },
   "devDependencies": {
