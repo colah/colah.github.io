@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@ch402" />
+    <meta property="og:url" content="http://colah.github.io/posts/2020-05-University/" />
+    <meta property="og:title" content="Interpretability vs Neuroscience [rough note]" />
+    <meta property="og:description"
+        content="A list of advantages that make understanding artificial nerural networks much easier than biological ones." />
+
+    <title>Interpretability vs Neuroscience [rough note] -- colah's blog</title>
+
+    <link rel="stylesheet" href="../../fonts/Serif/cmun-serif.css" />
+    <link rel="stylesheet" href="../../fonts/Serif-Slanted/cmun-serif-slanted.css" />
+
+    <!--BOOTSTRAP-->
+    <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--mobile first-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--removed html from url but still is html-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!--font awesome-->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <!--fonts: allan & cardo-->
+    <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
+
+    <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
+
+    <link href="../../css/default.css" rel="stylesheet">
+
+    <link href="../../comments/inlineDisqussions.css" rel="stylesheet">
+
+    <!--Highlight-->
+    <link href="../../highlight/styles/github.css" rel="stylesheet">
+
+    <link href="../../favicon.ico" rel="shortcut icon" />
+
+    <!--<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+    <script type="text/javascript"
+        src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <style>
+        .post {
+            width: 170px;
+            min-height: 175px;
+            padding-left: 5px;
+            padding-right: 5px;
+            float: left;
+            border-left: 1px solid #CCC;
+            background-color: white;
+        }
+
+        div a:first-of-type .post {
+            border-left: none;
+        }
+
+        .post:hover {
+            filter: brightness(90%);
+        }
+
+        .post h3 {
+            margin: 5px;
+            font-size: 75%;
+            text-align: center
+        }
+
+        .post h4 {
+            margin: 0px;
+            font-size: 50%;
+            text-align: center
+        }
+
+        .post img {
+            margin: 0px;
+            padding: 2px;
+            margin-bottom: 10px;
+            width: 100%;
+            height: 155px
+        }
+    </style>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-49811703-1', 'colah.github.io');
+        ga('require', 'linkid', 'linkid.js');
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview');
+
+    </script>
+
+</head>
+
+<body>
+    <div id="wrap">
+        <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <div class="container">
+                <!--Toggle header for mobile-->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand active" href="../../" style="font-size:20px;">colah's blog</a>
+                </div>
+                <!--normal header-->
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="../../"><span class="glyphicon glyphicon-pencil"></span> Blog</a></li>
+                        <li><a href="../../about.html"><span class="glyphicon glyphicon-user"></span> About</a></li>
+                        <li><a href="../../contact.html"><span class="glyphicon glyphicon-envelope"></span> Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </nav>
+
+
+        <div id="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1>Analogies between Biology and Deep Learning</h1>
+
+                        <div class="info">
+                            <p style="font-family:CMSS; font-size:120%">Posted on May 30th, 2020</p>
+                        </div>
+
+                        <br>
+
+                        <div
+                            style='background: #F8F8F8; border: 1px solid #AAA; border-radius: 8px; padding: 12px; font-size: 90%; color: #444; font-style: italic;'>
+                            This article is a rough note.
+                            Writing rough notes allows me share more content, since polishing takes lots of time.
+                            While I hope it's useful, it's likely lower quality and less carefully considered than my
+                            usual articles.
+                            It's very possible I wouldn't stand by this content if I thought about it more.
+                        </div>
+
+                        <br>
+                        <br>
+
+                        <style>
+                            body {
+                                text-align: left !important;
+                            }
+
+                            h2 {
+                                margin-top: 70px !important;
+                                font-size: 200% !important;
+                            }
+
+                            h1 div {
+                                font-size: 80%;
+                                color: #999;
+                            }
+
+                            h2 div {
+                                margin-bottom: 8px;
+                                font-size: 100%;
+                                color: #999;
+                                margin-top: 60px;
+                            }
+
+                            figcaption {
+                                font-size: 80%;
+                                color: #777;
+                                line-height: 115%;
+                            }
+
+                            span.title-arrow {
+                                margin-left: 12px;
+                                margin-right: 12px;
+                                font-size: 140%;
+                            }
+                        </style>
+
+
+                        <p>
+                            There's a lot of exciting analogies between physics and deep learning. Perhaps the
+                            most discussed are scaling laws (e.g. <a href="https://arxiv.org/pdf/2001.08361.pdf">Kaplan
+                                et
+                                al, 2020</a>), but other analogies are numerous (see e.g. <a
+                                href="https://www.annualreviews.org/doi/full/10.1146/annurev-conmatphys-031119-050745">Bahri
+                                et al, 2019</a> for a review).
+                        </p>
+
+                        <p> This essay is not about analogies between deep learning and physics, but
+                            rather a different set of analogies which I think are really underrated:
+                            analogies to biology. Where the physics analogies -- which tend towards
+                            connections to statistical physics -- often encourage one to zoom out and focus
+                            on a big picture, analogies to biology often suggest looking more closely at
+                            the details and internal structure of neural networks. </p>
+
+                        <p> Below are a list of some analogies I find interesting. I've tried not to
+                            spend too much time on the standared ones (neuroscience and evolution as
+                            learning), and instead focus on connections that may be more unfamiliar. Many
+                            of them are related to the <a href="https://distill.pub/2020/circuits/zoom-in/">circuits
+                                perspective</a> on
+                            neural networks. </p>
+
+                        <p>
+                            Some caveats: (1) This post is very biased towards work that I've been a part of, since
+                            these
+                            analogies have been very intertwined with thinking about my own work over the last few
+                            years. (2) It's speculative and non-rigorous, as loose analogies often are. (3) It's a rough
+                            note and many parts are random thoughts rather than highly-considered views.
+                        </p>
+
+                        <!--
+                        <ul>
+                            <li>Analogies
+                                <ul>
+                                    <li>Sub analogy</li>
+                                    <li>Sub analogy</li>
+                                    <li>Sub analogy</li>
+                                    <li>Sub analogy</li>
+                                    <li>Sub analogy</li>
+                                </ul>
+                            </li>
+                            <li>Analogies
+                                <ul>
+                                    <li>Sub analogy</li>
+                                    <li>Sub analogy</li>
+                                    <li>Sub analogy</li>
+                                    <li>Sub analogy</li>
+                                </ul>
+                            </li>
+                        </ul>-->
+
+
+
+                        <!------------->
+                        <h2>Non-Evolution Analogies</h2>
+
+                        <h3>Neuroscience <span class="title-arrow">↔</span> Interpretability</h3>
+
+                        <p><i>Analogy: model=brain</i></p>
+
+                        <p>Artificial neural networks are historically inspired by neuroscience, but I
+                            used to be pretty skeptical that the connection was anything more than
+                            superficial. I've since come around: I now think this is a very deep
+                            connection. The thing that personally persuaded me was that, in my own
+                            investigations of what goes on inside neural networks, we kept finding things
+                            that were previously discovered by neuroscientists. The most recent example of
+                            this is <a href="https://distill.pub/2021/multimodal-neurons/">multimodal
+                                neurons in CLIP</a>, which mirror a famous result in neuroscience. </p>
+
+                        <p>If you think of artificial neural networks as analogous to biological nerual networks, it's
+                            also natural connect neuroscience (which studies biological networks) to interpretability
+                            (which studies artificial ones). Especially flavors of interpretability, like the <a
+                                href="https://distill.pub/2020/circuits/zoom-in/">circuits</a> work I participate in,
+                            which investigates invidual neurons and their connections. And I feel like I've learned a
+                            lot of valuable lessons and gotten valuable feedback from the neuroscience community.</p>
+
+                        <p>But I also think it's worth keeping a very careful eye on ways in which neuroscience and
+                            interpretability are very different. Interpretability has <a
+                                href="http://colah.github.io/notes/interp-v-neuro/">many advantages</a> over
+                            nueroscience, not the least of which is having access to all the weights. </p>
+
+                        <h3>Anatomy <span class="title-arrow">↔</span> Interpretability</h3>
+
+                        <p><i>Analogy: model=organism, weights=body?</i></p>
+
+                        <p>Neurla networks are almost like discovering a new, alien kind of oranism.
+                            Training neural networks samples alien evolution (subject to pressures defined
+                            by the dataset). Interpretability is kind of like doing alien biology.</p>
+
+                        <p>When we look inside neural networks, we're like early anatomists performing
+                            the first disections. We find all sorts of rich structure, both at high and
+                            low-levels: </p>
+                        <ul>
+                            <li>"Tissues" - Neural networks have extremely
+                                distinctive weight structures in later layers, which you might see as being
+                                kind of analagous a distinct tissue in biology (Petrov et al, 2021). Pushing the
+                                analogy, one could almost imagine a "histology-style" approach to interpretability,
+                                where neural networks are studied at the level of "weight patterns" at different parts.
+                            </li>
+                            <li>"Brain Regions" - Neural networks have components that specialize in
+                                particular tasks (Voss et al,
+                                2021). This has a very natural anaology to regions of the brain and <a
+                                    href="https://en.wikipedia.org/wiki/Neuroanatomy">neuroanatomy</a>. Stretching a bit
+                                further, it might also be possible to see these structures as analagous to organs, in
+                                that they're larger scale structures dedicated to a task.</li>
+                            <li>Features / Circuits - This is the most abstract, but cracking
+                                neural networks open and discovering features and circuits has the flavor of
+                                discovering organic structures I imagine when I picture early anatomy. Since there are
+                                so many features and circuits, it's perhaps natural to think of them as similar to
+                                discovering tiny veigns or other very small scale anatomical structure.</li>
+                        </ul>
+
+                        <p>As soon as you look at multiple neural networks (or even look at multiple features within a
+                            network) you also start to get a flavor of taxonomy and comparative anatomy. If you look
+                            over training, you get developmental anatomy.</p>
+
+
+
+                        <h3>Motifs (Transcription Networks <span class="title-arrow">↔</span> Neural Networks)</h3>
+
+                        <p><i>Analogy: model=transcription network</i></p>
+
+                        <p>Transcription networks in genetics are graphs of excitation and inhibition
+                            between genes. This is analogous to neural networks being graphs of excitation
+                            and inhibition. The study of transcription networks makes extensive use of
+                            recurring patterns called "circuit motifs" (<a
+                                href="https://www.weizmann.ac.il/mcb/UriAlon/introduction-systems-biology-design-principles-biological-circuits">Alon,
+                                2007</a>) to great effect. More generally, the
+                            appraoch of studying graphs in terms of systems biology is a stable of systems biology.
+                        </p>
+
+                        <p>Circuit motifs can be found in the circutis of artificial nerual networks. I think it's a
+                            pretty powerful tool for simplifying the inner workings of nerual networks.
+                            A particularly powerful example is the <a
+                                href="https://distill.pub/2020/circuits/equivariance/">equivariance motif</a> which
+                            can simplify circuits in early vision by as much as 50x.</p>
+
+                        <p>In some cases, the exact same motifs observed in transcription networks can be found in
+                            convolutional neural networks if you unroll the motifs in time. For example, the <a
+                                href="https://distill.pub/2020/circuits/zoom-in/#claim-2-dog">oriented dog head
+                                circuit</a> can be seen as exhibiting an unrolled version of the "toggle switch" motif
+                            (double-negative loop with positive autoregulation).</a></p>
+
+                        <p>Unfortunately, many classic methods for studying motifs assume very sparse graphs, which
+                            neural network weights are not by default. As a result, we can't trivially apply methods
+                            from systems biology.</p>
+
+                        <h3>Pleitroy <span class="title-arrow">↔</span> Polysemanticity</h3>
+
+                        <p><a href="https://en.wikipedia.org/wiki/Pleiotropy">Pleitropy</a> is when a gene has multiple
+                            unrelated effects. <a
+                                href="https://distill.pub/2020/circuits/zoom-in/#claim-1-polysemantic">Polysemanticity</a>
+                            is when a neuron does multiple
+                            unrelated things. Possibly there's useful lessons to learn from one about the other.</p>
+
+                        <!------------->
+                        <h2>Evolution Analogies</h2>
+
+                        <p>There's a well known connection between evolution and optimization (see <a
+                                href="https://en.wikipedia.org/wiki/Evolutionary_algorithm"></a>evolutionary
+                            algorithms</a>). In addition to this high-level connection, I think there are
+                            many finer grained connections, specific to deep learning.</p>
+
+                        <p>As a lay person with regards to biology, this section is heavily influenced by popular books
+                            on evolution, especially the last few chapters of Dawkins' <i>The Ancestor's Tail</i>. It's
+                            very possible I've misunderstood something</p>
+
+                        <h3>Convergent Evolution <span class="title-arrow">↔</span> Feature Universality</h3>
+
+                        <p><i>Analogy: model=organism, evolution=learning</i></p>
+
+                        <p>Convergent evolution is often used to describe two similar seeming organisms
+                            evolving which aren't actually related. But there's a more subtle version which
+                            evolutionary biologists are also interested in: the evolution of particular
+                            traits (eg. use of certain chemicals, metabolic innovations, flying, eyes,
+                            echolocation).</p>
+
+                        <p>In neural networks, the same features and circuits form again and again across models (e.g.
+                            <a href="https://arxiv.org/pdf/1511.07543.pdf">Li et al, 2016</a>; <a
+                                href="https://distill.pub/2020/circuits/zoom-in/">Olah et al, 2020</a>; <a
+                                href="https://distill.pub/2020/circuits/frequency-edges/">Voss et al, 2021a</a>; many
+                            other results show something similar at an agregate level e.g. <a
+                                href="https://arxiv.org/pdf/1706.05806.pdf">Raghu et al, 2017</a>).
+                            My collaborators and I often call this <a
+                                href="https://distill.pub/2020/circuits/zoom-in/#claim-3">"universality"</a>.
+                        </p>
+
+                        <p>It's tempting to see these two phenomena as analagous. In both cases, an optimization process
+                            (evolution or gradient descent) produces the same result independently, multiple times.
+                            With that said, there are some caveats to taking the analogy too seriously. Many popular
+                            cases of convergent evolution are about convergence of capabilities (like flight, or
+                            echolocation), but the universality of features is an internal property, perhaps more
+                            analagous to convergence on the same chemical or metabolic innovations internally within an
+                            organism. (Of course, convergence in capabilities also exists in neural networks, but isn't
+                            very surprising.) Universality of circuits is even more specific: it's convergence on the
+                            same
+                            "code" to implement something internal, and is perhaps most analagous to the same mutation
+                            arising multiple times independently.
+                        </p>
+
+                        <h3>"Selfish Gene" <span class="title-arrow">↔</span> "Selfish Circuit / Features"</h3>
+
+                        <p><i>Analogy: feature/circuit=gene, evolution=learning, changes in gene prevelance=gradient</i>
+                        </p>
+
+                        <p>Thinking of genes as the unit of selection has been fruitful in evolution. Perhaps it would
+                            be
+                            helpful to think about the training of neural networks in terms of selection pressure on
+                            features and circuits.</p>
+
+                        <p>For example, I (low confidence) think that sometimes many neurons will try to detect similar
+                            things during training, then one does the best job and others shift to different tasks. This
+                            might be seen as similar to multiple genes (or species) competing for a niche, one pulling
+                            ahead, and then dominating the niche.</p>
+
+                        <h3>Evolutionary Ecology / Taxonomy <span class="title-arrow">↔</span> Interpretability</h3>
+
+                        <p><i>Analogy: model=ecosystem, feature=species, evolution/population dynamics=learning</i></p>
+
+                        <p>Similar to the above, it can be interesting to think of each model as an ecosystem under
+                            evolution, with each feature as a species competing for a niche within that ecosystem.
+                            For example, suppose there are two circuits which compute similar features. If one circuit
+                            does a better job than the other, and the information they provide substantivel overlaps,
+                            one circuit will gradually be starved of positive gradient, until the neurons implementing
+                            it can be captured for a different circuit.</p>
+
+                        <p>There's a specific example which makes me particularly excited to think about this type of
+                            thing (whether or not this is the best analog to use). As one looks at progressively larger
+                            language models, their agregate performance variest smoothly, but specific capabilities
+                            undergo discontinuous jumps (<a href="https://arxiv.org/pdf/2005.14165.pdf">Brown et al,
+                                2020</a>). For example, basic arithmetic seems to undergo a discontinuous change at
+                            about 10B parameters. It's tempting to think that this corresponds to a change in the
+                            intenral strategy the model uses for answering these questions, with a corresponding change
+                            in features and circuits. If so, one could imagine two different strategies competing
+                            internally within the model, and the less effective potentially being squeezed out.</p>
+
+                        <h3>Evolvability <span class="title-arrow">↔</span> Metalearning</h3>
+
+                        <p><i>Analogy: Model=organism, evolution=learning</i></p>
+
+                        <p><a href="https://en.wikipedia.org/wiki/Evolvability">Evolvability </a>is how effective a
+                            species is at evolving. A number of major
+                            evolutionary innovations seem to have been about increasing evolvability rather
+                            than increasing zeroth-order fitness, for example:</p>
+
+                        <ul>
+                            <li>Sexual reproduction switches to a better optimization algorithm</li>
+                            <li>Bilateria implements bilateral symmetry (which can be seen as a kind of weight tying)
+                                making
+                                evolution more efficient</li>
+                        </ul>
+
+                        <p>Evolvability seems analogous to what we call "meta-learning" in ML, a broad
+                            category of ideas around machine learning systems learning to learn better (see
+                            detailed discussion in <a href="https://arxiv.org/pdf/1907.06077.pdf">Gajewski
+                                et al, 2019</a>).</p>
+                        <p> A particularly important successes of evolution in
+                            achieving meta-learning is smothing that generally wouldn't be considered part
+                            of evolvability: brains. Brains allow biological organisms to learn over their
+                            lifetimes. This is perhaps analogous to the in-context meta-learning observed
+                            in modern language models.</p>
+
+
+                        <!------------->
+                        <h2>Things that seem like they should have an analogy but I'm not sure what it is</h2>
+
+                        <h3>Feature Specialization</h3>
+
+                        <p>Sometimes features seem to "split" as you study larger models. Every neural
+                            network I've studied has high-low frequency detectors, but some of the largest
+                            ones seem to split high-low frequency detectors. One model I looked at
+                            (InceptionV3?) low-medium frequency detectors and medium-high frequency
+                            detectors. Others have a variety of "texture contrast detectors."</p>
+
+                        <p>I think this is a really interesting phenomenon about the relationship
+                            between scales and features (to the extent it's a general pattern) and it feels
+                            very "biological"-y. But I'm not sure what the right analogy is:</p>
+
+                        <ul>
+                            <li>In someways, it feels like an phylogenetic tree. You have the ancestor
+                                species (generic feature) and descendant species which specialized into
+                                different niches (the specialized features). But this analogy doesn't capture
+                                the scaling aspect.</li>
+                            <li>I've wondered if it could somehow correspond to
+                                ecosystem size, with a larger ecosystem having more niches and supporting more
+                                specialized species. But I don't think this is generally true.</li>
+                            <li>Sometimes in evolution there are "genome duplication events" where the
+                                entire genome is duplicated. Since there are two copies of each gene, one can
+                                evolve in a different direction. (This seems like the best analogy so far,
+                                courtesy of Laura)</li>
+                        </ul>
+
+
+                        <!------------->
+                        <h2>Acknowledgments</h2>
+                        <p>Thanks to the extensive (and difficult to enumerate) list of people who have dicussed these
+                            ideas with me over the years. Thanks especially to Nick Cammarata for pushing me to think
+                            about circuit motifs, and to Laura Gunsalus for patiently talking through these ideas with
+                            me and aswering genetics questions.</p>
+
+                        <div id="disqus_thread"></div>
+
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+                        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+                        <script src="../../comments/inlineDisqussions.js"></script>
+                        <script src="../../js/disqus.js"></script>
+
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <!-- jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="../../js/footnotes.js"></script>
+
+    <script src="../../comments/inlineDisqussions.js"></script>
+
+    <noscript>Enable JavaScript for footnotes, Disqus comments, and other cool stuff.</noscript>
+
+</body>
+
+</html>
