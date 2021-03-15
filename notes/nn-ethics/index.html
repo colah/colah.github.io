@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@ch402" />
+    <meta property="og:url" content="http://colah.github.io/posts/2020-05-University/" />
+    <meta property="og:title" content="Interpretability vs Neuroscience [rough note]" />
+    <meta property="og:description"
+        content="A list of advantages that make understanding artificial nerural networks much easier than biological ones." />
+
+    <title>Interpretability vs Neuroscience [rough note] -- colah's blog</title>
+
+    <link rel="stylesheet" href="../../fonts/Serif/cmun-serif.css" />
+    <link rel="stylesheet" href="../../fonts/Serif-Slanted/cmun-serif-slanted.css" />
+
+    <!--BOOTSTRAP-->
+    <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--mobile first-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--removed html from url but still is html-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!--font awesome-->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <!--fonts: allan & cardo-->
+    <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
+
+    <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
+
+    <link href="../../css/default.css" rel="stylesheet">
+
+    <link href="../../comments/inlineDisqussions.css" rel="stylesheet">
+
+    <!--Highlight-->
+    <link href="../../highlight/styles/github.css" rel="stylesheet">
+
+    <link href="../../favicon.ico" rel="shortcut icon" />
+
+    <!--<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+    <script type="text/javascript"
+        src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <style>
+        .post {
+            width: 170px;
+            min-height: 175px;
+            padding-left: 5px;
+            padding-right: 5px;
+            float: left;
+            border-left: 1px solid #CCC;
+            background-color: white;
+        }
+
+        div a:first-of-type .post {
+            border-left: none;
+        }
+
+        .post:hover {
+            filter: brightness(90%);
+        }
+
+        .post h3 {
+            margin: 5px;
+            font-size: 75%;
+            text-align: center
+        }
+
+        .post h4 {
+            margin: 0px;
+            font-size: 50%;
+            text-align: center
+        }
+
+        .post img {
+            margin: 0px;
+            padding: 2px;
+            margin-bottom: 10px;
+            width: 100%;
+            height: 155px
+        }
+    </style>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-49811703-1', 'colah.github.io');
+        ga('require', 'linkid', 'linkid.js');
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview');
+
+    </script>
+
+</head>
+
+<body>
+    <div id="wrap">
+        <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <div class="container">
+                <!--Toggle header for mobile-->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand active" href="../../" style="font-size:20px;">colah's blog</a>
+                </div>
+                <!--normal header-->
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="../../"><span class="glyphicon glyphicon-pencil"></span> Blog</a></li>
+                        <li><a href="../../about.html"><span class="glyphicon glyphicon-user"></span> About</a></li>
+                        <li><a href="../../contact.html"><span class="glyphicon glyphicon-envelope"></span> Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </nav>
+
+
+        <div id="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1>Neural Network Analogues of Suffering</h1>
+                        <div class="info">
+                            <p style="font-family:CMSS; font-size:120%">Posted on ????</p>
+                        </div>
+
+                        <br>
+
+                        <div
+                            style='background: #F8F8F8; border: 1px solid #AAA; border-radius: 8px; padding: 12px; font-size: 90%; color: rgb(199, 183, 129); font-style: italic;'>
+                            Draft article, please don't share.
+                        </div>
+
+                        <br>
+
+                        <div
+                            style='background: #F8F8F8; border: 1px solid #AAA; border-radius: 8px; padding: 12px; font-size: 90%; color: #444; font-style: italic;'>
+                            This article is a rough note.
+                            Writing rough notes allows me share more content, since polishing takes lots of time.
+                            While I hope it's useful, it's likely lower quality and less carefully considered than my
+                            usual articles.
+                            It's very possible I wouldn't stand by this content if I thought about it more.
+                        </div>
+
+                        <br>
+                        <br>
+
+                        <style>
+                            body {
+                                text-align: left !important;
+                            }
+
+                            h2 {
+                                margin-top: 40px;
+                                font-size: 115% !important;
+                            }
+
+                            h1 div {
+                                font-size: 80%;
+                                color: #999;
+                            }
+
+                            h2 div {
+                                margin-bottom: 8px;
+                                font-size: 100%;
+                                color: #999;
+                                margin-top: 60px;
+                            }
+
+                            figcaption {
+                                font-size: 80%;
+                                color: #777;
+                                line-height: 115%;
+                            }
+
+                            ul>li {
+                                margin-bottom: 12px;
+                            }
+                        </style>
+
+
+
+
+                        <p>I sometimes have strange worries. One such worry is that artificial neural networks might
+                            have qualitative experience
+                            and be able to suffer. I don’t think this is terribly likely for any modern systems, but I
+                            still find it scary
+                            because it seems so easy to accidentally cause immense suffering if it were true --
+                            accidentally “scaling up” silent
+                            suffering of neural networks.</p>
+
+                        <p>Recently, having this concern has begun to feel a bit less lonely. Of course, the People for
+                            the Ethical Treatment of
+                            Reinforcement Learners website and paper has existed for some time. But it’s begun to feel a
+                            bit more mainstream in
+                            the last year. For example, the philosopher David Chalmers wrote in an essay “I am open to
+                            the idea that a worm with
+                            302 neurons is conscious, so I am open to the idea that GPT-3 with 175 billion parameters is
+                            conscious too.”</p>
+
+                        <p>For neural networks to suffer, two things must be true. First, they must have qualitative
+                            experience. Secondly, the
+                            experience must be “negatively valenced” (pain, suffering, etc). If convolutional neural
+                            networks experience the
+                            redness of red, well, there doesn’t seem to be any harm in industrial scale production of
+                            red qualia.</p>
+
+                        <p>I’m an AI researcher, not an ethicist or philosopher of mind. I have no idea how to answer
+                            the first question of
+                            qualitative experience beside intuition. (Although I do think that finding <a
+                                href="https://distill.pub/2021/multimodal-neurons/">multimodal neurons</a>, which were
+                            previously only found in humans, should be a bit of an update.) But let’s assume for a
+                            moment that they do. Despite
+                            being very far outside
+                            my expertise, I think there are some useful things that can be said on the second question
+                            of whether that
+                            experience might be pain or suffering.</p>
+
+
+                        <h2>I’m doubtful that RL is central to suffering</h2>
+
+                        <p>Most conversations I hear about the potential of neural networks to suffer assume that
+                            reinforcement learning is what
+                            would cause suffering. It’s easy to see why that’s the case. Introductions to RL often
+                            analogize positive reward
+                            with pleasure and negative reward with pain. If you take this literally, a poorly performing
+                            RL agent might be
+                            suffering a great deal! But I’m doubtful that RL is either necessary or sufficient for
+                            neural networks to suffer.
+                        </p>
+
+                        <p>A second hypothesis one sometimes here’s is that suffering is caused by physical embodiment,
+                            such as in robotics. I’m
+                            also doubtful of this.</p>
+
+                        <p>Consider the following thought experiment. At some point in the future, we train a neural
+                            network with imitation
+                            learning to perfectly mimic a human. It flawlessly passes the Turing test. It’s behavior is
+                            indistinguishable from
+                            the person it was trained on. Loved ones can’t tell them apart in writing. This person clone
+                            describes in depth how
+                            lonely it is, disembodied, living on a server without it’s loved ones. It seems to me that
+                            we should take that
+                            suffering very seriously, despite this model having neither embodiment nor being trained
+                            with RL.</p>
+
+
+                        <h2>Gradients and Negative Reward don’t really seem Analogous to Pain</h2>
+
+                        <p>My more fundamental objection is that I don’t think that the temptation to analogize pain to
+                            negative reward (or even
+                            negative gradients), holds up on closer consideration.
+
+                        <p>The first two reasons they don’t seem analogous to pain have to do with comparing the
+                            mechanisms and functions of
+                            pain to reward or gradient:</p>
+
+                        <ul>
+                            <li>
+                                It seems like a central part of pain is that we react to it. When I stub a toe, I might
+                                yelp. I’m distracted for
+                                a
+                                minute. The brief throbbing pain influences my actions for a moment. But negative reward
+                                and negative gradients
+                                don’t influence the models forward pass or policy roll out. They update how the model
+                                will behave in the future,
+                                but
+                                they don’t influence how the model behaves when it experiences the pain. This seems
+                                disanalogous to pain.</li>
+
+
+                            <li>In all models I’m aware of, flipping the sign of negative reward (or the initial
+                                gradient from a loss function)
+                                is
+                                equivalent to flipping the sign of the final gradient vector before it gets added to
+                                parameters. While I expect
+                                qualitative experience to eventually break down into simple computations which it’s hard
+                                to believe individually
+                                have moral value, it stretches credulity for me to believe that the difference between
+                                pain and pleasure is just
+                                adding or subtracting a vector. It feels like it should involve non-linear computation,
+                                or at the very least
+                                interacting with different parts of a large matrix multiply (ie. interacting with
+                                different eigenvectors).</li>
+                        </ul>
+
+                        <p>It also seems to me that when we try to make more precise biological analogies between
+                            reinforcement learning and
+                            biology, pain doesn’t actually end up being analogous to negative reward:
+
+                        <ul>
+                            <li>Arguably, the cleanest way to map RL onto biology is to think of evolution as the
+                                learning algorithm and
+                                reproductive success as the reward signal. (In this analogy, intelligence is a type of
+                                meta-learning.) If reward
+                                is
+                                reproductive success, it seems pretty clear that it isn’t analogous to pain. While
+                                having children is something
+                                that
+                                many (but not all) people want, and some people may suffer if they aren’t able to have
+                                children, it seems very
+                                far
+                                from being pain in and of itself.</li>
+
+
+                            <li>Another way to map RL onto biology is to map it to the learning of organisms with
+                                nervous systems. The crudest
+                                way
+                                to think of this is operant conditioning, where an organism might be shocked if it
+                                doesn’t do the right thing.
+                                This
+                                seems analogous to pain. But it seems like one can also learn in lots of cases that
+                                don’t involve pain. For
+                                example,
+                                I have extended periods of learning without pain or (external) pleasure. The counter
+                                argument is that perhaps
+                                all
+                                learning is ultimately motivated by pain and pleasure. This is more compelling that the
+                                evolutionary case, but I
+                                find both the mapping to RL less crisp, and the analogy weaker than it’s often presented
+                                as.</li>
+                        </ul>
+
+
+                        <h2>What might be analogous to pain instead?</h2>
+
+                        <ul>
+
+                            <li><b>Something I haven’t thought of.</b> I’m not very satisfied with any idea I’ve been
+                                able to generate, and I
+                                think this is
+                                far more likely than any of the proposals I list below.</li>
+
+
+                            <li><b>Something about meta-learning.</b> I’m inclined to think of RL as corresponding to
+                                evolution, with a reward
+                                signal
+                                of
+                                reproductive success. If you take that analogy seriously, then intelligent behavior
+                                (including pain responses)
+                                all
+                                arise from a kind of meta-learning. This is the specific idea I like most.</li>
+
+                            <li><b>Value functions (including implicit ones)</b>, especially if shared with a policy
+                                network. Contradicting
+                                everything
+                                I
+                                said earlier, I have some sympathy for value functions (neural networks which predict
+                                future reward) being
+                                related
+                                to pain. Value functions are nonlinear, dodging my concern about multiplying rewards by
+                                negative one. And if
+                                they
+                                share representations with the policy network, they can (kind of) influence behavior.
+                                But we’d need for this
+                                theory
+                                to also encompass approaches to RL without explicit value functions, imitation learners,
+                                and other agent-like
+                                systems. One could imagine these systems developing implicit, internal value functions
+                                to be more effective.
+                                This
+                                could be seen as a form of meta-learning, so it wouldn’t be totally different that the
+                                above.</li>
+
+                        </ul>
+                        <p>Most of these options point to something developing in the internal representations and
+                            circuits of the model.
+                            But
+                            one thing I find unsatisfying is that it’s not clear to what extent these theories would
+                            really distinguish
+                            “pain”
+                            from other aspects of representations. For example, if we speculate that pain is an implicit
+                            value function
+                            arising
+                            from meta-learning, how do we recognize the implicit value function without a reward signal
+                            to compare to? If we
+                            don’t think that reward signal is in and of itself pain, I’d be pretty unsatisfied with a
+                            theory where we can
+                            only
+                            recognize pain in cases where we have a reward signal.</p>
+
+
+                        <h2>Closing thoughts</h2>
+
+                        <p>Writing about what might be analogous to pain in neural networks feels kind
+                            of crank-ish. But as more and more capable neural networks are created, I think
+                            it would be very valuable for the deep learning community to have put some
+                            thought into. This is a topic where it would be much better to think about hard
+                            questions before we have to seriously face them.</p>
+
+
+                        <div id="disqus_thread"></div>
+
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+                        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+                        <script src="../../comments/inlineDisqussions.js"></script>
+                        <script src="../../js/disqus.js"></script>
+
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <!-- jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="../../js/footnotes.js"></script>
+
+    <script src="../../comments/inlineDisqussions.js"></script>
+
+    <noscript>Enable JavaScript for footnotes, Disqus comments, and other cool stuff.</noscript>
+
+</body>
+
+</html>
