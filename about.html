@@ -73,17 +73,17 @@
     grid-area: text;
 }
 
-@media (min-width: 800px) {
+/* @media (min-width: 900px) {
     .profile-container {
-        grid-template-columns: [bg-start] 1fr 20px [text-start] 1fr [text-end] 20px [bg-end];
+        grid-template-columns: [bg-start] 6fr [text-start] 5fr [text-end bg-end];
         grid-template-rows: [bg-start] 1fr [text-start] auto [text-end] 2fr [bg-end];
     }
     .profile-container  .profile {
         background-color:rgba(245,245,245,.9);
         width: 80%;
         height: min-content;
-        min-width: 320px;
-        max-width: 600px;
+        min-width: 300px;
+        max-width: 500px;
         padding:20px;
         padding-right: 10px;
         margin: auto;
@@ -93,9 +93,36 @@
         background: #ffffff url('images/portrait-4.jpg') no-repeat 7% 40%;
         background-size: cover;
     }
+} */
+
+
+@media (min-width: 900px) {
+    .profile-container {
+        grid-template-rows: [bg-start text-start] 1fr [text-end bg-end];
+        grid-template-columns: [bg-start] 3fr [bg-end text-start] 2fr [text-end];
+    }
+    .profile-container  .profile {
+        background-color:#222;
+        color: #DDD;
+        width: 100%;
+        padding: 80px;
+        padding-top: 120px;
+        margin: 0px;
+        border-radius: 0px;
+    }
+    .profile-container  .profile a {
+        color: #FFF;
+        font-weight: bold;
+    }
+    .profile-container .profile-background {
+        background: #ffffff url('images/portrait-5-sq.jpg') no-repeat 50% 30%;
+        background-size: cover;
+        width: 100%;
+    }
 }
 
-@media (max-width: 800px) {
+
+@media (max-width: 900px) {
     .profile-container {
         grid-template-columns: [bg-start text-start] 1fr [text-end bg-end];
         grid-template-rows: [bg-start] 1fr [bg-end text-start] auto [text-end];
@@ -113,9 +140,9 @@
         font-weight: bold;
     }
     .profile-container .profile-background {
-        background: #ffffff url('images/portrait-4.jpg') no-repeat 0% 40%;
+        background: #ffffff url('images/portrait-5-sq.jpg') no-repeat 50% 30%;
         background-size: cover;
-        min-height: 500px;
+        width: 100%;
     }
 }
 
