@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Notes on Habbema et al. (2015): "Realizing a Desired Family Size" -- colah's blog</title>
+
+    <link rel="stylesheet" href="../../fonts/Serif/cmun-serif.css" />
+    <link rel="stylesheet" href="../../fonts/Serif-Slanted/cmun-serif-slanted.css" />
+
+    <!--BOOTSTRAP-->
+    <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--mobile first-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--removed html from url but still is html-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!--font awesome-->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <!--fonts: allan & cardo-->
+    <link href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
+
+    <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
+
+    <link href="../../css/default.css" rel="stylesheet">
+
+    <link href="../../comments/inlineDisqussions.css" rel="stylesheet">
+
+    <!--Highlight-->
+    <link href="../../highlight/styles/github.css" rel="stylesheet">
+
+    <link href="../../favicon.ico" rel="shortcut icon" />
+
+    <!--<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+    <script type="text/javascript"
+        src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <style>
+        .post {
+            width: 170px;
+            min-height: 175px;
+            padding-left: 5px;
+            padding-right: 5px;
+            float: left;
+            border-left: 1px solid #CCC;
+            background-color: white;
+        }
+
+        div a:first-of-type .post {
+            border-left: none;
+        }
+
+        .post:hover {
+            filter: brightness(90%);
+        }
+
+        .post h3 {
+            margin: 5px;
+            font-size: 75%;
+            text-align: center
+        }
+
+        .post h4 {
+            margin: 0px;
+            font-size: 50%;
+            text-align: center
+        }
+
+        .post img {
+            margin: 0px;
+            padding: 2px;
+            margin-bottom: 10px;
+            width: 100%;
+            height: 155px
+        }
+
+        #main-article a {
+            color: #77C !important;
+        }
+
+        .link-emph a {
+            font-weight: bold;
+            color: #77C;
+        }
+
+        .figcaption {
+            font-size: 80%;
+            color: #777;
+        }
+
+        .img-container {
+            margin: auto;
+            margin-top: 24px;
+            margin-bottom: 24px;
+        }
+
+        ul li:not(:first-child) {
+            margin-top: 8px;
+        }
+
+        @media only screen and (min-width: 900px) {
+            .large-overflow-img-container {
+                width: 900px;
+            }
+        }
+
+        @media only screen and (max-width: 900px) {
+            .large-overflow-img-container {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-49811703-1', 'colah.github.io');
+        ga('require', 'linkid', 'linkid.js');
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview');
+
+    </script>
+
+</head>
+
+<body>
+    <div id="wrap">
+        <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <div class="container">
+                <!--Toggle header for mobile-->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand active" href="../../" style="font-size:20px;">colah's blog</a>
+                </div>
+                <!--normal header-->
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="../../"><span class="glyphicon glyphicon-pencil"></span> Blog</a></li>
+                        <li><a href="../../about.html"><span class="glyphicon glyphicon-user"></span> About</a></li>
+                        <li><a href="../../contact.html"><span class="glyphicon glyphicon-envelope"></span> Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </nav>
+
+
+        <div id="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8" id="main-article">
+                        <h1 style="font-size: 260%; line-height: 130%;">Notes on Habbema <i>et al.</i> (2015):
+                            "Realizing a Desired Family
+                            Size"</h1>
+                        <div class="info">
+                            <p style="font-family:CMSS; font-size:120%">Posted on Sept 12, 2021</p>
+
+                            <!--
+        by colah
+    -->
+                        </div>
+                        </br>
+
+
+
+                        <p>Recently, I’ve been trying to understand the literature on age and fertility. I <a
+                                href="https://twitter.com/ch402/status/1407002844847173632">really
+                                want to have children</a>, especially biological ones. Since I’m male, my partner’s
+                            age will matter more than
+                            mine, but
+                            it
+                            still seems really important to understand, if only because I’m likely to date people
+                            similar to
+                            me in age.</p>
+
+                        <p>Most resources I found just weren’t that helpful. At best, most resources give raw
+                            probabilities
+                            for conception at a given maternal age. But it’s actually quite difficult to turn
+                            those raw statistics into an estimate of the complete probability a couple will
+                            successfully have a child, let alone several. Not only is the probability of conception
+                            across
+                            months not independent, but it can change surprisingly rapidly.</p>
+
+                        <p>From this perspective, <a
+                                href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4542717/">Habbema <i>et al.</i>
+                                2015</a> is a
+                            remarkably useful paper. They build a model to estimate the probability a couple, for a
+                            given initial maternal age, will be able to achieve a given “desired family size.” I’m
+                            not qualified to evaluate the medical aspects, but their paper does a great job of
+                            picking a question that’s relevant to people who want to have kids.</p>
+
+                        <p>The main result
+                            of Habbema is this table, showing the maternal age you need to start start
+                            trying at, if you want to achieve a family of a given size with a given probability:</p>
+
+                        <div class="img-container" style='max-width: 400px;'>
+                            <img src="images/Habbema-table.png" />
+                            <div class="figcaption">From <a
+                                    href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4542717/">Habbema <i>et al.</i>
+                                    2015</a></div>
+                        </div>
+
+
+                        <p>Although that table is interesting, it isn’t <i>really</i> the question I want to ask. In
+                            principle, their data (if you trust it) allows one to ask a much broader range of questions.
+                            Unfortunately, their paper doesn’t do any of the analyses I think would be most interesting!
+                        </p>
+
+                        <p>So, I tried to extract the data from their graphs and do the analyses I wanted myself.
+                            I did this by hand, so teh data might be
+                            off
+                            by a percentage point here or there, but I think I got things pretty accurate. (You can
+                            <a href="Habbema2015ApproximateData.csv">download
+                                a csv of my approximate version of their data</a> if you want to analyze it!)
+                        </p>
+
+                        <p>My main takeaways are:</p>
+
+                        <ul>
+                            <li>The number of children you want has a big effect: at some points, the difference between
+                                wanting
+                                3 children and 1 can be equivalent to as much as a 12 year age difference.</li>
+                            <li>Starting a single year earlier can matter a shocking amount: there are points where your
+                                likelihood of achieving a desired family size drops 10%/year.</li>
+                            <li>IVF matters less than I would have hoped. By the mid 30s, it’s equivalent to a 1-3
+                                year
+                                difference. (It’s important to be clear that their IVF scenario does not include egg
+                                freezing at
+                                a younger age.)</li>
+                        </ul>
+
+
+                        <h2>Data overview</h2>
+
+                        <p>Fundamentally, the data we get from Habbema <i>et al.</i> is the probability
+                            that
+                            a couple will achieve a desired family size for a given maternal starting age,
+                            depending on whether they'd like one, two, or three children, and whether they are able and
+                            willing to resort to IVF.
+                            (In the IVF case, it's assumed the couple starts trying to conceive naturally, and
+                            transitions to IVF when a fertility specialist following standard practices recommends it.)
+                        </p>
+
+
+                        <div class="img-container" style='max-width: 600px; padding-left: 60px;'>
+                            <img src="images/age_vs_prob.png" />
+                        </div>
+
+                        <p>Habbema <i>et al.</i> then use this to determine the age one needs to determine the latest
+                            age one can start
+                            and
+                            have a given probability of achieving a given family size.
+                            Habbema give this for 90%, 75%, and 50% probability.
+                            I wanted something more comprehensive, so I made the following visualization:</p>
+
+
+                        <div class="img-container" style='max-width: 600px;'>
+                            <img src="images/children_given_age_risk.png" />
+                        </div>
+
+                        <h2>What’s the cost of waiting a year?</h2>
+
+                        <p>I suspect for many people, the most powerful tool to give them is an understanding of the
+                            marginal cost of waiting a year.</p>
+
+                        <p>One useful way to look at this is the lost probability of achieving a desired family size due
+                            to
+                            waiting an additional year. I’ve also included a plot showing the lost fraction of one’s
+                            remaining probability of reaching a desired family size: although the absolute probability
+                            change is helpful for thinking about expected value, if one’s committed to trying to have
+                            children and it’s a question of when, the fraction of remaining probability plot determines
+                            how
+                            much worse one option is than another.</p>
+
+
+                        <div class="img-container large-overflow-img-container">
+                            <img src="images/derivatives.png" />
+                        </div>
+
+                        <p>I was really surprised just how sharp these peaks are. It feels like waiting a single year
+                            can’t
+                            possibly matter that much, so I was quite surprised that there are points where waiting a
+                            single
+                            year can cost 10% of one’s probability of achieving a desired family size, or as much as 30%
+                            of
+                            one’s remaining probability.</p>
+
+                        <p>Another useful way to look at this is to ask how many years of waiting, at a given age, are
+                            equivalent to accepting a given “risk budget”. We see that accepting a 10% increase in the
+                            risk
+                            of not achieving a desired family size is worth 10+ years at 20, but almost linearly falls
+                            from
+                            there:</p>
+
+
+                        <div class="img-container large-overflow-img-container">
+                            <img src="images/years_for_risk.png" />
+                        </div>
+
+                        <p>Of course, there are many other, additional costs to waiting an additional year, which aren’t
+                            captured by the probability delta. For example, going through a miscarriage seems like an
+                            emotionally painful experience for a couple, beyond it’s effect on this probability. The
+                            difficulties of a pregnancy might also be increased. On the other hand, there are many
+                            countervailing costs one would need to weigh all of this against.</p>
+
+
+                        <h2>How much does the number of kids you want matter?</h2>
+
+                        <p>One thing that really stands out to me in the above plots is just how much the desired family
+                            size matters. To understand this better, I looked at the difference in probability between
+                            achieving a family size of 1 and N as a function of age. (For simplicity, I focused on the
+                            non
+                            IVF case.)</p>
+
+                        <div class="img-container" style='max-width: 600px; padding-left: 60px;'>
+                            <img src="images/child_prob_diff.png" />
+                        </div>
+
+                        <p>An alternative way to look at this is to try to convert the difference between different
+                            family
+                            size goals into numbers of years. For each age and scenario, I determined how many years
+                            older
+                            someone only aiming to have one child and willing/able to use IVF could be and have the same
+                            probability.</p>
+
+                        <div class="img-container" style='max-width: 600px; padding-left: 60px;'>
+                            <img src="images/child_years.png" />
+                        </div>
+
+                        <p>This plot is a bit weird. It’s technically true (according to Habbema’s data) that a woman
+                            aiming to have 3 kids without IVF starting at the age 20 has the same probability as a woman
+                            16
+                            years older only aiming to have one child with IVF. But that’s mostly because the year to
+                            year
+                            changes in probability in the 20s are very small.</p>
+
+                        <p>I think the more useful, functional frame is probably something like “If you are planning to
+                            have children in your 30s and you want to have three children, it might be useful to think
+                            of
+                            yourself as effectively being 5-7 years older than someone who wants one. If you want two
+                            children, it might be useful to think of yourself as 3-4 years older than someone who only
+                            wants
+                            one.”</p>
+
+
+                        <h2>How much does IVF help?</h2>
+
+                        <p>Something else that surprised me about the Habbema data is how little IVF seems to help:</p>
+
+                        <div class="img-container" style='max-width: 600px; padding-left: 60px;'>
+                            <img src="images/ivf_years.png" />
+                        </div>
+
+                        <p>To be clear, in a lot of cases IVF means you can start having kids 2-5 years later with the
+                            same
+                            probability of achieving desired family size, and that’s a big win. But I honestly expected
+                            more. Habbema and colleagues try to defend IVF on this point: “The impact of IVF on starting
+                            age
+                            should not be confused with the effectiveness of IVF in terms of an increase in chance of
+                            success. The increase in the chance of realizing a two-child family by using IVF is
+                            considerable
+                            (6–8%) for starting ages between 30 and 40...” But I would have expected more than 6-8%.</p>
+
+                        <p>It’s important to be clear that their IVF scenario does not include egg freezing. I think
+                            freezing eggs at a younger age and then having children later is increasingly becoming
+                            popular,
+                            and my interpretation is that the IVF numbers are not necessarily informative about your
+                            changes
+                            if you do that. I haven’t looked into this super carefully, but if you’re trying to get a
+                            better
+                            model of this, <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3888550/">Pelin <i>et
+                                    al.</i>
+                                (2014)</a> and
+                            <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4457646/">Mesen <i>et al.</i>
+                                (2016)</a>
+                            seem
+                            useful. Unfortunately, I can’t find any papers jointly modelling the probability of live
+                            births given the age of oocyte retrieval and the age when a patient tries to get
+                            pregnant. I’m moderately worried that a lot of resources may be misleading in only
+                            focusing on probability conditioned on the retrieval age, when Pelin <i>et al.</i> find that
+                            age
+                            at attempted pregnancy affects success probability by 2-3x, and it’s very easy to
+                            imagine correlations between the age of freezing and the age of attempted pregnancy.
+                        </p>
+
+                        <h2>Interesting Quotes from Habbema’s Discussion</h2>
+
+                        <ul>
+                            <li>“From fertility-awareness studies and population surveys, we know that most young people
+                                are too
+                                optimistic about their chances to conceive spontaneously after age 35”</li>
+                            <li>“[Y]oung people tend to overestimate the effectiveness of IVF”</li>
+                            <li>“Couples who are highly motivated to conceive and are well informed of the best period
+                                within a
+                                cycle to conceive can sometimes reach higher fecundabilities than the 0.23 used in the
+                                baseline”</li>
+                            <li>“The results on latest starting age assume that the couples start trying for the next
+                                pregnancy
+                                15 months after the birth of a child…. For example, for a period of 9 instead of 15
+                                months, the
+                                latest starting age will be half a year later for a two-child family, and one year later
+                                for a
+                                three-child family.”</li>
+                            <li>“[These] calculations are based on population data, and therefore apply to couples for
+                                which age
+                                is the only known fertility-related attribute. This is usually the case when couples
+                                start
+                                building a family, but not after a fertility investigation has been performed. A more
+                                informed
+                                prognosis of natural conception is now possible, by taking the results of the fertility
+                                investigation into account.”</li>
+                        </ul>
+
+
+                        <div class="link-emph" style="margin-top: 60px; font-style: italic; opacity: 0.9;">
+
+                            <p><b>Looking for a partner to have kids with?</b>
+
+                            <p>One of the biggest challenges to having children is finding the right partner.</p>
+
+
+                            <p>
+                                I'm a monogamous, straight, 28 year old male who <a
+                                    href="https://twitter.com/ch402/status/1407002844847173632">really wants
+                                    to have kids someday</a>.
+                                I’d love to date someone who shares both my excitement to have kids and my love of math
+                                and
+                                science.
+                                If you think we might be compatible, consider emailing me <a
+                                    href="mailto:christopherolah.co@gmail.com">an email</a> with
+                                or DMing me <a href="https://twitter.com/ch402">on
+                                    Twitter</a>.
+                                (I'm single as of publishing this essay in Sept 2021.)
+                            </p>
+
+
+                            <p>If you're on the fence about reaching out, you might find my essay on <a
+                                    href="/personal/micromarriages/">micromarriages</a> interesting.</p>
+
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="../../js/footnotes.js"></script>
+
+    <script src="../../comments/inlineDisqussions.js"></script>
+
+    <noscript>Enable JavaScript for footnotes, Disqus comments, and other cool stuff.</noscript>
+
+</body>
+
+</html>
