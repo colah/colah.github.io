@@ -142,15 +142,9 @@
                         <h1>Analogies between Biology and Deep Learning</h1>
 
                         <div class="info">
-                            <p style="font-family:CMSS; font-size:120%">Posted on ?????</p>
+                            <p style="font-family:CMSS; font-size:120%">Posted on Oct 2, 2021</p>
                         </div>
 
-                        <br>
-
-                        <div
-                            style='background: #F8F8F8; border: 1px solid #AAA; border-radius: 8px; padding: 12px; font-size: 90%; color: rgb(199, 183, 129); font-style: italic;'>
-                            Draft article, please don't share.
-                        </div>
 
                         <br>
 
@@ -211,22 +205,22 @@
                                 et al, 2019</a> for a review).
                         </p>
 
-                        <p> This essay is about a second set of analogies which I think are underrated:
+                        <p> This essay is about a different set of analogies which I think are underrated:
                             analogies to biology. Where physics analogies often encourage us to zoom out and focus
                             on the big picture, analogies to biology often suggest looking more closely at
                             the details and internal structure of neural networks. </p>
                                 <!-- -- which tend towards
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             connections to statistical physics ---->
                         <p> Below are a list of some analogies I find interesting. I've tried not to
-                            spend too much time on the standard ones (neuroscience and evolution as
-                            learning), and instead focus on connections that may be more unfamiliar. </p>
+                            spend too much time on the standard ones (eg. the neuroscience analogy and the evolution as
+                            learning analogy), and instead focus on connections that may be less familiar. </p>
 
                         <p>
-                            Some caveats: (1) This post is very biased towards work that I've been a part of, since
+                            Some caveats: (1) This post is biased towards work that I've been a part of, since
                             these
                             analogies have been very intertwined with thinking about my own work over the last few
                             years. (2) It's speculative and non-rigorous, as loose analogies often are. (3) It's a rough
-                            note and many parts are random thoughts rather than highly-considered views.
+                            note collecting random thoughts rather than highly-considered views.
                         </p>
 
                         <!--
@@ -260,7 +254,7 @@
                         <p>In biology, <a href='https://en.wikipedia.org/wiki/Segmentation_(biology)'>segmentation</a> is when organisms have
                             bodies with repeated segments. <a href='https://en.wikipedia.org/wiki/Symmetry_in_biology'>Symmetry</a> is when
                             organisms have bodies with symmetries such as a reflection. A famous example is
-                            <a href='https://en.wikipedia.org/wiki/Bilateria'>Bilateria</a> (of which humans are part), which developed
+                            <a href='https://en.wikipedia.org/wiki/Bilateria'>Bilateria</a> (of which humans are a part), which developed
                             bilateral symmetry early in the tree of life. Presumably segmentation and symmetry allow DNA to more efficiently
                             represent complex body plans (and thereby make evolution's exploration more efficient, see discussion of
                             evolvability later).
@@ -270,7 +264,7 @@
                             In neural networks, weight-tying is when the same weights are used in multiple locations. This allows the network to
                             abstract repeated "functions" and use them multiple times. The most famous example is probably the <a
                                 href="https://colah.github.io/posts/2014-07-Conv-Nets-Modular/">convolutional neural network</a>, which uses a
-                            special version of weight tying to implement symmetry.
+                            special version of weight tying to implement translation symmetry.
                             Weight tying allows neural networks to encode complex functions with many fewer weights, making them easier to
                             learn.
                         </p>
@@ -280,10 +274,8 @@
                             similar to biological symmetry. But there's one major difference: complex weight-tying schemes, such as those in
                             convolutional neural networks, are typically designed by humans, while evolution learned segmentation and biological
                             symmetry.
-                        </p>
-                        <p>
-                            (Arguably, the Transformer architecture has moved neural networks closer to the learned symmetries of evolution.
-                            One could see the root of neural organisms exhibiting segmentation and symmetry is the existence of many cells with
+                            Arguably, the Transformer architecture has recently moved neural networks closer to the learned symmetries of evolution.
+                            (One could see the root of neural organisms exhibiting segmentation and symmetry as the existence of many cells with
                             the
                             same DNA, analogous to how weight-tied neural networks have many neurons with the same weights.
                             While architectures like convolutional networks force particular structures of interactions between neurons, the
@@ -316,10 +308,11 @@
 
                         <p>If you think of artificial neural networks as analogous to biological neural networks, it's
                             also natural connect neuroscience (which studies biological networks) to interpretability
-                            (which studies artificial ones). Especially flavors of interpretability, like the <a
+                            (which studies artificial ones). This is especially true of flavors of interpretability, like the <a
                                 href="https://distill.pub/2020/circuits/zoom-in/">circuits</a> work I participate in,
-                            which investigates individual neurons and their connections. And I feel like I've learned a
-                            lot of valuable lessons and gotten valuable feedback from the neuroscience community.</p>
+                            which investigates individual neurons and their connections. In doing this work,
+                            I feel like I've benefited from a lot of valuable lessons and gotten valuable feedback from the neuroscience community.
+                            </p>
 
                         <p>But I also think it's worth keeping a very careful eye on ways in which neuroscience and
                             interpretability are very different. Interpretability has <a
@@ -343,10 +336,10 @@
                                 kind of analogous a distinct tissue in biology (<a href="https://distill.pub/2020/circuits/weight-banding/">Petrov et
                                     al, 2021</a>). Pushing the
                                 analogy, one could almost imagine a "histology-style" approach to interpretability,
-                                where neural networks are studied at the level of "weight patterns" at different parts.
+                                where neural networks are studied at the level of the "weight patterns" in different parts.
                             </li>
                             <li>"Brain Regions" - Neural networks have components that specialize in
-                                particular tasks (<a href="https://distill.pub/2020/circuits/branch-specialization/">Voss et al,
+                                particular tasks (eg. <a href="https://distill.pub/2020/circuits/branch-specialization/">Voss et al,
                                     2021</a>). This has a very natural analogy to regions of the brain and <a
                                     href="https://en.wikipedia.org/wiki/Neuroanatomy">neuroanatomy</a>. Stretching a bit
                                 further, it might also be possible to see these structures as analogous to organs, in
@@ -356,7 +349,11 @@
                                 has the flavor of
                                 discovering organic structures I imagine when I picture early anatomy. Since there are
                                 so many features and circuits, it's perhaps natural to think of them as similar to
-                                discovering tiny veins or other very small scale anatomical structure.</li>
+                                discovering tiny veins or other very small scale anatomical structure.
+                                We don't yet have all the organizing principles or hypotheses, we're doing early
+                                <a href="https://en.wikipedia.org/wiki/Descriptive_research">descriptive research</a>
+                                like the early anatomists.
+                                </li>
                         </ul>
                         
                         <p>Extensions of this analogy: If you look at multiple neural networks (or even look at multiple features within
@@ -372,11 +369,11 @@
 
                         <p>Transcription networks in genetics are graphs of excitation and inhibition
                             between genes. This is analogous to neural networks being graphs of excitation
-                            and inhibition. The study of transcription networks makes extensive use of
+                            and inhibition between neurons. The study of transcription networks makes extensive use of
                             recurring patterns called "circuit motifs" (<a
                                 href="https://www.weizmann.ac.il/mcb/UriAlon/introduction-systems-biology-design-principles-biological-circuits">Alon,
                                 2007</a>) to great effect. More generally, the
-                            approach of studying graphs in terms of systems biology is a stable of systems biology.
+                            approach of studying graphs in terms of systems biology is a staple of systems biology.
                         </p>
 
                         <p>Circuit motifs can be found in the circuits of artificial neural networks. I think it's a
@@ -396,6 +393,8 @@
                             from systems biology.</p>
 
                         <h3>Pleiotropy <span class="title-arrow">↔</span> Polysemanticity</h3>
+
+                        <p><i>Analogy: neurons=genes</i></p>
 
                         <p><a href="https://en.wikipedia.org/wiki/Pleiotropy">Pleiotropy</a> is when a gene has multiple
                             unrelated effects. <a
@@ -440,12 +439,13 @@
                             
                             
                             <p>
-                                Even with the improvements we typically consider to be evolvability, evolution is a slow learner. Since it relies on
+                                Even with the improvements we typically consider to be evolvability (discussed in the previous section), evolution is a
+                                slow learner. Since it relies on
                                 mutations, it can only happen on relatively large populations over several generations.
                             
                                 Instead, evolution often develops mechanisms on top of evolution which allow for much faster adaptation.
                                 We'll call these mechanisms "fast learning", since they don't seem to count as evolvability and I'm not
-                                aware of a general term for this category of traits.
+                                aware of a general term for this category of traits in biology.
                             </p>
                             <p>
                                 The clearest example of biological fast learning is the nervous system in animals (a dedicated organ system for fast
@@ -455,8 +455,9 @@
                                 These fast learning
                                 mechanisms often function at the level of individual organisms rather than populations and allow for change within a
                                 lifetime.
-                                Often, they don't carry from an organism to its offspring, although in some cases they do eg. epigenetic
-                                inheritance, social learning).
+                                (Often, these changes are not inherited by an organisms offspring, although there are cases where they are including
+                                epigenetic inheritance, social learning, and antibodies in milk.)
+                                Examples of biological fast learning include:
                             </p>
                             
                             <ul>
@@ -479,8 +480,9 @@
                                     transmit these behaviors to their offspring and others.</li>
                             </ul>
                             
-                            <p>How does this relate to artificial neural networks? Some neural networks exhibit a special kind of "fast learning"
-                                metalearning which seems analogous.</p>
+                            <p>How does this relate to artificial neural networks? Some neural networks exhibit "fast learning"
+                                which might be seen as very roughly analogous to these biological phenomena, in that it also allows for learning
+                                on a much shorter timescale.</p>
                             
                             
                             <p>
@@ -497,18 +499,19 @@
                                 examples.
                                 A particularly striking example of this is the in-context metalearning of GPT-3 (<a
                                     href="https://arxiv.org/pdf/2005.14165.pdf">Brown et al, 2020</a>): GPT-3 took an enormous amount of text to
-                                train, but can often learn to perform new tasks from a handful of examples.
+                                train, but can often learn to perform new tasks from a handful of examples within it's context.
                             
                             </p>
                             
                             <p>
-                                The relationship between slow learning and fast learning can be seen as analogous to the relationship between
-                                evolution and intelligence (eg.
+                                As metalearning developed, researchers have drawn analogies between slow learning and fast learning in machine learning
+                                and evolution and intelligence in biology (eg.
                                 <a href="http://joschu.net/docs/2018-09-aix.pdf">Schulman, 2018</a>; <a
                                     href="https://www.sciencedirect.com/science/article/pii/S1364661319300610">Botvinick, 2019</a>).
-                                I think this is a really elegant way to think about fast learning, and can extended to other
+                                Just as intelligence allows organisms to learn within a single lifetime (in contrast to evolution taking generations),
+                                machine learning's fast learning allows for learning within a single context or episode.
+                                I think this is a really elegant and rich way to think about things, and can extended to other
                                 examples of fast biological learning like the adaptive immune system.
-                            
                             </p>
 
                         <h3>Convergent Evolution <span class="title-arrow">↔</span> Feature Universality</h3>
@@ -533,9 +536,9 @@
                                 href="https://distill.pub/2020/circuits/zoom-in/#claim-3">"universality"</a>.
                         </p>
 
-                        <p>It's tempting to see these two phenomena as analogous. In both cases, an optimization process
+                        <p>It seems natural to see these two phenomena as analogous. In both cases, an optimization process
                             (evolution or gradient descent) produces the same result independently, multiple times.
-                            With that said, there are some caveats to taking the analogy too seriously. Many popular
+                            With that said, there are some caveats to this analogy Many popular
                             cases of convergent evolution are about convergence of capabilities (like flight, or
                             echolocation), but the universality of features is an internal property, perhaps more
                             analogous to convergence on the same chemical or metabolic innovations internally within an
@@ -558,22 +561,28 @@
                                     unit of selection</a>
                                 rather than the whole organism
                                 has been fruitful in evolution. We can think of features (or circuits) as the genes of
-                                a network, being optimized by the training process to maximize their contribution to fitness. For example, I
+                                a network, being optimized by the training process to maximize their contribution to fitness (loss). For example, I
                                 (low confidence) think that sometimes many neurons will try to detect similar
                                 things early in training, then one does the best job and others shift to different tasks. This seems similar to
                                 a
                                 gene outcompeting variants in the gene pool.
                             </li>
-                            <li><b>Model=Ecosystem, Features=Species.</b> We can think of a model as an ecosystem under
+                            <li><b>Model=Ecosystem, Features=Species.</b> We can also think of a model as an ecosystem under
                                 evolution, with each feature as a species competing for a niche within that ecosystem.
                                 For example, suppose there are two circuits which compute similar features. If one circuit
                                 does a better job than the other, and the information they provide substantially overlaps,
                                 one circuit will gradually be starved of positive gradient, until the neurons implementing
-                                it can be captured for a different circuit.</li>
+                                it can be captured for a different circuit.
+                                This analogy becomes interesting when we start thinking about variations in the model
+                                and training objective. For example, do larger models allow for more "biodiversity"
+                                (variety of features with similar niches) or larger "megafauna" (larger and more complex circuits)?
+                                How do different training objectives (climates?) affect the types of features that form (convergent evolution to
+                                attractors of a climate)?</li>
                                 </ul>
 
-                        <p>There's a specific example which makes me particularly excited to think about this type of
-                            thing (whether or not this is the best analog to use). As one looks at progressively larger
+                        <p>There's a specific example which makes me particularly excited to think about this general type of
+                            analogy (although perhaps the best specific analogy is different from the ones listed).
+                            As one looks at progressively larger
                             language models, their aggregate performance varies smoothly, but specific capabilities
                             undergo discontinuous jumps (<a href="https://arxiv.org/pdf/2005.14165.pdf">Brown et al,
                                 2020</a>). For example, basic arithmetic seems to undergo a discontinuous change at
@@ -588,44 +597,54 @@
 
                         <h3>Feature Specialization</h3>
 
-                        <p>Sometimes features seem to "split" as you study larger models. Every neural
-                            network I've studied has high-low frequency detectors, but some of the largest
-                            ones seem to split high-low frequency detectors. One model I looked at
-                            (InceptionV3?) low-medium frequency detectors and medium-high frequency
-                            detectors. Others have a variety of "texture contrast detectors."</p>
+                        <p>Sometimes features seem to "split" as you study larger models. For example, every vision neural
+                            network I've studied has <a href="https://distill.pub/2020/circuits/frequency-edges/">high-low frequency
+                                detectors</a>, but some of the largest models
+                            ones seem to split high-low frequency detectors into more fine-grained features. One model I looked at
+                            (InceptionV3?) has both medium-low frequency detectors and high-medium frequency
+                            detectors, instead of a generic high-low frequency detectors. Others have a variety of "texture contrast detectors."
+                        </p>
 
-                        <p>I think this is a really interesting phenomenon about the relationship
-                            between scales and features (to the extent it's a general pattern) and it feels
-                            very "biological"-y. But I'm not sure what the right analogy is:</p>
+                        <p>To the extent this is a general pattern relating model scale and features,
+                            I think it's a very interesting one. And it feels very "biological"-y,
+                            for lack of a better term! But I'm not sure what the right analogy is.
+                            Here are a few candidates, none of which seem exactly right:</p>
 
                         <ul>
-                            <li>In someways, it feels like an phylogenetic tree. You have the ancestor
+                            <li>In someways, it feels like a phylogenetic tree. You have the ancestor
                                 species (generic feature) and descendant species which specialized into
                                 different niches (the specialized features). But this analogy doesn't capture
                                 the scaling aspect.</li>
                             <li>I've wondered if it could somehow correspond to
-                                ecosystem size, with a larger ecosystem (larger model) having more niches and supporting more
-                                specialized species (specialized features). But I don't think this is generally true.</li>
+                                ecosystem size (see the model=ecosystem analogy above), with larger ecosystems (larger models) having more niches and
+                                supporting more
+                                specialized species (specialized features).
+                                But I don't think this is generally true in the biological case.</li>
                             <li>Sometimes in evolution there are "genome duplication events" where the
                                 entire genome is duplicated. Since there are two copies of each gene, one can
-                                evolve in a different direction.</li>
+                                evolve in a different direction, free from being evolutionarily conserved.
+                                As an analogy, this has several nice properties: we have a tree of features,
+                                and a larger DNA sequence can have more children in that tree.
+                                However, the fact that the analogy results from duplication events,
+                                rather than being a purely emergent result of evolutionary optimization, makes the analogy
+                                seem weaker.</li>
                         </ul>
 
+                        <h2>Conclusion</h2>
+                        
+                        <p>
+                            Most of these analogies are very speculative and exploratory, but I've found them interesting and generative to
+                            think about, especially in the context of interpretability.
+                        </p>
 
                         <!------------->
                         <h2>Acknowledgments</h2>
                         <p>Thanks to the extensive (and difficult to enumerate) list of people who have discussed these
-                            ideas with me over the years. Thanks especially to Nick Cammarata for pushing me to think
-                            about circuit motifs, and to Laura Gunsalus for patiently talking through these ideas with
+                            ideas with me over the years. Thanks especially to Laura Gunsalus for patiently talking through these ideas with
                             me and answering genetics questions.</p>
-
-                        <div id="disqus_thread"></div>
 
                         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
                         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-
-                        <script src="../../comments/inlineDisqussions.js"></script>
-                        <script src="../../js/disqus.js"></script>
 
                     </div>
                     <div class="col-md-4"></div>
