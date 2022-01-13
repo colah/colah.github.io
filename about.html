@@ -55,7 +55,7 @@
 
 .profile-container {
     width: 100%;
-    height: calc(100vh - 40px);
+    min-height: calc(100vh - 40px);
     margin: 0px;
     display: grid;
 
@@ -99,14 +99,15 @@
 @media (min-width: 900px) {
     .profile-container {
         grid-template-rows: [bg-start text-start] 1fr [text-end bg-end];
-        grid-template-columns: [bg-start] 3fr [bg-end text-start] 2fr [text-end];
+        grid-template-columns: [bg-start] 2fr [bg-end text-start] 2fr [text-end];
     }
     .profile-container  .profile {
         background-color:#222;
         color: #DDD;
         width: 100%;
         padding: 80px;
-        padding-top: 120px;
+        padding-top: 80px;
+        padding-right: 60px;
         margin: 0px;
         border-radius: 0px;
     }
@@ -125,7 +126,7 @@
 @media (max-width: 900px) {
     .profile-container {
         grid-template-columns: [bg-start text-start] 1fr [text-end bg-end];
-        grid-template-rows: [bg-start] 1fr [bg-end text-start] auto [text-end];
+        grid-template-rows: [bg-start] auto 1fr [bg-end text-start] auto [text-end];
     }
     .profile-container  .profile {
         background-color:#222;
@@ -143,6 +144,7 @@
         background: #ffffff url('images/portrait-7.jpeg') no-repeat 40% 10%;
         background-size: cover;
         width: 100%;
+        min-height: 90vw;
     }
 }
 
@@ -154,6 +156,10 @@
 .profile p {
     font-size: 130%;
     text-align: left !important;
+}
+
+p {
+    margin-bottom: 15px !important;
 }
 
 
@@ -190,12 +196,26 @@
             <div class="profile">
                 <h2>Christopher Olah</h2>
                 
-                <p>
-                    Trying to understand things well and explain them clearly.
-                </p>
 
-                <p>Find me on <a href="https://twitter.com/ch402">Twitter</a>.
-                </p>
+                <p>
+                    I work on reverse engineering artificial neural networks into human understandable algorithms.
+                    </p>
+                    <p>
+                        I'm one of the co-founders of <a href="http://anthropic.com/">Anthropic</a>, an AI lab focused on the
+                        safety of large models.
+                    
+                        Previously, I led interpretability research at <a href="https://openai.com/">OpenAI</a>, worked at <a
+                            href="https://research.google/teams/brain/">Google Brain</a>, and co-founded <a
+                            href="https://distill.pub/">Distill</a>, a
+                        scientific journal focused on outstanding communication.
+                    </p>
+
+<p>
+    My blog should not be taken to reflect the views of any organization
+    I'm affiliated with.
+</p>
+<p><a href="https://twitter.com/ch402">Twitter</a> &nbsp-&nbsp <a
+        href="https://scholar.google.com/citations?user=6dskOSUAAAAJ&hl=en&oi=sra">Google Scholar</a></p>
     </div>
     </div>
     
