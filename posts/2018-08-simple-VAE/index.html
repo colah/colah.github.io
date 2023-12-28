@@ -1,0 +1,512 @@
+<!doctype html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://distill.pub/template.v2.js"></script>
+  <style>.eq-grid {
+  padding: 10px;
+  padding-left: 20px;
+  display: grid;
+  justify-content: start;
+  grid-row-gap: 10px;
+  margin-top: 6px;
+  margin-bottom: 24px;
+}
+.eq-grid d-math {
+  font-size: 120%;
+}
+.eq-grid figcaption d-math {
+  font-size: 100%;
+}
+.eq-grid figcaption {
+}
+.eq-grid .expansion-marker {
+  border: 1px solid #CCC;
+  border-bottom: none;
+  height: 6px;
+  width: 100%;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+.eq-grid .faded {
+  opacity: 0.5;
+}
+</style>
+</head>
+
+<body>
+
+<d-front-matter>
+  <script type="text/json">{
+  "title": "Variational Autoencoders, Very Simply",
+  "description": "",
+  "password": "vae",
+  "authors": [
+
+    {
+      "author": "Chris Olah",
+      "authorURL": "https://colah.github.io/",
+      "affiliation": "",
+      "affiliationURL": ""
+    }
+  ],
+  "katex": {
+    "delimiters": [
+      {
+        "left": "$",
+        "right": "$",
+        "display": false
+      },
+      {
+        "left": "$$",
+        "right": "$$",
+        "display": true
+      }
+    ]
+  }
+  }</script>
+</d-front-matter>
+
+<d-title>
+  <h1>Variational Autoencoders, Very Simply</h1>
+</d-title>
+
+<d-article>
+
+<div style="padding: 10px; border: 1px solid hsl(40, 80%, 80%); background: hsl(40, 90%, 95%); border-radius: 4px; margin-top: 10px; margin-bottom: 30px;">
+This article was originally submitted to Distill and circulated for feedback in 2018. I never quite had the time to push it over the finish line, and when Distill was ended, it ceased to be available on Distill drafts. However, per Distill's policies, it was released under a Creative Commons license at submission.
+</div>
+
+<p>
+  Variational Autoencoders (VAEs) are a way to model a complicated probability distribution with a neural network.
+  They do this by learning to map the complicated distribution into and back out from a simple distribution that we know how to work with.
+  Because we know how to evaluate probabilities and sample within this simple distribution, successfully learning this mapping would let us do the same operations on the complicated distrubtion.
+</p>
+
+<p>
+  The network has two parts, an <b>encoder</b>, $E$, that squeezes our complicated distribution into a simple one we know how to work with, and a <b>decoder</b>, $D$, that transforms that simple distribution back into the complicated one.
+</p>
+
+
+<figure>
+  <img style="width: 100%;" src="images/VAE_overview.png">
+</figure>
+
+<p>
+  In particular, the encoder maps every point in our complicated distribution into a (narrow, simple) distribution over possible values of the simple distribution. Conversely, the decoder maps every point in the simple distribution to a (narrow, simple) distribution over points in the complicated distribution.
+</p>
+
+<figure>
+  <img style="width: 100%;" src="images/VAE_run.png">
+</figure>
+
+<p>
+  This leaves us with two different ways to model the probability of an $(x,z)$ pair. We can use the true probability distribution and the encoder, or the simple distribution and the decoder:
+</p>
+
+<figure>
+  <img style="width: 100%;" src="images/VAE_twodists.png">
+</figure>
+
+<p>
+  Our model works well when these two distributions, $p_E(x,z)$ and $p_D(x,z)$ are the same.
+  In particular, if that's true, then $p_D(x) = p_E(x) = p(x)$.
+  But how can we optimize for that?
+</p>
+
+<br>
+
+<h2>The Objective Function</h2>
+
+
+<p>
+  If we want the distributions to be the same, a natural thing to minimize is the KL divergence, $KL^E_D(X, Z)$.
+  Successfully minimizing this would cause the distributions to be the same.
+</p>
+<p>
+  There's a reason to minimize the KL divergence that's possibly even more compelling.
+  In a generative model, we want to minimize
+  the KL divergence of our model of $X$ and the true distribution.
+  Penalizing the KL divergence of the two distributions is an $(X,Z)$
+  an upper bound on the KL divergence of the marginal on $X$.
+</p>
+
+
+<div class="eq-grid">
+  <div style="grid-row: 1; grid-column: 1;"><d-math>KL^E_D(X) ~~\leq~~ KL^E_D(X, Z)</d-math></div>
+  <figcaption style="grid-row: 2; grid-column: 1; max-width:320px;">
+    The KL divergence is a <b>upper-bound</b> on the errors of $p_D(X)$,
+    optimizing the log-likelihood of the data.
+  </figcaption>
+</div>
+
+<aside>
+  We use the non-standard notation $H^\text{~source}_\text{~code}(\text{expr})$
+  to denote cross-entropy.
+  See appendix for details.
+</aside>
+
+<p>
+  Unfortunately, we can't just naively plugin the KL divergence, because it requires us to evaluate $p(x)$.
+  The good news is that if we pull the cost apart and think a little bit, everything will work out nicely.
+</p>
+
+<p>
+  KL divergence is the <i>extra</i> bits used to represent data if you believe one distribution, but it's sampled from a different distribution.
+  It's fundamentally a difference:
+</p>
+
+
+<div class="eq-grid">
+
+  <div style="grid-row: 1; grid-column: 1;"><d-math>C ~~~=~~~~</d-math></div>
+  <div style="grid-row: 1; grid-column: 2/5;"><d-math>KL^E_D(X, Z)</d-math></div>
+
+  <div class="expansion-marker" style="grid-row: 2; grid-column: 2 / 5; "></div>
+
+  <div style="grid-row: 3; grid-column: 1;"><d-math>~~~~~~~=~~~~</d-math></div>
+
+  <div style="grid-row: 3; grid-column: 2;"><d-math>H^E_D(X, Z)</d-math></div>
+  <figcaption style="grid-row: 4; grid-column: 2; max-width:120px;">
+    Bits to represent samples from $E$ if you believe $D$.
+  </figcaption>
+
+  <div style="grid-row: 3; grid-column: 3;"><d-math>~~~-~~~</d-math></div>
+
+  <div style="grid-row: 3; grid-column: 4;"><d-math>H^E_E(X, Z)</d-math></div>
+  <figcaption style="grid-row: 4; grid-column: 4; max-width:120px;">
+    Bits to represent samples from $E$ with optimal code.
+  </figcaption>
+
+</div>
+
+
+<p>
+  We can expand the second term again: the information in $(x,z)$ is the information in $x$ plus the information in $z$ that wasn't in $x$.
+</p>
+
+
+<div class="eq-grid">
+
+  <div style="grid-row: 1; grid-column: 1;"><d-math> C ~~~=~~~~ </d-math></div>
+  <div style="grid-row: 1; grid-column: 2;"><d-math> H^E_D(X, Z) </d-math></div>
+  <div style="grid-row: 1; grid-column: 3;"><d-math> ~~~-~~~ </d-math></div>
+  <div style="grid-row: 1; grid-column: 4;"><d-math> H^E_E(X, Z) </d-math></div>
+
+
+  <div class="expansion-marker" style="grid-row: 2; grid-column: 4 / 7; "></div>
+
+  <div style="grid-row: 3; grid-column: 1;"><d-math> ~~~~~~~=~~~~ </d-math></div>
+  <div style="grid-row: 3; grid-column: 2;"><d-math> H^E_D(X, Z) </d-math></div>
+  <div style="grid-row: 3; grid-column: 3;"><d-math> ~~~-~~~ </d-math></div>
+  <div style="grid-row: 3; grid-column: 4;"><d-math> H^E_E(Z | X) </d-math></div>
+  <div style="grid-row: 3; grid-column: 5;"><d-math> ~~~-~~~ </d-math></div>
+  <div style="grid-row: 3; grid-column: 6;"><d-math> H^E_E(X) </d-math></div>
+
+  <figcaption style="grid-row: 4; grid-column: 4; max-width:135px;">
+    Bits to represent $z$<br> if you already know $x$.
+  </figcaption>
+  <figcaption style="grid-row: 4; grid-column: 6; max-width:120px;">
+    Bits to represent<br> $x$ by itself.
+  </figcaption>
+</div>
+
+
+<p>
+  Now, here's the critical observation: $H^E_E(X)$ is impossible to compute.
+  We can't evaluate $p(x)$ -- if we could, we'd already have a perfect generative model!
+  <em>But we don't need to compute it.</em>
+  $H^E_E(X)$ is a constant value.
+  If we minimize the rest of the expression, we're still minimizing the same value.
+</p>
+
+<div class="eq-grid">
+  <div style="grid-row: 1; grid-column: 1;"><d-math> C ~~~=~~~~ </d-math></div>
+  <div style="grid-row: 1; grid-column: 2;"><d-math> H^E_D(X, Z) </d-math></div>
+  <div style="grid-row: 1; grid-column: 3;"><d-math> ~~~-~~~ </d-math></div>
+  <div style="grid-row: 1; grid-column: 4;"><d-math> H^E_E(Z | X) </d-math></div>
+  <div style="grid-row: 1; grid-column: 5;" class="faded" ><d-math> ~~~-~~~ </d-math></div>
+  <div style="grid-row: 1; grid-column: 6;" class="faded" ><d-math> H^E_E(X) </d-math></div>
+
+  <figcaption style="grid-row: 2; grid-column: 6;">
+    Constant term;<br> can ignore.
+  </figcaption>
+</div>
+
+
+<p>
+  Optimizing this new objective is equivelant to optimizing the old one.
+  And unlike the old one, it's actually possible to compute.
+</p>
+
+
+<h2>What does this loss really mean?</h2>
+
+<p>
+  Given that we just spontaneously dropped a term from our objective function,
+  you might reasonably being wondering whether the new expression is very meaningful.
+  Maybe it's just a hack that we can use to optimize an otherwise intractible objective.
+  Please be reassured, it's actually very meaningful!
+</p>
+
+<p>
+  The easy explanation for our new loss is that it's an upper bound on <d-math>H^E_D(X)</d-math>.<d-footnote>
+
+    How do we know that our new objective is an upper bound on <d-math>H^E_D(X)</d-math>?
+    Recall that we originally motivated our objective as an upper bound on
+    <d-math>KL^E_D(X)</d-math>. We can also expand that KL divergence to get <d-math> H^E_E(X) </d-math>
+    on both sides, and drop the both:
+
+    <br>
+
+      <span class="eq-grid" style="margin-top:">
+
+        <span style="grid-row: 1; grid-column: 1/4;"><d-math> KL^E_D(X) </d-math></span>
+        <span style="grid-row: 1; grid-column: 4;"><d-math> ~~~~~~~\leq~~~~~~~ </d-math></span>
+        <span style="grid-row: 1; grid-column: 5/10;"><d-math>  C ~=~ KL^E_D(X, Z) </d-math></span>
+
+        <span class="expansion-marker" style="grid-row: 2; grid-column: 1/4; "></span>
+        <span class="expansion-marker" style="grid-row: 2; grid-column: 5/10; "></span>
+
+        <span style="grid-row: 3; grid-column: 1;"><d-math> H^E_D(X) </d-math></span>
+        <span style="grid-row: 3; grid-column: 2;" class="faded" ><d-math> ~~-~~ </d-math></span>
+        <span style="grid-row: 3; grid-column: 3;" class="faded" ><d-math> H^E_E(X) </d-math></span>
+        <span style="grid-row: 3; grid-column: 4;"><d-math> ~~~~~~~\leq~~~~~~~ </d-math></span>
+        <span style="grid-row: 3; grid-column: 5;"><d-math> H^E_D(X, Z) </d-math></span>
+        <span style="grid-row: 3; grid-column: 6;"><d-math> ~~-~~ </d-math></span>
+        <span style="grid-row: 3; grid-column: 7;"><d-math> H^E_E(Z | X) </d-math></span>
+        <span style="grid-row: 3; grid-column: 8;" class="faded" ><d-math> ~~-~~ </d-math></span>
+        <span style="grid-row: 3; grid-column: 9;" class="faded" ><d-math> H^E_E(X) </d-math></span>
+
+        <!--<figcaption style="grid-row: 4; grid-column: 1/10; margin-top: 8px;">
+          Since <d-math>-H^E_E(X)</d-math> is on both sides, we can drop it and preserve the inequality.
+        </figcaption>-->
+      </span>
+
+      giving us the bound.
+
+  </d-footnote>
+  We minimize cross-entropy all the time in machine learning, so that seems pretty reasonable.
+  But you might still feel a bit short-changed by this explanation.
+  Why, really, is it an upper bound?
+</p>
+
+
+<p>
+  One interpretation is the "bits back" argument.
+  The decoder needs, on average, a certain number of bits to specify a given <d-math>(x,z)</d-math>.
+  However, we only care about the number of bits needed to describe <d-math>x</d-math>,
+  so we can subtract off the irrelevant ones.
+</p>
+
+<div class="eq-grid">
+  <div style="grid-row: 1; grid-column: 1;"><d-math> H^E_D(X) </d-math></div>
+  <div style="grid-row: 1; grid-column: 2;"><d-math> ~~\leq~~~~~ </d-math></div>
+  <div style="grid-row: 1; grid-column: 3;"><d-math> H^E_D(X, Z) </d-math></div>
+  <div style="grid-row: 1; grid-column: 4;"><d-math> ~~~-~~~ </d-math></div>
+  <div style="grid-row: 1; grid-column: 5;"><d-math> H^E_E(Z | X) </d-math></div>
+
+  <figcaption style="grid-row: 2; grid-column: 1; max-width:120px;">
+    Bits decoder needs to describe $x$.
+  </figcaption>
+
+  <figcaption style="grid-row: 2; grid-column: 3; max-width:120px;">
+    Bits decoder needs to describe $(x,z)$.
+  </figcaption>
+
+  <figcaption style="grid-row: 2; grid-column: 5; max-width:120px;">
+    Bits of $z$ that are random noise.
+  </figcaption>
+</div>
+
+<p>
+  A related interpetation is to think of the VAE as "smuggling" bits of
+  information about <d-math>x</d-math> through <d-math>z</d-math>.
+  The model may not be using all the bits of <d-math>z</d-math> to stored
+  information about <d-math>x</d-math> and we'd rather not penalize it unnecessarily.
+  By expnading <d-math>H^E_D(X, Z)</d-math>, we can get a term corresponding to an
+  upper bound on the "smuggled bits".
+
+</p>
+
+<div class="eq-grid">
+  <div style="grid-row: 1; grid-column: 1;"><d-math> H^E_D(X) </d-math></div>
+  <div style="grid-row: 1; grid-column: 2;"><d-math> ~~\leq~~~~~ </d-math></div>
+  <div style="grid-row: 1; grid-column: 3;"><d-math> H^E_D(X | Z) </d-math></div>
+  <div style="grid-row: 1; grid-column: 4;"><d-math> ~~~+~~~~ </d-math></div>
+  <div style="grid-row: 1; grid-column: 5;"><d-math> H^E_D(Z) ~-~ H^E_E(Z | X) </d-math></div>
+
+  <figcaption style="grid-row: 2; grid-column: 1; max-width:120px;">
+    Bits decoder needs to describe $x$.
+  </figcaption>
+
+  <figcaption style="grid-row: 2; grid-column: 3; max-width:135px;">
+    Bits decoder needs to describe $x$ given $z$.
+  </figcaption>
+
+  <figcaption style="grid-row: 2; grid-column: 5; max-width:190px;">
+    Upper bound on information about $x$ passed through $z$.
+  </figcaption>
+</div>
+
+
+<!--
+So let's break the cost apart:
+
+C =  KL(pD || pE)
+C = HED (x,z) - HEE (x,z)
+C = HED (x,z) - HEE (z|x) - HEE (x)
+
+Now, HEE (x) = H(x) is constant so it is equivelant to minimize:
+
+C = HED (x,z) - HEE (z|x)
+
+If you expand this out, you get the standard VAE cost.
+
+It can be evaluated by sampling pE(x,z) and then computing pD(x,z) as one naturally does in a feedforward run ​of a VAE.
+-->
+
+
+
+
+</d-article>
+
+
+
+<d-appendix>
+
+  <h3>Information Theory Notation</h3>
+
+  <p>
+    Information theory notation needs to accomodate both
+    <b>multiple variables</b> (eg. joint entropy, conditional entropy)
+    and <b>multiple distributions</b> (eg. cross entropy, KL divergence).
+    Standard notation handles both of these cases quite well, as long as its only one at a time.
+  </p>
+
+  <p>
+    Unfortunately, things can get a bit more awkward when one simultaneously works with both multiple distributions and variables.
+    This isn't surprising, since the most common notation uses the same expressions for both:
+    $H(p,q)$ is cross-entropy between two distributions, but $H(X,Y)$ is joint entropy between two variables.
+    Of course, it's easy to resolve this -- but one typically does so by breaking out the logarithms.
+  </p>
+
+  <style>
+    .notation-table {
+      margin-bottom:8px;
+      width: 100%;
+    }
+    .notation-table tr:first-child th {
+      border-bottom: #DDD 1px solid;
+    }
+    .notation-table tr {
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+
+  </style>
+
+  <div style="margin-bottom:24px; margin-top: 4px; width: 100%">
+  <table class="notation-table">
+    <tr>
+      <th style="width:25%"></th>
+      <th style="width:20%">$X$</th>
+      <th style="width:30%">$X,Y$</th>
+      <th style="width:25%">$X|Y$</th>
+    </tr>
+    <tr>
+      <th>Entropy</th>
+      <td><d-math>H(X)</d-math></td>
+      <td><d-math>H(X,Y)</d-math></td>
+      <td><d-math>H(X|Y)</d-math></td>
+    </tr>
+    <tr>
+      <th>Cross Entropy</th>
+      <td><d-math>H(p,q)</d-math></td>
+      <td><d-math>\sum_{x,y}p(x,y)\log\left(q(x,y)\right)</d-math></td>
+      <td><d-math>\sum_{x,y}p(x,y)\log\left(q(x|y)\right)</d-math></td>
+    </tr>
+    <tr>
+      <th>KL Divergence</th>
+      <td><d-math>KL(p || q)</d-math></td>
+      <td><d-math>\sum_{x,y}p(x,y)\log\left(\frac{q(x,y)}{p(x,y)}\right)</d-math></td>
+      <td><d-math>\sum_{x,y}p(x,y)\log\left(\frac{q(x|y)}{p(x|y)}\right)</d-math></td>
+    </tr>
+  </table>
+  <figcaption style="font-size: 90%;">Standard notation can be messy when there are both multiple variables and distributions. </figcaption>
+  </div>
+
+  <p>
+    There are, of course, ways one might be able to twist things into notation a bit more elegantly.
+    For example, expressing conditional KL divergence as $H(p(X|Y) || q(X|Y))$ is arguably valid.
+    And there are a variety of non-standard notations in the literature which make these things easy.
+    But in my experience, most ML papers handle such situations with indiscriminate use of logarithm rich expressions.
+  </p>
+
+  <p>
+    For the experenced practitioner, this isn't that much of an issue.
+    Parsing the equation for conditional KL divergence
+    -- and making sure it isn't actually mutual KL divergence, which would only be two characters different --
+    might take a minute but is easy to do.
+    But for the novice, it can be hard to interpet these equations.
+    Not only is there a lot to parse and hold in ones head, but the intent of different parts of the equation is hard to pull out.
+  </p>
+
+  <p>
+    In this essay, we've used one non-standard notation, selected for being close to the notation typically used in machine learning and we think quite intuitive.
+    For regular entropy, it's the exact same.
+    For cross entropy and KL divergence, one uses superscript to denote the source distribution and subscript to denote the coding distribution.
+  </p>
+
+  <table style="margin-bottom:24px; margin-top: 4px; width: 100%" class="notation-table">
+    <tr>
+      <th style="width:25%"></th>
+      <th style="width:20%">$X$</th>
+      <th style="width:30%">$X,Y$</th>
+      <th style="width:25%">$X|Y$</th>
+    </tr>
+    <tr>
+      <th>Entropy</th>
+      <td><d-math>H(X)</d-math></td>
+      <td><d-math>H(X,Y)</d-math></td>
+      <td><d-math>H(X|Y)</d-math></td>
+    </tr>
+    <tr>
+      <th>Cross Entropy</th>
+      <td><d-math>H^p_q(X)</d-math></td>
+      <td><d-math>H^p_q(X, Y)</d-math></td>
+      <td><d-math>H^p_q(X | Y)</d-math></td>
+    </tr>
+    <tr>
+      <th>KL Divergence</th>
+      <td><d-math>K\!L^p_q(X)</d-math></td>
+      <td><d-math>K\!L^p_q(X, Y)</d-math></td>
+      <td><d-math>K\!L^p_q(X | Y)</d-math></td>
+    </tr>
+  </table>
+
+  <p>
+    We don't have a view on the specific notation researchers should use --
+    just that they might make their papers more approachable if they used a
+    notation that accomodated these expressions well.
+  </p>
+
+  <h3>Acknowledgments</h3>
+  <p>
+    I'm grateful to Maithra Raghu for discussing this explanation with me.
+    Thanks as well to the Google AI residents for letting me practice explaining VAEs to them.
+  </p>
+  <p>
+    This paper was partly written while I was affiliated with
+    <a href="https://ai.google/research/teams/brain">Google Brain</a>.
+    A big thank you to them!
+  </p>
+
+  <d-footnote-list></d-footnote-list>
+  <d-citation-list></d-citation-list>
+</d-appendix>
+
+<d-bibliography src="bibliography.bib"></d-bibliography>
+
+<script type="text/javascript" src="index.bundle.js"></script></body>

@@ -1,0 +1,28 @@
+.eq-grid {
+  padding: 10px;
+  padding-left: 20px;
+  display: grid;
+  justify-content: start;
+  grid-row-gap: 10px;
+  margin-top: 6px;
+  margin-bottom: 24px;
+}
+.eq-grid d-math {
+  font-size: 120%;
+}
+.eq-grid figcaption d-math {
+  font-size: 100%;
+}
+.eq-grid figcaption {
+}
+.eq-grid .expansion-marker {
+  border: 1px solid #CCC;
+  border-bottom: none;
+  height: 6px;
+  width: 100%;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+.eq-grid .faded {
+  opacity: 0.5;
+}
