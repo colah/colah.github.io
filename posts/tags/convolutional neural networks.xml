@@ -229,7 +229,7 @@ w_0 &amp; w_1 &amp;  0  &amp;  0  &amp; ...\\
 <p>In fact, the use of highly-efficient parallel convolution implementations on GPUs has been essential to recent progress in computer vision.</p>
 <h1 id="next-posts-in-this-series">Next Posts in this Series</h1>
 <p>This post is part of a series on convolutional neural networks and their generalizations. The first two posts will be review for those familiar with deep learning, while later ones should be of interest to everyone. To get updates, subscribe to my <a href="../../rss.xml">RSS feed</a>!</p>
-<p>Please comment below or on the side. Pull requests can be made on <a href="https://github.com/colah/Conv-Nets-Series">github</a>.</p>
+<p>Please comment below or on the side. Pull requests can be made on <a href="https://github.com/colah/colah.github.io">github</a>.</p>
 <h1 id="acknowledgments">Acknowledgments</h1>
 <p>I’m extremely grateful to Eliana Lorch, for extensive discussion of convolutions and help writing this post.</p>
 <p>I’m also grateful to Michael Nielsen and Dario Amodei for their comments and support.</p>
@@ -444,7 +444,7 @@ Filters learned by the first convolutional layer. The top half corresponds to th
 <h1 id="next-posts-in-this-series">Next Posts in this Series</h1>
 <p><a href="../2014-07-Understanding-Convolutions/"><strong>Read the next post!</strong></a></p>
 <p>This post is part of a series on convolutional neural networks and their generalizations. The first two posts will be review for those familiar with deep learning, while later ones should be of interest to everyone. To get updates, subscribe to my <a href="../../rss.xml">RSS feed</a>!</p>
-<p>Please comment below or on the side. Pull requests can be made on <a href="https://github.com/colah/Conv-Nets-Series">github</a>.</p>
+<p>Please comment below or on the side. Pull requests can be made on <a href="https://github.com/colah/colah.github.io">github</a>.</p>
 <h1 id="acknowledgments">Acknowledgments</h1>
 <p>I’m grateful to Eliana Lorch, Aaron Courville, and Sebastian Zany for their comments and support.</p>
 <section class="footnotes">
