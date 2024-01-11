@@ -194,7 +194,7 @@ Filters learned by the first convolutional layer. The top half corresponds to th
 <p>If one combines this with the equation for <span class="math">\(A(x)\)</span>,</p>
 <p><span class="math">\[A(x) = \sigma(Wx + b)\]</span></p>
 <p>one has everything they need to implement a convolutional neural network, at least in theory.</p>
-<p>In practice, this is often not best way to think about convolutional neural networks. There is an alternative formulation, in terms of a mathematical operation called <em>convolution</em>, that is often more helpful.</p>
+<p>In practice, this is often not best the way to think about convolutional neural networks. There is an alternative formulation, in terms of a mathematical operation called <em>convolution</em>, that is often more helpful.</p>
 <p>The convolution operation is a powerful tool. In mathematics, it comes up in diverse contexts, ranging from the study of partial differential equations to probability theory. In part because of its role in PDEs, convolution is very important in the physical sciences. It also has an important role in many applied areas, like computer graphics and signal processing.</p>
 <p>For us, convolution will provide a number of benefits. Firstly, it will allow us to create much more efficient implementations of convolutional layers than the naive perspective might suggest. Secondly, it will remove a lot of messiness from our formulation, handling all the bookkeeping presently showing up in the indexing of <span class="math">\(x\)</span>s – the present formulation may not seem messy yet, but that’s only because we haven’t got into the tricky cases yet. Finally, convolution will give us a significantly different perspective for reasoning about convolutional layers.</p>
 <blockquote>
