@@ -136,7 +136,7 @@
 <p>Instead of just naively summing over the paths, it would be much better to factor them:</p>
 <p><span class="math">\[\frac{\partial Z}{\partial X} = (\alpha + \beta + \gamma)(\delta + \epsilon + \zeta)\]</span></p>
 <p>This is where “forward-mode differentiation” and “reverse-mode differentiation” come in. They’re algorithms for efficiently computing the sum by factoring the paths. Instead of summing over all of the paths explicitly, they compute the same sum more efficiently by merging paths back together at every node. In fact, both algorithms touch each edge exactly once!</p>
-<p>Forward-mode differentiation starts at an input to the graph and moves towards the end. At every node, it sums all the paths feeding in. Each of those paths represents one way in which the input affects that node. By adding them up, we get the total way in which the node is affected by the input, it’s derivative.</p>
+<p>Forward-mode differentiation starts at an input to the graph and moves towards the end. At every node, it sums all the paths feeding in. Each of those paths represents one way in which the input affects that node. By adding them up, we get the total ways in which the node is affected by the input, it’s derivative.</p>
 <div style="width:70%; margin-left:auto; margin-right:auto; margin-bottom:17px; margin-top:17px;">
 <img src="img/chain-forward-greek.png" alt>
 </div>
