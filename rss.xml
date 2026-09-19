@@ -90,6 +90,20 @@
 </item>
 
 <item>
+    <title>Data.List Recursion Illustrated</title>
+    <link>http://colah.github.io/posts/2015-02-DataList-Illustrated/</link>
+    <description><![CDATA[
+<p>Data.List is a standard Haskell library. It provides lots of really helpful functions for working with lists.</p>
+
+<p>In particular, Data.List provides functions for particular patterns of recursion on lists. Some of them, such as map, are familiar to many programmers. But there are lots of subtle variations, and it’s hard to keep them all straight.</p>
+
+<p><a href="http://colah.github.io/posts/2015-02-DataList-Illustrated/">Read more.</a></p>
+]]></description>
+    <pubDate>Thurs, 12 Feb 2015 00:00:00 UTC</pubDate>
+    <guid>http://colah.github.io/posts/2015-02-DataList-Illustrated/</guid>
+</item>
+
+<item>
     <title>Visualizing Representations: Deep Learning and Human Beings</title>
     <link>http://colah.github.io/posts/2015-01-Visualizing-Representations/</link>
     <description><![CDATA[
@@ -102,6 +116,104 @@
 ]]></description>
     <pubDate>Fri, 16 Jan 2015 00:00:00 UTC</pubDate>
     <guid>http://colah.github.io/posts/2015-01-Visualizing-Representations/</guid>
+</item>
+
+<item>
+    <title>Groups &amp; Group Convolutions</title>
+    <link>http://colah.github.io/posts/2014-12-Groups-Convolution/</link>
+    <description><![CDATA[
+<p>Consider a square. Is it symmetric? How is it symmetric? How much symmetry does it have? What kind of symmetry does it have?</p>
+
+<p>What do those questions even mean?</p>
+
+<p><a href="http://colah.github.io/posts/2014-12-Groups-Convolution/">Read more.</a></p>
+]]></description>
+    <pubDate>Mon, 8 Dec 2014 00:00:00 UTC</pubDate>
+    <guid>http://colah.github.io/posts/2014-12-Groups-Convolution/</guid>
+</item>
+
+<item>
+    <title>Visualizing MNIST: An Exploration of Dimensionality Reduction</title>
+    <link>http://colah.github.io/posts/2014-10-Visualizing-MNIST/</link>
+    <description><![CDATA[
+<p>At some fundamental level, no one understands machine learning.</p>
+
+<p>It isn’t a matter of things being too complicated. Almost everything we do is fundamentally very simple. Unfortunately, an innate human handicap interferes with us understanding these simple things.</p>
+
+<p><a href="http://colah.github.io/posts/2014-10-Visualizing-MNIST/">Read more.</a></p>
+]]></description>
+    <pubDate>Thurs, 9 Oct 2014 00:00:00 UTC</pubDate>
+    <guid>http://colah.github.io/posts/2014-10-Visualizing-MNIST/</guid>
+</item>
+
+<item>
+    <title>Understanding Convolutions</title>
+    <link>http://colah.github.io/posts/2014-07-Understanding-Convolutions/</link>
+    <description><![CDATA[
+<p>In a previous post, we built up an understanding of convolutional neural networks, without referring to any significant mathematics. To go further, however, we need to understand convolutions.</p>
+
+<p>If we just wanted to understand convolutional neural networks, it might suffice to roughly understand convolutions. But the aim of this series is to bring us to the frontier of convolutional neural networks and explore new options. To do that, we’re going to need to understand convolutions very deeply.</p>
+
+<p><a href="http://colah.github.io/posts/2014-07-Understanding-Convolutions/">Read more.</a></p>
+]]></description>
+    <pubDate>Sun, 13 Jul 2014 00:00:00 UTC</pubDate>
+    <guid>http://colah.github.io/posts/2014-07-Understanding-Convolutions/</guid>
+</item>
+
+<item>
+    <title>Conv Nets: A Modular Perspective</title>
+    <link>http://colah.github.io/posts/2014-07-Conv-Nets-Modular/</link>
+    <description><![CDATA[
+<p>In the last few years, deep neural networks have lead to breakthrough results on a variety of pattern recognition problems, such as computer vision and voice recognition. One of the essential components leading to these results has been a special kind of neural network called a convolutional neural network.</p>
+
+<p>At its most basic, convolutional neural networks can be thought of as a kind of neural network that uses many identical copies of the same neuron. This allows the network to have lots of neurons and express computationally large models while keeping the number of actual parameters – the values describing how neurons behave – that need to be learned fairly small.</p>
+
+<p><a href="http://colah.github.io/posts/2014-07-Conv-Nets-Modular/">Read more.</a></p>
+]]></description>
+    <pubDate>Tues, 8 Jul 2014 00:00:00 UTC</pubDate>
+    <guid>http://colah.github.io/posts/2014-07-Conv-Nets-Modular/</guid>
+</item>
+
+<item>
+    <title>Deep Learning, NLP, and Representations</title>
+    <link>http://colah.github.io/posts/2014-07-NLP-RNNs-Representations/</link>
+    <description><![CDATA[
+<p>In the last few years, deep neural networks have dominated pattern recognition. They blew the previous state of the art out of the water for many computer vision tasks. Voice recognition is also moving that way.</p>
+
+<p>But despite the results, we have to wonder… why do they work so well?</p>
+
+<p><a href="http://colah.github.io/posts/2014-07-NLP-RNNs-Representations/">Read more.</a></p>
+]]></description>
+    <pubDate>Mon, 7 Jul 2014 00:00:00 UTC</pubDate>
+    <guid>http://colah.github.io/posts/2014-07-NLP-RNNs-Representations/</guid>
+</item>
+
+<item>
+    <title>Fanfiction, Graphs, and PageRank</title>
+    <link>http://colah.github.io/posts/2014-07-FFN-Graphs-Vis/</link>
+    <description><![CDATA[
+<p>On a website called fanfiction.net, users write millions of stories about their favorite stories. They have diverse opinions about them. They love some stories, and hate others. The opinions are noisy, and it’s hard to see the big picture.</p>
+
+<p>With tools from mathematics and some helpful software, however, we can visualize the underlying structure.</p>
+
+<p><a href="http://colah.github.io/posts/2014-07-FFN-Graphs-Vis/">Read more.</a></p>
+]]></description>
+    <pubDate>Sun, 6 Jul 2014 00:00:00 UTC</pubDate>
+    <guid>http://colah.github.io/posts/2014-07-FFN-Graphs-Vis/</guid>
+</item>
+
+<item>
+    <title>Neural Networks, Manifolds, and Topology</title>
+    <link>http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/</link>
+    <description><![CDATA[
+<p>Recently, there’s been a great deal of excitement and interest in deep neural networks because they’ve achieved breakthrough results in areas such as computer vision.</p>
+
+<p>However, there remain a number of concerns about them. One is that it can be quite challenging to understand what a neural network is really doing. If one trains it well, it achieves high quality results, but it is challenging to understand how it is doing so. If the network fails, it is hard to understand what went wrong.</p>
+
+<p><a href="http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/">Read more.</a></p>
+]]></description>
+    <pubDate>Sun, 6 Apr 2014 00:00:00 UTC</pubDate>
+    <guid>http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/</guid>
 </item>
 
     </channel>
